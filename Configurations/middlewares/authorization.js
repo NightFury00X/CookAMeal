@@ -1,5 +1,5 @@
-function isAuthorized(req, res, next) {
-   console.log('Req here: ', req.user);
+function isAuthorized(req, res, callback) {
+    return callback(null, req);
 }
 
 module.exports = isAuthorized;

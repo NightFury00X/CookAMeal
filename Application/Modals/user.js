@@ -1,27 +1,10 @@
-// The User model.
+// The User Model.
 'use strict';
 
 let bcrypt = require('bcrypt'),
+    
+    db = require('../../Application/Modals'),
     config = require('../../Configurations/Main/config');
-
-// Compares two passwords.
-function comparePasswords(password, callback) {
-    bcrypt.compare(password, this.password, function (error, isMatch) {
-        if (error) {
-            return callback(error);
-        }        
-        return callback(null, isMatch);
-    });
-}
-
-// Hashes the password for a user object.
-function hashPassword(user) {
-    if (user.changed('password')) {
-        return bcrypt.hash(user.password, 10).then(function (password) {
-            user.password = password;
-        });
-    }
-}
 
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
@@ -31,18 +14,95 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false
         },
-        username: {
+        email: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: {
+                args: true,
+                msg: 'Oops. Looks like you already have an account with this email address. Please try to login.',
+                fields: [sequelize.fn('lower', sequelize.col('email'))]
+            },
+            validate: {
+                isEmail: {
+                    args: true,
+                    msg: 'You have entered invalid email format.'
+                }
+            }
+        },
+        firstname: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                is: {
+                    args: ["^[a-z]+$", 'i'],
+                    msg: 'The first name you have entered is contains some bed characters.'
+                }
+            }
+        },
+        lastname: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                is: {
+                    args: ["^[a-z]+$", 'i'],
+                    msg: 'The last name you have entered is contains some bed characters.'
+                }
+            }
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        role: {
-            type: DataTypes.INTEGER,
-            defaultValue: config.userRoles.user
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isNumeric: {
+                    args: true,
+                    msg: 'you have entered invalid phone number.'
+                }
+            }
         },
+        gender: {
+            type: DataTypes.CHAR,
+            allowNull: false,
+            validate: {
+                isIn: {
+                    args: [['m', 'M', 'f', 'F']],
+                    msg: "Must be valid gender Male or Female."
+                }
+            }
+        },
+        description: {
+            type: DataTypes.TEXT
+        },
+        dietpreffrence: {
+            type: DataTypes.STRING
+        },
+        type: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                isIn: {
+                    args: [['1', '2']],
+                    msg: "Invalid user type."
+                }
+            }
+        },
+        cardtypebankdetails: {
+            type: DataTypes.STRING
+        },
+        drivingdistance: {
+            type: DataTypes.FLOAT,
+            validate: {
+                isFloat: {
+                    args: true,
+                    msg: 'Invalid driving distance value.'
+                }
+            }
+        },
+        updated_at: DataTypes.DATE,
+        deleted_at: DataTypes.DATE
     };
 
 // 2: The model options.
@@ -55,12 +115,36 @@ module.exports = function (sequelize, DataTypes) {
         },
         classMethods: {
             associate: function (models) {
-                UserModel.hasMany(models.AddressModel, { onDelete: 'CASCADE' });
+                UserModel.hasMany(models.AddressModel, {onDelete: 'CASCADE'});
+                UserModel.hasMany(models.SocialModel, {onDelete: 'CASCADE'});
             }
         },
-        underscored: true
+        underscored: true,
+        getterMethods: {
+            fullName() {
+                return this.firstname + ' ' + this.lastname;
+            }
+        }
     };
-    
-    let UserModel = sequelize.define('user', modelDefinition, modelOptions);    
+    let UserModel = sequelize.define('user', modelDefinition, modelOptions);
     return UserModel;
 };
+
+// Compares two passwords.
+function comparePasswords(password, callback) {
+    bcrypt.compare(password, this.password, function (error, isMatch) {
+        if (error) {
+            return callback(error);
+        }
+        return callback(null, isMatch);
+    });
+}
+
+// Hashes the password for a user object.
+function hashPassword(user) {
+    if (user.changed('password')) {
+        return bcrypt.hash(user.password, 10).then(function (password) {
+            user.password = password;
+        });
+    }
+}

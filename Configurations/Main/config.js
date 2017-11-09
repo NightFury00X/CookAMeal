@@ -31,7 +31,9 @@ config.SALT_WORK_FACTOR = 12;
 let userRoles = config.userRoles = {
     guest: 1,    // ...001
     user: 2,     // ...010
-    admin: 4     // ...100
+    admin: 4,    // ...100
+    cook: 5,
+    customer: 6
 };
 
 config.accessLevels = {

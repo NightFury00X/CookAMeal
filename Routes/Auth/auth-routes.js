@@ -6,7 +6,7 @@ const isAuthorized = require('../../Configurations/middlewares/authorization');
 
 const authRoutes = function (passport) {
     const middlewares = [passport.authenticate('jwt', {session: false}), isAuthorized];
-
+    
     // Signup    
     router.post('/signup', AuthController.signUp);
     
@@ -15,6 +15,7 @@ const authRoutes = function (passport) {
     
     // Authenticate user
     router.get('/:id', middlewares, AuthController.getUserData);
+    
     return router;
 };
 

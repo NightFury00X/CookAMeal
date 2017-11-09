@@ -34,14 +34,15 @@ app.use(passport.initialize());
 hookJWTStrategy(passport);
 
 // Helmet
-app.use(heltmet());
+// app.use(heltmet());
 
 // global.Domain = require('./Configurations/Domains/domain');
 
 // Bundle API routes.
 app.use('/api', require('./Routes/routes')(passport));
 
-db.sequelize.sync()
+db.sequelize.sync({ Force: true
+})
     .then(startApp)
     .catch(function (e) {
         throw new Error(e);
