@@ -1,10 +1,7 @@
 // The User Model.
 'use strict';
 
-let bcrypt = require('bcrypt'),
-    
-    db = require('../../Application/Modals'),
-    config = require('../../Configurations/Main/config');
+let bcrypt = require('bcrypt');
 
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
@@ -113,12 +110,6 @@ module.exports = function (sequelize, DataTypes) {
         hooks: {
             beforeValidate: hashPassword
         },
-        classMethods: {
-            associate: function (models) {
-                UserModel.hasMany(models.AddressModel, {onDelete: 'CASCADE'});
-                UserModel.hasMany(models.SocialModel, {onDelete: 'CASCADE'});
-            }
-        },
         underscored: true,
         getterMethods: {
             fullName() {
@@ -126,7 +117,14 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     };
-    let UserModel = sequelize.define('user', modelDefinition, modelOptions);
+
+    const UserModel = sequelize.define('User', modelDefinition, modelOptions);
+
+    UserModel.associate = function (models) {
+        UserModel.hasMany(models.Address);
+        UserModel.hasMany(models.Social);
+    };
+
     return UserModel;
 };
 

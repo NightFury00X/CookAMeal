@@ -27,5 +27,5 @@ module.exports = function (sequelize, DataTypes) {
         underscored: true
     };
     
-    return sequelize.define('social', modelDefinition, modelOptions);
+    return sequelize.define('Social', modelDefinition, modelOptions);
 };

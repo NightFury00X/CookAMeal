@@ -34,7 +34,7 @@ app.use(passport.initialize());
 hookJWTStrategy(passport);
 
 // Helmet
-// app.use(heltmet());
+app.use(heltmet());
 
 // global.Domain = require('./Configurations/Domains/domain');
 

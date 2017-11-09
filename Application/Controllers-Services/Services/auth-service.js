@@ -18,11 +18,12 @@ AuthService = function () {
 AuthService.prototype.signup = async (registrationData, res) => {
     const trans = await db.sequelize.transaction();
     try {
-        let user = await db.UserModel.create(registrationData.user, {transaction: trans});
+        console.log('db: ', registrationData);
+        let user = await db.User.create(registrationData.user, {transaction: trans});
         registrationData.address.user_id = user.id;
         registrationData.social.user_id = user.id;
-        let a =await db.AddressModel.create(registrationData.address, {transaction: trans});
-        await db.SocialModel.create(registrationData.social, {transaction: trans});
+        let a =await db.Address.create(registrationData.address, {transaction: trans});
+        await db.Social.create(registrationData.social, {transaction: trans});
         let d = await trans.commit();
         console.log(d);
         // return a;
@@ -30,7 +31,7 @@ AuthService.prototype.signup = async (registrationData, res) => {
         await trans.rollback();
         throw (error);
     }
-    
+
     // let address = await db.AddressModel.create(registrationData.address);
     // let social = await db.SocialModel.create(registrationData.social);
     // return user;

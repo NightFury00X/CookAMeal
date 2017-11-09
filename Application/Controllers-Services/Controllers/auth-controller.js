@@ -8,6 +8,7 @@ let AuthController = {};
 // Register a user.
 AuthController.signUp = async (req, res) => {
     let registrationData = req.body.details;
+    console.log(req);
     try {
         let result = await AuthService.signup(registrationData, res);
         responseHelper.setSuccessResponse({message: result}, res, 201);

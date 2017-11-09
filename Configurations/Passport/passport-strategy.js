@@ -14,7 +14,7 @@ function hookJWTStrategy(passport) {
     options.ignoreExpiration = false;
     
     passport.use(new JWTStrategy(options, function (JWTPayload, callback) {
-        db.UserModel.findOne(
+        db.User.findOne(
             {
                 attributes: ['id', 'username', 'role'],
                 where: {username: JWTPayload.username}
