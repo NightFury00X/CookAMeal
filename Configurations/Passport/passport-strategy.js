@@ -4,7 +4,7 @@ let JWTStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 
 let db = require('../../Application/Modals'),
-    config = require('../Main/config');
+    config = require('../Main');
 
 // Hooks the JWT Strategy.
 function hookJWTStrategy(passport) {
@@ -16,8 +16,8 @@ function hookJWTStrategy(passport) {
     passport.use(new JWTStrategy(options, function (JWTPayload, callback) {
         db.User.findOne(
             {
-                attributes: ['id', 'username', 'role'],
-                where: {username: JWTPayload.username}
+                attributes: ['id', 'email', 'type'],
+                where: {email: JWTPayload.username}
                 , raw: true
             })
             .then(function (user) {

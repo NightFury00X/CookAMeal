@@ -114,28 +114,30 @@ module.exports = function (sequelize, DataTypes) {
         getterMethods: {
             fullName() {
                 return this.firstname + ' ' + this.lastname;
+            },
+            userInfo() {
+                return {
+                    id: this.id,
+                    username: this.username,
+                    role: this.type
+                }
             }
         }
     };
-
+    
     const UserModel = sequelize.define('User', modelDefinition, modelOptions);
-
+    
     UserModel.associate = function (models) {
         UserModel.hasMany(models.Address);
         UserModel.hasMany(models.Social);
     };
-
+    
     return UserModel;
 };
 
 // Compares two passwords.
-function comparePasswords(password, callback) {
-    bcrypt.compare(password, this.password, function (error, isMatch) {
-        if (error) {
-            return callback(error);
-        }
-        return callback(null, isMatch);
-    });
+async function comparePasswords(password) {
+    return await bcrypt.compare(password, this.password);
 }
 
 // Hashes the password for a user object.

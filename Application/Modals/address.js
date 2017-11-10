@@ -69,7 +69,5 @@ module.exports = function (sequelize, DataTypes) {
         underscored: true
     };
     
-    const AddressModel = sequelize.define('Address', modelDefinition, modelOptions);
-    
-    return AddressModel;
+    return sequelize.define('Address', modelDefinition, modelOptions);
 };

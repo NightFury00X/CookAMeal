@@ -8,41 +8,27 @@ let AuthController = {};
 // Register a user.
 AuthController.signUp = async (req, res) => {
     let registrationData = req.body.details;
-    console.log(req);
     try {
-        let result = await AuthService.signup(registrationData, res);
+        let result = await AuthService.signup(registrationData);
         responseHelper.setSuccessResponse({message: result}, res, 201);
     } catch (error) {
-        console.log('error: ', error);
-        responseHelper.setErrorResponse({message: error}, res, 401);
+        console.log(error);
+        responseHelper.setErrorResponse({message: error.message.replace(',\n', ',').split(',')}, res, 400);
     }
-    
-    // .then(function (success) {
-    //     AuthService.getUserData(success.user_id)
-    //         .then(function (result) {
-    //             responseHelper.setSuccessResponse({message: result}, res, 201);
-    //         });
-    // })
-    // .catch(function (error) {
-    //     responseHelper.setErrorResponse({message: error.errors}, res, 403);
-    // });
 };
 
 // Authenticate a user.
-AuthController.authenticateUser = function (req, res) {
-    req.checkBody('username', 'User Name field required!').notEmpty();
-    req.checkBody('password', 'password field required!').notEmpty();
-    const errors = req.validationErrors();
-    if (errors) {
-        res.status(400).json({message: errors});
-    } else {
-        let loginDetails = {
-            email: req.body.username,
-            password: req.body.password,
-            potentialUser: {where: {email: req.body.username}}
-        };
-        console.log('user: ', loginDetails);
-        AuthService.authenticate(loginDetails, res);
+AuthController.authenticateUser = async (req, res) => {
+    let loginDetails = {
+        email: req.body.username,
+        password: req.body.password,
+        potentialUser: {where: {email: req.body.username}}
+    };
+    try {
+        let result = await AuthService.authenticate(loginDetails);       
+        responseHelper.setSuccessResponse({message: result}, res, 200);
+    } catch (error) {
+        responseHelper.setErrorResponse({message: error}, res, 400);
     }
 };
 

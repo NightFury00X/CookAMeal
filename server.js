@@ -6,16 +6,24 @@ let express = require('express'),
     morgan = require('morgan'),
     passport = require('passport'),
     errorHandler = require('errorhandler'),
-    log = require('./Configurations/Libs/Log')(module),
-    config = require('./Configurations/Main/config'),
+    config = require('./Configurations/Main'),
     db = require('./Application/Modals'),
-    heltmet = require('helmet');
+    heltmet = require('helmet'),
+    winston = require('winston');
+
+const logger = new (winston.Logger)({
+    transports: [
+        // colorize the output to the console
+        new (winston.transports.Console)({ colorize: true })
+    ]
+});
 
 // App related modules.
 let hookJWTStrategy = require('./Configurations/Passport/passport-strategy');
 
 // Initializations.
 let app = express();
+let server = require('http').createServer(app);
 
 // Parse as urlencoded and json.
 app.use(bodyParser.urlencoded({extended: false}));
@@ -36,21 +44,29 @@ hookJWTStrategy(passport);
 // Helmet
 app.use(heltmet());
 
-// global.Domain = require('./Configurations/Domains/domain');
-
 // Bundle API routes.
 app.use('/api', require('./Routes/routes')(passport));
 
-db.sequelize.sync({ Force: true
+// app.use(express.logger({format: config.logging.express_format}));
+
+db.sequelize.sync({
+    Force: true
 })
     .then(startApp)
     .catch(function (e) {
         throw new Error(e);
     });
 
-function startApp() {
-    app.listen(config.server.port, function () {
-        console.log('Express server listening on port ' + config.server.port);
+function startApp() {    
+    let protocol = config.app.ssl ? 'https' : 'http';
+    let port = process.env.PORT || config.app.port;
+    let app_url = protocol + '://' + config.app.host + ':' + port;
+    let env = process.env.NODE_ENV
+        ? ('[' + process.env.NODE_ENV + ']') : '[development]';
+    
+    logger.info('Initiated...', env);
+    server.listen(port, function() {
+        logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);
     });
 }
 
@@ -65,12 +81,12 @@ app.use((req, res, next) => {
 
 app.use(function (req, res) {
     res.status(404);
-    log.debug('Not found URL: %s', req.url);
+    logger.error('Not found URL: %s', req.url);
     res.send({error: 'URL [' + req.url + '] not found!'});
 });
 
 app.use(function (err, req, res) {
     res.status(err.status || 500);
-    log.error('Internal error(%d): %s', res.statusCode, err.message);
+    logger.error('Internal error(%d): %s', res.statusCode, err.message);
     res.send({error: err.message});
 });

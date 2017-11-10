@@ -1,10 +1,10 @@
 'use strict';
 
 let jwt = require('jsonwebtoken'),
-    config = require('../../Configurations/Main/config');
+    config = require('../../Configurations/Main');
 
 function generateToken(user) {
-    return jwt.sign(
+    return 'JWT ' + jwt.sign(
         user,
         config.keys.secret,
         {expiresIn: '30m'}

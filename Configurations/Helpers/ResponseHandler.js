@@ -15,7 +15,6 @@ module.exports = {
             data: [],
             "error": errors
         };
-        log.error('Internal error(%d): %s', res.statusCode, errors);
         this.setResponse(statusCode, response, res);
     },
     setResponse: function (status, response, res) {
