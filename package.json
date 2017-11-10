@@ -31,15 +31,15 @@
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
     "mysql2": "^1.4.2",
-    "nodemailer": "^4.3.1",
+    "nodemailer": "^4.4.0",
     "nodemailer-express-handlebars": "^2.0.0",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
-    "sequelize": "^3.30.4",
+    "sequelize": "^4.22.6",
     "sequelize-transactions": "^1.0.1",
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "@types/node": "^8.0.50"
+    "@types/node": "^8.0.51"
   }
 }
