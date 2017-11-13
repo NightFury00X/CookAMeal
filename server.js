@@ -14,7 +14,7 @@ let express = require('express'),
 const logger = new (winston.Logger)({
     transports: [
         // colorize the output to the console
-        new (winston.transports.Console)({ colorize: true })
+        new (winston.transports.Console)({colorize: true})
     ]
 });
 
@@ -60,8 +60,12 @@ app.use('/api', require('./Routes/routes')(passport));
 //     .catch(function (e) {
 //         throw new Error(e);
 //     });
-startApp();
-function startApp() {    
+let port = process.env.PORT || 8081;
+app.listen(port, function () {
+    logger.info('Initiated...');
+});
+
+function startApp() {
     let protocol = config.app.ssl ? 'https' : 'http';
     let port = process.env.PORT || config.app.port;
     let app_url = protocol + '://' + config.app.host + ':' + port;
@@ -69,7 +73,7 @@ function startApp() {
         ? ('[' + process.env.NODE_ENV + ']') : '[development]';
     
     logger.info('Initiated...', env);
-    server.listen(port, function() {
+    server.listen(port, function () {
         logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);
     });
 }
