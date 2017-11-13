@@ -4,8 +4,7 @@
   "description": "Cook a Meal Api",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "SET NODE_ENV=production && nodemon server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [
     "express",
