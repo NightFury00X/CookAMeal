@@ -44,7 +44,7 @@ hookJWTStrategy(passport);
 // Helmet
 app.use(heltmet());
 
-app.get('/', function (req, res) {
+app.get('/a', function (req, res) {
     res.send('Hello');
 });
 
