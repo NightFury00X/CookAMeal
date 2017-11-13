@@ -6,13 +6,15 @@ let chalk = require('chalk'),
 let AuthController = {};
 
 // Register a user.
-AuthController.signUp = async (req, res) => {
+AuthController.signUp = async (req, res, next) => {
     let registrationData = req.body.details;
     try {
         let result = await AuthService.signup(registrationData);
         responseHelper.setSuccessResponse({message: result}, res, 201);
     } catch (error) {
-        responseHelper.setErrorResponse({message: error + '.'}, res, 400);
+        // console.log(error);
+        next(error);
+        // responseHelper.setErrorResponse({message: error.message.replace(',\n', ',').split(',')}, res, 400);
     }
 };
 
@@ -34,6 +36,16 @@ AuthController.authenticateUser = async (req, res) => {
 //Get userDetails
 AuthController.getUserData = function (req, res) {
     AuthService.getUserData(req.user, res);
+};
+
+//check error
+AuthController.check = function (req, res, next) {
+    try {
+        throw ('error');
+    } catch (error) {
+        //console.log('error: ', error);
+        next(error);
+    }
 };
 
 module.exports = AuthController;

@@ -6,15 +6,17 @@ let express = require('express'),
     morgan = require('morgan'),
     passport = require('passport'),
     errorHandler = require('errorhandler'),
-    config = require('./Configurations/Main'),
     db = require('./Application/Modals'),
     heltmet = require('helmet'),
-    winston = require('winston');
+    winston = require('winston'),
+    cors = require('cors'),
+    compression = require("compression"),
+    config = require('./Configurations/Main');
 
 const logger = new (winston.Logger)({
     transports: [
         // colorize the output to the console
-        new (winston.transports.Console)({ colorize: true })
+        new (winston.transports.Console)({colorize: true})
     ]
 });
 
@@ -31,7 +33,10 @@ app.use(bodyParser.json());
 app.use(expressValidator());
 
 // Hook up the HTTP logger.
-app.use(morgan('dev'));
+app.use(morgan('common'));
+
+//To make requests lighter and load faster
+app.use(compression());
 
 app.use(errorHandler());
 
@@ -57,36 +62,54 @@ db.sequelize.sync({
         throw new Error(e);
     });
 
-function startApp() {    
+function startApp() {
     let protocol = config.app.ssl ? 'https' : 'http';
     let port = process.env.PORT || config.app.port;
     let app_url = protocol + '://' + config.app.host + ':' + port;
     let env = process.env.NODE_ENV
         ? ('[' + process.env.NODE_ENV + ']') : '[development]';
-    
+
     logger.info('Initiated...', env);
-    server.listen(port, function() {
+    server.listen(port, function () {
         logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);
     });
 }
 
 // Enable CORS from client-side
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8081');
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    next();
+app.use(cors({
+    origin: ['http://localhost:8081'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
+    allowedHeaders: ['content-type', 'Authorization']
+}));
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:8081');
+//     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     next();
+// });
+
+// Main middleware
+app.use(function (err, req, res, next) {
+    // Do logging and user-friendly error message display
+    console.error('=>', err);
+    res.status(500).send({status: 500, message: 'internal error', type: err});
+});
+// Routes
+
+app.use(function (req, res, next) {
+    console.log('Time:', Date.now());
+    next()
 });
 
-app.use(function (req, res) {
-    res.status(404);
-    logger.error('Not found URL: %s', req.url);
-    res.send({error: 'URL [' + req.url + '] not found!'});
-});
-
-app.use(function (err, req, res) {
-    res.status(err.status || 500);
-    logger.error('Internal error(%d): %s', res.statusCode, err.message);
-    res.send({error: err.message});
-});
+// app.use(function (req, res) {
+//     res.status(404);
+//     logger.error('Not found URL: %s', req.url);
+//     res.send({error: 'URL [' + req.url + '] not found!'});
+// });
+//
+// app.use(function (err, req, res) {
+//     res.status(err.status || 500);
+//     logger.error('Internal error(%d): %s', res.statusCode, err.message);
+//     res.send({error: err.message});
+// });

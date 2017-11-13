@@ -8,10 +8,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="node-DefinitelyTyped" level="application" />
-    <orderEntry type="library" name="node-cache-DefinitelyTyped" level="application" />
-    <orderEntry type="library" name="sequelize-DefinitelyTyped" level="application" />
-    <orderEntry type="library" name="global-tunnel-ng-DefinitelyTyped" level="application" />
-    <orderEntry type="library" name="winston-DefinitelyTyped" level="application" />
   </component>
 </module>
