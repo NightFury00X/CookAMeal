@@ -12,8 +12,7 @@ AuthController.signUp = async (req, res) => {
         let result = await AuthService.signup(registrationData);
         responseHelper.setSuccessResponse({message: result}, res, 201);
     } catch (error) {
-        console.log(error);
-        responseHelper.setErrorResponse({message: error.message.replace(',\n', ',').split(',')}, res, 400);
+        responseHelper.setErrorResponse({message: error + '.'}, res, 400);
     }
 };
 
@@ -25,7 +24,7 @@ AuthController.authenticateUser = async (req, res) => {
         potentialUser: {where: {email: req.body.username}}
     };
     try {
-        let result = await AuthService.authenticate(loginDetails);       
+        let result = await AuthService.authenticate(loginDetails);
         responseHelper.setSuccessResponse({message: result}, res, 200);
     } catch (error) {
         responseHelper.setErrorResponse({message: error}, res, 400);

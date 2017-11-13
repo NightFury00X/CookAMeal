@@ -44,19 +44,23 @@ hookJWTStrategy(passport);
 // Helmet
 app.use(heltmet());
 
+app.get('/', function (req, res) {
+    res.send('Hello');
+});
+
 // Bundle API routes.
 app.use('/api', require('./Routes/routes')(passport));
 
 // app.use(express.logger({format: config.logging.express_format}));
 
-db.sequelize.sync({
-    Force: true
-})
-    .then(startApp)
-    .catch(function (e) {
-        throw new Error(e);
-    });
-
+// db.sequelize.sync({
+//     Force: true
+// })
+//     .then(startApp)
+//     .catch(function (e) {
+//         throw new Error(e);
+//     });
+startApp();
 function startApp() {    
     let protocol = config.app.ssl ? 'https' : 'http';
     let port = process.env.PORT || config.app.port;
