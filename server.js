@@ -14,7 +14,7 @@ let express = require('express'),
 const logger = new (winston.Logger)({
     transports: [
         // colorize the output to the console
-        new (winston.transports.Console)({colorize: true})
+        new (winston.transports.Console)({ colorize: true })
     ]
 });
 
@@ -44,28 +44,20 @@ hookJWTStrategy(passport);
 // Helmet
 app.use(heltmet());
 
-app.get('/a', function (req, res) {
-    res.send('Hello');
-});
-
 // Bundle API routes.
 app.use('/api', require('./Routes/routes')(passport));
 
 // app.use(express.logger({format: config.logging.express_format}));
 
-// db.sequelize.sync({
-//     Force: true
-// })
-//     .then(startApp)
-//     .catch(function (e) {
-//         throw new Error(e);
-//     });
-let port = process.env.PORT || 8081;
-app.listen(port, function () {
-    logger.info('Initiated...');
-});
+db.sequelize.sync({
+    Force: true
+})
+    .then(startApp)
+    .catch(function (e) {
+        throw new Error(e);
+    });
 
-function startApp() {
+function startApp() {    
     let protocol = config.app.ssl ? 'https' : 'http';
     let port = process.env.PORT || config.app.port;
     let app_url = protocol + '://' + config.app.host + ':' + port;
@@ -73,7 +65,7 @@ function startApp() {
         ? ('[' + process.env.NODE_ENV + ']') : '[development]';
     
     logger.info('Initiated...', env);
-    server.listen(port, function () {
+    server.listen(port, function() {
         logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);
     });
 }
