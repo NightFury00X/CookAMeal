@@ -35,7 +35,7 @@
     "nodemailer-express-handlebars": "^2.0.0",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
-    "sequelize": "^4.22.6",
+    "sequelize": "^3.30.3",
     "sequelize-transactions": "^1.0.1",
     "winston": "^2.3.1"
   },
