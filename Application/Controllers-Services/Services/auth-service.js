@@ -30,7 +30,7 @@ AuthService.prototype.signup = async (registrationData, files) => {
         if (files) {
             let filename = (new Date).valueOf() + '-' + files[0].originalname;
             files[0].user_id = user.id;
-            files[0].imageurl = files[0].destination + '/' + filename;
+            files[0].imageurl = 'http://cookamealapi.cynotecksandbox.com/' + files[0].destination + '/' + filename;
             await db.MediaObject.create(files[0], {transaction: trans});
             fs.rename(files[0].path, 'public/profile/' + filename, function (error) {
                 if (error) throw error;
