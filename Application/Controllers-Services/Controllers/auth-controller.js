@@ -8,7 +8,8 @@ let AuthController = {};
 AuthController.signUp = async (req, res, next) => {
     let userData = req.body.details.split('[').join('{');
     userData = userData.split(']').join('}');
-    let registrationData = JSON.parse(userData);
+    let registrationData = userData.split(']').join('}');
+    console.log('Data: ', registrationData);
     try {
         let result = await AuthService.signup(registrationData, req.files);
         responseHelper.setSuccessResponse({message: result}, res, 201);
