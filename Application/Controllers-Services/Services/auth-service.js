@@ -17,7 +17,9 @@ AuthService = function () {
 // AuthService = new BaseService();
 
 AuthService.prototype.signup = async (registrationData, files) => {
-    console.log('Data: ', registrationData);
+    console.log('User: ', registrationData.user);
+    console.log('Address: ', registrationData.address);
+    console.log('Social: ', registrationData.social);
     const trans = await db.sequelize.transaction();
     try {
         let user = await db.User.create(registrationData.user, {transaction: trans});
