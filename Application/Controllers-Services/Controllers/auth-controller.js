@@ -6,7 +6,7 @@ let AuthController = {};
 
 // Register a user.
 AuthController.signUp = async (req, res, next) => {
-    console.log('Req: ', req.body.details.replace('[', '{').replace(']', '}'));
+    console.log('Request: ', req.body.details.replace('[', '{').replace(']', '}'));
     let registrationData = req.body.details.replace('[', '{').replace(']', '}');
     try {
         let result = await AuthService.signup(registrationData, req.files);

@@ -17,6 +17,7 @@ AuthService = function () {
 // AuthService = new BaseService();
 
 AuthService.prototype.signup = async (registrationData, files) => {
+    console.log('Data: ', registrationData);
     const trans = await db.sequelize.transaction();
     try {
         let user = await db.User.create(registrationData.user, {transaction: trans});
@@ -31,11 +32,14 @@ AuthService.prototype.signup = async (registrationData, files) => {
             let filename = (new Date).valueOf() + '-' + files[0].originalname;
             files[0].user_id = user.id;
             files[0].imageurl = 'http://cookamealapi.cynotecksandbox.com/' + files[0].destination + '/' + filename;
-            await db.MediaObject.create(files[0], {transaction: trans});
-            fs.rename(files[0].path, 'public/profile/' + filename, function (error) {
-                if (error) throw error;
-                console.log('File Uploaded...');
-            });
+            let uploadedFile = await db.MediaObject.create(files[0], {transaction: trans});
+            console.log('uploadedFile: ', uploadedFile);
+            if (uploadedFile) {
+                fs.rename(files[0].path, 'public/profile/' + filename, function (error) {
+                    if (error) throw error;
+                    console.log('File Uploaded...');
+                });
+            }
             // files.forEach(async (file) => {
             //     //upload files
             //   
