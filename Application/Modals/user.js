@@ -98,15 +98,15 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
+        image_url: {
+            type: DataTypes.STRING
+        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
 
 // 2: The model options.
     let modelOptions = {
-        instanceMethods: {
-            comparePasswords: comparePasswords
-        },
         hooks: {
             beforeValidate: hashPassword
         },
@@ -118,7 +118,7 @@ module.exports = function (sequelize, DataTypes) {
             userInfo() {
                 return {
                     id: this.id,
-                    username: this.username,
+                    username: this.email,
                     role: this.type
                 }
             }
@@ -128,16 +128,22 @@ module.exports = function (sequelize, DataTypes) {
     const UserModel = sequelize.define('User', modelDefinition, modelOptions);
     
     UserModel.associate = function (models) {
-        UserModel.hasMany(models.Address);
-        UserModel.hasMany(models.Social);
+        UserModel.hasMany(models.Address, {onDelete: 'CASCADE'});
+        UserModel.hasMany(models.Social, {onDelete: 'CASCADE'});
+        UserModel.hasMany(models.MediaObject, {onDelete: 'CASCADE'});
+    };
+    
+    // Adding an instance level method
+    UserModel.prototype.comparePasswords = function (password) {
+        return comparePasswords(password, this.password);
     };
     
     return UserModel;
 };
 
 // Compares two passwords.
-async function comparePasswords(password) {
-    return await bcrypt.compare(password, this.password);
+async function comparePasswords(password, pwd) {
+    return await bcrypt.compare(password, pwd);
 }
 
 // Hashes the password for a user object.

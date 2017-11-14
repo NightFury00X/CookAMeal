@@ -63,3 +63,8 @@ typings/
 
 .idea/
 log/
+/Public/
+Cook-A-Meal.rar
+Public/
+uploads/
+web.config

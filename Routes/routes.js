@@ -11,7 +11,6 @@ const APIRoutes = function (passport) {
     router.use('/auth/', AuthRoutes(passport));
 
     router.use(function (req, res, next) {
-        console.log('Router level error');
         next();
     });
     

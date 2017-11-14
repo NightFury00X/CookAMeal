@@ -13,6 +13,10 @@ let express = require('express'),
     compression = require("compression"),
     config = require('./Configurations/Main');
 
+
+let multer = require('multer'),
+    upload = multer({dest: 'uploads/'});
+
 const logger = new (winston.Logger)({
     transports: [
         // colorize the output to the console
@@ -50,6 +54,14 @@ hookJWTStrategy(passport);
 app.use(heltmet());
 
 // Bundle API routes.
+app.post('/upload', upload.any(), function (req, res, next) {
+    // console.log('Done', req.body.details);
+    if (req.files) {
+        req.files.forEach(function (file) {
+            console.log('File: ', file);
+        });
+    }
+});
 app.use('/api', require('./Routes/routes')(passport));
 
 // app.use(express.logger({format: config.logging.express_format}));
@@ -68,7 +80,7 @@ function startApp() {
     let app_url = protocol + '://' + config.app.host + ':' + port;
     let env = process.env.NODE_ENV
         ? ('[' + process.env.NODE_ENV + ']') : '[development]';
-
+    
     logger.info('Initiated...', env);
     server.listen(port, function () {
         logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);
@@ -76,30 +88,30 @@ function startApp() {
 }
 
 // Enable CORS from client-side
-app.use(cors({
-    origin: ['http://localhost:8081'],
-    methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
-    allowedHeaders: ['content-type', 'Authorization']
-}));
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', 'http://localhost:8081');
-//     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
-//     res.header('Access-Control-Allow-Credentials', 'true');
-//     next();
-// });
+// app.use(cors({
+//     origin: ['http://localhost:8081'],
+//     methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
+//     allowedHeaders: ['content-type', 'Authorization', 'Origin', 'Accept', 'X-Requested-With', 'Access-Control-Allow-Credentials']
+// }));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8081');
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 
 // Main middleware
 app.use(function (err, req, res, next) {
     // Do logging and user-friendly error message display
-    console.error('=>', err);
-    res.status(500).send({status: 500, message: 'internal error', type: err});
+    res.status(500).send({status: 500, message: 'internal error', type: err.message});
+    next();
 });
-// Routes
 
+// Routes
 app.use(function (req, res, next) {
     console.log('Time:', Date.now());
-    next()
+    next();
 });
 
 // app.use(function (req, res) {

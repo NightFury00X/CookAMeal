@@ -4,7 +4,7 @@ module.exports = {
     setSuccessResponse: function (data, res, statusCode) {
         let response = {
             "success": true,
-            result: data,
+            data: data,
             "error": []
         };
         this.setResponse(statusCode, response, res);
