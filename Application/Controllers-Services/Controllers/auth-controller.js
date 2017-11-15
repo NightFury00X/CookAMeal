@@ -4,13 +4,18 @@ let AuthService = require('../Services/auth-service'),
 // The authentication controller.
 let AuthController = {};
 
+let multer = require('multer'),
+    upload = multer({dest: 'Public/Profile'});
+
 // Register a user.
 AuthController.signUp = async (req, res, next) => {
-    let userData = req.body.details.split('[').join('{');
-    userData = userData.split(']').join('}');
-    let registrationData = userData.split(']').join('}');
-    console.log('ROW Data: ', registrationData);
-    console.log('Data: ', JSON.parse(registrationData));
+    // let userData = req.body.details.split('[').join('{');
+    // userData = userData.split(']').join('}');
+    // let registrationData = userData.split(']').join('}');
+    // console.log('ROW Data: ', registrationData);
+    // console.log('Data: ', JSON.parse(registrationData));
+    
+    console.log('Requested file: ', req.body);
     try {
         let result = await AuthService.signup(JSON.parse(registrationData), req.files);
         responseHelper.setSuccessResponse({message: result}, res, 201);
