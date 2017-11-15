@@ -17,9 +17,6 @@ AuthService = function () {
 // AuthService = new BaseService();
 
 AuthService.prototype.signup = async (registrationData, files) => {
-    console.log('User: ', registrationData.user);
-    console.log('Address: ', registrationData.address);
-    console.log('Social: ', registrationData.social);
     const trans = await db.sequelize.transaction();
     try {
         let user = await db.User.create(registrationData.user, {transaction: trans});
@@ -27,35 +24,19 @@ AuthService.prototype.signup = async (registrationData, files) => {
         registrationData.social.user_id = user.id;
         await db.Address.create(registrationData.address, {transaction: trans});
         await db.Social.create(registrationData.social, {transaction: trans});
-        
-        
         // upload user profile image
         if (files) {
             let filename = (new Date).valueOf() + '-' + files[0].originalname;
             files[0].user_id = user.id;
             files[0].imageurl = 'http://cookamealapi.cynotecksandbox.com/' + files[0].destination + '/' + filename;
             let uploadedFile = await db.MediaObject.create(files[0], {transaction: trans});
-            console.log('uploadedFile: ', uploadedFile);
             if (uploadedFile) {
                 fs.rename(files[0].path, 'public/profile/' + filename, function (error) {
                     if (error) throw error;
                     console.log('File Uploaded...');
                 });
             }
-            // files.forEach(async (file) => {
-            //     //upload files
-            //   
-            //     file.user_id = user.id;
-            //     console.log('Files: ', file);
-            //     // await db.MediaObject.create(file, {transaction: trans});
-            //     // let filename = (new Date).valueOf() + '-' + file.originalname;
-            //     // fs.rename(file.path, 'public/profile/' + filename, function (error) {
-            //     //     if (error) throw error;
-            //     //     console.log('File Uploaded...');
-            //     // });
-            // });
-        }
-        
+        }          
         //commit transaction
         await trans.commit();
         return generateToken(user.userInfo);
