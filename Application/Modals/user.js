@@ -26,80 +26,9 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        firstname: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: {
-                    args: ["^[a-z]+$", 'i'],
-                    msg: 'The first name you have entered is contains some bed characters.'
-                }
-            }
-        },
-        lastname: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                is: {
-                    args: ["^[a-z]+$", 'i'],
-                    msg: 'The last name you have entered is contains some bed characters.'
-                }
-            }
-        },
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        phone: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isNumeric: {
-                    args: true,
-                    msg: 'you have entered invalid phone number.'
-                }
-            }
-        },
-        gender: {
-            type: DataTypes.CHAR,
-            allowNull: false,
-            validate: {
-                isIn: {
-                    args: [['m', 'M', 'f', 'F']],
-                    msg: "Must be valid gender Male or Female."
-                }
-            }
-        },
-        description: {
-            type: DataTypes.TEXT
-        },
-        dietpreffrence: {
-            type: DataTypes.STRING
-        },
-        type: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-                isIn: {
-                    args: [['1', '2']],
-                    msg: "Invalid user type."
-                }
-            }
-        },
-        cardtypebankdetails: {
-            type: DataTypes.STRING
-        },
-        drivingdistance: {
-            type: DataTypes.FLOAT,
-            validate: {
-                isFloat: {
-                    args: true,
-                    msg: 'Invalid driving distance value.'
-                }
-            }
-        },
-        image_url: {
-            type: DataTypes.STRING
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
@@ -110,27 +39,13 @@ module.exports = function (sequelize, DataTypes) {
         hooks: {
             beforeValidate: hashPassword
         },
-        underscored: true,
-        getterMethods: {
-            fullName() {
-                return this.firstname + ' ' + this.lastname;
-            },
-            userInfo() {
-                return {
-                    id: this.id,
-                    username: this.email,
-                    role: this.type
-                }
-            }
-        }
+        underscored: true
     };
     
     const UserModel = sequelize.define('User', modelDefinition, modelOptions);
     
     UserModel.associate = function (models) {
-        UserModel.hasMany(models.Address, {onDelete: 'CASCADE'});
-        UserModel.hasMany(models.Social, {onDelete: 'CASCADE'});
-        UserModel.hasMany(models.MediaObject, {onDelete: 'CASCADE'});
+        UserModel.hasMany(models.Profile, {onDelete: 'CASCADE'});
     };
     
     // Adding an instance level method

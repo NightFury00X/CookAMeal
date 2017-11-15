@@ -20,25 +20,53 @@ AuthService = function () {
 AuthService.prototype.signup = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
-        let user = await db.User.create(registrationData.user, {transaction: trans});
-        registrationData.address.user_id = user.id;
-        registrationData.social.user_id = user.id;
+        let userData = registrationData.user;
+        
+        // Add user type
+        let userType = await db.UserType.create({
+            userid: userData.email,
+            type: 1,
+            role: userData.type
+        }, {transaction: trans});
+        // console.log('User Type: ', userType);
+        
+        //add user login data
+        let userCredentialsData = await db.User.create({
+            user_type_id: userType.id,
+            email: userData.email,
+            password: userData.password
+        }, {transaction: trans});
+        // console.log('User Credentials: ', userCredentialsData);
+        
+        //add user profile data
+        let tempData = userData;
+        delete tempData.password;
+        tempData.user_type_id = userType.id;
+        tempData.user_id = userCredentialsData.id;
+        // console.log('TempData: ', tempData);
+        let userProfileData = await db.Profile.create(tempData, {transaction: trans});
+        // console.log('User Profile: ', userProfileData);
+        // let user = await db.User.create(registrationData.user, {transaction: trans});
+        registrationData.address.profile_id = userProfileData.id;
+        registrationData.social.profile_id = userProfileData.id;
         await db.Address.create(registrationData.address, {transaction: trans});
         await db.Social.create(registrationData.social, {transaction: trans});
         
+        // console.log('Files: ', files);
         //upload profile image
-        if (files.profile) {
+        if (files && files.profile) {
             let data = await FileUploader.UploadProfile(files.profile);
             console.log('File: ', data);
         }
-        if (files.doc) {
+        if (files && files.doc) {
             let data = await FileUploader.UploadDoc(files.doc);
             console.log('File: ', data);
         }
         
         // commit transaction
         await trans.commit();
-        return generateToken(user.userInfo);
+        console.log('user Type: ', userType.userInfo);
+        return generateToken(userType.userInfo);
     } catch (error) {
         // rollback transaction
         await trans.rollback();
