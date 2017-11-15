@@ -17,7 +17,7 @@ AuthController.signUp = async (req, res, next) => {
     
     console.log('Requested file: ', req.body);
     try {
-        let result = await AuthService.signup(JSON.parse(req.body.details), req.files);
+        let result = await AuthService.signup(req.body.details, req.files);
         responseHelper.setSuccessResponse({message: result}, res, 201);
     } catch (error) {
         console.log('Error: ', error);
