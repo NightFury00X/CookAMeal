@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^[a-z]+$", 'i'],
+                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The street name you have entered is contains some bed characters.'
                 }
             }
@@ -25,7 +25,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^[a-z]+$", 'i'],
+                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The city you have entered is contains some bed characters.'
                 }
             }
@@ -35,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^[a-z]+$", 'i'],
+                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The state you have entered is contains some bed characters.'
                 }
             }
@@ -45,7 +45,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isNumeric: {
-                    args: ["^[a-z]+$", 'i'],
+                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The zipcode you have entered is contains some bed characters.'
                 }
             }
@@ -55,7 +55,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^[a-z]+$", 'i'],
+                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The country you have entered is contains some bed characters.'
                 }
             }

@@ -9,7 +9,7 @@ AuthController.signUp = async (req, res, next) => {
     try {
         let registrationData = JSON.parse(req.body.details);
         let result = await AuthService.signup(registrationData, req.files);
-        responseHelper.setSuccessResponse({message: result}, res, 201);
+        responseHelper.setSuccessResponse({Token: result}, res, 201);
     } catch (error) {
         next(error);
     }

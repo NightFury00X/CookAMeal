@@ -8,7 +8,8 @@ let chalk = require('chalk'),
     hbs = require('nodemailer-express-handlebars'),
     fs = require('fs'),
     db = require('../../Modals'),
-    generateToken = require('../../../Configurations/Helpers/authentication');
+    generateToken = require('../../../Configurations/Helpers/authentication'),
+    FileUploader = require('../../../Configurations/Helpers/file-uploader');
 
 
 AuthService = function () {
@@ -24,24 +25,22 @@ AuthService.prototype.signup = async (registrationData, files) => {
         registrationData.social.user_id = user.id;
         await db.Address.create(registrationData.address, {transaction: trans});
         await db.Social.create(registrationData.social, {transaction: trans});
-        // upload user profile image
-        if (files) {
-            let filename = (new Date).valueOf() + '-' + files[0].originalname;
-            files[0].user_id = user.id;
-            files[0].imageurl = 'http://cookamealapi.cynotecksandbox.com/' + files[0].destination + '/' + filename;
-            let uploadedFile = await db.MediaObject.create(files[0], {transaction: trans});
-            if (uploadedFile) {
-                fs.rename(files[0].path, 'public/profile/' + filename, function (error) {
-                    if (error) throw error;
-                    console.log('File Uploaded...');
-                });
-            }
-        }          
-        //commit transaction
+        
+        //upload profile image
+        if (files.profile) {
+            let data = await FileUploader.UploadProfile(files.profile);
+            console.log('File: ', data);
+        }
+        if (files.doc) {
+            let data = await FileUploader.UploadDoc(files.doc);
+            console.log('File: ', data);
+        }
+        
+        // commit transaction
         await trans.commit();
         return generateToken(user.userInfo);
     } catch (error) {
-        //rollback transaction
+        // rollback transaction
         await trans.rollback();
         throw (error);
     }

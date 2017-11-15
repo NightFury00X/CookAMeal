@@ -11,11 +11,8 @@ let express = require('express'),
     winston = require('winston'),
     cors = require('cors'),
     compression = require("compression"),
+    fileUpload = require('express-fileupload'),
     config = require('./Configurations/Main');
-
-
-let multer = require('multer'),
-    upload = multer({dest: 'uploads/'});
 
 const logger = new (winston.Logger)({
     transports: [
@@ -29,6 +26,7 @@ let hookJWTStrategy = require('./Configurations/Passport/passport-strategy');
 
 // Initializations.
 let app = express();
+app.use(fileUpload());
 let server = require('http').createServer(app);
 
 // Parse as urlencoded and json.
@@ -53,15 +51,6 @@ hookJWTStrategy(passport);
 // Helmet
 app.use(heltmet());
 
-// Bundle API routes.
-app.post('/upload', upload.any(), function (req, res, next) {
-    // console.log('Done', req.body.details);
-    if (req.files) {
-        req.files.forEach(function (file) {
-            console.log('File: ', file);
-        });
-    }
-});
 app.use('/api', require('./Routes/routes')(passport));
 
 // app.use(express.logger({format: config.logging.express_format}));
@@ -104,7 +93,13 @@ app.use((req, res, next) => {
 // Main middleware
 app.use(function (err, req, res, next) {
     // Do logging and user-friendly error message display
-    res.status(500).send({status: 500, message: 'internal error', type: err.message});
+    res.status(500).send(
+        {
+            success: false,
+            data: '{}',
+            error: err.message
+        }
+    );
     next();
 });
 
