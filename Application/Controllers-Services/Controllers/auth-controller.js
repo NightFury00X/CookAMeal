@@ -48,7 +48,7 @@ AuthController.authenticateUser = async (req, res, next) => {
         let result = await AuthService.authenticate(loginDetails);
         if (!result)
             responseHelper.setErrorResponse({message: 'Invalid user credentials.'}, res, 200);
-        responseHelper.setSuccessResponse({Token: result}, res, 200);
+        responseHelper.setSuccessResponse(result, res, 200);
     } catch (error) {
         next(error);
     }

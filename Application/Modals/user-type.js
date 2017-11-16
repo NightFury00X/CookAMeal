@@ -19,17 +19,17 @@ module.exports = function (sequelize, DataTypes) {
                 fields: [sequelize.fn('lower', sequelize.col('email'))]
             },
         },
-        type: {
+        type: { // 1 - Normal User, 2 - Facebook User
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
                 isIn: {
-                    args: [['1', '2']], // 1 - normal login, 2 -facebook login
+                    args: [['1', '2']], 
                     msg: "Invalid user type."
                 }
             }
         },
-        role: {
+        role: {   // 1 - Cook, 2 - Customer
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {

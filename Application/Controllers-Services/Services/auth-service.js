@@ -52,16 +52,26 @@ AuthService.prototype.signup = async (registrationData, files) => {
         await db.Social.create(registrationData.social, {transaction: trans});
         
         //upload profile image
+        let mediaObject;
         if (files && files.profile) {
             let profileImage = files.profile[0];
             profileImage.user_type_id = userType.id;
             profileImage.imageurl = config.UPLOAD_LOCATION + profileImage.filename;
-            await db.MediaObject.create(profileImage, {transaction: trans});
+            mediaObject = await db.MediaObject.create(profileImage, {transaction: trans});
         }
         
         // commit transaction
         await trans.commit();
-        return generateToken(userType.userInfo);
+        return {
+            token: generateToken(userType.userInfo),
+            user: {
+                id: userType.userid,
+                fullname: userProfileData.fullName,
+                type: userType.type,
+                role: userType.role,
+                profile_url: mediaObject ? mediaObject.imageurl : ''
+            }
+        };
     } catch (error) {
         // rollback transaction
         await trans.rollback();
@@ -80,6 +90,21 @@ AuthService.prototype.authenticate = async (loginDetails) => {
         let userFound = await db.UserType.findOne({
             where: {id: user.user_type_id}
         });
+        
+        let userType = await db.UserType.findOne({
+            where: {id: user.user_type_id},
+            include: [{model: db.Profile}, {model: db.MediaObject}]
+        });
+        return {
+            token: generateToken(userFound.userInfo),
+            user: {
+                id: userType.userid,
+                fullname: userType.Profiles[0].fullName,
+                type: userType.type,
+                role: userType.role,
+                profile_url: userType.MediaObjects.length > 0 ? userType.MediaObjects[0].imageurl : ''
+            }
+        };
         return generateToken(userFound.userInfo);
     } catch (error) {
         throw (error);

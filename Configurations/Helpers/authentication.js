@@ -7,16 +7,8 @@ function generateToken(user) {
     return 'JWT ' + jwt.sign(
         user,
         config.keys.secret,
-        {expiresIn: '30m'}
+        {expiresIn: '50y'}
     )
-}
-
-function setUserInfo(request) {
-    return {
-        id: request.id,
-        username: request.email,
-        role: request.role
-    }
 }
 
 module.exports = generateToken;
