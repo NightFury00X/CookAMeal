@@ -14,6 +14,7 @@ FileUploder.UploadProfile = function (file) {
                 return reject(new Error('Invalid file format [' + extension + '].'));
             }
             let fileName = (new Date).valueOf() + '-' + file.name;
+            console.log('File: ', filePath + fileName);
             file.mv(filePath + fileName, function (error) {
                 if (error) {
                     return reject(error);
@@ -45,6 +46,7 @@ FileUploder.UploadDoc = function (file) {
                 return reject(new Error('Invalid file format [' + extension + '].'));
             }
             let fileName = (new Date).valueOf() + '-' + file.name;
+            console.log('File: ', filePath + fileName);
             file.mv(filePath + fileName, function (error) {
                 if (error) {
                     return reject(error);
