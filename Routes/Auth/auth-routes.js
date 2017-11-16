@@ -7,6 +7,9 @@ const isAuthorized = require('../../Configurations/middlewares/authorization');
 const authRoutes = function (passport) {
     const middlewares = [passport.authenticate('jwt', {session: false}), isAuthorized];
     
+    //Check Facebook user already registered or not    
+    router.get('/:id/fb', AuthController.fb);
+    
     // Signup    
     router.post('/signup', AuthController.signUp);
     

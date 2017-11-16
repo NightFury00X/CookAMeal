@@ -8,6 +8,18 @@ AuthService = function () {
 
 // AuthService = new BaseService();
 
+AuthService.prototype.fb = async (fbId) => {
+    try {
+        return await db.UserType.findAll({
+            attributes: ['id'],
+            where: {userid: fbId},
+            raw: true
+        });
+    } catch (error) {
+        return error;
+    }
+};
+
 AuthService.prototype.signup = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
@@ -63,10 +75,12 @@ AuthService.prototype.authenticate = async (loginDetails) => {
         if (!user)
             return;
         let isMatch = await user.comparePasswords(loginDetails.password);
-        if (!isMatch) {
+        if (!isMatch)
             return;
-        }
-        return generateToken(user.userInfo);
+        let userFound = await db.UserType.findOne({
+            where: {id: user.user_type_id}
+        });
+        return generateToken(userFound.userInfo);
     } catch (error) {
         throw (error);
     }
@@ -79,6 +93,18 @@ AuthService.prototype.getUserData = async (userInfo) => {
             where: {email: userInfo.email},
             include: [{model: db.Address, paranoid: false, required: true},
                 {model: db.Social, paranoid: false, required: true}]
+        });
+    } catch (error) {
+        throw (error);
+    }
+};
+
+AuthService.prototype.getUserType = async (userId) => {
+    try {
+        return await db.UserType.findOne({
+            attributes: ['id'],
+            where: {userid: userId, type: 1},
+            raw: true
         });
     } catch (error) {
         throw (error);

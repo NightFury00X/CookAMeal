@@ -5,6 +5,20 @@ let AuthService = require('../Services/auth-service'),
 // The authentication controller.
 let AuthController = {};
 
+//Check facebook user already in database or not
+
+AuthController.fb = async (req, res, next) => {
+    try {
+        let user = await AuthService.fb(req.params.id);
+        if (user.length)
+            responseHelper.setSuccessResponse(user, res, 201);
+        else
+            responseHelper.setErrorResponse({message: 'facebook user not exist.'}, res, 201);
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Register a user.
 AuthController.signUp = async (req, res, next) => {
     try {
@@ -26,6 +40,11 @@ AuthController.authenticateUser = async (req, res, next) => {
         potentialUser: {where: {email: req.body.username}}
     };
     try {
+        //check user type
+        let userType = await AuthService.getUserType(loginDetails.email);
+        console.log('data: ', userType);
+        if (!userType)
+            responseHelper.setErrorResponse({message: 'Invalid user credentials.'}, res, 200);
         let result = await AuthService.authenticate(loginDetails);
         if (!result)
             responseHelper.setErrorResponse({message: 'Invalid user credentials.'}, res, 200);

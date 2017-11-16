@@ -12,7 +12,12 @@ module.exports = function (sequelize, DataTypes) {
         },
         userid: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: {
+                args: true,
+                msg: 'Oops. Looks like you already have an account. Please try to login.',
+                fields: [sequelize.fn('lower', sequelize.col('email'))]
+            },
         },
         type: {
             type: DataTypes.INTEGER,
