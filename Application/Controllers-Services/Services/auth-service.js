@@ -1,15 +1,6 @@
-let chalk = require('chalk'),
-    log = console.log,
-    jwt = require('jsonwebtoken'),
-    // config = require('../../../Configurations/Main/config'),
-    // BaseService = require('./base-service'),
-    responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
-    nodemailer = require('nodemailer'),
-    hbs = require('nodemailer-express-handlebars'),
-    fs = require('fs'),
-    db = require('../../Modals'),
-    generateToken = require('../../../Configurations/Helpers/authentication'),
-    FileUploader = require('../../../Configurations/Helpers/file-uploader');
+let db = require('../../Modals'),
+    config = require('../../../Configurations/Main'),
+    generateToken = require('../../../Configurations/Helpers/authentication');
 
 
 AuthService = function () {
@@ -28,7 +19,6 @@ AuthService.prototype.signup = async (registrationData, files) => {
             type: 1,
             role: userData.type
         }, {transaction: trans});
-        // console.log('User Type: ', userType);
         
         //add user login data
         let userCredentialsData = await db.User.create({
@@ -36,36 +26,29 @@ AuthService.prototype.signup = async (registrationData, files) => {
             email: userData.email,
             password: userData.password
         }, {transaction: trans});
-        // console.log('User Credentials: ', userCredentialsData);
         
         //add user profile data
         let tempData = userData;
         delete tempData.password;
         tempData.user_type_id = userType.id;
         tempData.user_id = userCredentialsData.id;
-        // console.log('TempData: ', tempData);
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
-        // console.log('User Profile: ', userProfileData);
-        // let user = await db.User.create(registrationData.user, {transaction: trans});
+        
         registrationData.address.profile_id = userProfileData.id;
         registrationData.social.profile_id = userProfileData.id;
         await db.Address.create(registrationData.address, {transaction: trans});
         await db.Social.create(registrationData.social, {transaction: trans});
         
-        // console.log('Files: ', files);
         //upload profile image
         if (files && files.profile) {
-            let data = await FileUploader.UploadProfile(files.profile);
-            console.log('File: ', data);
-        }
-        if (files && files.doc) {
-            let data = await FileUploader.UploadDoc(files.doc);
-            console.log('File: ', data);
+            let profileImage = files.profile[0];
+            profileImage.user_type_id = userType.id;
+            profileImage.imageurl = config.UPLOAD_LOCATION + profileImage.filename;
+            await db.MediaObject.create(profileImage, {transaction: trans});
         }
         
         // commit transaction
         await trans.commit();
-        console.log('user Type: ', userType.userInfo);
         return generateToken(userType.userInfo);
     } catch (error) {
         // rollback transaction

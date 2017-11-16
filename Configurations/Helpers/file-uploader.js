@@ -1,14 +1,14 @@
 let path = require('path');
 let FileUploder = {};
 
-let fileExtension = ['.jpg', '.jpeg', '.png', '.'];
+let fileExtension = ['.jpg', '.jpeg', '.png'];
 
 //Upload profile image
 FileUploder.UploadProfile = function (file) {
     try {
         return new Promise((resolve, reject) => {
             let filePath = path.join(__dirname, '../../Public/Profile/');
-            console.log('profile File Path: ', filePath);
+            console.log('profile File Path: ', file);
             let extension = path.extname(file.name);
             if (fileExtension.indexOf(extension) < 0) {
                 return reject(new Error('Invalid file format [' + extension + '].'));

@@ -1,5 +1,6 @@
 let AuthService = require('../Services/auth-service'),
-    responseHelper = require('../../../Configurations/Helpers/ResponseHandler');
+    responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
+    uploadFile = require('../../../Configurations/Helpers/file-upload-multer');
 
 // The authentication controller.
 let AuthController = {};
@@ -7,9 +8,11 @@ let AuthController = {};
 // Register a user.
 AuthController.signUp = async (req, res, next) => {
     try {
+        //upload file
+        let files = await uploadFile(req, res);
         let registrationData = JSON.parse(req.body.details);
-        let result = await AuthService.signup(registrationData, req.files);
-        responseHelper.setSuccessResponse({Token: result}, res, 201);
+        let result = await AuthService.signup(registrationData, files);
+        responseHelper.setSuccessResponse(result, res, 201);
     } catch (error) {
         next(error);
     }

@@ -11,6 +11,7 @@ let express = require('express'),
     winston = require('winston'),
     cors = require('cors'),
     compression = require("compression"),
+    mkdirp = require('mkdirp'),
     fileUpload = require('express-fileupload'),
     config = require('./Configurations/Main');
 
@@ -24,9 +25,14 @@ const logger = new (winston.Logger)({
 // App related modules.
 let hookJWTStrategy = require('./Configurations/Passport/passport-strategy');
 
+// Upload file folder
+let uploadFileLocation = __dirname + '/Uploads';
+
+mkdirp.sync(uploadFileLocation);
+
 // Initializations.
 let app = express();
-app.use(fileUpload());
+// app.use(fileUpload());
 let server = require('http').createServer(app);
 
 // Parse as urlencoded and json.

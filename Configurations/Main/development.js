@@ -26,3 +26,5 @@ exports.user = {
 exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
 };
+
+exports.UPLOAD_LOCATION = 'E:\\Cook-A-Meal\\Uploads\\';
