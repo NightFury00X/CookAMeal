@@ -42,7 +42,6 @@ AuthController.authenticateUser = async (req, res, next) => {
     try {
         //check user type
         let userType = await AuthService.getUserType(loginDetails.email);
-        console.log('data: ', userType);
         if (!userType)
             responseHelper.setErrorResponse({message: 'Invalid user credentials.'}, res, 200);
         let result = await AuthService.authenticate(loginDetails);

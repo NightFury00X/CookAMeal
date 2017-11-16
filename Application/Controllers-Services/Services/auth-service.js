@@ -105,7 +105,6 @@ AuthService.prototype.authenticate = async (loginDetails) => {
                 profile_url: userType.MediaObjects.length > 0 ? userType.MediaObjects[0].imageurl : ''
             }
         };
-        return generateToken(userFound.userInfo);
     } catch (error) {
         throw (error);
     }
