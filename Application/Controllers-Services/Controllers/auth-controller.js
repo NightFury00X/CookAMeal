@@ -24,7 +24,9 @@ AuthController.signUp = async (req, res, next) => {
     try {
         //upload file
         let files = await uploadFile(req, res);
+        
         let registrationData = JSON.parse(req.body.details);
+        console.log('Details: ', registrationData);
         let result = await AuthService.signup(registrationData, files);
         responseHelper.setSuccessResponse(result, res, 201);
     } catch (error) {
