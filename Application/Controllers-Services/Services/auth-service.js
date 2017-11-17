@@ -24,7 +24,7 @@ AuthService.prototype.signup = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
         let userData = registrationData.user;
-        
+        userData.allergies = JSON.stringify(userData.allergies);
         // Add user type
         let userType = await db.UserType.create({
             userid: userData.email,
