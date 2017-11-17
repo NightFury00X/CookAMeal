@@ -70,6 +70,9 @@ module.exports = function (sequelize, DataTypes) {
         dietpreffrence: {
             type: DataTypes.STRING
         },
+        allergies: {
+            type: DataTypes.STRING
+        },
         type: {
             type: DataTypes.INTEGER,
             allowNull: false,
