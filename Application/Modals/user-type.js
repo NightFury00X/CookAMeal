@@ -61,9 +61,9 @@ module.exports = function (sequelize, DataTypes) {
     let UserTypeModel = sequelize.define('UserType', modelDefinition, modelOptions);
     
     UserTypeModel.associate = function (models) {
-        UserTypeModel.hasMany(models.User, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.Profile, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.MediaObject, {onDelete: 'CASCADE'});
+        UserTypeModel.hasOne(models.User, {onDelete: 'CASCADE'});
+        UserTypeModel.hasOne(models.Profile, {onDelete: 'CASCADE'});
+        UserTypeModel.hasOne(models.MediaObject, {onDelete: 'CASCADE'});
     };
     
     return UserTypeModel;

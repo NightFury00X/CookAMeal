@@ -45,7 +45,7 @@ module.exports = function (sequelize, DataTypes) {
     const UserModel = sequelize.define('User', modelDefinition, modelOptions);
     
     UserModel.associate = function (models) {
-        UserModel.hasMany(models.Profile, {onDelete: 'CASCADE'});
+        UserModel.hasOne(models.Profile, {onDelete: 'CASCADE'});
     };
     
     // Adding an instance level method

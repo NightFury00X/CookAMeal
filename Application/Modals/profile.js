@@ -115,8 +115,8 @@ module.exports = function (sequelize, DataTypes) {
     let ProfileModel = sequelize.define('Profile', modelDefinition, modelOptions);
     
     ProfileModel.associate = function (models) {
-        ProfileModel.hasMany(models.Address, {onDelete: 'CASCADE'});
-        ProfileModel.hasMany(models.Social, {onDelete: 'CASCADE'});
+        ProfileModel.hasOne(models.Address, {onDelete: 'CASCADE'});
+        ProfileModel.hasOne(models.Social, {onDelete: 'CASCADE'});
     };
     
     return  ProfileModel;
