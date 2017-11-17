@@ -23,7 +23,6 @@ AuthService.prototype.fb = async (fbId) => {
 AuthService.prototype.signup = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
-        console.log('Details: ', registrationData);
         let userData = registrationData.user;
         
         // Add user type
@@ -45,7 +44,6 @@ AuthService.prototype.signup = async (registrationData, files) => {
         delete tempData.password;
         tempData.user_type_id = userType.id;
         tempData.user_id = userCredentialsData.id;
-        console.log('Profile: ', tempData);
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
         
         registrationData.address.profile_id = userProfileData.id;
@@ -57,7 +55,7 @@ AuthService.prototype.signup = async (registrationData, files) => {
         let mediaObject;
         if (files && files.profile) {
             let profileImage = files.profile[0];
-            profileImage.user_type_id = userType.id;
+            profileImage.profile_id = userProfileData.id;
             profileImage.imageurl = config.UPLOAD_LOCATION + profileImage.filename;
             mediaObject = await db.MediaObject.create(profileImage, {transaction: trans});
         }
@@ -95,16 +93,19 @@ AuthService.prototype.authenticate = async (loginDetails) => {
         
         let userType = await db.UserType.findOne({
             where: {id: user.user_type_id},
-            include: [{model: db.Profile}, {model: db.MediaObject}]
+            include: [{
+                model: db.Profile,
+                include: [{model: db.MediaObject}]
+            }]
         });
         return {
             token: generateToken(userFound.userInfo),
             user: {
                 id: userType.userid,
-                fullname: userType.Profiles[0].fullName,
+                fullname: userType.Profile.fullName,
                 type: userType.type,
                 role: userType.role,
-                profile_url: userType.MediaObjects.length > 0 ? userType.MediaObjects[0].imageurl : ''
+                profile_url: userType.Profile.MediaObject ? userType.Profile.MediaObject.imageurl : ''
             }
         };
     } catch (error) {

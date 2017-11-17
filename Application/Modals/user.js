@@ -44,9 +44,9 @@ module.exports = function (sequelize, DataTypes) {
     
     const UserModel = sequelize.define('User', modelDefinition, modelOptions);
     
-    UserModel.associate = function (models) {
-        UserModel.hasOne(models.Profile, {onDelete: 'CASCADE'});
-    };
+    // UserModel.associate = function (models) {
+    //     UserModel.hasOne(models.Profile, {onDelete: 'CASCADE'});
+    // };
     
     // Adding an instance level method
     UserModel.prototype.comparePasswords = function (password) {

@@ -117,6 +117,7 @@ module.exports = function (sequelize, DataTypes) {
     ProfileModel.associate = function (models) {
         ProfileModel.hasOne(models.Address, {onDelete: 'CASCADE'});
         ProfileModel.hasOne(models.Social, {onDelete: 'CASCADE'});
+        ProfileModel.hasOne(models.MediaObject, {onDelete: 'CASCADE'});
     };
     
     return  ProfileModel;
