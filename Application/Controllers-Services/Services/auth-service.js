@@ -23,6 +23,7 @@ AuthService.prototype.fb = async (fbId) => {
 AuthService.prototype.signup = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
+        console.log('Details: ', registrationData);
         let userData = registrationData.user;
         
         // Add user type
