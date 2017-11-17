@@ -44,6 +44,7 @@ AuthService.prototype.signup = async (registrationData, files) => {
         delete tempData.password;
         tempData.user_type_id = userType.id;
         tempData.user_id = userCredentialsData.id;
+        console.log('Profile: ', tempData);
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
         
         registrationData.address.profile_id = userProfileData.id;
