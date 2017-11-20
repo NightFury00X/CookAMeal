@@ -11,7 +11,7 @@ AuthService = function () {
 
 AuthService.prototype.fb = async (fbId) => {
     try {
-        return await db.UserType.findAll({
+         return await db.UserType.findAll({
             attributes: ['id'],
             where: {userid: fbId},
             raw: true

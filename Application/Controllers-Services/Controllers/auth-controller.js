@@ -9,7 +9,7 @@ let AuthController = {};
 AuthController.fb = async (req, res, next) => {
     try {
         let user = await AuthService.fb(req.params.id);
-        if (user.length)
+        if (user)
             responseHelper.setSuccessResponse(user, res, 201);
         else
             responseHelper.setErrorResponse({message: 'facebook user not exist.'}, res, 201);
