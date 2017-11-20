@@ -54,6 +54,14 @@ app.use(passport.initialize());
 // Hook the passport JWT strategy.
 hookJWTStrategy(passport);
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', ['http://localhost:8081', 'http://localhost:8100', 'https://cook-a-meal-testing.herokuapp.com']);
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+
 // Helmet
 app.use(heltmet());
 
@@ -83,11 +91,11 @@ function startApp() {
 }
 
 // Enable CORS from client-side
-app.use(cors({
-    origin: ['*'],
-    methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
-    allowedHeaders: ['content-type', 'Authorization', 'Origin', 'Accept', 'X-Requested-With', 'Access-Control-Allow-Credentials']
-}));
+// app.use(cors({
+//     origin: ['http://localhost:8082'],
+//     methods: ['GET', 'DELETE', 'PUT', 'OPTIONS'],
+//     allowedHeaders: ['content-type', 'Authorization', 'Origin', 'Accept', 'X-Requested-With', 'Access-Control-Allow-Credentials']
+// }));
 // app.use((req, res, next) => {
 //     res.header('Access-Control-Allow-Origin', '*');
 //     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
