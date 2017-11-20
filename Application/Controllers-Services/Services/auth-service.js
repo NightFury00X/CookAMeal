@@ -31,9 +31,11 @@ AuthService.prototype.signup = async (registrationData, files) => {
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbId) {
             let fb = await commonService.CheckuserTypeByFbId(registrationData.facebook.fbId);
-            if (fb)
+            if (!fb)
                 type = 2;
         }
+        
+        console.log('User: ',  type === 1 ? userData.email : registrationData.facebook.fbId);
         
         // Add user type
         let userType = await db.UserType.create({
