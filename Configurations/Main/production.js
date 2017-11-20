@@ -5,7 +5,7 @@ exports.app = app = {
     ssl: false
 };
 
-exports.mysql = {
+exports.mssql = {
     host: '132.148.87.196',
     dialect: 'mssql',
     logging: false,

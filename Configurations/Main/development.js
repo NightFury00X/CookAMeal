@@ -13,6 +13,7 @@ exports.logging = {
 exports.mssql = {
     host: 'CYNODT022',
     dialect: 'mssql',
+    logging: false,
     pool: {
         max: 5,
         min: 0,
