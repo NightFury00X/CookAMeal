@@ -1,6 +1,7 @@
 let db = require('../../Modals'),
     config = require('../../../Configurations/Main'),
-    generateToken = require('../../../Configurations/Helpers/authentication');
+    generateToken = require('../../../Configurations/Helpers/authentication'),
+    commonService = require('./common-service');
 
 
 AuthService = function () {
@@ -25,10 +26,19 @@ AuthService.prototype.signup = async (registrationData, files) => {
     try {
         let userData = registrationData.user;
         userData.allergies = JSON.stringify(userData.allergies);
+        
+        let type = 1;
+        //checking facebook id if exist
+        if (registrationData.facebook.fbId) {
+            let fb = await commonService.CheckuserTypeByFbId(registrationData.facebook.fbId);
+            if (fb)
+                type = 2;
+        }
+        
         // Add user type
         let userType = await db.UserType.create({
             userid: userData.email,
-            type: 1,
+            type: type,
             role: userData.type
         }, {transaction: trans});
         

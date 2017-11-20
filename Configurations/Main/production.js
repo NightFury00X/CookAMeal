@@ -10,7 +10,7 @@ exports.mssql = {
     dialect: 'mssql',
     define: {
         schema: "dbo",
-        freezeTableName: true,
+        freezeTableName: false,
     },
     logging: false,
     pool: {
