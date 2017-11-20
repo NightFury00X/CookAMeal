@@ -54,15 +54,36 @@ app.use(passport.initialize());
 // Hook the passport JWT strategy.
 hookJWTStrategy(passport);
 
+const whitelist = ['http://localhost:8081', 'http://localhost:8100', 'https://cook-a-meal-testing.herokuapp.com'];
+const corsOptions = {
+    origin: function (origin, callback) {
+        console.log('Origin: ', origin);
+        if (origin === undefined || whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'));
+            if (config.secure) {
+            }
+        }
+    }
+};
 
+app.use(cors(corsOptions));
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    next();
-});
+// app.use((req, res, next) => {
+//     let allowedOrigins = ['http://localhost:8081', 'http://localhost:8100', 'https://cook-a-meal-testing.herokuapp.com'];
+//     let origin = req.headers.origin;
+//     console.log('Origin: ', origin);
+//     if (allowedOrigins.includes(origin)) {
+//         res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
+//     }
+//     console.log('Origin: ', req.header('origin'));
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     next();
+// });
 
 // Helmet
 app.use(heltmet());
