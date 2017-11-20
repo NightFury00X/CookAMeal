@@ -37,7 +37,7 @@ AuthService.prototype.signup = async (registrationData, files) => {
         
         // Add user type
         let userType = await db.UserType.create({
-            userid: userData.email,
+            userid: type === 1 ? userData.email : registrationData.facebook.fbId,
             type: type,
             role: userData.type
         }, {transaction: trans});
