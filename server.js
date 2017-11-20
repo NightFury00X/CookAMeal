@@ -71,13 +71,6 @@ hookJWTStrategy(passport);
 // app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
-    // let allowedOrigins = ['http://localhost:8081', 'http://localhost:8100', 'https://cook-a-meal-testing.herokuapp.com'];
-    // let origin = req.headers.origin;
-    // console.log('Origin: ', origin);
-    // if (allowedOrigins.includes(origin)) {
-    //     res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
-    // }
-    // console.log('Origin: ', req.header('origin'));
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
@@ -89,8 +82,6 @@ app.use((req, res, next) => {
 app.use(heltmet());
 
 app.use('/api', require('./Routes/routes')(passport));
-
-// app.use(express.logger({format: config.logging.express_format}));
 
 db.sequelize.sync({
     Force: true
@@ -113,20 +104,6 @@ function startApp() {
     });
 }
 
-// Enable CORS from client-side
-// app.use(cors({
-//     origin: ['http://localhost:8082'],
-//     methods: ['GET', 'DELETE', 'PUT', 'OPTIONS'],
-//     allowedHeaders: ['content-type', 'Authorization', 'Origin', 'Accept', 'X-Requested-With', 'Access-Control-Allow-Credentials']
-// }));
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
-//     res.header('Access-Control-Allow-Credentials', 'true');
-//     next();
-// });
-
 // Main middleware
 app.use(function (err, req, res, next) {
     // Do logging and user-friendly error message display
@@ -144,15 +121,3 @@ app.use(function (err, req, res, next) {
 app.use(function (req, res, next) {
     next();
 });
-
-// app.use(function (req, res) {
-//     res.status(404);
-//     logger.error('Not found URL: %s', req.url);
-//     res.send({error: 'URL [' + req.url + '] not found!'});
-// });
-//
-// app.use(function (err, req, res) {
-//     res.status(err.status || 500);
-//     logger.error('Internal error(%d): %s', res.statusCode, err.message);
-//     res.send({error: err.message});
-// });

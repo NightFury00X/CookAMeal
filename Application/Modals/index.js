@@ -9,7 +9,7 @@ let sequelize = new Sequelize(
     config.user.dbname,
     config.user.user,
     config.user.password,
-    config.mysql
+    config.mssql
 );
 
 useTransaction(sequelize);

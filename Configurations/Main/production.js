@@ -5,16 +5,15 @@ exports.app = app = {
     ssl: false
 };
 
-exports.logging = {
-    // http://www.senchalabs.org/connect/middleware-logger.html
-    express_format: '[:date] ":method :url HTTP/:http-version" :status :res[content-length] - :response-time ms ":referrer" :remote-addr'
-};
-
 exports.mysql = {
-    host: 'localhost',
-    port: 3306,
-    dialect: 'mysql',
-    logging: false
+    host: '132.148.87.196',
+    dialect: 'mssql',
+    logging: false,
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    }
 };
 
 exports.user = {

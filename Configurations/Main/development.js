@@ -10,17 +10,20 @@ exports.logging = {
     express_format: '[:date] ":method :url HTTP/:http-version" :status :res[content-length] - :response-time ms ":referrer" :remote-addr'
 };
 
-exports.mysql = {
-    host: 'localhost',
-    port: 3306,
-    dialect: 'mysql',
-    logging: false
+exports.mssql = {
+    host: 'CYNODT022',
+    dialect: 'mssql',
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    }
 };
 
 exports.user = {
     dbname: 'cookameal',
-    user: 'root',
-    password: ''
+    user: 'sa',
+    password: 'Admin@123'
 };
 
 exports.keys = {
