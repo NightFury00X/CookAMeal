@@ -35,7 +35,7 @@ AuthService.prototype.signup = async (registrationData, files) => {
                 type = 2;
         }
         
-        console.log('User: ',  type === 1 ? userData.email : registrationData.facebook.fbId);
+        console.log('User: ', type === 1 ? userData.email : registrationData.facebook.fbId);
         
         // Add user type
         let userType = await db.UserType.create({
@@ -45,17 +45,18 @@ AuthService.prototype.signup = async (registrationData, files) => {
         }, {transaction: trans});
         
         //add user login data
-        let userCredentialsData = await db.User.create({
-            user_type_id: userType.id,
-            email: userData.email,
-            password: userData.password
-        }, {transaction: trans});
+        if (type === 1) {
+            await db.User.create({
+                user_type_id: userType.id,
+                email: userData.email,
+                password: userData.password
+            }, {transaction: trans});
+        }
         
         //add user profile data
         let tempData = userData;
         delete tempData.password;
         tempData.user_type_id = userType.id;
-        tempData.user_id = userCredentialsData.id;
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
         
         registrationData.address.profile_id = userProfileData.id;
