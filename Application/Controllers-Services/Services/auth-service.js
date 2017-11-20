@@ -91,6 +91,7 @@ AuthService.prototype.signup = async (registrationData, files) => {
 
 AuthService.prototype.authenticate = async (loginDetails) => {
     try {
+        console.log('loginDetails: ', loginDetails);
         let user = await db.User.findOne(loginDetails.potentialUser);
         if (!user)
             return;

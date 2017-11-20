@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
+    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="Change database mysql to mssql.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,25 +18,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="auth-controller.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="140" column="9" lean-forward="false" selection-start-line="140" selection-start-column="9" selection-end-line="140" selection-end-column="9" />
+              <folding>
+                <element signature="e#606#3020#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="auth-controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-112">
+            <state relative-caret-position="88">
               <caret line="43" column="73" lean-forward="false" selection-start-line="43" selection-start-column="73" selection-end-line="43" selection-end-column="73" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js">
+      <file leaf-file-name="common-service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/common-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1792">
-              <caret line="106" column="10" lean-forward="false" selection-start-line="106" selection-start-column="10" selection-end-line="106" selection-end-column="10" />
-              <folding>
-                <element signature="e#3721#4116#0" expanded="false" />
-                <element signature="e#4173#4392#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="162">
+              <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -60,7 +68,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/base-service.js" />
         <option value="$PROJECT_DIR$/views/registration.hbs" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/relationship.js" />
         <option value="$PROJECT_DIR$/Application/Modals/models.js" />
@@ -82,7 +89,6 @@
         <option value="$PROJECT_DIR$/Configurations/Main/config.js" />
         <option value="$PROJECT_DIR$/Configurations/middlewares/request-checker.js" />
         <option value="$PROJECT_DIR$/Configurations/Main/index.js" />
-        <option value="$PROJECT_DIR$/Application/Modals/index.js" />
         <option value="$PROJECT_DIR$/Configurations/Libs/log.js" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/routes-helper.js" />
         <option value="$PROJECT_DIR$/Configurations/Main/database.js" />
@@ -95,20 +101,24 @@
         <option value="/Dummy.txt" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/upload-profile-image.js" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/upload-files.js" />
-        <option value="$PROJECT_DIR$/Application/Modals/address.js" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/multer.js" />
-        <option value="$PROJECT_DIR$/Application/Modals/user.js" />
-        <option value="$PROJECT_DIR$/Application/Modals/profile.js" />
-        <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/file-uploader.js" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" />
-        <option value="$PROJECT_DIR$/Configurations/Main/production.js" />
-        <option value="$PROJECT_DIR$/Configurations/Main/development.js" />
-        <option value="$PROJECT_DIR$/Routes/Auth/auth-routes.js" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/authentication.js" />
+        <option value="$PROJECT_DIR$/Application/Modals/emp.js" />
+        <option value="$PROJECT_DIR$/Application/Modals/lib.js" />
+        <option value="$PROJECT_DIR$/Routes/Auth/auth-routes.js" />
+        <option value="$PROJECT_DIR$/Application/Modals/user.js" />
+        <option value="$PROJECT_DIR$/Application/Modals/profile.js" />
         <option value="$PROJECT_DIR$/Application/Modals/user-type.js" />
-        <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" />
+        <option value="$PROJECT_DIR$/Application/Modals/index.js" />
+        <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/Application/Modals/address.js" />
+        <option value="$PROJECT_DIR$/Configurations/Main/development.js" />
+        <option value="$PROJECT_DIR$/Configurations/Main/production.js" />
+        <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/common-service.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js" />
+        <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" />
       </list>
     </option>
   </component>
@@ -157,7 +167,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -190,10 +199,39 @@
               <item name="Controllers-Services" type="462c0819:PsiDirectoryNode" />
               <item name="Services" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Application" type="462c0819:PsiDirectoryNode" />
+              <item name="Modals" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Configurations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Configurations" type="462c0819:PsiDirectoryNode" />
+              <item name="Main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Routes" type="462c0819:PsiDirectoryNode" />
+              <item name="Auth" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -255,6 +293,12 @@
       <traceFlagActivationTask presentableText="24 hours" timeInMinutes="1440" />
     </traceFlagActivationTasks>
   </component>
+  <component name="SFStoredExecutionPersistentComponent">
+    <executions>
+      <execution name="Default" sourceToExecute="" />
+    </executions>
+    <lastSelectedExecutionName>Default</lastSelectedExecutionName>
+  </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
@@ -276,91 +320,9 @@
       <workItem from="1510546557930" duration="8935000" />
       <workItem from="1510720588627" duration="21015000" />
       <workItem from="1510749382437" duration="4698000" />
-      <workItem from="1510808673442" duration="19394000" />
-    </task>
-    <task id="LOCAL-00001" summary="publish">
-      <created>1510203430352</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1510203430352</updated>
-    </task>
-    <task id="LOCAL-00002" summary="update async and await&#10;implemented transaction state">
-      <created>1510238183969</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1510238183969</updated>
-    </task>
-    <task id="LOCAL-00003" summary="update async and await&#10;implemented transaction state">
-      <created>1510318961527</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1510318961527</updated>
-    </task>
-    <task id="LOCAL-00004" summary="update async and await&#10;implemented transaction state">
-      <created>1510557256033</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1510557256034</updated>
-    </task>
-    <task id="LOCAL-00005" summary="update async and await&#10;implemented transaction state">
-      <created>1510557733216</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1510557733216</updated>
-    </task>
-    <task id="LOCAL-00006" summary="update async and await&#10;implemented transaction state">
-      <created>1510557928848</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1510557928848</updated>
-    </task>
-    <task id="LOCAL-00007" summary="update async and await&#10;implemented transaction state">
-      <created>1510558256491</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1510558256491</updated>
-    </task>
-    <task id="LOCAL-00008" summary="update async and await&#10;implemented transaction state">
-      <created>1510657596295</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1510657596296</updated>
-    </task>
-    <task id="LOCAL-00009" summary="update async and await&#10;implemented transaction state">
-      <created>1510663050388</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1510663050388</updated>
-    </task>
-    <task id="LOCAL-00010" summary="update async and await&#10;implemented transaction state">
-      <created>1510664846675</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1510664846675</updated>
-    </task>
-    <task id="LOCAL-00011" summary="update async and await&#10;implemented transaction state">
-      <created>1510665181528</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1510665181528</updated>
-    </task>
-    <task id="LOCAL-00012" summary="update async and await&#10;implemented transaction state">
-      <created>1510665779836</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1510665779836</updated>
+      <workItem from="1510808673442" duration="20000000" />
+      <workItem from="1510893689857" duration="13256000" />
+      <workItem from="1511153244430" duration="13904000" />
     </task>
     <task id="LOCAL-00013" summary="update async and await&#10;implemented transaction state">
       <created>1510665803680</created>
@@ -516,11 +478,200 @@
       <option name="project" value="LOCAL" />
       <updated>1510838425109</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Fixed user Authentication using credentials.">
+      <created>1510839112458</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1510839112458</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Add new Column [Allergies] to user model">
+      <created>1510900474948</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1510900474948</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Fixed Model association.&#10;Remove hasMany association from Models and applied hasOne association.">
+      <created>1510912525671</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1510912525671</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Fixed user Authentication using credentials.">
+      <created>1510913698921</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1510913698921</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Fixed user Authentication using credentials.">
+      <created>1510913843371</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1510913843371</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Fixed user Authentication using credentials.">
+      <created>1510914011193</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1510914011193</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Fixed user Authentication using credentials.">
+      <created>1510915884780</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1510915884780</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Fixed user Authentication using credentials.">
+      <created>1510917116855</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1510917116855</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Fixed user Authentication using credentials.">
+      <created>1510917220793</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1510917220793</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Fixed user Authentication using credentials.">
+      <created>1510917307708</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1510917307708</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Fixed user Authentication using credentials.">
+      <created>1510917382109</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1510917382109</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Fixed user Authentication using credentials.">
+      <created>1510917499116</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1510917499116</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Fixed user Authentication using credentials.">
+      <created>1510917662735</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1510917662735</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Fixed user Authentication using credentials.">
+      <created>1510917799935</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1510917799935</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Fixed user Authentication using credentials.">
+      <created>1510928595380</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1510928595380</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Added Access-Control-Allow-Origin">
+      <created>1511154765780</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1511154765781</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Fixed user Authentication using credentials.">
+      <created>1511156659744</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1511156659744</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Fixed Allow-Access-Control-Origin">
+      <created>1511157795424</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1511157795424</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Fixed Allow-Access-Control-Origin">
+      <created>1511158360263</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1511158360263</updated>
+    </task>
+    <task id="LOCAL-00054" summary="ok">
+      <created>1511159915637</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1511159915637</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Fixed user Authentication using credentials.">
+      <created>1511160321209</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1511160321210</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Change database mysql to mssql.">
+      <created>1511162620129</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1511162620129</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Change database mysql to mssql.">
+      <created>1511162766357</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1511162766357</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Change database mysql to mssql.">
+      <created>1511169035112</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1511169035112</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Added Scheme name.">
+      <created>1511169198296</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1511169198296</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Change database mysql to mssql.">
+      <created>1511169495576</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1511169495576</updated>
+    </task>
+    <task id="LOCAL-00061" summary="register user as facebook user or normal user.">
+      <created>1511171413846</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1511171413846</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="198874000" />
+    <option name="totallyTimeSpent" value="226640000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -541,10 +692,10 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2911184" sideWeight="0.5075643" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.4924357" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33881578" sideWeight="0.4924357" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2806354" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28971255" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Job Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="MaxCompute Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -610,8 +761,16 @@
     <MESSAGE value="fix file extension check." />
     <MESSAGE value="update async and await&#10;implemented transaction state" />
     <MESSAGE value="implement multer file uploader package." />
+    <MESSAGE value="Add new Column [Allergies] to user model" />
+    <MESSAGE value="Fixed Model association.&#10;Remove hasMany association from Models and applied hasOne association." />
+    <MESSAGE value="Added Access-Control-Allow-Origin" />
+    <MESSAGE value="Fixed Allow-Access-Control-Origin" />
+    <MESSAGE value="ok" />
     <MESSAGE value="Fixed user Authentication using credentials." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed user Authentication using credentials." />
+    <MESSAGE value="Added Scheme name." />
+    <MESSAGE value="Change database mysql to mssql." />
+    <MESSAGE value="register user as facebook user or normal user." />
+    <option name="LAST_COMMIT_MESSAGE" value="register user as facebook user or normal user." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -629,15 +788,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Configurations/Domains/domain.js" />
-    <entry file="file://$PROJECT_DIR$/Configurations/middlewares/authenticate-middleware.js" />
-    <entry file="file://$PROJECT_DIR$/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4510">
-          <caret line="10" column="30" lean-forward="true" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/test.js" />
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/testing.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/sequelize/lib/model.js">
@@ -745,13 +895,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Configurations/Helpers/upload-profile-image.js" />
-    <entry file="file://$PROJECT_DIR$/Application/Modals/address.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1276">
-          <caret line="58" column="40" lean-forward="false" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Configurations/Helpers/multer.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/express-fileupload/lib/index.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -767,26 +910,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Modals/social.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="20" column="17" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="30" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/@types/node/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="1460" column="20" lean-forward="false" selection-start-line="1460" selection-start-column="20" selection-end-line="1460" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="46" column="30" lean-forward="true" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -794,9 +921,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="3" column="44" lean-forward="false" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
-          <folding>
-            <element signature="e#1332#2437#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -804,15 +928,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Modals/mediaobject.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="49" column="40" lean-forward="false" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -820,39 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Configurations/Main/production.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="29" column="24" lean-forward="true" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Modals/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="49" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Routes/Auth/auth-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="13" column="35" lean-forward="false" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Configurations/Main/development.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="29" column="16" lean-forward="false" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -861,30 +943,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="-4955">
             <caret line="66" column="70" lean-forward="true" selection-start-line="66" selection-start-column="70" selection-end-line="66" selection-end-column="70" />
-            <folding>
-              <marker date="1507570339000" expanded="true" signature="3145:3170" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="3939:4009" ph="{&quot;data&quot;: 'foobar'...}" />
-              <marker date="1507570339000" expanded="true" signature="4115:4135" ph="{&quot;data&quot;: 'foobar'...}" />
-              <marker date="1507570339000" expanded="true" signature="4201:4221" ph="{&quot;data&quot;: 'foobar'...}" />
-              <marker date="1507570339000" expanded="true" signature="6581:6616" ph="//..." />
-              <marker date="1507570339000" expanded="true" signature="6668:6705" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="6744:6798" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="6810:6822" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="6898:6933" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="6902:6931" ph="//..." />
-              <marker date="1507570339000" expanded="true" signature="7074:7111" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="7267:7321" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="7497:7547" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="7739:7789" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="8002:8054" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="8209:8266" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="9389:9542" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="9402:9540" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="9408:9536" ph="/*...*/" />
-              <marker date="1507570339000" expanded="true" signature="9974:10098" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="9987:10096" ph="{...}" />
-              <marker date="1507570339000" expanded="true" signature="9993:10092" ph="/*...*/" />
-            </folding>
           </first_editor>
           <second_editor />
         </state>
@@ -894,7 +952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="3" column="2" lean-forward="false" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -902,35 +959,31 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Modals/emp.js" />
+    <entry file="file://$PROJECT_DIR$/Application/Modals/lib.js" />
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="43" column="33" lean-forward="true" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Modals/profile.js">
+    <entry file="file://$PROJECT_DIR$/Routes/Auth/auth-routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="105" column="20" lean-forward="false" selection-start-line="105" selection-start-column="12" selection-end-line="105" selection-end-column="20" />
-          <folding>
-            <element signature="e#128#276#0" expanded="false" />
-            <element signature="e#293#803#0" expanded="false" />
-            <element signature="e#824#1116#0" expanded="false" />
-            <element signature="e#1136#1427#0" expanded="false" />
-            <element signature="e#1444#1704#0" expanded="false" />
-            <element signature="e#1722#1991#0" expanded="false" />
-            <element signature="e#2014#2058#0" expanded="false" />
-            <element signature="e#2084#2130#0" expanded="false" />
-            <element signature="e#2146#2390#0" expanded="false" />
-            <element signature="e#2421#2467#0" expanded="false" />
-            <element signature="e#2494#2714#0" expanded="false" />
-            <element signature="e#2735#2781#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="374">
+          <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Modals/user-type.js">
+    <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="39" selection-end-line="37" selection-end-column="43" />
+        <state relative-caret-position="76">
+          <caret line="73" column="48" lean-forward="false" selection-start-line="73" selection-start-column="48" selection-end-line="73" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -943,18 +996,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
+    <entry file="file://$PROJECT_DIR$/Configurations/Main/development.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1210">
-          <caret line="35" column="25" lean-forward="false" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+        <state relative-caret-position="132">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="18" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configurations/Main/production.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="12" column="30" lean-forward="false" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Modals/address.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="71" column="69" lean-forward="false" selection-start-line="71" selection-start-column="69" selection-end-line="71" selection-end-column="69" />
+          <folding>
+            <element signature="e#142#2062#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Modals/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-110">
+          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Modals/mediaobject.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="50" column="42" lean-forward="true" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Modals/profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="120" column="22" lean-forward="true" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
+          <folding>
+            <element signature="e#128#276#0" expanded="false" />
+            <element signature="e#293#803#0" expanded="false" />
+            <element signature="e#824#1116#0" expanded="false" />
+            <element signature="e#1136#1427#0" expanded="false" />
+            <element signature="e#1444#1704#0" expanded="false" />
+            <element signature="e#1722#1991#0" expanded="false" />
+            <element signature="e#2014#2058#0" expanded="false" />
+            <element signature="e#2213#2457#0" expanded="false" />
+            <element signature="e#2488#2534#0" expanded="false" />
+            <element signature="e#2561#2781#0" expanded="false" />
+            <element signature="e#2802#2848#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Modals/social.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="20" column="17" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="30" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Modals/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="36" column="36" lean-forward="true" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
+        <state relative-caret-position="297">
+          <caret line="46" column="1" lean-forward="false" selection-start-line="46" selection-start-column="1" selection-end-line="48" selection-end-column="9" />
           <folding>
             <element signature="e#158#306#0" expanded="false" />
             <element signature="e#323#833#0" expanded="false" />
@@ -963,22 +1078,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js">
+    <entry file="file://$PROJECT_DIR$/Application/Modals/user-type.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-112">
-          <caret line="43" column="73" lean-forward="false" selection-start-line="43" selection-start-column="73" selection-end-line="43" selection-end-column="73" />
+        <state relative-caret-position="858">
+          <caret line="39" column="31" lean-forward="true" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/common-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1792">
-          <caret line="106" column="10" lean-forward="false" selection-start-line="106" selection-start-column="10" selection-end-line="106" selection-end-column="10" />
+        <state relative-caret-position="68">
+          <caret line="140" column="9" lean-forward="false" selection-start-line="140" selection-start-column="9" selection-end-line="140" selection-end-column="9" />
           <folding>
-            <element signature="e#3721#4116#0" expanded="false" />
-            <element signature="e#4173#4392#0" expanded="false" />
+            <element signature="e#606#3020#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="43" column="73" lean-forward="false" selection-start-line="43" selection-start-column="73" selection-end-line="43" selection-end-column="73" />
+          <folding />
         </state>
       </provider>
     </entry>
