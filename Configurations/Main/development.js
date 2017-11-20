@@ -13,6 +13,9 @@ exports.logging = {
 exports.mssql = {
     host: 'CYNODT022',
     dialect: 'mssql',
+    define: {
+        schema: "dbo"
+    },
     logging: false,
     pool: {
         max: 5,

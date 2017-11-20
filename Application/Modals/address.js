@@ -69,5 +69,5 @@ module.exports = function (sequelize, DataTypes) {
         underscored: true
     };
     
-    return sequelize.define('Address', modelDefinition, modelOptions).schema('dbo');
+    return sequelize.define('Address', modelDefinition, modelOptions);
 };
