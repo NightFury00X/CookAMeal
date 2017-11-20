@@ -8,6 +8,10 @@ exports.app = app = {
 exports.mssql = {
     host: '132.148.87.196',
     dialect: 'mssql',
+    define: {
+        schema: "dbo",
+        freezeTableName: true,
+    },
     logging: false,
     pool: {
         max: 5,

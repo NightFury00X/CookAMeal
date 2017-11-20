@@ -14,7 +14,8 @@ exports.mssql = {
     host: 'CYNODT022',
     dialect: 'mssql',
     define: {
-        schema: "dbo"
+        schema: "dbo",
+        freezeTableName: true,
     },
     logging: false,
     pool: {
