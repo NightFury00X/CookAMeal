@@ -1,5 +1,4 @@
 let db = require('../../Modals'),
-    config = require('../../../Configurations/Main'),
     generateToken = require('../../../Configurations/Helpers/authentication');
 
 

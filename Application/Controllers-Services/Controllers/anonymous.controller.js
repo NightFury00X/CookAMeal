@@ -40,7 +40,7 @@ AnonymousController.SignUp = async (req, res, next) => {
         //upload file
         let files = await uploadFile(req, res);
         let registrationData = JSON.parse(req.body.details);
-        let result = await CommonService.SignUp(registrationData, files);
+        let result = await AnonymousService.SignUp(registrationData, files);
         return responseHelper.setSuccessResponse(result, res, 201);
     } catch (error) {
         next(error);

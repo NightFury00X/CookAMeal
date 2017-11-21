@@ -1,12 +1,13 @@
 let db = require('../../Modals'),
     config = require('../../../Configurations/Main'),
+    CommonService = require('./common.service'),
     generateToken = require('../../../Configurations/Helpers/authentication');
 
 
 AnonymousService = function () {
 };
 
-AnonymousService.prototype.SignUp = async (registrationData) => {
+AnonymousService.prototype.SignUp = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
         let userData = registrationData.user;
@@ -15,7 +16,7 @@ AnonymousService.prototype.SignUp = async (registrationData) => {
         let type = 1;
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbId) {
-            let fb = await commonService.CheckuserTypeByFbId(registrationData.facebook.fbId);
+            let fb = await CommonService.CheckuserTypeByUserId(registrationData.facebook.fbId);
             if (!fb)
                 type = 2;
         }
@@ -96,7 +97,7 @@ AnonymousService.prototype.Authenticate = async (loginDetails) => {
                 include: [{model: db.MediaObject}]
             }]
         });
-        if(!userType)
+        if (!userType)
             return null;
         return {
             token: generateToken(userFound.userInfo),
