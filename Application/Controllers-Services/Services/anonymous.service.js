@@ -10,7 +10,6 @@ AnonymousService = function () {
 AnonymousService.prototype.SignUp = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
-        console.log('Registration Data: ', registrationData);
         let userData = registrationData.user;
         userData.allergies = JSON.stringify(userData.allergies);
         
@@ -21,12 +20,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             if (!fb)
                 type = 2;
         }
-    
-        console.log('User: ', userData);
-        
-        console.log('User: ', type === 1 ? userData.email : registrationData.facebook.fbId);
-    
-        console.log('Type: ', type);
         // Add user type
         let userType = await db.UserType.create({
             userid: type === 1 ? userData.email : registrationData.facebook.fbId,
