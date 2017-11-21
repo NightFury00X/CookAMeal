@@ -3,12 +3,12 @@
 const router = require('express').Router();
 const AnonymousController = require('../../Application/Controllers-Services/Controllers/anonymous.controller');
 
-const commonRoutes = function (passport) {
+const AnonymousRoutes = function (passport) {
     //1: Facebook User SignIn
-    router.post('/signup', AnonymousController.FbSignIn);
+    router.post('/fbsign', AnonymousController.FbSignIn);
     
     //2: SignUp
-    router.post('/fbsign', AnonymousController.SignUp);
+    router.post('/signup', AnonymousController.SignUp);
     
     //3: Normal User SignIn
     router.post('/authenticate', AnonymousController.AuthenticateUser);
@@ -16,4 +16,4 @@ const commonRoutes = function (passport) {
     return router;
 };
 
-module.exports = commonRoutes;
+module.exports = AnonymousRoutes;
