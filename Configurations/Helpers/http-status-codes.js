@@ -55,10 +55,15 @@ statusCodes[exports.UNPROCESSABLE_ENTITY = 422] = "Unprocessable Entity";
 statusCodes[exports.UNSUPPORTED_MEDIA_TYPE = 415] = "Unsupported Media Type";
 statusCodes[exports.USE_PROXY = 305] = "Use Proxy";
 
-exports.getStatusText = function (statusCode) {
+let StatusCode = {};
+
+StatusCode.GetStatusText = function (statusCode) {
+    console.log('Hello');
     if (statusCodes.hasOwnProperty(statusCode)) {
         return statusCodes[statusCode];
     } else {
         throw new Error("Status code does not exist: " + statusCode);
     }
 };
+
+module.exports = StatusCode;

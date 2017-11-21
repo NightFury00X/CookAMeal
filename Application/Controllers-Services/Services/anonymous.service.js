@@ -1,27 +1,12 @@
 let db = require('../../Modals'),
     config = require('../../../Configurations/Main'),
-    generateToken = require('../../../Configurations/Helpers/authentication'),
-    commonService = require('./anonymous.service');
+    generateToken = require('../../../Configurations/Helpers/authentication');
 
 
-AuthService = function () {
+AnonymousService = function () {
 };
 
-// AuthService = new BaseService();
-
-AuthService.prototype.fb = async (fbId) => {
-    try {
-         return await db.UserType.findAll({
-            attributes: ['id'],
-            where: {userid: fbId},
-            raw: true
-        });
-    } catch (error) {
-        return error;
-    }
-};
-
-AuthService.prototype.signup = async (registrationData, files) => {
+AnonymousService.prototype.SignUp = async (registrationData) => {
     const trans = await db.sequelize.transaction();
     try {
         let userData = registrationData.user;
@@ -92,9 +77,8 @@ AuthService.prototype.signup = async (registrationData, files) => {
     }
 };
 
-AuthService.prototype.authenticate = async (loginDetails) => {
+AnonymousService.prototype.Authenticate = async (loginDetails) => {
     try {
-        console.log('loginDetails: ', loginDetails);
         let user = await db.User.findOne(loginDetails.potentialUser);
         if (!user)
             return;
@@ -106,12 +90,14 @@ AuthService.prototype.authenticate = async (loginDetails) => {
         });
         
         let userType = await db.UserType.findOne({
-            where: {id: user.user_type_id},
+            where: {id: user.user_type_id, type: 1},
             include: [{
                 model: db.Profile,
                 include: [{model: db.MediaObject}]
             }]
         });
+        if(!userType)
+            return null;
         return {
             token: generateToken(userFound.userInfo),
             user: {
@@ -127,29 +113,4 @@ AuthService.prototype.authenticate = async (loginDetails) => {
     }
 };
 
-AuthService.prototype.getUserData = async (userInfo) => {
-    try {
-        return await db.User.findAll({
-            attributes: {exclude: ['password', 'updated_at', 'deleted_at', 'created_at']},
-            where: {email: userInfo.email},
-            include: [{model: db.Address, paranoid: false, required: true},
-                {model: db.Social, paranoid: false, required: true}]
-        });
-    } catch (error) {
-        throw (error);
-    }
-};
-
-AuthService.prototype.getUserType = async (userId) => {
-    try {
-        return await db.UserType.findOne({
-            attributes: ['id'],
-            where: {userid: userId, type: 1},
-            raw: true
-        });
-    } catch (error) {
-        throw (error);
-    }
-};
-
-module.exports = new AuthService();
+module.exports = new AnonymousService();

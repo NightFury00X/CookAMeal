@@ -117,7 +117,17 @@ app.use(function (err, req, res, next) {
     next();
 });
 
-// Routes
+// Routes Error 404
 app.use(function (req, res, next) {
+    console.log('Error', req.url);
+    let err = new Error('The Route ' + req.url + ' is Not Found');
+    err.status = 404;
+    res.status(404).send(
+        {
+            success: false,
+            data: '{}',
+            error: err.message
+        }
+    );
     next();
 });
