@@ -13,12 +13,6 @@ module.exports = function (sequelize, DataTypes) {
         street: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                is: {
-                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
-                    msg: 'The street name you have entered is contains some bed characters.'
-                }
-            }
         },
         city: {
             type: DataTypes.STRING,
