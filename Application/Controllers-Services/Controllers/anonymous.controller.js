@@ -39,6 +39,9 @@ let Anonymous = {
             //upload file
             let files = await uploadFile(req, res);
             let registrationData = JSON.parse(req.body.details);
+            console.log('Data: ', registrationData);
+            console.log('--------------------------------------------------------------------------');
+            console.log('Files: ', files);
             let result = await AnonymousService.SignUp(registrationData, files);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.StatusCode.CREATED);
         } catch (error) {
