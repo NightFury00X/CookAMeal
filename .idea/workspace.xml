@@ -2,40 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/admin-controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/admin.service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Modals/category.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Modals/certificate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Modals/identificationcard.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Configurations/Helpers/common-config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Routes/Admin/admin.routes.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Routes/Common/common-routes.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Configurations/Helpers/http-status-codes.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Configurations/Helpers/routes-helper.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/cook.controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/cook.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/customer.controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/customer.controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Modals/mediaobject.js" afterPath="$PROJECT_DIR$/Application/Modals/mediaobject.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Modals/profile.js" afterPath="$PROJECT_DIR$/Application/Modals/profile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Modals/user-type.js" afterPath="$PROJECT_DIR$/Application/Modals/user-type.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Modals/user.js" afterPath="$PROJECT_DIR$/Application/Modals/user.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" afterPath="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Main/development.js" afterPath="$PROJECT_DIR$/Configurations/Main/development.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Passport/passport-strategy.js" afterPath="$PROJECT_DIR$/Configurations/Passport/passport-strategy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/middlewares/authorization.js" afterPath="$PROJECT_DIR$/Configurations/middlewares/authorization.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js" afterPath="$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Auth/auth-routes.js" afterPath="$PROJECT_DIR$/Routes/Auth/auth-routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Cook/cook.routes.js" afterPath="$PROJECT_DIR$/Routes/Cook/cook.routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/routes.js" afterPath="$PROJECT_DIR$/Routes/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -83,25 +51,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="file-uploader.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-uploader.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-396">
-              <caret line="3" column="44" lean-forward="false" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="anonymous.service.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="anonymous.service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1081">
-              <caret line="65" column="4" lean-forward="false" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
+            <state relative-caret-position="81">
+              <caret line="58" column="163" lean-forward="true" selection-start-line="58" selection-start-column="163" selection-end-line="58" selection-end-column="163" />
               <folding>
                 <element signature="e#1024#1205#0" expanded="false" />
                 <element signature="e#1325#1535#0" expanded="false" />
-                <element signature="e#4952#6040#0" expanded="false" />
+                <element signature="e#4881#5969#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -127,7 +85,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="anonymous.controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="anonymous.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
@@ -142,6 +100,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="file-upload-multer.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="21" column="10" lean-forward="false" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="certificate.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/Modals/certificate.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -152,22 +120,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mediaobject.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Modals/mediaobject.js">
+      <file leaf-file-name="identificationcard.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Modals/identificationcard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="60" column="49" lean-forward="false" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="49" />
+            <state relative-caret-position="968">
+              <caret line="47" column="44" lean-forward="false" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="identificationcard.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Modals/identificationcard.js">
+      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="47" column="44" lean-forward="false" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
-              <folding />
+            <state relative-caret-position="22">
+              <caret line="7" column="2" lean-forward="false" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+              <folding>
+                <element signature="e#296#504#0" expanded="false" />
+                <element signature="e#573#3144#0" expanded="false" />
+                <element signature="e#635#3033#0" expanded="false" />
+                <element signature="e#3208#4281#0" expanded="false" />
+                <element signature="e#4340#4735#0" expanded="false" />
+                <element signature="e#4792#5011#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -183,6 +158,7 @@
       <find>files</find>
       <find>Conso</find>
       <find>consol</find>
+      <find>console</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -230,7 +206,6 @@
         <option value="$PROJECT_DIR$/Routes/routes.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
-        <option value="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" />
         <option value="$PROJECT_DIR$/Application/Modals/user.js" />
         <option value="$PROJECT_DIR$/Application/Modals/social.js" />
         <option value="$PROJECT_DIR$/Application/Modals/address.js" />
@@ -244,6 +219,7 @@
         <option value="$PROJECT_DIR$/Application/Modals/identificationcard.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js" />
         <option value="$PROJECT_DIR$/Application/Modals/profile.js" />
+        <option value="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" />
       </list>
     </option>
@@ -451,21 +427,7 @@
       <workItem from="1511153244430" duration="16178000" />
       <workItem from="1511237640549" duration="25425000" />
       <workItem from="1511323531093" duration="28577000" />
-      <workItem from="1511422818352" duration="13083000" />
-    </task>
-    <task id="LOCAL-00028" summary="removed unused variables.">
-      <created>1510725163990</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1510725163990</updated>
-    </task>
-    <task id="LOCAL-00029" summary="fix users registration api.&#10;added profile model.&#10;added user-type model.&#10;updated user model.&#10;changed all relationship for better structure.">
-      <created>1510753355328</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1510753355328</updated>
+      <workItem from="1511422818352" duration="14087000" />
     </task>
     <task id="LOCAL-00030" summary="fix file extension check.">
       <created>1510809320315</created>
@@ -796,11 +758,25 @@
       <option name="project" value="LOCAL" />
       <updated>1511266829414</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Updated Code">
+      <created>1511444327389</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1511444327390</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Updated Code">
+      <created>1511444752647</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1511444752647</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="295999000" />
+    <option name="totallyTimeSpent" value="297003000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -822,7 +798,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19901316" sideWeight="0.48940998" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28782895" sideWeight="0.48940998" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30332828" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -901,7 +877,8 @@
     <MESSAGE value="Change database mysql to mssql." />
     <MESSAGE value="Update fb id" />
     <MESSAGE value="Remove Street unwanted validation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove Street unwanted validation." />
+    <MESSAGE value="Updated Code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -973,25 +950,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="7" column="2" lean-forward="false" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
-          <folding>
-            <element signature="e#296#504#0" expanded="false" />
-            <element signature="e#573#3144#0" expanded="false" />
-            <element signature="e#635#3033#0" expanded="false" />
-            <element signature="e#3208#4281#0" expanded="false" />
-            <element signature="e#4340#4735#0" expanded="false" />
-            <element signature="e#4792#5011#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Routes/Cook/cook.routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="9" column="39" lean-forward="true" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -999,6 +962,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" column="37" lean-forward="true" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1006,6 +970,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-528">
           <caret line="6" column="16" lean-forward="false" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1013,6 +978,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" column="21" lean-forward="true" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1029,6 +995,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="79" lean-forward="true" selection-start-line="1" selection-start-column="79" selection-end-line="2" selection-end-column="76" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1036,6 +1003,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="8" column="25" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1043,6 +1011,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" column="39" lean-forward="true" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1050,6 +1019,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="93" column="60" lean-forward="false" selection-start-line="93" selection-start-column="60" selection-end-line="93" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1057,6 +1027,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="3" column="76" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="76" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1071,6 +1042,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
           <caret line="10" column="25" lean-forward="true" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1085,6 +1057,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="13" column="32" lean-forward="true" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1092,6 +1065,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
           <caret line="25" column="34" lean-forward="true" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1099,6 +1073,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" column="57" lean-forward="false" selection-start-line="7" selection-start-column="57" selection-end-line="7" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1114,6 +1089,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="17" column="30" lean-forward="false" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1121,14 +1097,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
           <caret line="19" column="25" lean-forward="true" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="23" column="62" lean-forward="false" selection-start-line="23" selection-start-column="51" selection-end-line="23" selection-end-column="62" />
           <folding />
         </state>
       </provider>
@@ -1219,14 +1187,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Modals/identificationcard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="47" column="44" lean-forward="false" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Routes/routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -1280,18 +1240,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1081">
-          <caret line="65" column="4" lean-forward="false" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
-          <folding>
-            <element signature="e#1024#1205#0" expanded="false" />
-            <element signature="e#1325#1535#0" expanded="false" />
-            <element signature="e#4952#6040#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1301,6 +1249,49 @@
             <element signature="e#1822#2228#0" expanded="false" />
             <element signature="e#2278#3554#0" expanded="false" />
             <element signature="e#3601#3789#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="21" column="10" lean-forward="false" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Modals/identificationcard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="968">
+          <caret line="47" column="44" lean-forward="false" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="7" column="2" lean-forward="false" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+          <folding>
+            <element signature="e#296#504#0" expanded="false" />
+            <element signature="e#573#3144#0" expanded="false" />
+            <element signature="e#635#3033#0" expanded="false" />
+            <element signature="e#3208#4281#0" expanded="false" />
+            <element signature="e#4340#4735#0" expanded="false" />
+            <element signature="e#4792#5011#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="58" column="163" lean-forward="true" selection-start-line="58" selection-start-column="163" selection-end-line="58" selection-end-column="163" />
+          <folding>
+            <element signature="e#1024#1205#0" expanded="false" />
+            <element signature="e#1325#1535#0" expanded="false" />
+            <element signature="e#4881#5969#0" expanded="false" />
           </folding>
         </state>
       </provider>

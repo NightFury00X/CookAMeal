@@ -43,9 +43,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         let certificateMediaObject;
         let identificationCardData;
         
-        console.log('files: ', files.length);
-        
-        if (files && files.length) {
+        if (files) {
             if (files.profile) {
                 let profileImage = files.profile[0];
                 profileImage.user_type_id = userType.id;
