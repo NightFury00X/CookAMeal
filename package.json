@@ -7,13 +7,6 @@
     "start": "nodemon server.js"
   },
   "keywords": [
-    "express",
-    "jwt-authentication",
-    "jwt",
-    "mysql",
-    "angular",
-    "sequelize",
-    "authentication"
   ],
   "author": "Cynoteck",
   "license": "MIT",

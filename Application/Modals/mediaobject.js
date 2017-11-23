@@ -38,6 +38,14 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
+        objectType: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        linkedObject: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
@@ -47,5 +55,11 @@ module.exports = function (sequelize, DataTypes) {
         underscored: true
     };
     
-    return sequelize.define('MediaObject', modelDefinition, modelOptions);
+    let MediaObject = sequelize.define('MediaObject', modelDefinition, modelOptions);
+    
+    MediaObject.associate = function (models) {
+        // MediaObject.belongsTo(models.Profile);
+    };
+    
+    return MediaObject;
 };

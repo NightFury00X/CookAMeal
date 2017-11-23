@@ -1,5 +1,6 @@
 // The Profile Model.
 'use strict';
+let CommonConfig = require('../../Configurations/Helpers/common-config');
 
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
@@ -56,6 +57,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         gender: {
             type: DataTypes.CHAR,
+            length: 1,
             allowNull: false,
             validate: {
                 isIn: {
@@ -95,15 +97,15 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        image_url: {
-            type: DataTypes.STRING
-        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
 
 // 2: The model options.
     let modelOptions = {
+        hooks: {
+            beforeCreate: UpdateLinkedMediaObject
+        },
         underscored: true,
         getterMethods: {
             fullName() {
@@ -115,10 +117,27 @@ module.exports = function (sequelize, DataTypes) {
     let ProfileModel = sequelize.define('Profile', modelDefinition, modelOptions);
     
     ProfileModel.associate = function (models) {
-        ProfileModel.hasOne(models.Address, {onDelete: 'CASCADE'});
-        ProfileModel.hasOne(models.Social, {onDelete: 'CASCADE'});
-        ProfileModel.hasOne(models.MediaObject, {onDelete: 'CASCADE'});
+        // ProfileModel.hasOne(models.Address);
+        // ProfileModel.hasOne(models.Social);
+        // ProfileModel.hasOne(models.Category);
+        // ProfileModel.hasOne(models.Certificate);
+        // ProfileModel.hasOne(models.IdentificationCard);
+        ProfileModel.belongsTo(models.MediaObject);
     };
     
-    return  ProfileModel;
+    return ProfileModel;
 };
+
+function UpdateLinkedMediaObject(model, trans) {
+    let MediaObject = this.associations.MediaObject.target;
+    MediaObject.update({
+        linkedObject: model.id
+    }, {
+        where: {
+            user_type_id: model.user_type_id,
+            objectType: CommonConfig.ObjectType.Profile
+        }
+    }, {transaction: trans}).then(function (media) {
+        console.log('Updated')
+    });
+}

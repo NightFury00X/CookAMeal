@@ -29,13 +29,13 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        role: {   // 1 - Cook, 2 - Customer
+        role: {   // 1 - Cook, 2 - Customer, 3 - Admin
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
                 isIn: {
                     args: [['1', '2']],
-                    msg: "Invalid user type."
+                    msg: "Invalid user role."
                 }
             }
         },
@@ -61,8 +61,13 @@ module.exports = function (sequelize, DataTypes) {
     let UserTypeModel = sequelize.define('UserType', modelDefinition, modelOptions);
     
     UserTypeModel.associate = function (models) {
-        UserTypeModel.hasOne(models.User, {onDelete: 'CASCADE'});
-        UserTypeModel.hasOne(models.Profile, {onDelete: 'CASCADE'});
+        UserTypeModel.hasOne(models.User);
+        UserTypeModel.hasOne(models.Profile);
+        UserTypeModel.hasOne(models.MediaObject);
+        UserTypeModel.hasOne(models.Address);
+        UserTypeModel.hasOne(models.Category);
+        UserTypeModel.hasOne(models.Certificate);
+        UserTypeModel.hasOne(models.IdentificationCard);
     };
     
     return UserTypeModel;

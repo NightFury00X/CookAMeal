@@ -9,11 +9,11 @@ let express = require('express'),
     db = require('./Application/Modals'),
     heltmet = require('helmet'),
     winston = require('winston'),
-    cors = require('cors'),
     compression = require("compression"),
     mkdirp = require('mkdirp'),
-    fileUpload = require('express-fileupload'),
-    config = require('./Configurations/Main');
+    config = require('./Configurations/Main'),
+    CommonConfig = require('./Configurations/Helpers/common-config');
+
 
 const logger = new (winston.Logger)({
     transports: [
@@ -32,7 +32,7 @@ mkdirp.sync(uploadFileLocation);
 
 // Initializations.
 let app = express();
-// app.use(fileUpload());
+
 let server = require('http').createServer(app);
 
 // Parse as urlencoded and json.
@@ -53,22 +53,6 @@ app.use(passport.initialize());
 
 // Hook the passport JWT strategy.
 hookJWTStrategy(passport);
-
-// const whitelist = ['http://localhost:8081', 'http://localhost:8100', 'https://cook-a-meal-testing.herokuapp.com'];
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         console.log('Origin: ', origin);
-//         if (origin === undefined || whitelist.indexOf(origin) !== -1) {
-//             callback(null, true)
-//         } else {
-//             callback(new Error('Not allowed by CORS'));
-//             if (config.secure) {
-//             }
-//         }
-//     }
-// };
-//
-// app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -107,7 +91,7 @@ function startApp() {
 // Main middleware
 app.use(function (err, req, res, next) {
     // Do logging and user-friendly error message display
-    res.status(500).send(
+    res.status(CommonConfig.StatusCode.INTERNAL_SERVER_ERROR).send(
         {
             success: false,
             data: '{}',
@@ -121,8 +105,7 @@ app.use(function (err, req, res, next) {
 app.use(function (req, res, next) {
     console.log('Error', req.url);
     let err = new Error('The Route ' + req.url + ' is Not Found');
-    err.status = 404;
-    res.status(404).send(
+    res.status(CommonConfig.StatusCode.NOT_FOUND).send(
         {
             success: false,
             data: '{}',

@@ -7,8 +7,6 @@ let db = require('../../Modals'),
 AuthService = function () {
 };
 
-// AuthService = new BaseService();
-
 AuthService.prototype.fb = async (fbId) => {
     try {
          return await db.UserType.findAll({
@@ -92,7 +90,7 @@ AuthService.prototype.signup = async (registrationData, files) => {
     }
 };
 
-AuthService.prototype.authenticate = async (loginDetails) => {
+AuthService.prototype.Authenticate = async (loginDetails) => {
     try {
         console.log('loginDetails: ', loginDetails);
         let user = await db.User.findOne(loginDetails.potentialUser);
@@ -127,7 +125,7 @@ AuthService.prototype.authenticate = async (loginDetails) => {
     }
 };
 
-AuthService.prototype.getUserData = async (userInfo) => {
+AuthService.prototype.GetUserData = async (userInfo) => {
     try {
         return await db.User.findAll({
             attributes: {exclude: ['password', 'updated_at', 'deleted_at', 'created_at']},

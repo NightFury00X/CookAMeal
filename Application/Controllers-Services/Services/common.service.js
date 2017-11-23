@@ -5,7 +5,7 @@ let db = require('../../Modals'),
 CommonService = function () {
 };
 
-CommonService.prototype.CheckuserTypeByUserId = async (fbId) => {
+CommonService.prototype.CheckUserTypeByUserId = async (fbId) => {
     try {
         return await db.UserType.findOne({
             attributes: ['id'],
@@ -32,10 +32,36 @@ CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
 };
 
 CommonService.prototype.GenerateToken = async (tokenData, userData) => {
-    return {
-        token: generateToken(tokenData),
-        userDetails: userData
-    };
+    try {
+        return {
+            token: generateToken(tokenData),
+            userDetails: userData
+        };
+    } catch (error) {
+        return error;
+    }
+};
+
+CommonService.prototype.GetCategories = async () => {
+    try {
+        return await db.Category.findAll({
+            include: [{model: db.MediaObject, attributes: ['imageurl']}]
+        });
+    } catch (error) {
+        return error;
+    }
+};
+
+CommonService.prototype.GetCategoryById = async (catId) => {
+    try {
+        return await db.Category.findOne({
+            attributes: ['id', 'name'],
+            where: {id: catId},
+            include: [{model: db.MediaObject, attributes: ['imageurl']}]
+        });
+    } catch (error) {
+        return error;
+    }
 };
 
 module.exports = new CommonService();

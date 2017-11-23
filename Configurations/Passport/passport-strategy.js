@@ -14,11 +14,10 @@ function hookJWTStrategy(passport) {
     options.ignoreExpiration = false;
     
     passport.use(new JWTStrategy(options, function (JWTPayload, callback) {
-        db.User.findOne(
+        db.UserType.findOne(
             {
-                attributes: ['id', 'email', 'type'],
-                where: {email: JWTPayload.username}
-                , raw: true
+                attributes: ['id', 'userid', 'role', 'type'],
+                where: {userid: JWTPayload.username}
             })
             .then(function (user) {
                 if (!user) {

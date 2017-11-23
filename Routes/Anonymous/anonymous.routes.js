@@ -1,17 +1,17 @@
 'use strict';
 
-const router = require('express').Router();
-const AnonymousController = require('../../Application/Controllers-Services/Controllers/anonymous.controller');
+const router = require('express').Router(),
+    AnonymousController = require('../../Application/Controllers-Services/Controllers/anonymous.controller');
 
 const AnonymousRoutes = function (passport) {
     //1: Facebook User SignIn
-    router.post('/fbsign', AnonymousController.FbSignIn);
+    router.post('/fbsign', AnonymousController.Anonymous.FbSignIn);
     
     //2: SignUp
-    router.post('/signup', AnonymousController.SignUp);
+    router.post('/signup', AnonymousController.Anonymous.SignUp);
     
     //3: Normal User SignIn
-    router.post('/authenticate', AnonymousController.AuthenticateUser);
+    router.post('/authenticate', AnonymousController.Anonymous.AuthenticateUser);
     
     return router;
 };
