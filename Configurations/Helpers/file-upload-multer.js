@@ -18,9 +18,9 @@ let upload = multer({
         }
         callback(null, true)
     },
-    limits: {
-        fileSize: 5000000
-    }
+    // limits: {
+    //     fileSize: 5000000
+    // }
 }).fields([{name: 'profile', maxCount: 1}, {name: 'certificate', maxCount: 1}, {name: 'identificationCard', maxCount: 1}, {name: 'category', maxCount: 1}]);
 
 let uploadFile = function (req, res) {
