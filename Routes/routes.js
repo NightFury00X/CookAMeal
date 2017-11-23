@@ -33,8 +33,21 @@ const APIRoutes = function (passport) {
     
     // Cook Routes    
     router.use('/cook/', MiddleWareRules.Cook);
-    
+
+    router.use(function (req, res, next) {
+        let err = new Error('The Route ' + req.url + ' is Not Found');
+        res.status(CommonConfig.StatusCode.NOT_FOUND).send(
+            {
+                success: false,
+                data: '{}',
+                error: err.message
+            }
+        );
+        next();
+    });
+
     return router;
 };
+
 
 module.exports = APIRoutes;

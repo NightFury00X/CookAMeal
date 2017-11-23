@@ -37,6 +37,7 @@ let Anonymous = {
     SignUp: async (req, res, next) => {
         try {
             //upload file
+            console.log('Ok');
             let files = await uploadFile(req, res);
             let registrationData = JSON.parse(req.body.details);
             console.log('Data: ', registrationData);
@@ -51,6 +52,7 @@ let Anonymous = {
     AuthenticateUser: async (req, res, next) => {
         req.check('username').notEmpty();
         req.check('password').notEmpty();
+        console.log('req', req);
         if (req.validationErrors() || req.validationErrors().length > 0)
             return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.StatusCode.BAD_REQUEST);
         let loginDetails = {

@@ -11,11 +11,16 @@ exports.logging = {
 };
 
 exports.mssql = {
-    host: 'CYNODT022',
     dialect: 'mssql',
+    host: 'localhost',
+    port: 1433, // Default port
     define: {
         schema: "dbo",
         freezeTableName: false
+    },
+    dialectOptions: {
+        instanceName: 'MSSQLSERVER14',
+        requestTimeout: 30000
     },
     logging: false,
     pool: {
