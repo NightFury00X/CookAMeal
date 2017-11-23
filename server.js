@@ -103,14 +103,13 @@ app.use(function (err, req, res, next) {
 
 // Routes Error 404
 app.use(function (req, res, next) {
-    console.log('Error', req.url);
-    let err = new Error('The Route ' + req.url + ' is Not Found');
-    res.status(CommonConfig.StatusCode.NOT_FOUND).send(
-        {
-            success: false,
-            data: '{}',
-            error: err.message
-        }
-    );
+    // let err = new Error('The Route ' + req.url + ' is Not Found');
+    // res.status(CommonConfig.StatusCode.NOT_FOUND).send(
+    //     {
+    //         success: false,
+    //         data: '{}',
+    //         error: err.message
+    //     }
+    // );
     next();
 });
