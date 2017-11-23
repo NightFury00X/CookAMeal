@@ -4,6 +4,7 @@ let express = require('express'),
     bodyParser = require('body-parser'),
     expressValidator = require('express-validator'),
     morgan = require('morgan'),
+    json = require('morgan-json'),
     passport = require('passport'),
     errorHandler = require('errorhandler'),
     db = require('./Application/Modals'),
@@ -41,7 +42,8 @@ app.use(bodyParser.json());
 app.use(expressValidator());
 
 // Hook up the HTTP logger.
-app.use(morgan('common'));
+const format = json(':remote-addr :remote-user :date :method :url HTTP:http-version :status :res[content-length] :referrer :user-agent');
+app.use(morgan(format));
 
 //To make requests lighter and load faster
 app.use(compression());
@@ -103,13 +105,13 @@ app.use(function (err, req, res, next) {
 
 // Routes Error 404
 app.use(function (req, res, next) {
-    // let err = new Error('The Route ' + req.url + ' is Not Found');
-    // res.status(CommonConfig.StatusCode.NOT_FOUND).send(
-    //     {
-    //         success: false,
-    //         data: '{}',
-    //         error: err.message
-    //     }
-    // );
+    let err = new Error('The Route ' + req.url + ' is Not Found');
+    res.status(CommonConfig.StatusCode.NOT_FOUND).send(
+        {
+            success: false,
+            data: '{}',
+            error: err.message
+        }
+    );
     next();
 });

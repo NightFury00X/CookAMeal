@@ -71,7 +71,6 @@ let Anonymous = {
             if (!result)
                 return responseHelper.setErrorResponse({message: 'Invalid User Credentials.'}, res, CommonConfig.StatusCode.UNAUTHORIZED);
             
-            console.log('Login Details: ', result);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.StatusCode.OK);
         } catch (error) {
             next(error);
