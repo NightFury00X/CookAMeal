@@ -16,7 +16,8 @@ let express = require('express'),
     mkdirp = require('mkdirp'),
     config = require('./Configurations/Main'),
     CommonConfig = require('./Configurations/Helpers/common-config');
-
+// var multer = require('multer');
+var upload = multer();
 
 let logger = new (winston.Logger)({
     expressFormat: true,
@@ -34,7 +35,10 @@ let hookJWTStrategy = require('./Configurations/Passport/passport-strategy');
 // Upload file folder
 let uploadFileLocation = __dirname + '/Uploads';
 
+let logLocation = __dirname + '/logs/errors';
+
 mkdirp.sync(uploadFileLocation);
+mkdirp.sync(logLocation);
 
 // Initializations.
 let app = express();
@@ -43,9 +47,8 @@ let server = require('http').createServer(app);
 
 // Parse as urlencoded and json.
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
 
-app.use(multer()); // for parsing multipart/form-data
+app.use(bodyParser.json());
 
 app.use(expressValidator());
 

@@ -137,7 +137,5 @@ function UpdateLinkedMediaObject(model, trans) {
             user_type_id: model.user_type_id,
             objectType: CommonConfig.ObjectType.Profile
         }
-    }, {transaction: trans}).then(function (media) {
-        console.log('Updated')
-    });
+    }, {transaction: trans});
 }

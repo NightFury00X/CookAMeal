@@ -61,13 +61,13 @@ module.exports = function (sequelize, DataTypes) {
     let UserTypeModel = sequelize.define('UserType', modelDefinition, modelOptions);
     
     UserTypeModel.associate = function (models) {
-        UserTypeModel.hasOne(models.User);
+        UserTypeModel.hasOne(models.User, { onDelete: 'CASCADE' });
         UserTypeModel.hasOne(models.Profile);
         UserTypeModel.hasOne(models.MediaObject);
-        UserTypeModel.hasOne(models.Address);
-        UserTypeModel.hasOne(models.Category);
-        UserTypeModel.hasOne(models.Certificate);
-        UserTypeModel.hasOne(models.IdentificationCard);
+        UserTypeModel.hasOne(models.Address, { onDelete: 'CASCADE' });
+        UserTypeModel.hasOne(models.Category, { onDelete: 'CASCADE' });
+        UserTypeModel.hasOne(models.Certificate, { onDelete: 'CASCADE' });
+        UserTypeModel.hasOne(models.IdentificationCard, { onDelete: 'CASCADE' });
     };
     
     return UserTypeModel;

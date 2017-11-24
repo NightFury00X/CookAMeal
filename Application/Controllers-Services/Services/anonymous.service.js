@@ -11,9 +11,11 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
         let userData = registrationData.user;
+      
         userData.allergies = JSON.stringify(userData.allergies);
         
         let type = CommonConfig.UserType.Normal_User;
+        
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbId) {
             let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbId);

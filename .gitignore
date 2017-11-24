@@ -72,4 +72,4 @@ web.config
 /Uploads/
 /log/
 Configurations/Errors/
-log/
+/logs/
