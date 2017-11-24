@@ -55,10 +55,10 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 profileImage.imageurl = config.UPLOAD_LOCATION + profileImage.filename;
                 ProfileMediaObject = await db.MediaObject.create(profileImage, {transaction: trans});
             }
-            if (files.identificationCard) {
+            if (files.identification_card) {
                 let identificationCardMedia = files.identificationCard[0];
                 identificationCardMedia.user_type_id = userType.id;
-                identificationCardMedia.objectT_type = CommonConfig.ObjectType.IdentificationCard;
+                identificationCardMedia.objectt_type = CommonConfig.ObjectType.IdentificationCard;
                 identificationCardMedia.imageurl = config.UPLOAD_LOCATION + identificationCardMedia.filename;
                 IdenitificateMediaObject = await db.MediaObject.create(identificationCardMedia, {transaction: trans});
                 
