@@ -3,8 +3,6 @@
 let express = require('express'),
     bodyParser = require('body-parser'),
     expressValidator = require('express-validator'),
-    multer = require('multer'),
-    json = require('morgan-json'),
     passport = require('passport'),
     errorHandler = require('errorhandler'),
     db = require('./Application/Modals'),
@@ -16,8 +14,6 @@ let express = require('express'),
     mkdirp = require('mkdirp'),
     config = require('./Configurations/Main'),
     CommonConfig = require('./Configurations/Helpers/common-config');
-// var multer = require('multer');
-var upload = multer();
 
 let logger = new (winston.Logger)({
     expressFormat: true,
@@ -51,12 +47,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(expressValidator());
-
-// Hook up the HTTP logger.
-// const format = json(':remote-addr :remote-user :date :method :url HTTP:http-version :status :res[content-length] :referrer :user-agent');
-// app.use(morgan(format));
-const format = ':remote-addr :remote-user :date :method :url HTTP:http-version :status :res[content-length] :referrer :user-agent';
-// app.use(morgan(format));
 
 //To make requests lighter and load faster
 app.use(compression());
@@ -136,12 +126,6 @@ app.use(expressWinston.errorLogger({
     ],
     meta: true
 }));
-
-// Optionally you can include your custom error handler after the logging.
-// app.use(express.errorLogger({
-//     dumpExceptions: true,
-//     showStack: true
-// }));
 
 db.sequelize.sync({
     Force: true

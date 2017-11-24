@@ -40,7 +40,7 @@ let Anonymous = {
             let files = await uploadFile(req, res);
             let registrationData = JSON.parse(req.body.details);
            
-            if(!registrationData || !registrationData.user && !registrationData.address && !registrationData.social)
+            if(!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
                 return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.StatusCode.BAD_REQUEST);
             
             console.log('Data: ', registrationData);

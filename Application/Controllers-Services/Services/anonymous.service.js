@@ -11,8 +11,8 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     const trans = await db.sequelize.transaction();
     try {
         let userData = registrationData.user;
-      
-        userData.allergies = JSON.stringify(userData.allergies);
+        if (userData.allergies)
+            userData.allergies = JSON.stringify(userData.allergies);
         
         let type = CommonConfig.UserType.Normal_User;
         
@@ -59,14 +59,14 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 identificationCardMedia.objectType = CommonConfig.ObjectType.IdentificationCard;
                 identificationCardMedia.imageurl = config.UPLOAD_LOCATION + identificationCardMedia.filename;
                 IdenitificateMediaObject = await db.MediaObject.create(identificationCardMedia, {transaction: trans});
-    
+                
                 //Adding Identification Card Details
-                if(registrationData.identificationCard) {
+                if (registrationData.identificationCard) {
                     let identificationCard = registrationData.identificationCard
-    
+                    
                     identificationCard.media_object_id = IdenitificateMediaObject.id;
                     identificationCard.user_type_id = userType.id;
-    
+                    
                     identificationCardData = await db.IdentificationCard.create(identificationCard, {transaction: trans});
                 }
             }
@@ -82,14 +82,14 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         let tempData = userData;
         delete tempData.password;
         tempData.user_type_id = userType.id;
-        tempData.media_object_id =ProfileMediaObject? ProfileMediaObject.id : null;
+        tempData.media_object_id = ProfileMediaObject ? ProfileMediaObject.id : null;
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
         
         //Adding user address and social
         registrationData.address.profile_id = userProfileData.id;
         registrationData.social.profile_id = userProfileData.id;
         await db.Address.create(registrationData.address, {transaction: trans});
-        await db.Social.create(registrationData.social, {transaction: trans});        
+        await db.Social.create(registrationData.social, {transaction: trans});
         
         // committing transaction
         await trans.commit();
