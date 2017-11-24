@@ -18,9 +18,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbid) {
-            console.log('FB: ', registrationData.facebook);
             let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid);
-            console.log('Fb: ', fb);
             if (fb)
                 type = CommonConfig.UserType.Facebook_User;
         }
