@@ -134,7 +134,7 @@ AnonymousService.prototype.Authenticate = async (loginDetails) => {
         
         if (!userType)
             return null;
-        
+
         return {
             token: generateToken(userFound.userInfo),
             user: {
@@ -142,7 +142,7 @@ AnonymousService.prototype.Authenticate = async (loginDetails) => {
                 fullname: userType.Profile.fullName,
                 type: userType.type,
                 role: userType.role,
-                profile_url: userType.MediaObjects ? userType.MediaObjects[0].imageurl : ''
+                profile_url: userType.MediaObject ? userType.MediaObject.imageurl : ''
             }
         };
     } catch (error) {
