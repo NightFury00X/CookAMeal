@@ -44,8 +44,18 @@
       <file leaf-file-name="anonymous.service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+            <state relative-caret-position="152">
+              <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="profile.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Application/Modals/profile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="65" column="37" lean-forward="true" selection-start-line="65" selection-start-column="37" selection-end-line="65" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -202,6 +212,12 @@
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
               <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Application" type="462c0819:PsiDirectoryNode" />
+              <item name="Modals" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
               <item name="Routes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -306,14 +322,7 @@
       <workItem from="1511456299349" duration="61000" />
       <workItem from="1511456378761" duration="5767000" />
       <workItem from="1511463926683" duration="3572000" />
-      <workItem from="1511501906709" duration="15626000" />
-    </task>
-    <task id="LOCAL-00041" summary="Fixed user Authentication using credentials.">
-      <created>1510915884780</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1510915884780</updated>
+      <workItem from="1511501906709" duration="16541000" />
     </task>
     <task id="LOCAL-00042" summary="Fixed user Authentication using credentials.">
       <created>1510917116855</created>
@@ -651,11 +660,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511528720465</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="Fixed profile image URL.">
+      <created>1511529130530</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1511529130530</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="328866000" />
+    <option name="totallyTimeSpent" value="329781000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1054,14 +1070,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Modals/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="133" column="29" lean-forward="true" selection-start-line="133" selection-start-column="29" selection-end-line="133" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Modals/user.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-95">
@@ -1129,10 +1137,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Modals/profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="65" column="37" lean-forward="true" selection-start-line="65" selection-start-column="37" selection-end-line="65" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+        <state relative-caret-position="152">
+          <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
           <folding />
         </state>
       </provider>
