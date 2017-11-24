@@ -12,7 +12,7 @@ exports.mssql = {
         schema: "dbo",
         freezeTableName: false,
     },
-    logging: false,
+    logging: true,
     pool: {
         max: 5,
         min: 0,
