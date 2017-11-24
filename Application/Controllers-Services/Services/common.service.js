@@ -9,8 +9,7 @@ CommonService.prototype.CheckUserTypeByUserId = async (fbId) => {
     try {
         return await db.UserType.findOne({
             attributes: ['id'],
-            where: {userid: fbId},
-            raw: true
+            where: {user_id: fbId}
         });
     } catch (error) {
         return error;

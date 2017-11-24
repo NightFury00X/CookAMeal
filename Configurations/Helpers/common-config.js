@@ -22,8 +22,8 @@ CommonConfig.ObjectType = {
 };
 
 CommonConfig.UserType = {
-    Facebook_User: 1,
-    Normal_User: 2
+    Normal_User: 1,
+    Facebook_User: 2
 };
 
 CommonConfig.StatusCode = {

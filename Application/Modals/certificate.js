@@ -22,8 +22,7 @@ module.exports = function (sequelize, DataTypes) {
     let Certificate = sequelize.define('Certificate', modelDefinition, modelOptions);
     
     Certificate.associate = function (models) {
-        // Certificate.belongsTo(models.MediaObject);
-        // Certificate.belongsTo(models.UserType);
+        Certificate.belongsTo(models.MediaObject);
     };
     
     return Certificate;

@@ -34,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        zipcode: {
+        zip_code: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {

@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false
         },
-        userid: {
+        user_id: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: {
@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
                 fields: [sequelize.fn('lower', sequelize.col('email'))]
             },
         },
-        type: { // 1 - Normal User, 2 - Facebook User
+        user_type: { // 1 - Normal User, 2 - Facebook User
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
@@ -29,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        role: {   // 1 - Cook, 2 - Customer, 3 - Admin
+        user_role: {   // 1 - Cook, 2 - Customer, 3 - Admin
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
@@ -51,8 +51,8 @@ module.exports = function (sequelize, DataTypes) {
                 return {
                     id: this.id,
                     username: this.userid,
-                    role: this.role,
-                    type: this.type
+                    role: this.user_role,
+                    type: this.user_type
                 }
             }
         }

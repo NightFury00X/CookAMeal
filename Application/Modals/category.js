@@ -32,7 +32,7 @@ module.exports = function (sequelize, DataTypes) {
     let Category = sequelize.define('Category', modelDefinition, modelOptions);
     
     Category.associate = function (models) {
-        // Category.belongsTo(models.MediaObject, {onDelete: 'CASCADE'});
+        Category.belongsTo(models.MediaObject);
     };
     
     return Category;

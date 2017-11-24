@@ -8,10 +8,10 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
 let Anonymous = {
     FbSignIn: async (req, res, next) => {
         try {
-            req.check('fbId').notEmpty();
+            req.check('fbid').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
                 return responseHelper.setErrorResponse({message: 'Unable to connect with facebook.'}, res, 201);
-            let fbId = req.body.fbId;
+            let fbId = req.body.fbid;
             let user = await CommonService.CheckUserTypeByUserId(fbId);
             if (!user)
                 return responseHelper.setErrorResponse({message: 'facebook user not exist.'}, res, CommonConfig.StatusCode.OK);

@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        typeId: {
+        type_id: {
             type: DataTypes.STRING,
             allowNull: false,
         },

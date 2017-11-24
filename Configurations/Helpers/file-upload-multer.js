@@ -14,14 +14,14 @@ let upload = multer({
     fileFilter: function (req, file, callback) {
         let ext = path.extname(file.originalname);
         if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-            return callback(new Error('Only images are allowed'))
+            return callback(new Error('Only valid image formats [".jpg", ".jpeg", ".png"] are allowed'))
         }
         callback(null, true)
     },
     // limits: {
     //     fileSize: 5000000
     // }
-}).fields([{name: 'profile', maxCount: 1}, {name: 'certificate', maxCount: 1}, {name: 'identificationCard', maxCount: 1}, {name: 'category', maxCount: 1}]);
+}).fields([{name: 'profile', maxCount: 1}, {name: 'certificate', maxCount: 1}, {name: 'identificationcard', maxCount: 1}, {name: 'category', maxCount: 1}]);
 
 let uploadFile = function (req, res) {
     return new Promise((resolve, reject) => {

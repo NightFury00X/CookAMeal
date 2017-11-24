@@ -69,13 +69,13 @@ module.exports = function (sequelize, DataTypes) {
         description: {
             type: DataTypes.TEXT
         },
-        dietpreffrence: {
+        diet_preference: {
             type: DataTypes.STRING
         },
         allergies: {
             type: DataTypes.STRING
         },
-        type: {
+        user_role: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
@@ -85,10 +85,10 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        cardtypebankdetails: {
+        card_type_bank_details: {
             type: DataTypes.STRING
         },
-        drivingdistance: {
+        driving_distance: {
             type: DataTypes.FLOAT,
             validate: {
                 isFloat: {
@@ -96,6 +96,9 @@ module.exports = function (sequelize, DataTypes) {
                     msg: 'Invalid driving distance value.'
                 }
             }
+        },
+        allow_notification: {
+            type: DataTypes.BOOLEAN
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
@@ -117,11 +120,6 @@ module.exports = function (sequelize, DataTypes) {
     let ProfileModel = sequelize.define('Profile', modelDefinition, modelOptions);
     
     ProfileModel.associate = function (models) {
-        // ProfileModel.hasOne(models.Address);
-        // ProfileModel.hasOne(models.Social);
-        // ProfileModel.hasOne(models.Category);
-        // ProfileModel.hasOne(models.Certificate);
-        // ProfileModel.hasOne(models.IdentificationCard);
         ProfileModel.belongsTo(models.MediaObject);
     };
     
@@ -131,11 +129,11 @@ module.exports = function (sequelize, DataTypes) {
 function UpdateLinkedMediaObject(model, trans) {
     let MediaObject = this.associations.MediaObject.target;
     MediaObject.update({
-        linkedObject: model.id
+        linked_object: model.id
     }, {
         where: {
             user_type_id: model.user_type_id,
-            objectType: CommonConfig.ObjectType.Profile
+            object_type: CommonConfig.ObjectType.Profile
         }
     }, {transaction: trans});
 }

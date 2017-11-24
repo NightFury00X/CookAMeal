@@ -38,11 +38,11 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        objectType: {
+        object_type: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        linkedObject: {
+        linked_object: {
             type: DataTypes.STRING,
             allowNull: true
         },
