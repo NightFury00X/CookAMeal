@@ -19,7 +19,6 @@ let Anonymous = {
             // Get User Details
             let userDetails = await CommonService.GetUserDetailsByUserTypeId(user.id);
             
-            console.log('User Details: ', userDetails);
             //Generate Token        
             let userData = {
                 id: userDetails.userid,
