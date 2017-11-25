@@ -19,7 +19,7 @@ exports.mssql = {
         freezeTableName: false
     },
     dialectOptions: {
-        instanceName: 'MSSQLSERVER',
+        instanceName: 'MSSQLSERVER14',
         requestTimeout: 30000
     },
     logging: false,
@@ -41,4 +41,4 @@ exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
 };
 
-exports.UPLOAD_LOCATION = 'E:\\Cook-A-Meal\\Uploads\\';
+exports.UPLOAD_LOCATION = 'E:\\Node\\Cook-A-Meal\\Uploads\\';

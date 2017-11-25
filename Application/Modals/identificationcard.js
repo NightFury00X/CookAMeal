@@ -29,31 +29,14 @@ module.exports = function (sequelize, DataTypes) {
     
     // 2: The model options.
     let modelOptions = {
-        hooks: {
-            beforeCreate: UpdateLinkedMediaObject
-        },
         underscored: true
     };
     
     let IdentificationCard = sequelize.define('IdentificationCard', modelDefinition, modelOptions);
     
     IdentificationCard.associate = function (models) {
-        IdentificationCard.belongsTo(models.MediaObject);
+        IdentificationCard.hasOne(models.MediaObject, { onDelete: 'CASCADE' });
     };
     
     return IdentificationCard;
 };
-
-function UpdateLinkedMediaObject(model, trans) {
-    let MediaObject = this.associations.MediaObject.target;
-    MediaObject.update({
-        linkedObject: model.id
-    }, {
-        where: {
-            user_type_id: model.user_type_id,
-            objectType: CommonConfig.ObjectType.IdentificationCard
-        }
-    }, {transaction: trans}).then(function (media) {
-        console.log('Update')
-    });
-}

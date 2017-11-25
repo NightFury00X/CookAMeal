@@ -37,6 +37,7 @@ let Anonymous = {
         try {
             //upload file
             let files = await uploadFile(req, res);
+
             let registrationData = JSON.parse(req.body.details);
            
             if(!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)

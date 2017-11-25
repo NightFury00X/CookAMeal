@@ -1,5 +1,3 @@
-log = require('../Libs/log')(module);
-
 module.exports = {
     setSuccessResponse: function (data, res, statusCode) {
         let response = {

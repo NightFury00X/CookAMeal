@@ -10,48 +10,42 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false
         },
-        originalname: {
-            type: DataTypes.STRING,
+        mon: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
-        encoding: {
-            type: DataTypes.STRING,
+        tue: {
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
-        mimetype: {
-            type: DataTypes.STRING,
+        web: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        thu: {
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
-        destination: {
-            type: DataTypes.STRING,
+        fri: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        sat: {
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
-        filename: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        imageurl: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        size: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        object_type: {
-            type: DataTypes.STRING,
+        sun: {
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
-    
+
     // 2: The model options.
     let modelOptions = {
         underscored: true
     };
-    
-    let MediaObject = sequelize.define('MediaObject', modelDefinition, modelOptions);
-    
-    return MediaObject;
+
+    return sequelize.define('Day', modelDefinition, modelOptions);
 };

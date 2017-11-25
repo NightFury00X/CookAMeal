@@ -15,12 +15,6 @@ CommonConfig.AccessLevels = {
     Admin: Roles.Admin                               // 0100
 };
 
-CommonConfig.ObjectType = {
-    Profile: 1,
-    Document: 2,
-    Category: 3
-};
-
 CommonConfig.UserType = {
     Normal_User: 1,
     Facebook_User: 2
@@ -40,5 +34,6 @@ CommonConfig.StatusCode = {
 CommonConfig.ObjectType = {
     Profile: 1,
     IdentificationCard: 2,
-    Certificate: 3
+    Certificate: 3,
+    Category: 3
 };

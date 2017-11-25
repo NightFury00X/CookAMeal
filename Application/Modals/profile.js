@@ -106,9 +106,6 @@ module.exports = function (sequelize, DataTypes) {
 
 // 2: The model options.
     let modelOptions = {
-        hooks: {
-            beforeCreate: UpdateLinkedMediaObject
-        },
         underscored: true,
         getterMethods: {
             fullName() {
@@ -120,20 +117,13 @@ module.exports = function (sequelize, DataTypes) {
     let ProfileModel = sequelize.define('Profile', modelDefinition, modelOptions);
     
     ProfileModel.associate = function (models) {
-        ProfileModel.belongsTo(models.MediaObject);
+        ProfileModel.hasOne(models.Address, { onDelete: 'CASCADE' });
+        ProfileModel.hasOne(models.Social, { onDelete: 'CASCADE' });
+        ProfileModel.hasOne(models.Certificate, { onDelete: 'CASCADE' });
+        ProfileModel.hasOne(models.IdentificationCard, { onDelete: 'CASCADE' });
+        ProfileModel.hasOne(models.Recipe, { onDelete: 'CASCADE' });
+        ProfileModel.hasMany(models.MediaObject, { onDelete: 'CASCADE' });
     };
     
     return ProfileModel;
 };
-
-function UpdateLinkedMediaObject(model, trans) {
-    let MediaObject = this.associations.MediaObject.target;
-    MediaObject.update({
-        linked_object: model.id
-    }, {
-        where: {
-            user_type_id: model.user_type_id,
-            object_type: CommonConfig.ObjectType.Profile
-        }
-    }, {transaction: trans});
-}

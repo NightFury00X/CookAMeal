@@ -12,7 +12,7 @@ let storage = multer.diskStorage({
 let upload = multer({
     storage: storage,
     fileFilter: function (req, file, callback) {
-        let ext = path.extname(file.originalname);
+        let ext = path.extname(file.originalname).toLowerCase();
         if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
             return callback(new Error('Only valid image formats [".jpg", ".jpeg", ".png"] are allowed'))
         }

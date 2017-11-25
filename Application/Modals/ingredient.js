@@ -10,20 +10,30 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false
         },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        quantity: {
+            type: DataTypes.FLOAT,
+            allowNull: false
+        },
+        unit: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+        },
+        cost: {
+            type: DataTypes.DECIMAL,
+            allowNull: false
+        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
-    
+
     // 2: The model options.
     let modelOptions = {
         underscored: true
     };
-    
-    let Certificate = sequelize.define('Certificate', modelDefinition, modelOptions);
-    
-    Certificate.associate = function (models) {
-        Certificate.hasMany(models.MediaObject, { onDelete: 'CASCADE' });
-    };
-    
-    return Certificate;
+
+    return sequelize.define('Ingredients', modelDefinition, modelOptions);
 };
