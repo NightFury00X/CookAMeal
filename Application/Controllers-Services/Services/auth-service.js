@@ -127,11 +127,10 @@ AuthService.prototype.Authenticate = async (loginDetails) => {
 
 AuthService.prototype.GetUserData = async (userInfo) => {
     try {
-        return await db.User.findAll({
-            attributes: {exclude: ['password', 'updated_at', 'deleted_at', 'created_at']},
-            where: {email: userInfo.email},
-            include: [{model: db.Address, paranoid: false, required: true},
-                {model: db.Social, paranoid: false, required: true}]
+        console.log(userInfo);
+        return await db.UserType.findOne({
+            where: {id: userInfo.id},
+            include: [{model: db.Profile}]
         });
     } catch (error) {
         throw (error);

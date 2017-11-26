@@ -6,7 +6,7 @@ const AuthController = require('../../Application/Controllers-Services/Controlle
 const authRoutes = function (passport) {
     
     //1: Get User Data
-    // router.get('/:id', middlewares, AuthController.getUserData);
+    router.get('/user', AuthController.Auth.GetUser);
     
     return router;
 };

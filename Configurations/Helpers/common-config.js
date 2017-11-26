@@ -1,18 +1,18 @@
 'use strict';
 let CommonConfig = module.exports;
 
-let Roles = CommonConfig.ROLES = {
+let ROLES = CommonConfig.ROLES = {
     COOK: 1,        //  0001
     CUSTOMER: 2,    //  0010
     ADMIN: 4,       //  0100
     ALL: 8          //  1000
 };
 
-CommonConfig.AccessLevels = {
-    ALL: Roles.COOK | Roles.CUSTOMER | Roles.ADMIN,  // 0111
-    COOK: Roles.COOK | Roles.ADMIN,                  // 0101
-    CUSTOMER: Roles.CUSTOMER | Roles.ADMIN,          // 0110
-    ADMIN: Roles.ADMIN                               // 0100
+CommonConfig.ACCESS_LEVELS = {
+    ALL: ROLES.COOK | ROLES.CUSTOMER | ROLES.ADMIN,  // 0111
+    COOK: ROLES.COOK | ROLES.ADMIN,                  // 0101
+    CUSTOMER: ROLES.CUSTOMER | ROLES.ADMIN,          // 0110
+    ADMIN: ROLES.ADMIN                               // 0100
 };
 
 CommonConfig.USER_TYPE = {

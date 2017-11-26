@@ -12,31 +12,31 @@ const CookRoutes = require('./Cook/cook.routes');
 
 const APIRoutes = function (passport) {
     const MiddleWareRules = {
-        Admin: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.AccessLevels.Admin, AdminRoutes(passport))],
+        Admin: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.ADMIN, AdminRoutes(passport))],
         Auth: [passport.authenticate('jwt', {session: false})],
-        Common: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.AccessLevels.All, CommonRoutes(passport))],
-        Cook: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.AccessLevels.Cook, CookRoutes(passport))],
-        Customer: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.AccessLevels.Customer, CookRoutes(passport))]
+        Common: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.ALL, CommonRoutes(passport))],
+        Cook: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.COOK, CookRoutes(passport))],
+        Customer: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.CUSTOMER, CookRoutes(passport))]
     };
-    
+
     //Anonymous Routes
     router.use('/', AnonymousRoutes(passport));
-    
+
     //Anonymous Routes
     router.use('/auth', MiddleWareRules.Auth, AuthRoutes(passport));
-    
+
     // Auth Routes    
     router.use('/common/', MiddleWareRules.Common);
-    
+
     //Admin Routes
     router.use('/admin/', MiddleWareRules.Admin);
-    
+
     // Cook Routes    
     router.use('/cook/', MiddleWareRules.Cook);
 
     router.use(function (req, res, next) {
         let err = new Error('The Route ' + req.url + ' is Not Found');
-        res.status(CommonConfig.StatusCode.NOT_FOUND).send(
+        res.status(CommonConfig.STATUS_CODE.NOT_FOUND).send(
             {
                 success: false,
                 data: '{}',

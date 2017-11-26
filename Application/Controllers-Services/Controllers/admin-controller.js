@@ -8,7 +8,10 @@ let Category = {
         try {
             //upload file
             let files = await uploadFile(req, res);
-            
+
+            console.log('Request Body: ', req.body);
+            console.log('==============================================================');
+            console.log('Files: ', files);
             let categoryName = {
                 name: req.body.name
             };

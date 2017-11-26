@@ -12,12 +12,11 @@ function hookJWTStrategy(passport) {
     options.secretOrKey = config.keys.secret;
     options.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
     options.ignoreExpiration = false;
-    
     passport.use(new JWTStrategy(options, function (JWTPayload, callback) {
         db.UserType.findOne(
             {
-                attributes: ['id', 'userid', 'role', 'type'],
-                where: {userid: JWTPayload.username}
+                attributes: ['id', 'user_id', 'user_role', 'user_type'],
+                where: {user_id: JWTPayload.username}
             })
             .then(function (user) {
                 if (!user) {

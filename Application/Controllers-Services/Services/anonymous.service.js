@@ -63,7 +63,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 let profileImage = files.profile[0];
                 profileImage.profile_id = userProfileData.id;
                 profileImage.object_type = CommonConfig.OBJECT_TYPE.PROFILE;
-                profileImage.imageurl = config.UPLOAD_LOCATION + profileImage.filename;
+                profileImage.imageurl = CommonConfig.FILE_LOCATIONS.PROFILE + profileImage.filename;
                 ProfileMediaObject = await db.MediaObject.create(profileImage, {transaction: trans});
             }
             if (files.identification_card) {
@@ -78,16 +78,16 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 let identificationCardMedia = files.identification_card[0];
                 identificationCardMedia.identification_card_id = identificationCardData.id;
                 identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
-                identificationCardMedia.imageurl = config.UPLOAD_LOCATION + identificationCardMedia.filename;
+                identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
 
                 IdenitificateMediaObject = await db.MediaObject.create(identificationCardMedia, {transaction: trans});
             }
-            // if (files.certificate) {
-            //     let certificate = files.certificate[0];
-            //     certificate.user_type_id = userType.id;
-            //     certificate.imageurl = config.UPLOAD_LOCATION + certificate.filename;
-            //     certificateMediaObject = await db.MediaObject.create(certificate, {transaction: trans});
-            // }
+            if (files.certificate) {
+                let certificate = files.certificate[0];
+                certificate.user_type_id = userType.id;
+                certificate.imageurl = CommonConfig.FILE_LOCATIONS.CERTIFICATE + certificate.filename;
+                certificateMediaObject = await db.MediaObject.create(certificate, {transaction: trans});
+            }
         }
 
         // committing transaction
@@ -127,15 +127,16 @@ AnonymousService.prototype.Authenticate = async (loginDetails) => {
             include: [{
                 model: db.Profile,
                 include: [{
-                    model: db.MediaObject
+                    model: db.MediaObject,
+                    where: {
+                        object_type: CommonConfig.OBJECT_TYPE.PROFILE
+                    }
                 }]
             }]
         });
 
         if (!userType)
             return null;
-
-        //return userType.Profile.MediaObjects;
 
         return {
             token: generateToken(userFound.userInfo),
@@ -144,7 +145,7 @@ AnonymousService.prototype.Authenticate = async (loginDetails) => {
                 fullname: userType.Profile.fullName,
                 user_type: userType.user_type,
                 user_role: userType.user_role,
-                profile_url: userType.Profile.MediaObjects ? userType.Profile.MediaObjects[0].imageurl : ''
+                profile_url: userType.Profile.MediaObjects.length > 0 ? userType.Profile.MediaObjects[0].imageurl : ''
             }
         };
     } catch (error) {

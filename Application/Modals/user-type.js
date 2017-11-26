@@ -50,9 +50,9 @@ module.exports = function (sequelize, DataTypes) {
             userInfo() {
                 return {
                     id: this.id,
-                    username: this.userid,
-                    role: this.user_role,
-                    type: this.user_type
+                    username: this.user_id,
+                    user_role: this.user_role,
+                    user_type: this.user_type
                 }
             }
         }

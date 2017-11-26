@@ -73,7 +73,7 @@ app.use(heltmet());
 app.use(expressWinston.logger({
     expressFormat: true,
     colorize: true,
-    exitOnError:true,
+    exitOnError: true,
     transports: [
         new winston.transports.Console({
             json: false,
@@ -111,7 +111,7 @@ app.use('/api', require('./Routes/routes')(passport));
 // express-winston error Logger
 app.use(expressWinston.errorLogger({
     expressFormat: true,
-    exitOnError:false,
+    exitOnError: false,
     transports: [
         new winston.transports.DailyRotateFile({
             name: 'file',
@@ -148,10 +148,17 @@ function startApp() {
     });
 }
 
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    let err = new Error('The Route ' + req.url + ' is Not Found');
+    err.status = 404;
+    next(err);
+});
+
 // Error Response Handler
 app.use(function (err, req, res, next) {
     // Do logging and user-friendly error message display
-    res.status(CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
+    res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
         {
             success: false,
             data: '{}',

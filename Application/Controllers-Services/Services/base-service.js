@@ -1,3 +1,5 @@
-BaseService = function() {};
+BaseService = function() {
+
+};
 
 module.exports = BaseService;
