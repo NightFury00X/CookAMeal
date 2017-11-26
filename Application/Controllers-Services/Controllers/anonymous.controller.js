@@ -14,7 +14,7 @@ let Anonymous = {
             let fbId = req.body.fbid;
             let user = await CommonService.CheckUserTypeByUserId(fbId);
             if (!user)
-                return responseHelper.setErrorResponse({message: 'facebook user not exist.'}, res, CommonConfig.StatusCode.OK);
+                return responseHelper.setErrorResponse({message: 'facebook user not exist.'}, res, CommonConfig.STATUS_CODE.OK);
             
             // Get User Details
             let userDetails = await CommonService.GetUserDetailsByUserTypeId(user.id);
@@ -28,7 +28,7 @@ let Anonymous = {
                 profile_url: userDetails.Profile.MediaObject ? userDetails.Profile.MediaObject.imageurl : ''
             };
             let token = await CommonService.GenerateToken(userDetails.userInfo, userData);
-            return responseHelper.setSuccessResponse(token, res, CommonConfig.StatusCode.OK);
+            return responseHelper.setSuccessResponse(token, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -41,14 +41,14 @@ let Anonymous = {
             let registrationData = JSON.parse(req.body.details);
            
             if(!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
-                return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.StatusCode.BAD_REQUEST);
+                return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
             
             console.log('Data: ', registrationData);
             console.log('--------------------------------------------------------------------------');
             console.log('Files: ', files);
             
             let result = await AnonymousService.SignUp(registrationData, files);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.StatusCode.CREATED);
+            return responseHelper.setSuccessResponse('Ok', res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
         }
@@ -57,7 +57,7 @@ let Anonymous = {
         req.check('username').notEmpty();
         req.check('password').notEmpty();
         if (req.validationErrors() || req.validationErrors().length > 0)
-            return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.StatusCode.BAD_REQUEST);
+            return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
         let loginDetails = {
             email: req.body.username,
             password: req.body.password,
@@ -68,22 +68,22 @@ let Anonymous = {
             let userType = await CommonService.CheckUserTypeByUserId(loginDetails.email);
             
             if (!userType)
-                return responseHelper.setErrorResponse({message: 'Invalid User Credentials.'}, res, CommonConfig.StatusCode.UNAUTHORIZED);
+                return responseHelper.setErrorResponse({message: 'Invalid User Credentials.'}, res, CommonConfig.STATUS_CODE.UNAUTHORIZED);
             
             // If user found generate and get Token and User details.
             let result = await AnonymousService.Authenticate(loginDetails);
             
             if (!result)
-                return responseHelper.setErrorResponse({message: 'Invalid User Credentials.'}, res, CommonConfig.StatusCode.UNAUTHORIZED);
+                return responseHelper.setErrorResponse({message: 'Invalid User Credentials.'}, res, CommonConfig.STATUS_CODE.UNAUTHORIZED);
             
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.StatusCode.OK);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
     },
     ResetPassword: async (req, res, next) => {
         try {
-            return responseHelper.setSuccessResponse('Reset Password.', res, CommonConfig.StatusCode.OK);
+            return responseHelper.setSuccessResponse('Reset Password.', res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

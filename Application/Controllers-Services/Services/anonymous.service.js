@@ -14,24 +14,24 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         if (userData.allergies)
             userData.allergies = JSON.stringify(userData.allergies);
 
-        let type = CommonConfig.UserType.Normal_User;
+        let type = CommonConfig.USER_TYPE.NORMAL_USER;
 
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbid) {
             let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid);
             if (!fb)
-                type = CommonConfig.UserType.Facebook_User;
+                type = CommonConfig.USER_TYPE.FACEBOOK_USER;
         }
 
         // Add user type
         let userType = await db.UserType.create({
-            user_id: type === CommonConfig.UserType.Normal_User ? userData.email : registrationData.facebook.fbid,
+            user_id: type === CommonConfig.USER_TYPE.NORMAL_USER ? userData.email : registrationData.facebook.fbid,
             user_type: type,
             user_role: userData.user_role
         }, {transaction: trans});
 
         //add user login data
-        if (type === CommonConfig.UserType.Normal_User) {
+        if (type === CommonConfig.USER_TYPE.NORMAL_USER) {
             await db.User.create({
                 user_type_id: userType.id,
                 email: userData.email,
@@ -62,7 +62,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             if (files.profile) {
                 let profileImage = files.profile[0];
                 profileImage.profile_id = userProfileData.id;
-                profileImage.object_type = CommonConfig.ObjectType.Profile;
+                profileImage.object_type = CommonConfig.OBJECT_TYPE.PROFILE;
                 profileImage.imageurl = config.UPLOAD_LOCATION + profileImage.filename;
                 ProfileMediaObject = await db.MediaObject.create(profileImage, {transaction: trans});
             }
@@ -77,7 +77,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
 
                 let identificationCardMedia = files.identification_card[0];
                 identificationCardMedia.identification_card_id = identificationCardData.id;
-                identificationCardMedia.object_type = CommonConfig.ObjectType.IdentificationCard;
+                identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
                 identificationCardMedia.imageurl = config.UPLOAD_LOCATION + identificationCardMedia.filename;
 
                 IdenitificateMediaObject = await db.MediaObject.create(identificationCardMedia, {transaction: trans});
@@ -123,7 +123,7 @@ AnonymousService.prototype.Authenticate = async (loginDetails) => {
         });
 
         let userType = await db.UserType.findOne({
-            where: {id: user.user_type_id, user_type: CommonConfig.UserType.Normal_User},
+            where: {id: user.user_type_id, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
             include: [{
                 model: db.Profile,
                 include: [{

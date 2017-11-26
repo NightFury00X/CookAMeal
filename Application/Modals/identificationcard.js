@@ -1,6 +1,5 @@
 // The Social Model.
 'use strict';
-let CommonConfig = require('../../Configurations/Helpers/common-config');
 
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.

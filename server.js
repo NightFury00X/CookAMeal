@@ -151,7 +151,7 @@ function startApp() {
 // Error Response Handler
 app.use(function (err, req, res, next) {
     // Do logging and user-friendly error message display
-    res.status(CommonConfig.StatusCode.INTERNAL_SERVER_ERROR).send(
+    res.status(CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
         {
             success: false,
             data: '{}',

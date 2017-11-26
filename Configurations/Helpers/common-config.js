@@ -1,26 +1,26 @@
 'use strict';
 let CommonConfig = module.exports;
 
-let Roles = CommonConfig.Roles = {
-    Cook: 1,        //  0001
-    Customer: 2,    //  0010
-    Admin: 4,       //  0100
-    All: 8          //  1000
+let Roles = CommonConfig.ROLES = {
+    COOK: 1,        //  0001
+    CUSTOMER: 2,    //  0010
+    ADMIN: 4,       //  0100
+    ALL: 8          //  1000
 };
 
 CommonConfig.AccessLevels = {
-    All: Roles.Cook | Roles.Customer | Roles.Admin,  // 0111
-    Cook: Roles.Cook | Roles.Admin,                  // 0101    
-    Customer: Roles.Customer | Roles.Admin,          // 0110  
-    Admin: Roles.Admin                               // 0100
+    ALL: Roles.COOK | Roles.CUSTOMER | Roles.ADMIN,  // 0111
+    COOK: Roles.COOK | Roles.ADMIN,                  // 0101
+    CUSTOMER: Roles.CUSTOMER | Roles.ADMIN,          // 0110
+    ADMIN: Roles.ADMIN                               // 0100
 };
 
-CommonConfig.UserType = {
-    Normal_User: 1,
-    Facebook_User: 2
+CommonConfig.USER_TYPE = {
+    NORMAL_USER: 1,
+    FACEBOOK_USER: 2
 };
 
-CommonConfig.StatusCode = {
+CommonConfig.STATUS_CODE = {
     OK: 200,
     CREATED: 201,
     ACCEPTED: 202,
@@ -31,9 +31,32 @@ CommonConfig.StatusCode = {
     INTERNAL_SERVER_ERROR: 500
 };
 
-CommonConfig.ObjectType = {
-    Profile: 1,
-    IdentificationCard: 2,
-    Certificate: 3,
-    Category: 3
+CommonConfig.OBJECT_TYPE = {
+    PROFILE: 1,
+    IDENTIFICATIONCARD: 2,
+    CERTIFICATE: 3,
+    CATEGORY: 3
+};
+
+CommonConfig.FILES = {
+    PROFILE: 'profile',
+    IDENTIFICATIONCARD: 'identification_card',
+    CERTIFICATE: 'certificate',
+    CATEGORY: 'category'
+};
+
+CommonConfig.FILE_LOCATIONS = {
+    PROFILE: 'uploads/profiles/',
+    IDENTIFICATIONCARD: 'uploads/identification_cards/',
+    CERTIFICATE: 'uploads/certificates/',
+    CATEGORY: 'uploads/categories/',
+    MIX: 'uploads/mix/',
+};
+
+CommonConfig.WHITE_LIST = {
+    IMAGE_EXTENSTIONS: ['.JPG', '.jpg', '.JPEG', '.jpeg', '.PNG', '.png']
+};
+
+CommonConfig.ERRORS = {
+    INVALID_FILE_FORMAT: 'Invalid image file format. Please upload only .JPG, JPEG or .PNG only.'
 };

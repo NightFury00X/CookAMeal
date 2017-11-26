@@ -6,7 +6,7 @@ let Category = {
     FindAll: async (req, res, next) => {
         try {
             let result = await CommonService.GetCategories();
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.StatusCode.OK);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -14,10 +14,10 @@ let Category = {
     FindById: async (req, res, next) => {
         try {
             if (!req.params.id)
-                return responseHelper.setErrorResponse({message: 'Category not found.'}, res, CommonConfig.StatusCode.OK);
+                return responseHelper.setErrorResponse({message: 'Category not found.'}, res, CommonConfig.STATUS_CODE.OK);
             let catId = req.params.id;
             let result = await CommonService.GetCategoryById(catId);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.StatusCode.OK);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

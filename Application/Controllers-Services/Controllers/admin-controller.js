@@ -13,7 +13,7 @@ let Category = {
                 name: req.body.name
             };
             let result = await AdminService.Add(req.user.id, categoryName, files);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.StatusCode.CREATED);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
         }

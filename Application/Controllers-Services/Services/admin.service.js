@@ -1,6 +1,5 @@
 let db = require('../../Modals'),
     config = require('../../../Configurations/Main'),
-    CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 AdminService = function () {
 };
@@ -10,7 +9,6 @@ AdminService.prototype.Add = async (userid, category, files) => {
     try {
         let categoryData = await db.Category.create(category, {transaction: trans});
     
-        //upload profile image
         // let mediaObject;
         if (files && files.category) {
             let CategoryImage = files.category[0];
