@@ -3,14 +3,14 @@ module.exports = {
         let response = {
             "success": true,
             data: data,
-            "error": []
+            "error": null
         };
         this.setResponse(statusCode, response, res);
     },
     setErrorResponse: function (errors, res, statusCode) {
         let response = {
             "success": false,
-            data: [],
+            data: null,
             "error": errors
         };
         this.setResponse(statusCode, response, res);

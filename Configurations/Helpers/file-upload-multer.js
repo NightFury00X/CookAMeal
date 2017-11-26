@@ -51,10 +51,26 @@ let upload = multer({
 let uploadFile = function (req, res) {
     return new Promise((resolve, reject) => {
         upload(req, res, function (error) {
+            if (req.files && req.files.profile) {
+                let magic = fs.readFileSync(req.files.profile[0].path).toString('hex', 0, 4);
+
+                if (!CheckMagicNumbers(magic)) {
+                    fs.unlinkSync(req.files.profile[0].path);
+                    reject('You are uploading an invalid image file.');
+                }
+            }
             if (error) return reject(error);
             return resolve(req.files);
         });
     });
 };
+
+/**
+ * @return {boolean}
+ */
+function CheckMagicNumbers(magic) {
+    if (magic === CommonConfig.MAGIC_NUMBERS.JPG
+        || magic === CommonConfig.MAGIC_NUMBERS.PNG) return true;
+}
 
 module.exports = uploadFile;

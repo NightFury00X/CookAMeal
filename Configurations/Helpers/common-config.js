@@ -60,3 +60,10 @@ CommonConfig.WHITE_LIST = {
 CommonConfig.ERRORS = {
     INVALID_FILE_FORMAT: 'Invalid image file format. Please upload only .JPG, JPEG or .PNG only.'
 };
+
+CommonConfig.MAGIC_NUMBERS = {
+    JPG: 'ffd8ffe0',
+    JPG1: 'ffd8ffe1',
+    PNG: '89504e47',
+    GIF: '47494638'
+};
