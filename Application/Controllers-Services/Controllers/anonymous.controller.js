@@ -48,7 +48,7 @@ let Anonymous = {
             console.log('Files: ', files);
             
             let result = await AnonymousService.SignUp(registrationData, files);
-            return responseHelper.setSuccessResponse('Ok', res, CommonConfig.STATUS_CODE.CREATED);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
         }
