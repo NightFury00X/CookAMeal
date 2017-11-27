@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Helpers/common-config.js" afterPath="$PROJECT_DIR$/Configurations/Helpers/common-config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" afterPath="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Main/development.js" afterPath="$PROJECT_DIR$/Configurations/Main/development.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Main/production.js" afterPath="$PROJECT_DIR$/Configurations/Main/production.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,23 +24,9 @@
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="64" column="67" lean-forward="false" selection-start-line="64" selection-start-column="53" selection-end-line="64" selection-end-column="67" />
+              <caret line="64" column="57" lean-forward="false" selection-start-line="64" selection-start-column="57" selection-end-line="64" selection-end-column="57" />
               <folding>
                 <element signature="e#271#274#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="anonymous.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="50" column="50" lean-forward="false" selection-start-line="50" selection-start-column="50" selection-end-line="50" selection-end-column="50" />
-              <folding>
-                <element signature="e#455#1777#0" expanded="false" />
-                <element signature="e#2769#4058#0" expanded="false" />
-                <element signature="e#4105#4294#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -49,28 +35,18 @@
       <file leaf-file-name="development.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Configurations/Main/development.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
+            <state relative-caret-position="171">
               <caret line="45" column="21" lean-forward="false" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="production.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="production.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Configurations/Main/production.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="39" column="22" lean-forward="false" selection-start-line="39" selection-start-column="7" selection-end-line="39" selection-end-column="22" />
+            <state relative-caret-position="83">
+              <caret line="33" column="31" lean-forward="true" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -79,18 +55,18 @@
       <file leaf-file-name="file-upload-multer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="10" column="44" lean-forward="false" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+            <state relative-caret-position="264">
+              <caret line="21" column="45" lean-forward="true" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common-config.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common-config.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Configurations/Helpers/common-config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="53" column="54" lean-forward="true" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="54" />
+            <state relative-caret-position="88">
+              <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -178,11 +154,11 @@
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" />
-        <option value="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" />
         <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/Configurations/Main/production.js" />
         <option value="$PROJECT_DIR$/Configurations/Main/development.js" />
         <option value="$PROJECT_DIR$/Configurations/Helpers/common-config.js" />
+        <option value="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" />
+        <option value="$PROJECT_DIR$/Configurations/Main/production.js" />
       </list>
     </option>
   </component>
@@ -391,13 +367,6 @@
       <workItem from="1511501906709" duration="17025000" />
       <workItem from="1511664097701" duration="14228000" />
       <workItem from="1511714452174" duration="3951000" />
-    </task>
-    <task id="LOCAL-00059" summary="Added Scheme name.">
-      <created>1511169198296</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1511169198296</updated>
     </task>
     <task id="LOCAL-00060" summary="Change database mysql to mssql.">
       <created>1511169495576</created>
@@ -735,11 +704,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511765088909</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="Fixing upload folder location path.">
+      <created>1511765785618</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1511765785618</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="371232000" />
+    <option name="totallyTimeSpent" value="371630000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1185,22 +1161,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="10" column="44" lean-forward="false" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Configurations/Main/development.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="45" column="21" lean-forward="false" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -1216,25 +1176,41 @@
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="64" column="67" lean-forward="false" selection-start-line="64" selection-start-column="53" selection-end-line="64" selection-end-column="67" />
+          <caret line="64" column="57" lean-forward="false" selection-start-line="64" selection-start-column="57" selection-end-line="64" selection-end-column="57" />
           <folding>
             <element signature="e#271#274#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Configurations/Main/production.js">
+    <entry file="file://$PROJECT_DIR$/Configurations/Main/development.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="21" />
+        <state relative-caret-position="171">
+          <caret line="45" column="21" lean-forward="false" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Configurations/Helpers/common-config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="53" column="54" lean-forward="true" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="54" />
+        <state relative-caret-position="88">
+          <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="21" column="45" lean-forward="true" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configurations/Main/production.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="33" column="31" lean-forward="true" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
           <folding />
         </state>
       </provider>

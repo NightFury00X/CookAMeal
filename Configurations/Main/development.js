@@ -43,7 +43,7 @@ exports.keys = {
 
 exports.FOLDER_LOCATION = 'E:/Cook-A-Meal/uploads/';
 
-exports.FILE_LOCATION = 'E:/Cook-A-Meal/';
+exports.FILE_LOCATION = 'E:/Cook-A-Meal/uploads/';
 
 exports.UPLOAD_LOCATION = [
     {PATH: 'E:/Cook-A-Meal/uploads/profiles'},

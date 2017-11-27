@@ -8,19 +8,19 @@ let storage = multer.diskStorage({
         let dest;
         switch (file.fieldname) {
             case CommonConfig.FILES.PROFILE:
-                dest = CommonConfig.FILE_LOCATIONS.PROFILE;
+                dest = CommonConfig.FOLDER_LOCATIONS.PROFILE;
                 break;
             case CommonConfig.FILES.IDENTIFICATIONCARD:
-                dest = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD;
+                dest = CommonConfig.FOLDER_LOCATIONS.IDENTIFICATIONCARD;
                 break;
             case CommonConfig.FILES.CERTIFICATE:
-                dest = CommonConfig.FILE_LOCATIONS.CERTIFICATE;
+                dest = CommonConfig.FOLDER_LOCATIONS.CERTIFICATE;
                 break;
             case CommonConfig.FILES.CATEGORY:
-                dest = CommonConfig.FILE_LOCATIONS.CATEGORY;
+                dest = CommonConfig.FOLDER_LOCATIONS.CATEGORY;
                 break;
             default:
-                dest = CommonConfig.FILE_LOCATIONS.MIX;
+                dest = CommonConfig.FOLDER_LOCATIONS.MIX;
                 break;
         }
         console.log('Destination: ', dest);
