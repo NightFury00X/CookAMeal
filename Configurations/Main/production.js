@@ -30,8 +30,9 @@ exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
 };
 
-// exports.UPLOAD_LOCATION = 'cookamealapi.cynotecksandbox.com/uploads/';
-exports.FILE_LOCATION = 'uploads/';
+exports.FOLDER_LOCATION = 'uploads/';
+
+exports.FILE_LOCATION = 'cookamealapi.cynotecksandbox.com/uploads/';
 
 exports.UPLOAD_LOCATION = [
     {PATH: 'uploads/profiles'},

@@ -37,8 +37,6 @@ let logLocation = __dirname + '/logs/errors';
 mkdirp.sync(uploadFileLocation);
 mkdirp.sync(logLocation);
 
-let profiles_path = config.UPLOAD_LOCATION.PROFILE;
-console.log(profiles_path);
 config.UPLOAD_LOCATION.forEach(function (location) {
     console.log(location.PATH);
     if (!fs.existsSync(location.PATH))

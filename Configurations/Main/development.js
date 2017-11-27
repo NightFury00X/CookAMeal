@@ -41,6 +41,8 @@ exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
 };
 
+exports.FOLDER_LOCATION = 'E:/Cook-A-Meal/uploads/';
+
 exports.FILE_LOCATION = 'E:/Cook-A-Meal/';
 
 exports.UPLOAD_LOCATION = [
