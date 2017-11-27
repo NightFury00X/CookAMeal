@@ -23,7 +23,6 @@ let storage = multer.diskStorage({
                 dest = CommonConfig.FOLDER_LOCATIONS.MIX;
                 break;
         }
-        console.log('Destination: ', dest);
         callback(null, dest);
     },
     filename: function (req, file, callback) {

@@ -38,7 +38,6 @@ mkdirp.sync(uploadFileLocation);
 mkdirp.sync(logLocation);
 
 config.UPLOAD_LOCATION.forEach(function (location) {
-    console.log(location.PATH);
     if (!fs.existsSync(location.PATH))
         fs.mkdirSync(location.PATH);
 });

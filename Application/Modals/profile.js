@@ -56,8 +56,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         gender: {
-            type: DataTypes.CHAR,
-            length: 1,
+            type: DataTypes.CHAR(1),
             allowNull: false,
             validate: {
                 isIn: {

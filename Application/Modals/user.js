@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
 // 2: The model options.
     let modelOptions = {
         hooks: {
-            beforeValidate: hashPassword
+            // beforeValidate: hashPassword
         },
         underscored: true
     };
