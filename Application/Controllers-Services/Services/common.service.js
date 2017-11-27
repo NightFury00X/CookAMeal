@@ -5,6 +5,17 @@ let db = require('../../Modals'),
 CommonService = function () {
 };
 
+CommonService.prototype.CheckUserTypeByUserEmail = async (email) => {
+    try {
+        return await db.UserType.findOne({
+            attributes: ['id'],
+            where: {user_id: email}
+        });
+    } catch (error) {
+        return error;
+    }
+};
+
 CommonService.prototype.CheckUserTypeByUserId = async (fbId) => {
     try {
         return await db.UserType.findOne({

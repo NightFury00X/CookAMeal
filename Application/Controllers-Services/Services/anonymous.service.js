@@ -129,10 +129,7 @@ AnonymousService.prototype.Authenticate = async (loginDetails) => {
             include: [{
                 model: db.Profile,
                 include: [{
-                    model: db.MediaObject,
-                    where: {
-                        object_type: CommonConfig.OBJECT_TYPE.PROFILE
-                    }
+                    model: db.MediaObject
                 }]
             }]
         });

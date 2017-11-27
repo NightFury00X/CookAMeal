@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isIn: {
-                    args: [['1', '2']], 
+                    args: [['1', '2']],
                     msg: "Invalid user type."
                 }
             }
@@ -61,8 +61,9 @@ module.exports = function (sequelize, DataTypes) {
     let UserTypeModel = sequelize.define('UserType', modelDefinition, modelOptions);
     
     UserTypeModel.associate = function (models) {
-        UserTypeModel.hasOne(models.User, { onDelete: 'CASCADE' });
-        UserTypeModel.hasOne(models.Profile, { onDelete: 'CASCADE' });
+        UserTypeModel.hasOne(models.User, {onDelete: 'CASCADE'});
+        UserTypeModel.hasOne(models.Profile, {onDelete: 'CASCADE'});
+        UserTypeModel.hasMany(models.BlackListedToken, {onDelete: 'CASCADE'});
     };
     
     return UserTypeModel;

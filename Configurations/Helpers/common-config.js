@@ -77,3 +77,7 @@ CommonConfig.MAGIC_NUMBERS = {
     PNG: '89504e47',
     GIF: '47494638'
 };
+
+CommonConfig.REASONS = {
+    USER_LOGGED_OUT: 'User logged out.'
+};

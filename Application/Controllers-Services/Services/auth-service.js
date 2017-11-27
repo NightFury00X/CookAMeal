@@ -9,11 +9,18 @@ AuthService = function () {
 
 AuthService.prototype.GetUserData = async (userInfo) => {
     try {
-        console.log(userInfo);
         return await db.UserType.findOne({
             where: {id: userInfo.id},
             include: [{model: db.Profile}]
         });
+    } catch (error) {
+        throw (error);
+    }
+};
+
+AuthService.prototype.Logout = async (tokenDetails) => {
+    try {
+        return await db.BlackListedToken.create(tokenDetails);
     } catch (error) {
         throw (error);
     }

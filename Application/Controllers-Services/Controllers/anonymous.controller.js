@@ -10,7 +10,7 @@ let Anonymous = {
         try {
             req.check('fbid').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
-                return responseHelper.setErrorResponse({message: 'Unable to connect with facebook.'}, res, 201);
+                return responseHelper.setErrorResponse({message: 'Unable to connect with facebook.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
             let fbId = req.body.fbid;
             let user = await CommonService.CheckUserTypeByUserId(fbId);
             if (!user)
@@ -66,7 +66,7 @@ let Anonymous = {
         };
         try {
             //Check User Type
-            let userType = await CommonService.CheckUserTypeByUserId(loginDetails.email);
+            let userType = await CommonService.CheckUserTypeByUserEmail(loginDetails.email);
             
             if (!userType)
                 return responseHelper.setErrorResponse({message: 'Invalid User Credentials.'}, res, CommonConfig.STATUS_CODE.UNAUTHORIZED);

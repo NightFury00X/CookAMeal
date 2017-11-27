@@ -13,7 +13,7 @@ const CookRoutes = require('./Cook/cook.routes');
 const APIRoutes = function (passport) {
     const MiddleWareRules = {
         Admin: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.ADMIN, AdminRoutes(passport))],
-        Auth: [passport.authenticate('jwt', {session: false})],
+        Auth: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.ALL, AuthRoutes(passport))],
         Common: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.ALL, CommonRoutes(passport))],
         Cook: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.COOK, CookRoutes(passport))],
         Customer: [passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.CUSTOMER, CookRoutes(passport))]
@@ -23,7 +23,7 @@ const APIRoutes = function (passport) {
     router.use('/', AnonymousRoutes(passport));
 
     //Anonymous Routes
-    router.use('/auth', MiddleWareRules.Auth, AuthRoutes(passport));
+    router.use('/auth', MiddleWareRules.Auth);
 
     // Auth Routes    
     router.use('/common/', MiddleWareRules.Common);
