@@ -4,8 +4,6 @@
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Admin/admin.routes.js" afterPath="$PROJECT_DIR$/Routes/Admin/admin.routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Common/common-routes.js" afterPath="$PROJECT_DIR$/Routes/Common/common-routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -464,13 +462,6 @@
       <workItem from="1511664097701" duration="14228000" />
       <workItem from="1511714452174" duration="3951000" />
     </task>
-    <task id="LOCAL-00067" summary="Update fb id">
-      <created>1511176362764</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1511176362764</updated>
-    </task>
     <task id="LOCAL-00068" summary="Update fb id">
       <created>1511256145033</created>
       <option name="number" value="00068" />
@@ -807,11 +798,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511788071602</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="Added Logout API.">
+      <created>1511788191566</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1511788191566</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="386215000" />
+    <option name="totallyTimeSpent" value="386254000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
