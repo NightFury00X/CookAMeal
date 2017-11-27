@@ -31,6 +31,8 @@ exports.keys = {
 };
 
 // exports.UPLOAD_LOCATION = 'cookamealapi.cynotecksandbox.com/uploads/';
+exports.FILE_LOCATION = 'cookamealapi.cynotecksandbox.com/uploads/';
+
 exports.UPLOAD_LOCATION = [
     {PATH: 'uploads/profiles'},
     {PATH: 'uploads/identification_cards'},
