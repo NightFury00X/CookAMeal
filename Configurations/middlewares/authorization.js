@@ -19,7 +19,6 @@ exports.Authorization = function (accessLevel, callback) {
                 user_type_id: req.user.id
             }
         }).then(function (record) {
-            console.log(record);
             if (record) {
                 let response = {
                     "success": false,

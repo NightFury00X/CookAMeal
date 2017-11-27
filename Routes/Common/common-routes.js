@@ -4,6 +4,7 @@ const router = require('express').Router();
 const CommonController = require('../../Application/Controllers-Services/Controllers/common.controller');
 
 const CommonRoutes = function (passport) {
+    
     //1: Get All Category list
     router.get('/category', CommonController.Category.FindAll);
     

@@ -16,10 +16,7 @@ function hookJWTStrategy(passport) {
         db.UserType.findOne(
             {
                 attributes: ['id', 'user_id', 'user_role', 'user_type'],
-                where: {id: JWTPayload.id},
-                // include: [{model: db.BlackListedToken,
-                // where:{}
-                // }]
+                where: {id: JWTPayload.id}
             })
             .then(function (user) {
                 if (!user) {
