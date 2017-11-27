@@ -7,7 +7,7 @@ let Auth = {
         try {
             req.check('type').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
-                return responseHelper.setErrorResponse({message: 'Please provide user email.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
+                return responseHelper.setErrorResponse({message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
             
             let tokenDetails = {
                 user_type_id: req.user.id,
@@ -17,7 +17,7 @@ let Auth = {
             let data = await AuthService.Logout(tokenDetails);
             if(!data)
                 return responseHelper.setErrorResponse({message: 'Unable to logout user.'}, res, CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR);
-            return responseHelper.setErrorResponse({message: 'User logged out successfuly.'}, res, CommonConfig.STATUS_CODE.OK);
+            return responseHelper.setSuccessResponse({message: 'You have successfully logged out!'}, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

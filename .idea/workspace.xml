@@ -2,21 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/Modals/token-blacklist.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Modals/user-type.js" afterPath="$PROJECT_DIR$/Application/Modals/user-type.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/Modals/user.js" afterPath="$PROJECT_DIR$/Application/Modals/user.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Helpers/common-config.js" afterPath="$PROJECT_DIR$/Configurations/Helpers/common-config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/Passport/passport-strategy.js" afterPath="$PROJECT_DIR$/Configurations/Passport/passport-strategy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configurations/middlewares/authorization.js" afterPath="$PROJECT_DIR$/Configurations/middlewares/authorization.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Auth/auth-routes.js" afterPath="$PROJECT_DIR$/Routes/Auth/auth-routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/routes.js" afterPath="$PROJECT_DIR$/Routes/routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -110,7 +98,6 @@
         <option value="$PROJECT_DIR$/Configurations/Passport/passport-strategy.js" />
         <option value="$PROJECT_DIR$/Routes/routes.js" />
         <option value="$PROJECT_DIR$/Application/Modals/token-blacklist.js" />
-        <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" />
         <option value="$PROJECT_DIR$/Configurations/middlewares/authorization.js" />
         <option value="$PROJECT_DIR$/Application/Modals/user.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
@@ -118,6 +105,7 @@
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/auth-service.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js" />
       </list>
     </option>
   </component>
@@ -173,6 +161,24 @@
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
               <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Application" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Application" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers-Services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="Application" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers-Services" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -278,13 +284,6 @@
       <workItem from="1511501906709" duration="17025000" />
       <workItem from="1511664097701" duration="14228000" />
       <workItem from="1511714452174" duration="3951000" />
-    </task>
-    <task id="LOCAL-00064" summary="Update fb id">
-      <created>1511175198236</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1511175198236</updated>
     </task>
     <task id="LOCAL-00065" summary="Update fb id">
       <created>1511175709410</created>
@@ -622,11 +621,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511774880399</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="Added Logout API.">
+      <created>1511781819194</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1511781819194</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="382290000" />
+    <option name="totallyTimeSpent" value="383036000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -751,7 +757,8 @@
     <MESSAGE value="Fixed User Signup, Signin and facebook signin/signup." />
     <MESSAGE value="Fixed upload folder location path." />
     <MESSAGE value="Fixing upload folder location path." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing upload folder location path." />
+    <MESSAGE value="Added Logout API." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Logout API." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -993,14 +1000,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Configurations/Helpers/ResponseHandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="23" lean-forward="false" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Modals/user-type.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -1100,18 +1099,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43">
-          <caret line="5" column="42" lean-forward="false" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
-          <folding>
-            <element signature="e#269#1185#0" expanded="false" />
-            <element signature="e#1233#1428#0" expanded="false" />
-            <element signature="e#1469#1724#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="109">
@@ -1150,6 +1137,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="63" column="22" lean-forward="true" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/auth-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="19" column="47" lean-forward="false" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
+          <folding>
+            <element signature="e#1230#1425#0" expanded="false" />
+            <element signature="e#1466#1721#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configurations/Helpers/ResponseHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
           <folding />
         </state>
       </provider>
