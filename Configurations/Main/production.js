@@ -31,3 +31,7 @@ exports.keys = {
 };
 
 exports.UPLOAD_LOCATION = 'cookamealapi.cynotecksandbox.com/uploads/';
+
+exports.DOMAIN = {
+    NAME: 'http://132.148.87.196:5151/'
+};

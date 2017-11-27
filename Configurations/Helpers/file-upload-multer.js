@@ -14,7 +14,7 @@ let storage = multer.diskStorage({
                 dest = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD;
                 break;
             case CommonConfig.FILES.CERTIFICATE:
-                dest = CommonConfig.File_Locations.Certificate;
+                dest = CommonConfig.FILE_LOCATIONS.CERTIFICATE;
                 break;
             case CommonConfig.FILES.CATEGORY:
                 dest = CommonConfig.FILE_LOCATIONS.CATEGORY;

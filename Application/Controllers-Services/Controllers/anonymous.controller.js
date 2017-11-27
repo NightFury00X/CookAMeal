@@ -23,10 +23,11 @@ let Anonymous = {
             let userData = {
                 id: userDetails.userid,
                 fullname: userDetails.Profile.fullName,
-                type: userDetails.type,
-                role: userDetails.role,
-                profile_url: userDetails.Profile.MediaObject ? userDetails.Profile.MediaObject.imageurl : ''
+                user_type: userDetails.user_type,
+                user_role: userDetails.user_role,
+                profile_url: userDetails.Profile.MediaObjects.length > 0 ? userDetails.Profile.MediaObjects[0].imageurl : ''
             };
+            
             let token = await CommonService.GenerateToken(userDetails.userInfo, userData);
             return responseHelper.setSuccessResponse(token, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
@@ -37,10 +38,10 @@ let Anonymous = {
         try {
             //upload file
             let files = await uploadFile(req, res);
-
+            
             let registrationData = JSON.parse(req.body.details);
-           
-            if(!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
+            
+            if (!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
                 return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
             
             console.log('Data: ', registrationData);

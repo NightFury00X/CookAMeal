@@ -1,4 +1,6 @@
 'use strict';
+let config = require('../Main');
+
 let CommonConfig = module.exports;
 
 let ROLES = CommonConfig.ROLES = {
@@ -46,11 +48,11 @@ CommonConfig.FILES = {
 };
 
 CommonConfig.FILE_LOCATIONS = {
-    PROFILE: 'uploads/profiles/',
-    IDENTIFICATIONCARD: 'uploads/identification_cards/',
-    CERTIFICATE: 'uploads/certificates/',
-    CATEGORY: 'uploads/categories/',
-    MIX: 'uploads/mix/',
+    PROFILE: config.DOMAIN.NAME + 'uploads/profiles/',
+    IDENTIFICATIONCARD: config.DOMAIN.NAME + 'uploads/identification_cards/',
+    CERTIFICATE: config.DOMAIN.NAME + 'uploads/certificates/',
+    CATEGORY: config.DOMAIN.NAME + 'uploads/categories/',
+    MIX: config.DOMAIN.NAME + 'uploads/mix/',
 };
 
 CommonConfig.WHITE_LIST = {

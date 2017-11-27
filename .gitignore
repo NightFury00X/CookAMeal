@@ -65,6 +65,10 @@ typings/
 log/
 /Public/
 Cook-A-Meal.rar
-Public/
 web.config
 Configurations/Errors/
+Uploads/
+config/
+migrations/
+models/
+seeders/

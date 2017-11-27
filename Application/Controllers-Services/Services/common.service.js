@@ -1,6 +1,6 @@
 let db = require('../../Modals'),
-    generateToken = require('../../../Configurations/Helpers/authentication');
-
+    generateToken = require('../../../Configurations/Helpers/authentication'),
+    CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 CommonService = function () {
 };
@@ -22,7 +22,10 @@ CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
             where: {id: userTypeId},
             include: [{
                 model: db.Profile,
-                include: [{model: db.MediaObject}]
+                include: [{
+                    model: db.MediaObject,
+                    where: {object_type: CommonConfig.OBJECT_TYPE.PROFILE}
+                }]
             }]
         });
     } catch (error) {

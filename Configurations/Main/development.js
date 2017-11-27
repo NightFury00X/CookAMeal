@@ -19,7 +19,7 @@ exports.mssql = {
         freezeTableName: false
     },
     dialectOptions: {
-        instanceName: 'MSSQLSERVER14',
+        instanceName: 'MSSQLSERVER',
         requestTimeout: 30000
     },
     logging: false,
@@ -39,4 +39,9 @@ exports.user = {
 
 exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
+};
+
+exports.DOMAIN = {
+    NAME: 'E:/Cook-A-Meal/'
+    // NAME: 'E:/Cook-A-Meal'
 };
