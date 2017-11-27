@@ -2,6 +2,7 @@
 
 const router = require('express').Router();
 const CommonController = require('../../Application/Controllers-Services/Controllers/common.controller');
+const RequestMethods = require('../../Configurations/middlewares/request-checker');
 
 const CommonRoutes = function (passport) {
     
