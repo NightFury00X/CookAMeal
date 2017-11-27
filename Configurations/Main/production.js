@@ -32,10 +32,10 @@ exports.keys = {
 
 // exports.UPLOAD_LOCATION = 'cookamealapi.cynotecksandbox.com/uploads/';
 exports.UPLOAD_LOCATION = [
-    {PATH: 'cookamealapi.cynotecksandbox.com/uploads/profiles'},
-    {PATH: 'cookamealapi.cynotecksandbox.com/uploads/identification_cards'},
-    {PATH: 'cookamealapi.cynotecksandbox.com/uploads/certificates'},
-    {PATH: 'cookamealapi.cynotecksandbox.com/uploads/categories'}
+    {PATH: 'uploads/profiles'},
+    {PATH: 'uploads/identification_cards'},
+    {PATH: 'uploads/certificates'},
+    {PATH: 'uploads/categories'}
 ];
 
 
