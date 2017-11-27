@@ -48,11 +48,11 @@ CommonConfig.FILES = {
 };
 
 CommonConfig.FOLDER_LOCATIONS = {
-    PROFILE: config.FILE_LOCATION + 'profiles/',
-    IDENTIFICATIONCARD: config.FILE_LOCATION + 'identification_cards/',
-    CERTIFICATE: config.FILE_LOCATION + 'certificates/',
-    CATEGORY: config.FILE_LOCATION + 'categories/',
-    MIX: config.FILE_LOCATION + 'mix/',
+    PROFILE: config.FOLDER_LOCATION + 'profiles/',
+    IDENTIFICATIONCARD: config.FOLDER_LOCATION + 'identification_cards/',
+    CERTIFICATE: config.FOLDER_LOCATION + 'certificates/',
+    CATEGORY: config.FOLDER_LOCATION + 'categories/',
+    MIX: config.FOLDER_LOCATION + 'mix/',
 };
 
 CommonConfig.FILE_LOCATIONS = {
