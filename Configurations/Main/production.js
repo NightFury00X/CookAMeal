@@ -32,7 +32,7 @@ exports.keys = {
 
 exports.FOLDER_LOCATION = 'uploads/';
 
-exports.FILE_LOCATION = 'cookamealapi.cynotecksandbox.com/uploads/';
+exports.FILE_LOCATION = 'http://cookamealapi.cynotecksandbox.com/uploads/';
 
 exports.UPLOAD_LOCATION = [
     {PATH: 'uploads/profiles'},
