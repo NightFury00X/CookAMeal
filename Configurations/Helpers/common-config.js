@@ -48,11 +48,11 @@ CommonConfig.FILES = {
 };
 
 CommonConfig.FILE_LOCATIONS = {
-    PROFILE: config.DOMAIN.NAME + 'uploads/profiles/',
-    IDENTIFICATIONCARD: config.DOMAIN.NAME + 'uploads/identification_cards/',
-    CERTIFICATE: config.DOMAIN.NAME + 'uploads/certificates/',
-    CATEGORY: config.DOMAIN.NAME + 'uploads/categories/',
-    MIX: config.DOMAIN.NAME + 'uploads/mix/',
+    PROFILE: config.DOMAIN.NAME + 'profiles/',
+    IDENTIFICATIONCARD: config.DOMAIN.NAME + 'identification_cards/',
+    CERTIFICATE: config.DOMAIN.NAME + 'certificates/',
+    CATEGORY: config.DOMAIN.NAME + 'categories/',
+    MIX: config.DOMAIN.NAME + 'mix/',
 };
 
 CommonConfig.WHITE_LIST = {

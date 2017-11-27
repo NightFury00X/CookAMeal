@@ -33,5 +33,5 @@ exports.keys = {
 exports.UPLOAD_LOCATION = 'cookamealapi.cynotecksandbox.com/uploads/';
 
 exports.DOMAIN = {
-    NAME: '/'
+    NAME: 'cookamealapi.cynotecksandbox.com/uploads/'
 };
