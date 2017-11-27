@@ -12,6 +12,7 @@ let express = require('express'),
     expressWinston = require('express-winston'),
     compression = require("compression"),
     mkdirp = require('mkdirp'),
+    fs = require('fs'),
     config = require('./Configurations/Main'),
     CommonConfig = require('./Configurations/Helpers/common-config');
 
@@ -35,6 +36,14 @@ let logLocation = __dirname + '/logs/errors';
 
 mkdirp.sync(uploadFileLocation);
 mkdirp.sync(logLocation);
+
+let profiles_path = config.UPLOAD_LOCATION.PROFILE;
+console.log(profiles_path);
+config.UPLOAD_LOCATION.forEach(function (location) {
+    console.log(location.PATH);
+    if (!fs.existsSync(location.PATH))
+        fs.mkdirSync(location.PATH);
+});
 
 // Initializations.
 let app = express();
@@ -141,7 +150,7 @@ function startApp() {
     let app_url = protocol + '://' + config.app.host + ':' + port;
     let env = process.env.NODE_ENV
         ? ('[' + process.env.NODE_ENV + ']') : '[development]';
-
+    
     logger.info('Initiated...', env);
     server.listen(port, function () {
         logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);

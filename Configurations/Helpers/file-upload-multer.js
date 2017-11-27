@@ -23,9 +23,6 @@ let storage = multer.diskStorage({
                 dest = CommonConfig.FILE_LOCATIONS.MIX;
                 break;
         }
-        console.log('Dstination: ', dest);
-        if (!fs.existsSync(dest))
-            fs.mkdirSync(dest);
         callback(null, dest);
     },
     filename: function (req, file, callback) {

@@ -41,7 +41,12 @@ exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
 };
 
-exports.UPLOAD_LOCATION = 'E:/Cook-A-Meal/uploads/';
+exports.UPLOAD_LOCATION = [
+    {PATH: 'E:/Cook-A-Meal/uploads/profiles'},
+    {PATH: 'E:/Cook-A-Meal/uploads/identification_cards'},
+    {PATH: 'E:/Cook-A-Meal/uploads/certificates'}, 
+    {PATH: 'E:/Cook-A-Meal/uploads/categories'}
+];
 
 exports.DOMAIN = {
     NAME: 'E:/Cook-A-Meal/'
