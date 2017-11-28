@@ -22,16 +22,16 @@ const APIRoutes = function (passport) {
     };
     
     //Anonymous Routes
-    //1: Facebook User SignIn
-    router.post('/fbsign', RequestMethods.CheckContentType.ApplicationJsonData, AnonymousController.Anonymous.FbSignIn);
+    // //1: Facebook User SignIn
+    // router.post('/fbsign', RequestMethods.CheckContentType.ApplicationJsonData, AnonymousController.Anonymous.FbSignIn);
+    //
+    // //2: SignUp
+    // router.post('/signup', RequestMethods.CheckContentType.ApplicationFormData, AnonymousController.Anonymous.SignUp);
+    //
+    // //3: Normal User SignIn
+    // router.post('/authenticate', RequestMethods.CheckContentType.ApplicationJsonData, AnonymousController.Anonymous.AuthenticateUser);
     
-    //2: SignUp
-    router.post('/signup', RequestMethods.CheckContentType.ApplicationFormData, AnonymousController.Anonymous.SignUp);
-    
-    //3: Normal User SignIn
-    router.post('/authenticate', RequestMethods.CheckContentType.ApplicationJsonData, AnonymousController.Anonymous.AuthenticateUser);
-    
-    // router.use('/guest/', AnonymousRoutes(passport));
+    router.use('/', AnonymousRoutes(passport));
     
     //Anonymous Routes
     router.use('/auth/', MiddleWareRules.Auth);
@@ -45,11 +45,11 @@ const APIRoutes = function (passport) {
     // Cook Routes    
     router.use('/cook/', MiddleWareRules.Cook);
     
-    router.use(function (req, res, next) {
-        let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
-        next(err);
-    });
-    
+    // router.use(function (req, res, next) {
+    //     let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
+    //     next(err);
+    // });
+    //
     return router;
 };
 

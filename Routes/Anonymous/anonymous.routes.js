@@ -15,10 +15,10 @@ const AnonymousRoutes = function (passport) {
     //3: Normal User SignIn
     router.post('/authenticate', RequestMethods.CheckContentType.ApplicationJsonData, AnonymousController.Anonymous.AuthenticateUser);
     
-    router.use(function (req, res, next) {
-        let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
-        next(err);
-    });
+    // router.use(function (req, res, next) {
+    //     let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
+    //     next(err);
+    // });
     
     
     return router;

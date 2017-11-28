@@ -13,10 +13,10 @@ const authRoutes = function (passport) {
     //2. Logout User
     router.post('/logout', RequestMethods.CheckContentType.ApplicationJsonData, AuthController.Auth.LogOutUser);
     
-    router.use(function (req, res, next) {
-        let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
-        next(err);
-    });
+    // router.use(function (req, res, next) {
+    //     let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
+    //     next(err);
+    // });
 
     return router;
 };
