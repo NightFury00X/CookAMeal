@@ -57,6 +57,7 @@ CommonService.prototype.GenerateToken = async (tokenData, userData) => {
 
 CommonService.prototype.GetCategories = async () => {
     try {
+        console.log('Inner');
         return await db.Category.findAll({
             attributes: ['id', 'name'],
             include: [

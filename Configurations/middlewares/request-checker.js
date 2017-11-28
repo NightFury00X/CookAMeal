@@ -7,6 +7,7 @@ RequestMethods.CheckAuthorizationHeader = function (req, res, next) {
     console.log('Content-Type: ', isAuth);
     if (!isAuth)
         return responseHelper.setErrorResponse({message: 'Header not present in the request. '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
+    console.log('Done');
     next();
 };
 

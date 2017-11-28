@@ -3,8 +3,9 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 let Category = {
-    FindAll: async (req, res, next) => {
+    GetAll: async (req, res, next) => {
         try {
+            console.log('Inner');
             let result = await CommonService.GetCategories();
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {

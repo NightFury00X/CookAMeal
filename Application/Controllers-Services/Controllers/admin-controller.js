@@ -8,17 +8,22 @@ let Category = {
         try {
             //upload file
             let files = await uploadFile(req, res);
-
+            
             console.log('Request Body: ', req.body);
             console.log('==============================================================');
             console.log('Files: ', files);
+            
+            if (!files || !files.category)
+                return responseHelper.setErrorResponse('Unable to create Category.', res, CommonConfig.STATUS_CODE.BAD_REQUEST);
             
             let categoryName = {
                 name: req.body.name
             };
             let result = await AdminService.Add(req.user.id, categoryName, files);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
-        } catch (error) {
+        }
+        catch
+            (error) {
             next(error);
         }
     }
