@@ -17,7 +17,7 @@ const authRoutes = function (passport) {
         let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
         next(err);
     });
-    
+
     return router;
 };
 

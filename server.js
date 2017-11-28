@@ -14,7 +14,8 @@ let express = require('express'),
     mkdirp = require('mkdirp'),
     fs = require('fs'),
     config = require('./Configurations/Main'),
-    CommonConfig = require('./Configurations/Helpers/common-config');
+    CommonConfig = require('./Configurations/Helpers/common-config'),
+    AnonymousRoutes = require('./Routes/Anonymous/anonymous.routes');
 
 let logger = new (winston.Logger)({
     expressFormat: true,
@@ -163,6 +164,7 @@ app.use(function (req, res, next) {
 // Error Response Handler
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
+        console.log('Error: ', err);
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
