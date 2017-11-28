@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Admin/admin.routes.js" afterPath="$PROJECT_DIR$/Routes/Admin/admin.routes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js" afterPath="$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Auth/auth-routes.js" afterPath="$PROJECT_DIR$/Routes/Auth/auth-routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Common/common-routes.js" afterPath="$PROJECT_DIR$/Routes/Common/common-routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/Cook/cook.routes.js" afterPath="$PROJECT_DIR$/Routes/Cook/cook.routes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routes/routes.js" afterPath="$PROJECT_DIR$/Routes/routes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
@@ -27,8 +23,8 @@
       <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="166" column="28" lean-forward="true" selection-start-line="166" selection-start-column="28" selection-end-line="166" selection-end-column="28" />
+            <state relative-caret-position="279">
+              <caret line="76" column="34" lean-forward="false" selection-start-line="76" selection-start-column="34" selection-end-line="76" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -47,8 +43,8 @@
       <file leaf-file-name="anonymous.routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="15" column="134" lean-forward="false" selection-start-line="15" selection-start-column="134" selection-end-line="15" selection-end-column="134" />
+            <state relative-caret-position="169">
+              <caret line="19" column="25" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -88,7 +84,7 @@
         <entry file="file://$PROJECT_DIR$/Routes/routes.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="191">
-              <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
+              <caret line="39" column="26" lean-forward="false" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -198,12 +194,12 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Configurations/Passport/passport-strategy.js" />
         <option value="$PROJECT_DIR$/Configurations/middlewares/request-checker.js" />
-        <option value="$PROJECT_DIR$/Routes/routes.js" />
         <option value="$PROJECT_DIR$/Routes/Admin/admin.routes.js" />
-        <option value="$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js" />
         <option value="$PROJECT_DIR$/Routes/Auth/auth-routes.js" />
         <option value="$PROJECT_DIR$/Routes/Common/common-routes.js" />
         <option value="$PROJECT_DIR$/Routes/Cook/cook.routes.js" />
+        <option value="$PROJECT_DIR$/Routes/routes.js" />
+        <option value="$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js" />
         <option value="$PROJECT_DIR$/server.js" />
       </list>
     </option>
@@ -429,14 +425,7 @@
       <workItem from="1511664097701" duration="14228000" />
       <workItem from="1511714452174" duration="3951000" />
       <workItem from="1511844147472" duration="640000" />
-      <workItem from="1511844875522" duration="13301000" />
-    </task>
-    <task id="LOCAL-00079" summary="Updated Code">
-      <created>1511445315984</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1511445315984</updated>
+      <workItem from="1511844875522" duration="14178000" />
     </task>
     <task id="LOCAL-00080" summary="Updated Code">
       <created>1511445542327</created>
@@ -774,11 +763,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511865233441</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="Fixed API Routing 404 Error.">
+      <created>1511865595693</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1511865595693</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="402769000" />
+    <option name="totallyTimeSpent" value="403646000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -800,7 +796,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2450658" sideWeight="0.48638427" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41118422" sideWeight="0.48638427" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3161876" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1232,14 +1228,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="15" column="134" lean-forward="false" selection-start-line="15" selection-start-column="134" selection-end-line="15" selection-end-column="134" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Routes/Auth/auth-routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
@@ -1264,18 +1252,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="19" column="25" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Routes/routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
-          <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
+          <caret line="39" column="26" lean-forward="false" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="166" column="28" lean-forward="true" selection-start-line="166" selection-start-column="28" selection-end-line="166" selection-end-column="28" />
+        <state relative-caret-position="279">
+          <caret line="76" column="34" lean-forward="false" selection-start-line="76" selection-start-column="34" selection-end-line="76" selection-end-column="34" />
           <folding />
         </state>
       </provider>

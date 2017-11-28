@@ -70,7 +70,17 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
     res.header('Access-Control-Allow-Credentials', 'true');
-    next();
+    
+    //intercepts OPTIONS method
+    if ('OPTIONS' === req.method) {
+        //respond with 200
+        console.log('You Are here.');
+        res.send(200);
+    }
+    else {
+        //move on
+        next();
+    }
 });
 
 // Helmet
@@ -156,6 +166,7 @@ function startApp() {
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
+    console.log('Req: ');
     let err = new Error('The Route ' + req.url + ' is Not Found');
     err.status = 404;
     next(err);
