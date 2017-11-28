@@ -49,19 +49,44 @@ let upload = multer({
 let uploadFile = function (req, res) {
     return new Promise((resolve, reject) => {
         upload(req, res, function (error) {
-            if (req.files && req.files.profile) {
-                let magic = fs.readFileSync(req.files.profile[0].path).toString('hex', 0, 4);
-
-                if (!CheckMagicNumbers(magic)) {
-                    fs.unlinkSync(req.files.profile[0].path);
-                    reject('You are uploading an invalid image file.');
+            if (error) return reject(error);
+            if (req.files) {
+                console.log('Files: ', req.files.profile);
+                if (req.files.profile) {
+                    if (!CheckFile(req.files.profile)) reject('You are uploading an invalid image file.');
+                }
+                if (req.files.certificate) {
+                    if (!CheckFile(req.files.certificate)) reject('You are uploading an invalid image file.');
+                }
+                if (req.files.identification_card) {
+                    if (!CheckFile(req.files.identification_card)) reject('You are uploading an invalid image file.');
+                }
+                if (req.files.category) {
+                    if (!CheckFile(req.files.category)) reject('You are uploading an invalid image file.');
                 }
             }
-            if (error) return reject(error);
             return resolve(req.files);
         });
     });
 };
+
+/**
+ * @return {boolean}
+ */
+function CheckFile(file) {
+    try {
+        console.log('File: ===========> ', file);
+        let magic = fs.readFileSync(file[0].path).toString('hex', 0, 4);
+        console.log('Magic: ',magic);
+        if (!CheckMagicNumbers(magic)) {
+            fs.unlinkSync(file[0].path);
+            return false;
+        }
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
 
 /**
  * @return {boolean}

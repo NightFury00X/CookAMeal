@@ -58,7 +58,18 @@ CommonService.prototype.GenerateToken = async (tokenData, userData) => {
 CommonService.prototype.GetCategories = async () => {
     try {
         return await db.Category.findAll({
-            include: [{model: db.MediaObject, attributes: ['imageurl']}]
+            attributes: ['id', 'name'],
+            include: [
+                {
+                    model: db.MediaObject,
+                    attributes: ['imageurl'],
+                    where: {
+                        imageurl: {
+                            $ne: null
+                        }
+                    }
+                }
+            ]
         });
     } catch (error) {
         return error;
