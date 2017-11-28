@@ -13,10 +13,19 @@ const CommonRoutes = function (passport) {
     //1: Get All Category by Id
     router.get('/category/:id', CommonController.Category.FindById);
     
-    // router.use(function (req, res, next) {
-    //     let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
-    //     next(err);
-    // });
+    router.use(function (req, res, next) {
+        res.status(404).send(
+            {
+                success: false,
+                data: null,
+                error: {
+                    message: 'The Route ' + req.url + ' is Not Found',
+                    error: 404
+                }
+            }
+        );
+        next(null, false);
+    });
     
     return router;
 };
