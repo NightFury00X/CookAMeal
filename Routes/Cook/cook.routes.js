@@ -5,19 +5,7 @@ const router = require('express').Router(),
     CommonConfig = require('../../Configurations/Helpers/common-config');
 
 const CookRoutes = function (passport) {
-    router.use(function (req, res, next) {
-        res.status(404).send(
-            {
-                success: false,
-                data: null,
-                error: {
-                    message: 'The Route ' + req.url + ' is Not Found',
-                    error: 404
-                }
-            }
-        );
-        next(null, false);
-    });
+
     return router;
 };
 

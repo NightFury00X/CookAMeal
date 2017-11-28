@@ -14,8 +14,7 @@ let express = require('express'),
     mkdirp = require('mkdirp'),
     fs = require('fs'),
     config = require('./Configurations/Main'),
-    CommonConfig = require('./Configurations/Helpers/common-config'),
-    AnonymousRoutes = require('./Routes/Anonymous/anonymous.routes');
+    CommonConfig = require('./Configurations/Helpers/common-config');
 
 let logger = new (winston.Logger)({
     expressFormat: true,
@@ -157,14 +156,15 @@ function startApp() {
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    console.log('App Route');
-    let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
+    let err = new Error('The Route ' + req.url + ' is Not Found');
+    err.status = 404;
     next(err);
 });
 
 // Error Response Handler
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
+        // Do logging and user-friendly error message display
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
@@ -179,6 +179,7 @@ if (app.get('env') === 'development') {
     });
 } else {
     app.use(function (err, req, res, next) {
+        // Do logging and user-friendly error message display
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
