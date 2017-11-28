@@ -1,29 +1,43 @@
 let RequestMethods = {},
-    responseHelper = require('../Helpers/ResponseHandler'),
     CommonConfig = require('../Helpers/common-config');
 
 RequestMethods.CheckAuthorizationHeader = function (req, res, next) {
     let isAuth = req.get('Authorization');
     console.log('Content-Type: ', isAuth);
-    if (!isAuth)
-        return responseHelper.setErrorResponse({message: 'Header not present in the request. '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
-    next();
+    if (!isAuth) {
+        return next({
+            status: CommonConfig.STATUS_CODE.BAD_REQUEST,
+            message: 'Header not present in the request!',
+            required: 'Authorization header.'
+        }, false);
+    }
+    next(null, req);
 };
 
 RequestMethods.CheckContentType = {
     ApplicationJsonData: function (req, res, next) {
         let isJsonData = req.get('Content-Type');
         console.log('Content-Type: ', isJsonData);
-        if (isJsonData.split(';')[0] !== 'application/json')
-            return responseHelper.setErrorResponse({message: 'Invalid Content Type. Content-Type: applicaiotn/json required!'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
-        next();
+        if (!isJsonData || isJsonData.split(';')[0] !== 'application/json') {
+            return next({
+                status: CommonConfig.STATUS_CODE.BAD_REQUEST,
+                message: 'Invalid Content Type. Content-Type: applicatiotn/json required!',
+                required: 'Content-Type: application/json.'
+            }, false);
+        }
+        next(null, req);
     },
     ApplicationFormData: function (req, res, next) {
         let isMultiPart = req.get('Content-Type');
         console.log('Content-Type: ', isMultiPart);
-        if (isMultiPart.split(';')[0] !== 'multipart/form-data')
-            return responseHelper.setErrorResponse({message: 'Invalid Content Type. Content-Type: multipart/form-data required!'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
-        next();
+        if (!isMultiPart || isMultiPart.split(';')[0] !== 'multipart/form-data') {
+            return next({
+                status: CommonConfig.STATUS_CODE.BAD_REQUEST,
+                message: 'Invalid Content Type. Content-Type: multipart/form-data required!',
+                required: 'Content-Type: multipart/form-data.'
+            }, false);
+        }
+        next(null, req);
     }
 };
 

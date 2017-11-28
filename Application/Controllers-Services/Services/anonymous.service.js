@@ -112,20 +112,10 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     }
 };
 
-AnonymousService.prototype.Authenticate = async (loginDetails) => {
+AnonymousService.prototype.Authenticate = async (userTypeId) => {
     try {
-        let user = await db.User.findOne(loginDetails.potentialUser);
-        if (!user)
-            return;
-        let isMatch = await user.comparePasswords(loginDetails.password);
-        if (!isMatch)
-            return;
-        let userFound = await db.UserType.findOne({
-            where: {id: user.user_type_id}
-        });
-        
         let userType = await db.UserType.findOne({
-            where: {id: user.user_type_id, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
+            where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
             include: [{
                 model: db.Profile,
                 include: [{
@@ -134,11 +124,8 @@ AnonymousService.prototype.Authenticate = async (loginDetails) => {
             }]
         });
         
-        if (!userType)
-            return null;
-        
         return {
-            token: generateToken(userFound.userInfo),
+            token: generateToken(userType.userInfo),
             user: {
                 id: userType.id,
                 email: userType.Profile.email,

@@ -7,6 +7,7 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
 // The authentication controller.
 let Anonymous = {
     FbSignIn: async (req, res, next) => {
+        console.log('Done');
         try {
             req.check('fbid').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
@@ -15,10 +16,10 @@ let Anonymous = {
             let user = await CommonService.CheckUserTypeByUserId(fbId);
             if (!user)
                 return responseHelper.setErrorResponse({message: 'facebook user not exist.'}, res, CommonConfig.STATUS_CODE.OK);
-            
+
             // Get User Details
             let userDetails = await CommonService.GetUserDetailsByUserTypeId(user.id);
-            
+
             //Generate Token        
             let userData = {
                 id: userDetails.userid,
@@ -27,7 +28,7 @@ let Anonymous = {
                 user_role: userDetails.user_role,
                 profile_url: userDetails.Profile.MediaObjects.length > 0 ? userDetails.Profile.MediaObjects[0].imageurl : ''
             };
-            
+
             let token = await CommonService.GenerateToken(userDetails.userInfo, userData);
             return responseHelper.setSuccessResponse(token, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
@@ -38,16 +39,16 @@ let Anonymous = {
         try {
             //upload file
             let files = await uploadFile(req, res);
-            
+
             let registrationData = JSON.parse(req.body.details);
-            
+
             if (!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
                 return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
-            
+
             console.log('Data: ', registrationData);
             console.log('--------------------------------------------------------------------------');
             console.log('Files: ', files);
-            
+
             let result = await AnonymousService.SignUp(registrationData, files);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
@@ -55,28 +56,8 @@ let Anonymous = {
         }
     },
     AuthenticateUser: async (req, res, next) => {
-        req.check('username').notEmpty();
-        req.check('password').notEmpty();
-        if (req.validationErrors() || req.validationErrors().length > 0)
-            return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
-        let loginDetails = {
-            email: req.body.username,
-            password: req.body.password,
-            potentialUser: {where: {email: req.body.username}}
-        };
         try {
-            //Check User Type
-            let userType = await CommonService.CheckUserTypeByUserEmail(loginDetails.email);
-            
-            if (!userType)
-                return responseHelper.setErrorResponse({message: 'Invalid User Credentials.'}, res, CommonConfig.STATUS_CODE.UNAUTHORIZED);
-            
-            // If user found generate and get Token and User details.
-            let result = await AnonymousService.Authenticate(loginDetails);
-            
-            if (!result)
-                return responseHelper.setErrorResponse({message: 'Invalid User Credentials.'}, res, CommonConfig.STATUS_CODE.UNAUTHORIZED);
-            
+            let result = await AnonymousService.Authenticate(req.user.user_type_id);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);

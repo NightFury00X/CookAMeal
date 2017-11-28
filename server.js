@@ -27,7 +27,7 @@ let logger = new (winston.Logger)({
 });
 
 // App related modules.
-let hookJWTStrategy = require('./Configurations/Passport/passport-strategy');
+// let hookJWTStrategy = require('./Configurations/Passport/passport-strategy');
 
 // Upload file folder
 let uploadFileLocation = __dirname + '/Uploads';
@@ -63,14 +63,14 @@ app.use(errorHandler());
 app.use(passport.initialize());
 
 // Hook the passport JWT strategy.
-hookJWTStrategy(passport);
+// hookJWTStrategy(passport);
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
     res.header('Access-Control-Allow-Credentials', 'true');
-    
+
     //intercepts OPTIONS method
     if ('OPTIONS' === req.method) {
         //respond with 200
@@ -121,7 +121,10 @@ app.use(expressWinston.logger({
     }
 }));
 
-app.use('/api', require('./Routes/routes')(passport));
+
+// app.use('/api', require('./Routes/routes')(app));
+
+require('./Routes/routes')(app);
 
 // express-winston error Logger
 app.use(expressWinston.errorLogger({
@@ -156,7 +159,7 @@ function startApp() {
     let app_url = protocol + '://' + config.app.host + ':' + port;
     let env = process.env.NODE_ENV
         ? ('[' + process.env.NODE_ENV + ']') : '[development]';
-    
+
     logger.info('Initiated...', env);
     server.listen(port, function () {
         logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);
