@@ -38,5 +38,4 @@ const APIRoutes = function (passport) {
     return router;
 };
 
-
 module.exports = APIRoutes;

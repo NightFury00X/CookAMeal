@@ -7,7 +7,7 @@ const RequestMethods = require('../../Configurations/middlewares/request-checker
 const CommonRoutes = function (passport) {
     
     //1: Get All Category list
-    router.get('/category', CommonController.Category.FindAll);
+    router.get('/category', CommonController.Category.GetAll);
     
     //1: Get All Category by Id
     router.get('/category/:id', CommonController.Category.FindById);
