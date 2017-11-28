@@ -14,7 +14,7 @@ RequestMethods.CheckContentType = {
     ApplicationJsonData: function (req, res, next) {
         let isJsonData = req.get('Content-Type');
         console.log('Content-Type: ', isJsonData);
-        if (isJsonData !== 'application/json')
+        if (isJsonData.split(';')[0] !== 'application/json')
             return responseHelper.setErrorResponse({message: 'Invalid Content Type. Content-Type: applicaiotn/json required!'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
         next();
     },
