@@ -75,7 +75,7 @@ app.use((req, res, next) => {
     if ('OPTIONS' === req.method) {
         //respond with 200
         console.log('You Are here.');
-        res.send(200);
+        res.send(res);
     }
     else {
         //move on
