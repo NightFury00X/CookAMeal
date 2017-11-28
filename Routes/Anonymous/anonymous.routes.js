@@ -1,8 +1,9 @@
 'use strict';
 
 const router = require('express').Router(),
-    AnonymousController = require('../../Application/Controllers-Services/Controllers/anonymous.controller');
-const RequestMethods = require('../../Configurations/middlewares/request-checker');
+    AnonymousController = require('../../Application/Controllers-Services/Controllers/anonymous.controller'),
+    RequestMethods = require('../../Configurations/middlewares/request-checker'),
+    CommonConfig = require('../../Configurations/Helpers/common-config');
 
 const AnonymousRoutes = function (passport) {
     //1: Facebook User SignIn
@@ -13,6 +14,18 @@ const AnonymousRoutes = function (passport) {
     
     //3: Normal User SignIn
     router.post('/authenticate', RequestMethods.CheckContentType.ApplicationJsonData, AnonymousController.Anonymous.AuthenticateUser);
+    
+    router.use(function (req, res, next) {
+        let err = new Error('The Route ' + req.url + ' is Not Found');
+        res.status(CommonConfig.STATUS_CODE.NOT_FOUND).send(
+            {
+                success: false,
+                data: '{}',
+                error: err.message
+            }
+        );
+        next();
+    });
     
     return router;
 };
