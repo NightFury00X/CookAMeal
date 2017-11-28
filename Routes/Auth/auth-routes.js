@@ -1,9 +1,8 @@
 'use strict';
 
-const router = require('express').Router(),
-    AuthController = require('../../Application/Controllers-Services/Controllers/auth-controller'),
-    RequestMethods = require('../../Configurations/middlewares/request-checker'),
-    CommonConfig = require('../../Configurations/Helpers/common-config');
+const router = require('express').Router();
+const AuthController = require('../../Application/Controllers-Services/Controllers/auth-controller');
+const RequestMethods = require('../../Configurations/middlewares/request-checker');
 
 const authRoutes = function (passport) {
     
@@ -12,7 +11,7 @@ const authRoutes = function (passport) {
     
     //2. Logout User
     router.post('/logout', RequestMethods.CheckContentType.ApplicationJsonData, AuthController.Auth.LogOutUser);
-
+    
     return router;
 };
 

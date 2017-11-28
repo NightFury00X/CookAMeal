@@ -1,11 +1,9 @@
 'use strict';
 
-const router = require('express').Router(),
-    CookController = require('../../Application/Controllers-Services/Controllers/cook.controller'),
-    CommonConfig = require('../../Configurations/Helpers/common-config');
+const router = require('express').Router();
+const CookController = require('../../Application/Controllers-Services/Controllers/cook.controller');
 
-const CookRoutes = function (passport) {
-
+const CookRoutes = function (passport) {    
     return router;
 };
 

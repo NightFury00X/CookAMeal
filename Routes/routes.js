@@ -19,29 +19,22 @@ const APIRoutes = function (passport) {
         Cook: [RequestMethods.CheckAuthorizationHeader, passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.COOK, CookRoutes(passport))],
         Customer: [RequestMethods.CheckAuthorizationHeader, passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.CUSTOMER, CookRoutes(passport))]
     };
-    
+
     //Anonymous Routes
     router.use('/', AnonymousRoutes(passport));
-    
+
     //Anonymous Routes
     router.use('/auth', MiddleWareRules.Auth);
-    
+
     // Auth Routes    
     router.use('/common/', MiddleWareRules.Common);
-    
+
     //Admin Routes
     router.use('/admin/', MiddleWareRules.Admin);
-    
+
     // Cook Routes    
     router.use('/cook/', MiddleWareRules.Cook);
-    
-    // catch 404 and forward to error handler
-    router.use(function (req, res, next) {
-        console.log('Route');
-        let err = {error: 'The Route ' + req.url + ' is Not Found', status: 404};
-        next(err);
-    });
-    
+
     return router;
 };
 
