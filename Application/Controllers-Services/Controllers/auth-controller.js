@@ -7,7 +7,10 @@ let Auth = {
         try {
             req.check('type').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
-                return responseHelper.setErrorResponse({message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
+                return next({
+                    message: 'Invalid request.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
             
             let tokenDetails = {
                 user_type_id: req.user.id,
@@ -16,7 +19,11 @@ let Auth = {
             };
             let data = await AuthService.Logout(tokenDetails);
             if(!data)
-                return responseHelper.setErrorResponse({message: 'Unable to logout user.'}, res, CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR);
+                return next({
+                    message: 'Unable to process your request.',
+                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+                }, false);
+            
             return responseHelper.setSuccessResponse({message: 'You have successfully logged out!'}, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);

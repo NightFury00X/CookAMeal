@@ -14,7 +14,10 @@ let Category = {
             console.log('Files: ', files);
             
             if (!files || !files.category)
-                return responseHelper.setErrorResponse('Unable to create Category.', res, CommonConfig.STATUS_CODE.BAD_REQUEST);
+                return next({
+                    message: 'Unable to create Category.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
             
             let categoryName = {
                 name: req.body.name

@@ -15,7 +15,11 @@ let Category = {
     FindById: async (req, res, next) => {
         try {
             if (!req.params.id)
-                return responseHelper.setErrorResponse({message: 'Category not found.'}, res, CommonConfig.STATUS_CODE.OK);
+                return next({
+                    message: 'Category not found.',
+                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+                }, false);
+            
             let catId = req.params.id;
             let result = await CommonService.GetCategoryById(catId);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);

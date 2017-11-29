@@ -11,11 +11,17 @@ let Anonymous = {
         try {
             req.check('fbid').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
-                return responseHelper.setErrorResponse({message: 'Unable to connect with facebook.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
+                return next({
+                    message: 'Unable to connect with facebook.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
             let fbId = req.body.fbid;
             let user = await CommonService.CheckUserTypeByUserId(fbId);
             if (!user)
-                return responseHelper.setErrorResponse({message: 'facebook user not exist.'}, res, CommonConfig.STATUS_CODE.OK);
+                return next({
+                    message: 'facebook user not exist.',
+                    status: CommonConfig.STATUS_CODE.OK
+                }, false);
             
             // Get User Details
             let userDetails = await CommonService.GetUserDetailsByUserTypeId(user.id);
@@ -43,7 +49,10 @@ let Anonymous = {
             let registrationData = JSON.parse(req.body.details);
             
             if (!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
-                return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
+                return next({
+                    message: 'Bad Request.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
             
             console.log('Data: ', registrationData);
             console.log('--------------------------------------------------------------------------');
@@ -68,10 +77,10 @@ let Anonymous = {
             if (req.tokenData) {
                 let data = await AnonymousService.SendResetPasswordKeyToMail(req.tokenData.email);
                 if (!data)
-                    return responseHelper.setErrorResponse({
-                        message: 'Unable to send email!',
+                    return next({
+                        message: 'Unable to process your request!',
                         status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
-                    }, res, CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR);
+                    }, false);
     
                 return responseHelper.setSuccessResponse({
                     email: req.tokenData.email,
@@ -81,17 +90,20 @@ let Anonymous = {
             
             req.check('email').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
-                return responseHelper.setErrorResponse({
+                return next({
                     message: 'Bad request!',
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
-                }, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
+                }, false);
             
             let email = req.body.email;
             
             let user = await CommonService.CheckUserTypeByUserEmail(email);
             
             if (!user)
-                return responseHelper.setErrorResponse({message: 'Email not exists in our database!'}, res, CommonConfig.STATUS_CODE.OK);
+                return next({
+                    message: 'Email not exists in our database!',
+                    status: CommonConfig.STATUS_CODE.OK
+                }, false);
             
             //Generate rendom password
             let randomKey = await CommonService.GenerateRandomKey();
@@ -108,7 +120,10 @@ let Anonymous = {
             }, email);
             
             if (!data)
-                return responseHelper.setErrorResponse({message: 'Unable to process your request. Please try again later.'}, res, CommonConfig.STATUS_CODE.OK);
+                return next({
+                    message: 'Unable to process your request. Please try again later.',
+                    status: CommonConfig.STATUS_CODE.OK
+                }, false);
             
             return responseHelper.setSuccessResponse({
                 email: email,
