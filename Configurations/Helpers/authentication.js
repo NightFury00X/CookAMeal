@@ -11,4 +11,12 @@ function generateToken(user) {
     )
 }
 
+function generateTokenForResetPassword(user) {
+    return 'JWT ' + jwt.sign(
+        user,
+        config.keys.secret,
+        {expiresIn: '1d'}
+    )
+}
+
 module.exports = generateToken;

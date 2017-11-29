@@ -64,6 +64,7 @@ module.exports = function (sequelize, DataTypes) {
         UserTypeModel.hasOne(models.User, {onDelete: 'CASCADE'});
         UserTypeModel.hasOne(models.Profile, {onDelete: 'CASCADE'});
         UserTypeModel.hasMany(models.BlackListedToken, {onDelete: 'CASCADE'});
+        UserTypeModel.hasMany(models.ResetPassword, {onDelete: 'CASCADE'});
     };
     
     return UserTypeModel;

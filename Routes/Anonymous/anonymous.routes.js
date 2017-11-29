@@ -26,4 +26,9 @@ router.post('/authenticate',
     requireLogin,
     AnonymousController.Anonymous.AuthenticateUser);
 
+//4: Reset Password
+router.post('/resetpass',
+    RequestMethods.CheckContentType.ApplicationJsonData,
+    AnonymousController.Anonymous.ResetPassword);
+
 module.exports = router;

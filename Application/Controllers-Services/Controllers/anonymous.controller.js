@@ -1,5 +1,6 @@
 let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
     AnonymousService = require('../Services/anonymous.service'),
+    generateTokenForResetPassword = require('../../../Configurations/Helpers/authentication'),
     CommonService = require('../Services/common.service'),
     uploadFile = require('../../../Configurations/Helpers/file-upload-multer'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
@@ -16,10 +17,10 @@ let Anonymous = {
             let user = await CommonService.CheckUserTypeByUserId(fbId);
             if (!user)
                 return responseHelper.setErrorResponse({message: 'facebook user not exist.'}, res, CommonConfig.STATUS_CODE.OK);
-
+            
             // Get User Details
             let userDetails = await CommonService.GetUserDetailsByUserTypeId(user.id);
-
+            
             //Generate Token        
             let userData = {
                 id: userDetails.userid,
@@ -28,7 +29,7 @@ let Anonymous = {
                 user_role: userDetails.user_role,
                 profile_url: userDetails.Profile.MediaObjects.length > 0 ? userDetails.Profile.MediaObjects[0].imageurl : ''
             };
-
+            
             let token = await CommonService.GenerateToken(userDetails.userInfo, userData);
             return responseHelper.setSuccessResponse(token, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
@@ -39,16 +40,16 @@ let Anonymous = {
         try {
             //upload file
             let files = await uploadFile(req, res);
-
+            
             let registrationData = JSON.parse(req.body.details);
-
+            
             if (!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
                 return responseHelper.setErrorResponse({message: 'Bad Request '}, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
-
+            
             console.log('Data: ', registrationData);
             console.log('--------------------------------------------------------------------------');
             console.log('Files: ', files);
-
+            
             let result = await AnonymousService.SignUp(registrationData, files);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
@@ -65,7 +66,27 @@ let Anonymous = {
     },
     ResetPassword: async (req, res, next) => {
         try {
-            return responseHelper.setSuccessResponse('Reset Password.', res, CommonConfig.STATUS_CODE.OK);
+            let email = req.body.email;
+            
+            let user = await CommonService.CheckUserTypeByUserEmail(email);
+            
+            if (!user)
+                return responseHelper.setErrorResponse('User not found!', res, CommonConfig.STATUS_CODE.OK);
+            
+            //Generate rendom password
+            let randomKey = await CommonService.GenerateRandomKey();
+            
+            //get token by random key
+            let token = generateTokenForResetPassword({id: user.id, email: email});
+            
+            //Add key to database            
+            let data = await AnonymousService.AddResetPasswordDetails({
+                random_key: randomKey,
+                token: token,
+                user_type_id: user.id
+            });
+            
+            return responseHelper.setSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

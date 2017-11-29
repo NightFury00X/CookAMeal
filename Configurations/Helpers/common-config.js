@@ -63,6 +63,16 @@ CommonConfig.FILE_LOCATIONS = {
     MIX: config.FILE_LOCATION + 'mix/',
 };
 
+CommonConfig.OPTIONS = {
+    RANDOM_KEYS: {
+        length: 8,
+        numeric: true,
+        letters: true,
+        special: false,
+        exclude: ['a', 'b', '1']
+    }
+};
+
 CommonConfig.WHITE_LIST = {
     IMAGE_EXTENSTIONS: ['.JPG', '.jpg', '.JPEG', '.jpeg', '.PNG', '.png']
 };

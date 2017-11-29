@@ -2,8 +2,9 @@ let RequestMethods = {},
     CommonConfig = require('../Helpers/common-config');
 
 RequestMethods.CheckAuthorizationHeader = function (req, res, next) {
+    console.log('Req: ', req);
     let isAuth = req.get('Authorization');
-    console.log('Content-Type: ', isAuth);
+    console.log('Authorization: ', isAuth);
     if (!isAuth) {
         return next({
             status: CommonConfig.STATUS_CODE.BAD_REQUEST,

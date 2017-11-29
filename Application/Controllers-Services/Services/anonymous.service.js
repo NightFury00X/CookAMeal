@@ -140,4 +140,12 @@ AnonymousService.prototype.Authenticate = async (userTypeId) => {
     }
 };
 
+AnonymousService.prototype.AddResetPasswordDetails = async (userDetails) => {
+    try {
+        return await db.ResetPassword.create(userDetails);
+    } catch (error) {
+        throw (error);
+    }
+};
+
 module.exports = new AnonymousService();

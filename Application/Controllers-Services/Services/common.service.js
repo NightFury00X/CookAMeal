@@ -1,4 +1,5 @@
-let db = require('../../Modals'),
+let randomString = require('random-string'),
+    db = require('../../Modals'),
     generateToken = require('../../../Configurations/Helpers/authentication'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
@@ -87,6 +88,10 @@ CommonService.prototype.GetCategoryById = async (catId) => {
     } catch (error) {
         return error;
     }
+};
+
+CommonService.prototype.GenerateRandomKey = async () => {
+    return randomString(CommonConfig.OPTIONS.RANDOM_KEYS);
 };
 
 module.exports = new CommonService();
