@@ -2,7 +2,6 @@ let RequestMethods = {},
     CommonConfig = require('../Helpers/common-config');
 
 RequestMethods.CheckAuthorizationHeader = function (req, res, next) {
-    console.log('Req: ', req);
     let isAuth = req.get('Authorization');
     console.log('Authorization: ', isAuth);
     if (!isAuth) {
