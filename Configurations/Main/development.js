@@ -56,3 +56,21 @@ exports.DOMAIN = {
     NAME: 'E:/Cook-A-Meal/'
     // NAME: 'E:/Cook-A-Meal'
 };
+
+exports.CONFIG = {
+    EMAIL_ENGINE_OPTIONS: {
+        viewEngine: {
+            extname: '.hbs',
+            layoutsDir: 'views/'
+        },
+        viewPath: 'views/',
+        extName: '.hbs'
+    },
+    EMAIL_OPTIONS: {
+        service: "gmail",
+        auth: {
+            user: 'curacall2015@gmail.com',
+            pass: 'Curacall_2015'
+        }
+    }
+};

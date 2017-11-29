@@ -1,7 +1,8 @@
 let db = require('../../Modals'),
     CommonService = require('./common.service'),
     generateToken = require('../../../Configurations/Helpers/authentication'),
-    CommonConfig = require('../../../Configurations/Helpers/common-config');
+    CommonConfig = require('../../../Configurations/Helpers/common-config'),
+    Email = require('../../../Configurations/Helpers/send-email');
 
 AnonymousService = function () {
 };
@@ -140,10 +141,32 @@ AnonymousService.prototype.Authenticate = async (userTypeId) => {
     }
 };
 
-AnonymousService.prototype.AddResetPasswordDetails = async (userDetails) => {
+AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email) => {
+    const trans = await db.sequelize.transaction();
     try {
-        return await db.ResetPassword.create(userDetails);
+        
+        //get user info
+        
+        let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
+        
+        let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
+        
+        let data = await db.ResetPassword.create(userDetails);
+        
+        if (!data)
+            return null;
+        let isSent = await Email.ToResetPassword({
+            fullname: fullname,
+            email: email,
+            key: userDetails.random_key
+        });
+        // committing transaction
+        await trans.commit();
+        
+        return isSent;
     } catch (error) {
+        // rollback transaction
+        await trans.rollback();
         throw (error);
     }
 };

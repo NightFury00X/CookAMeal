@@ -25,7 +25,7 @@ RequestMethods.CheckContentType = {
                 required: 'Content-Type: application/json.'
             }, false);
         }
-        next(null, req);
+        next();
     },
     ApplicationFormData: function (req, res, next) {
         let isMultiPart = req.get('Content-Type');
@@ -37,7 +37,7 @@ RequestMethods.CheckContentType = {
                 required: 'Content-Type: multipart/form-data.'
             }, false);
         }
-        next(null, req);
+        next();
     }
 };
 

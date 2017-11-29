@@ -45,3 +45,15 @@ exports.UPLOAD_LOCATION = [
 exports.DOMAIN = {
     NAME: 'uploads/'
 };
+
+exports.CONFIG = {
+    EMAIL_OPTIONS: {
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+            user: 'curacall2015@gmail.com',
+            pass: 'Curacall_2015'
+        },
+        secureConnection: false
+    }
+};

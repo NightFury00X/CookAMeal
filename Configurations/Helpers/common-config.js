@@ -91,3 +91,9 @@ CommonConfig.MAGIC_NUMBERS = {
 CommonConfig.REASONS = {
     USER_LOGGED_OUT: 'User logged out.'
 };
+
+CommonConfig.EMAIL_TEMPLATES = {
+    RESET_PASSWORD: 'resetpassword'
+};
+
+CommonConfig.EMAIL_FROM = 'Cook-A-Meal';

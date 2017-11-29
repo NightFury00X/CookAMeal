@@ -8,7 +8,6 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
 // The authentication controller.
 let Anonymous = {
     FbSignIn: async (req, res, next) => {
-        console.log('Done');
         try {
             req.check('fbid').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
@@ -66,12 +65,19 @@ let Anonymous = {
     },
     ResetPassword: async (req, res, next) => {
         try {
+            req.check('email').notEmpty();
+            if (req.validationErrors() || req.validationErrors().length > 0)
+                return responseHelper.setErrorResponse({
+                    message: 'Bad request!',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, res, CommonConfig.STATUS_CODE.BAD_REQUEST);
+            
             let email = req.body.email;
             
             let user = await CommonService.CheckUserTypeByUserEmail(email);
             
             if (!user)
-                return responseHelper.setErrorResponse('User not found!', res, CommonConfig.STATUS_CODE.OK);
+                return responseHelper.setErrorResponse({message: 'Email not exists in our database!'}, res, CommonConfig.STATUS_CODE.OK);
             
             //Generate rendom password
             let randomKey = await CommonService.GenerateRandomKey();
@@ -84,9 +90,17 @@ let Anonymous = {
                 random_key: randomKey,
                 token: token,
                 user_type_id: user.id
-            });
+            }, email);
             
-            return responseHelper.setSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK);
+            if (!data)
+                return responseHelper.setErrorResponse({message: 'Unable to process your request. Please try again later.'}, res, CommonConfig.STATUS_CODE.OK);
+            
+            return responseHelper.setSuccessResponse({
+                id: data.id,
+                email: email,
+                valid_upto: '1 day',
+                message: 'We have sent an email to your registered email address. Thank you.'
+            }, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

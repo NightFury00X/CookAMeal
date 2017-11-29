@@ -13,6 +13,7 @@ require('../../Configurations/Passport/passport-strategy');
 //1: Facebook User SignIn
 router.post('/fbsign',
     RequestMethods.CheckContentType.ApplicationJsonData,
+    requireLogin,
     AnonymousController.Anonymous.FbSignIn);
 
 //2: SignUp
