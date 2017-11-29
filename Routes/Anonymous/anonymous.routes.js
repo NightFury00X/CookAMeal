@@ -9,6 +9,7 @@ const passport = require('passport'),
 
 // Passport Strategy
 require('../../Configurations/Passport/passport-strategy');
+const CommonMiddleware = require("../../Configurations/middlewares/reset-password-check");
 
 //1: Facebook User SignIn
 router.post('/fbsign',
@@ -30,6 +31,7 @@ router.post('/authenticate',
 //4: Reset Password
 router.post('/resetpass',
     RequestMethods.CheckContentType.ApplicationJsonData,
+    CommonMiddleware.VarifyResetPasswordPassKey,
     AnonymousController.Anonymous.ResetPassword);
 
 module.exports = router;

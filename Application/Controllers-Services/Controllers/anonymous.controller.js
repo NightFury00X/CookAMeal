@@ -65,6 +65,20 @@ let Anonymous = {
     },
     ResetPassword: async (req, res, next) => {
         try {
+            if (req.tokenData) {
+                let data = await AnonymousService.SendResetPasswordKeyToMail(req.tokenData.email);
+                if (!data)
+                    return responseHelper.setErrorResponse({
+                        message: 'Unable to send email!',
+                        status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+                    }, res, CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR);
+    
+                return responseHelper.setSuccessResponse({
+                    email: req.tokenData.email,
+                    message: 'We have sent an email to your registered email address. Thank you.'
+                }, res, CommonConfig.STATUS_CODE.OK);
+            }
+            
             req.check('email').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
                 return responseHelper.setErrorResponse({
@@ -87,6 +101,7 @@ let Anonymous = {
             
             //Add key to database            
             let data = await AnonymousService.AddResetPasswordDetails({
+                email: email,
                 random_key: randomKey,
                 token: token,
                 user_type_id: user.id
@@ -96,9 +111,7 @@ let Anonymous = {
                 return responseHelper.setErrorResponse({message: 'Unable to process your request. Please try again later.'}, res, CommonConfig.STATUS_CODE.OK);
             
             return responseHelper.setSuccessResponse({
-                id: data.id,
                 email: email,
-                valid_upto: '1 day',
                 message: 'We have sent an email to your registered email address. Thank you.'
             }, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {

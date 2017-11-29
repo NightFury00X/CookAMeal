@@ -149,17 +149,31 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email) 
         
         let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
         
-        let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
-        
-        let data = await db.ResetPassword.create(userDetails);
-        
-        if (!data)
+        let fullname;
+        if (!userInfo) {
+            trans.rollback();
             return null;
+        }
+        fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
+        
+        let data = await db.ResetPassword.create(userDetails, {transaction: trans});
+        
+        if (!data) {
+            trans.rollback();
+            return null;
+        }
+        
         let isSent = await Email.ToResetPassword({
             fullname: fullname,
             email: email,
             key: userDetails.random_key
         });
+        
+        if (!isSent) {
+            trans.rollback();
+            return null;
+        }
+        
         // committing transaction
         await trans.commit();
         
@@ -167,6 +181,41 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email) 
     } catch (error) {
         // rollback transaction
         await trans.rollback();
+        throw (error);
+    }
+};
+
+AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
+    try {
+        //get user info
+        let tokenData = await db.UserType.findOne({
+            where: {
+                user_id: email
+            },
+            attributes: ['id'],
+            include: [{
+                attributes: ['firstname', 'lastname'],
+                model: db.Profile
+            }, {
+                where: {status: 1, is_valid: 1},
+                attributes: ['random_key'],
+                model: db.ResetPassword
+            }]
+        });
+        
+        if (!tokenData)
+            return null;
+        
+        let fullname = tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname;
+        let keyValue = tokenData.ResetPasswords[0].random_key;
+        
+        return await Email.ToResetPassword({
+            fullname: fullname,
+            email: email,
+            key: keyValue
+        });
+        
+    } catch (error) {
         throw (error);
     }
 };
