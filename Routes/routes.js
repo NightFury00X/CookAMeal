@@ -1,85 +1,62 @@
 'use strict';
+const passport = require('passport'),
+    requireAuth = passport.authenticate('jwt', {session: false});
 
-const BaseApi = require('express').Router();
-const AnonymousRoutes = require('express').Router();
+// Passport Strategy
+require('../Configurations/Passport/passport-strategy');
 
+const BaseApi = require('express').Router(),
+    AuthRoutes = require('express').Router(),
+    CommonRoutes = require('express').Router(),
+    AdminRoutes = require('express').Router(),
+    CookRoutes = require('express').Router();
 
-const AuthRoutes = require('express').Router();
-const router = require('express').Router();
-const Authorization = require('../Configurations/middlewares/authorization').Authorization;
-const CommonConfig = require('../Configurations/Helpers/common-config');
-// const AnonymousRoutes = require('./Anonymous/anonymous.routes');
-// const AuthRoutes = require('./Auth/auth-routes');
-const CommonRoutes = require('./Common/common-routes');
-const AdminRoutes = require('./Admin/admin.routes');
-const CookRoutes = require('./Cook/cook.routes');
-const RequestMethods = require('../Configurations/middlewares/request-checker');
-
-const passport = require('passport');
-const passportService= require('../Configurations/Passport/passport-strategy');
-
-// Middleware to require login/auth
-let requireAuth = passport.authenticate('jwt', {session: false}),
-    requireLogin = passport.authenticate('local', {session: false});
-
-
+const Authorization = require('../Configurations/middlewares/authorization'),
+    CommonConfig = require('../Configurations/Helpers/common-config'),
+    RequestMethods = require('../Configurations/middlewares/request-checker'),
+    RequireLogin = require('../Configurations/middlewares/token-validate');
 
 module.exports = function (app) {
-
+    
     //1: Anonymous Routes
-    BaseApi.use('/api', require('./Anonymous/anonymous.routes'));
+    BaseApi.use('/api',
+        require('./Anonymous/anonymous.routes'));
 
     //2: Auth Routes
     BaseApi.use('/api', AuthRoutes);
     AuthRoutes.use('/auth',
         RequestMethods.CheckAuthorizationHeader,
-        passport.authenticate('jwt', {session: false}),
-        Authorization(CommonConfig.ACCESS_LEVELS.CUSTOMER, require('./Auth/auth-routes')));
+        requireAuth,
+        RequireLogin.IsUserTokenValid,
+        Authorization(CommonConfig.ACCESS_LEVELS.ALL),
+        require('./Auth/auth-routes'));
 
     //3: Common Routes
-    // BaseApi.use('/api');
-
-
+    BaseApi.use('/api', CommonRoutes);
+    CommonRoutes.use('/common',
+        RequestMethods.CheckAuthorizationHeader,
+        requireAuth,
+        RequireLogin.IsUserTokenValid,
+        Authorization(CommonConfig.ACCESS_LEVELS.ALL),
+        require('./Common/common-routes'));
+    
+    //4: Admin Routes
+    BaseApi.use('/api', AdminRoutes);
+    AdminRoutes.use('/admin',
+        RequestMethods.CheckAuthorizationHeader,
+        requireAuth,
+        RequireLogin.IsUserTokenValid,
+        Authorization(CommonConfig.ACCESS_LEVELS.ADMIN),
+        require('./Admin/admin.routes'));
+    
+    //5: Cook Routes
+    BaseApi.use('/api', CookRoutes);
+    CookRoutes.use('/cook',
+        RequestMethods.CheckAuthorizationHeader,
+        requireAuth,
+        RequireLogin.IsUserTokenValid,
+        Authorization(CommonConfig.ACCESS_LEVELS.COOK),
+        require('./Cook/cook.routes'));
+    
     app.use(BaseApi);
-
 };
-
-// let APIRoutes = function (app) {
-//
-//     router.get('/abc', function (req, res, callback) {
-//         res.sendStatus(200);
-//     });
-//     router.use('/', AnonymousRoutes);
-//     return router;
-//
-// };
-
-
-// const APIRoutes = function (passport) {
-//     const MiddleWareRules = {
-//         Admin: [RequestMethods.CheckAuthorizationHeader, passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.ADMIN, AdminRoutes(passport))],
-//         Auth: [RequestMethods.CheckAuthorizationHeader, passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.ALL, AuthRoutes(passport))],
-//         Common: [RequestMethods.CheckAuthorizationHeader, passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.ALL, CommonRoutes(passport))],
-//         Cook: [RequestMethods.CheckAuthorizationHeader, passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.COOK, CookRoutes(passport))],
-//         Customer: [RequestMethods.CheckAuthorizationHeader, passport.authenticate('jwt', {session: false}), Authorization(CommonConfig.ACCESS_LEVELS.CUSTOMER, CookRoutes(passport))]
-//     };
-//
-//     //Anonymous Routes
-//     router.use('/', AnonymousRoutes(passport));
-//
-//     //Anonymous Routes
-//     router.use('/auth', MiddleWareRules.Auth);
-//
-//     // Auth Routes
-//     router.use('/common/', MiddleWareRules.Common);
-//
-//     //Admin Routes
-//     router.use('/admin/', MiddleWareRules.Admin);
-//
-//     // Cook Routes
-//     router.use('/cook/', MiddleWareRules.Cook);
-//
-//     return router;
-// };
-//
-// module.exports = APIRoutes;

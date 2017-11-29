@@ -1,16 +1,14 @@
 'use strict';
 
 const router = require('express').Router(),
-    AnonymousController = require('../../Application/Controllers-Services/Controllers/anonymous.controller');
-const RequestMethods = require('../../Configurations/middlewares/request-checker');
+    AnonymousController = require('../../Application/Controllers-Services/Controllers/anonymous.controller'),
+    RequestMethods = require('../../Configurations/middlewares/request-checker');
 
-const passport = require('passport');
-const passportService= require('../../Configurations/Passport/passport-strategy');
-
-// Middleware to require login/auth
-let requireAuth = passport.authenticate('jwt', {session: false}),
+const passport = require('passport'),
     requireLogin = passport.authenticate('local', {session: false});
 
+// Passport Strategy
+require('../../Configurations/Passport/passport-strategy');
 
 //1: Facebook User SignIn
 router.post('/fbsign',
