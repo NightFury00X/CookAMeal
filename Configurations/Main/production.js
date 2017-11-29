@@ -47,13 +47,19 @@ exports.DOMAIN = {
 };
 
 exports.CONFIG = {
+    EMAIL_ENGINE_OPTIONS: {
+        viewEngine: {
+            extname: '.hbs',
+            layoutsDir: 'views/'
+        },
+        viewPath: 'views/',
+        extName: '.hbs'
+    },
     EMAIL_OPTIONS: {
-        host: 'smtp.gmail.com',
-        port: 587,
+        service: "gmail",
         auth: {
             user: 'curacall2015@gmail.com',
             pass: 'Curacall_2015'
-        },
-        secureConnection: false
+        }
     }
 };
