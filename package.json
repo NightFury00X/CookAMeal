@@ -4,9 +4,9 @@
   "description": "Cook a Meal Api",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "build:dev":"set NODE_ENV=development --set enviroment variable & nodemon clusters.js",
-    "build:prod":"set NODE_ENV=production --set enviroment variable & nodemon clusters.js"
+    "start": "nodemon clusters.js",
+    "build:dev":"set NODE_ENV=development & nodemon clusters.js",
+    "build:prod":"set NODE_ENV=production & nodemon clusters.js"
   },
   "keywords": [],
   "author": "Cynoteck",

@@ -8,7 +8,6 @@
 let config
     , config_file = './' + (process.env.NODE_ENV ? process.env.NODE_ENV : 'development') + '.js';
 
-console.log('config: ', config_file);
 try {
     config = require(config_file);
 } catch (err) {
