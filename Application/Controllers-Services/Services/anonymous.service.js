@@ -113,7 +113,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     }
 };
 
-AnonymousService.prototype.Authenticate = async (userTypeId, type) => {
+AnonymousService.prototype.Authenticate = async (userTypeId, uniqueKey, type) => {
     try {
         let userType = await db.UserType.findOne({
             where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
@@ -126,7 +126,7 @@ AnonymousService.prototype.Authenticate = async (userTypeId, type) => {
         });
         
         return {
-            token: generateToken(userType.userInfo, type),
+            token: generateToken(userType.userInfo, uniqueKey, type),
             user: {
                 id: userType.id,
                 email: userType.Profile.email,

@@ -31,6 +31,7 @@ let localLogin = new LocalStrategy(localOptions, async (username, password, done
                 email: username
             }
         });
+        
         if (resetPasswordUserLogin) {
             // Compare password
             let isMatch = await resetPasswordUserLogin.comparePasswords(password);

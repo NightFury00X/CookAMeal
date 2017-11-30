@@ -4,17 +4,18 @@ let jwt = require('jsonwebtoken'),
     config = require('../../Configurations/Main');
 
 module.exports = {
-    generateToken: (user, type) => {
+    generateToken: (user, uniqueKey, type) => {
         user.is_normal = type;
-        console.log('user: ', user);
+        user.unique_key = uniqueKey;
         return 'JWT ' + jwt.sign(
             user,            
             config.keys.secret,
             {expiresIn: '50y'}
         )
     },
-    generateTokenForResetPassword: (user, type) => {
+    generateTokenForResetPassword: (user, uniqueKey, type) => {
         user.is_normal = type;
+        user.unique_key = uniqueKey;
         return 'JWT ' + jwt.sign(
             user,
             config.keys.secret,

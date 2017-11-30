@@ -66,7 +66,8 @@ let Anonymous = {
     },
     AuthenticateUser: async (req, res, next) => {
         try {
-            let result = await AnonymousService.Authenticate(req.user.user_type_id, !req.user.random_key);
+            console.log('Request: ', req.user.id);
+            let result = await AnonymousService.Authenticate(req.user.user_type_id, req.user.id, !req.user.random_key);
             result.type = !req.user.random_key;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
@@ -101,7 +102,10 @@ let Anonymous = {
             let randomKey = await CommonService.GenerateRandomKey();
             
             //get token by random key
-            let token = generateTokenForResetPassword({id: user.id, email: email}, true);
+            let token = generateTokenForResetPassword({
+                id: user.id,
+                email: email
+            }, true);
             
             //Add key to database            
             let data = await AnonymousService.AddResetPasswordDetails({

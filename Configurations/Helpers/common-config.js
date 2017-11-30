@@ -70,6 +70,12 @@ CommonConfig.OPTIONS = {
         letters: true,
         special: false,
         exclude: ['a', 'b', '1']
+    },
+    UNIQUE_RANDOM_KEYS: {
+        length: 16,
+        numeric: true,
+        letters: false,
+        special: false
     }
 };
 

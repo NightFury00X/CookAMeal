@@ -94,6 +94,10 @@ CommonService.prototype.GenerateRandomKey = async () => {
     return randomString(CommonConfig.OPTIONS.RANDOM_KEYS);
 };
 
+CommonService.prototype.GenerateUnique16DigitKey = async () => {
+    return randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS);
+};
+
 CommonService.prototype.ChangePassword = async (userDetails) => {
     try {
         // TODO Check reset password is requested or not.

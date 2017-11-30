@@ -1,5 +1,6 @@
 let CommonMiddleware = {},
     db = require('../../Application/Modals');
+const CommonConfig = require("../Helpers/common-config");
 
 CommonMiddleware.VarifyResetPasswordPassKey = async (req, res, next) => {
     try {
@@ -27,5 +28,21 @@ CommonMiddleware.VarifyResetPasswordPassKey = async (req, res, next) => {
     }
 };
 
+CommonMiddleware.AccessToChangePassword = async (req, res, next) => {
+    console.log('Requested user: ', req.user);
+    if (!req.user.type)
+        return next({
+            message: 'Access Denied/Forbidden',
+            status: CommonConfig.STATUS_CODE.FORBIDDEN
+        }, false);
+    
+    // TODO Check token is expired or not
+    let data = db.ResetPassword.findOne({
+        where: {
+            email: req.user.email
+        }
+    });
+    next();
+};
 module.exports = CommonMiddleware;
 

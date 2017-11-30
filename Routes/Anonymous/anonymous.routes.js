@@ -11,8 +11,8 @@ const passport = require('passport'),
 // Passport Strategy
 require('../../Configurations/Passport/passport-strategy');
 const CommonMiddleware = require("../../Configurations/middlewares/reset-password-check"),
-    {ValidateParams, ValidateBody} = require('../../Configurations/middlewares/validation'),
-    {ParamSchemas, BodySchemas} = require('../../Application/Schemas/schema');
+    {ValidateBody} = require('../../Configurations/middlewares/validation'),
+    {BodySchemas} = require('../../Application/Schemas/schema');
 
 //1: Facebook User SignIn
 router.post('/fbsign',
@@ -45,6 +45,7 @@ router.put('/changepassword',
     RequestMethods.CheckContentType.ApplicationJsonData,
     ValidateBody(BodySchemas.ChangePassword),
     requireAuth,
+    CommonMiddleware.AccessToChangePassword,
     AnonymousController.Anonymous.ChangePassword);
 
 module.exports = router;
