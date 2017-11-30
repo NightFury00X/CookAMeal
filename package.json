@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon clusters.js",
-    "build:dev":"set NODE_ENV=development & nodemon clusters.js",
-    "build:prod":"set NODE_ENV=production & nodemon clusters.js"
+    "build:dev":"set NODE_ENV=development& nodemon clusters.js",
+    "build:prod":"set NODE_ENV=production& nodemon clusters.js"
   },
   "keywords": [],
   "author": "Cynoteck",
