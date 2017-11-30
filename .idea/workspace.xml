@@ -4,15 +4,7 @@
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/anonymous.controller.js" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
-      <change beforePath="$PROJECT_DIR$/Application/Schemas/schema.js" afterPath="$PROJECT_DIR$/Application/Schemas/schema.js" />
-      <change beforePath="$PROJECT_DIR$/Configurations/Helpers/authentication.js" afterPath="$PROJECT_DIR$/Configurations/Helpers/authentication.js" />
-      <change beforePath="$PROJECT_DIR$/Configurations/Helpers/common-config.js" afterPath="$PROJECT_DIR$/Configurations/Helpers/common-config.js" />
       <change beforePath="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" afterPath="$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js" />
-      <change beforePath="$PROJECT_DIR$/Configurations/Passport/passport-strategy.js" afterPath="$PROJECT_DIR$/Configurations/Passport/passport-strategy.js" />
-      <change beforePath="$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js" afterPath="$PROJECT_DIR$/Routes/Anonymous/anonymous.routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -40,8 +32,8 @@
       <file leaf-file-name="file-upload-multer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="91" column="25" lean-forward="false" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
+            <state relative-caret-position="162">
+              <caret line="63" column="41" lean-forward="false" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -128,7 +120,6 @@
       <find>FILE_LOCATION</find>
       <find>CHAR</find>
       <find>'Data:</find>
-      <find>cons</find>
       <find>Not Found</find>
       <find>var</find>
       <find>email</find>
@@ -136,6 +127,7 @@
       <find>Done</find>
       <find>Start</find>
       <find>start</find>
+      <find>cons</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -420,14 +412,7 @@
       <workItem from="1512017682756" duration="99000" />
       <workItem from="1512019091878" duration="8098000" />
       <workItem from="1512027757298" duration="78000" />
-      <workItem from="1512033655119" duration="10267000" />
-    </task>
-    <task id="LOCAL-00102" summary="Fixing upload folder location path.">
-      <created>1511764491058</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1511764491058</updated>
+      <workItem from="1512033655119" duration="10307000" />
     </task>
     <task id="LOCAL-00103" summary="Fixing upload folder location path.">
       <created>1511764604791</created>
@@ -765,11 +750,18 @@
       <option name="project" value="LOCAL" />
       <updated>1512034885004</updated>
     </task>
-    <option name="localTasksCounter" value="151" />
+    <task id="LOCAL-00151" summary="Fixed production and development variables.">
+      <created>1512045978866</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1512045978866</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="458781000" />
+    <option name="totallyTimeSpent" value="458821000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1262,8 +1254,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Configurations/Helpers/file-upload-multer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="91" column="25" lean-forward="false" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
+        <state relative-caret-position="162">
+          <caret line="63" column="41" lean-forward="false" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
           <folding />
         </state>
       </provider>

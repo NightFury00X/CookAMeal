@@ -52,7 +52,6 @@ let uploadFile = function (req, res, next) {
             if (error) return reject(error);
             if (req.files) {
                 if (req.files.profile) {
-                    console.log('Profile Image: ', req.files.profile);
                     if (!CheckFile(req.files.profile))
                         reject(next({
                             message: 'You are uploading an invalid profile image file.',
@@ -89,7 +88,6 @@ let uploadFile = function (req, res, next) {
 function CheckFile(file) {
     try {
         let magic = fs.readFileSync(file[0].path).toString('hex', 0, 4);
-        console.log('Magic: ', magic);
         if (!CheckMagicNumbers(magic)) {
             fs.unlinkSync(file[0].path);
             return false;
