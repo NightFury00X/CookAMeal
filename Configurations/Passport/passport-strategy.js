@@ -56,18 +56,39 @@ let jwtOptions = {
 
 let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     try {
-        // Find user specified in token
-        let user = await db.UserType.findById(payload.id);
-        
-        // If user doesn't exists, handle it
-        if (!user)
-            done({
-                message: 'Access Denied/Forbidden',
-                status: CommonConfig.STATUS_CODE.FORBIDDEN
-            }, false);
-        
-        // Otherwise, return the user);
-        done(null, user);
+        if (!payload.is_normal && !payload.unique_key) {
+            // Find user specified in token
+            let user = await db.UserType.findById(payload.id);
+            
+            // If user doesn't exists, handle it
+            if (!user)
+                return done({
+                    message: 'Access Denied/Forbidden',
+                    status: CommonConfig.STATUS_CODE.FORBIDDEN
+                }, false);
+            
+            // Otherwise, return the user);
+            done(null, user);
+        } else {
+            // Find user specified in token
+            let user = await db.ResetPassword.findOne({
+                where: {
+                    id: payload.unique_key,
+                    is_valid: true,
+                    status: true
+                }
+            });
+            
+            // If user doesn't exists, handle it
+            if (!user)
+                return done({
+                    message: 'Access Denied/Forbidden',
+                    status: CommonConfig.STATUS_CODE.FORBIDDEN
+                }, false);
+            
+            // Otherwise, return the user);
+            done(null, user);
+        }
     } catch (error) {
         done({
             message: error,

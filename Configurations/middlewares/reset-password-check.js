@@ -29,20 +29,20 @@ CommonMiddleware.VarifyResetPasswordPassKey = async (req, res, next) => {
 };
 
 CommonMiddleware.AccessToChangePassword = async (req, res, next) => {
-    console.log('Requested user: ', req.user);
-    if (!req.user.type)
+    if (!req.user.id)
         return next({
             message: 'Access Denied/Forbidden',
             status: CommonConfig.STATUS_CODE.FORBIDDEN
         }, false);
     
     // TODO Check token is expired or not
-    let data = db.ResetPassword.findOne({
+    let data = await db.ResetPassword.findOne({
         where: {
             email: req.user.email
         }
     });
-    next();
+    console.log('Data:===================> ', data);
+    next(null, data);
 };
 module.exports = CommonMiddleware;
 

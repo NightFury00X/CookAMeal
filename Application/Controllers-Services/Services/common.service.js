@@ -101,17 +101,26 @@ CommonService.prototype.GenerateUnique16DigitKey = async () => {
 CommonService.prototype.ChangePassword = async (userDetails) => {
     try {
         // TODO Check reset password is requested or not.
-        
+        let resetPasswordData = await db.ResetPassword.update({
+            is_valid: 0,
+            status: 0,
+        }, {
+            where: {
+                id: userDetails.id,
+                email: userDetails.email
+            }
+        });
         // TODO If reset password requested, update the record in ResetPassword
         
         // TODO Update password field in user table
-        return await db.User.update(
-            {password: userDetails.password}, {
-                where: {
-                    user_type_id: userDetails.id,
-                    email: userDetails.email
-                }
-            });
+        return await db.User.update({
+            password: userDetails.password
+        }, {
+            where: {
+                user_type_id: userDetails.id,
+                email: userDetails.email
+            }
+        });
     }
     catch (error) {
         return error;

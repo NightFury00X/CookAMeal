@@ -135,9 +135,8 @@ let Anonymous = {
             // TODO Update user password
             let userDetails = {
                 id: req.user.id,
-                email: req.user.user_id,
-                password: req.body.password,
-                type: req.user.type
+                email: req.user.email,
+                password: req.body.password
             };
             console.log('user: ', userDetails);
             let data = await CommonService.ChangePassword(userDetails);
