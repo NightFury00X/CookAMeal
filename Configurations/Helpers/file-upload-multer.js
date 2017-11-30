@@ -46,23 +46,36 @@ let upload = multer({
     maxCount: 1
 }, {name: CommonConfig.FILES.CATEGORY, maxCount: 1}]);
 
-let uploadFile = function (req, res) {
+let uploadFile = function (req, res, next) {
     return new Promise((resolve, reject) => {
         upload(req, res, function (error) {
             if (error) return reject(error);
             if (req.files) {
-                console.log('Files: ', req.files.profile);
                 if (req.files.profile) {
-                    if (!CheckFile(req.files.profile)) reject('You are uploading an invalid image file.');
+                    console.log('Profile Image: ', req.files.profile);
+                    if (!CheckFile(req.files.profile))
+                        reject(next({
+                            message: 'You are uploading an invalid profile image file.',
+                            status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                        }, false));
                 }
                 if (req.files.certificate) {
-                    if (!CheckFile(req.files.certificate)) reject('You are uploading an invalid image file.');
+                    if (!CheckFile(req.files.certificate)) reject(next({
+                        message: 'You are uploading an invalid certificate image file.',
+                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                    }, false));
                 }
                 if (req.files.identification_card) {
-                    if (!CheckFile(req.files.identification_card)) reject('You are uploading an invalid image file.');
+                    if (!CheckFile(req.files.identification_card)) reject(next({
+                        message: 'You are uploading an invalid identification card image file.',
+                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                    }, false));
                 }
                 if (req.files.category) {
-                    if (!CheckFile(req.files.category)) reject('You are uploading an invalid image file.');
+                    if (!CheckFile(req.files.category)) reject(next({
+                        message: 'You are uploading an invalid recipe image file.',
+                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                    }, false));
                 }
             }
             return resolve(req.files);
@@ -75,9 +88,8 @@ let uploadFile = function (req, res) {
  */
 function CheckFile(file) {
     try {
-        console.log('File: ===========> ', file);
         let magic = fs.readFileSync(file[0].path).toString('hex', 0, 4);
-        console.log('Magic: ',magic);
+        console.log('Magic: ', magic);
         if (!CheckMagicNumbers(magic)) {
             fs.unlinkSync(file[0].path);
             return false;
@@ -93,6 +105,9 @@ function CheckFile(file) {
  */
 function CheckMagicNumbers(magic) {
     if (magic === CommonConfig.MAGIC_NUMBERS.JPG
+        || magic === CommonConfig.MAGIC_NUMBERS.JPG1
+        || magic === CommonConfig.MAGIC_NUMBERS.JPG2
+        || magic === CommonConfig.MAGIC_NUMBERS.JPG3
         || magic === CommonConfig.MAGIC_NUMBERS.PNG) return true;
 }
 

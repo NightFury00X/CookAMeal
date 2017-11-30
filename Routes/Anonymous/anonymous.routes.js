@@ -5,7 +5,8 @@ const router = require('express').Router(),
     RequestMethods = require('../../Configurations/middlewares/request-checker');
 
 const passport = require('passport'),
-    requireLogin = passport.authenticate('local', {session: false});
+    requireLogin = passport.authenticate('local', {session: false}),
+    requireAuth = passport.authenticate('jwt', {session: false});
 
 // Passport Strategy
 require('../../Configurations/Passport/passport-strategy');
@@ -37,5 +38,12 @@ router.post('/resetpass',
     ValidateBody(BodySchemas.ResetPassword),
     CommonMiddleware.VarifyResetPasswordPassKey,
     AnonymousController.Anonymous.ResetPassword);
+
+//5: Change Password
+router.put('/changepassword',
+    RequestMethods.CheckContentType.ApplicationJsonData,
+    ValidateBody(BodySchemas.ChangePassword),
+    requireAuth,
+    AnonymousController.Anonymous.ChangePassword);
 
 module.exports = router;

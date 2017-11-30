@@ -113,7 +113,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     }
 };
 
-AnonymousService.prototype.Authenticate = async (userTypeId) => {
+AnonymousService.prototype.Authenticate = async (userTypeId, type) => {
     try {
         let userType = await db.UserType.findOne({
             where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
@@ -126,7 +126,7 @@ AnonymousService.prototype.Authenticate = async (userTypeId) => {
         });
         
         return {
-            token: generateToken(userType.userInfo),
+            token: generateToken(userType.userInfo, type),
             user: {
                 id: userType.id,
                 email: userType.Profile.email,
@@ -143,7 +143,7 @@ AnonymousService.prototype.Authenticate = async (userTypeId) => {
 
 AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email) => {
     const trans = await db.sequelize.transaction();
-    try {        
+    try {
         //get user info
         let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
         

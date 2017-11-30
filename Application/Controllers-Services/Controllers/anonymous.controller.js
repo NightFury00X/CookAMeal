@@ -44,7 +44,7 @@ let Anonymous = {
     SignUp: async (req, res, next) => {
         try {
             //upload file
-            let files = await uploadFile(req, res);
+            let files = await uploadFile(req, res, next);
             
             let registrationData = JSON.parse(req.body.details);
             
@@ -66,7 +66,8 @@ let Anonymous = {
     },
     AuthenticateUser: async (req, res, next) => {
         try {
-            let result = await AnonymousService.Authenticate(req.user.user_type_id);
+            let result = await AnonymousService.Authenticate(req.user.user_type_id, !req.user.random_key);
+            result.type = !req.user.random_key;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
@@ -125,10 +126,15 @@ let Anonymous = {
             next(error);
         }
     },
-    Test: async (req, res, next) => {
-        // const result = Joi.validate(req.params, idSchema);
-        return responseHelper.setSuccessResponse({id: req.params}, res, CommonConfig.STATUS_CODE.OK);
-    }
+    ChangePassword: async (req, res, next) => {
+        try {
+            // TODO Update user password
+            console.log(req.user);
+            return responseHelper.setSuccessResponse(req.user, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    },
 };
 
 //Check facebook user already in database or not

@@ -5,6 +5,17 @@ let randomString = require('random-string'),
 
 CommonService = function () {
 };
+CommonService.prototype.CheckuserExistInResetPasswordByEmailID = async (email) => {
+    try {
+        return await db.ResetPassword.findOne({
+            attributes: ['id'],
+            where: {email: email}
+        });
+    } catch (error) {
+        console.log('error');
+        return error;
+    }
+};
 
 CommonService.prototype.CheckUserTypeByUserEmail = async (email) => {
     try {

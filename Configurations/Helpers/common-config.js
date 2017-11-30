@@ -84,6 +84,8 @@ CommonConfig.ERRORS = {
 CommonConfig.MAGIC_NUMBERS = {
     JPG: 'ffd8ffe0',
     JPG1: 'ffd8ffe1',
+    JPG2: 'ffd8ffe2',
+    JPG3: 'ffd8ffdb',
     PNG: '89504e47',
     GIF: '47494638'
 };
@@ -97,3 +99,7 @@ CommonConfig.EMAIL_TEMPLATES = {
 };
 
 CommonConfig.EMAIL_FROM = 'Cook-A-Meal';
+
+CommonConfig.REG_EXP = {
+    PASSWORD: /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}$/
+};
