@@ -66,7 +66,6 @@ let Anonymous = {
     },
     AuthenticateUser: async (req, res, next) => {
         try {
-            console.log('Ok');
             let result = await AnonymousService.Authenticate(req.user.user_type_id, !req.user.random_key);
             result.type = !req.user.random_key;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
