@@ -69,7 +69,6 @@ async function comparePasswords(password, pwd) {
 
 // Hashes the password for a reset-password object.
 function hashPassword(resetpassword) {
-    console.info('Start', resetpassword);
     if (resetpassword.changed('temp_password')) {
         return bcrypt.hash(resetpassword.temp_password, 10).then(function (password) {
             resetpassword.temp_password = password;
