@@ -38,10 +38,4 @@ router.post('/resetpass',
     CommonMiddleware.VarifyResetPasswordPassKey,
     AnonymousController.Anonymous.ResetPassword);
 
-//4: test
-router.get('/:id/:myid',
-    ValidateParams(ParamSchemas.idSchema, 'id'),
-    // ValidateParams(Schemas.myidSchema, 'myid'),
-    AnonymousController.Anonymous.Test);
-
 module.exports = router;
