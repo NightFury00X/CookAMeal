@@ -13,6 +13,7 @@ CommonService.prototype.CheckUserTypeByUserEmail = async (email) => {
             where: {user_id: email}
         });
     } catch (error) {
+        console.log('error');
         return error;
     }
 };

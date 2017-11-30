@@ -1,6 +1,6 @@
 let db = require('../../Modals'),
     CommonService = require('./common.service'),
-    generateToken = require('../../../Configurations/Helpers/authentication'),
+    {generateToken} = require('../../../Configurations/Helpers/authentication'),
     CommonConfig = require('../../../Configurations/Helpers/common-config'),
     Email = require('../../../Configurations/Helpers/send-email');
 
@@ -143,18 +143,15 @@ AnonymousService.prototype.Authenticate = async (userTypeId) => {
 
 AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email) => {
     const trans = await db.sequelize.transaction();
-    try {
-        
+    try {        
         //get user info
-        
         let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
         
-        let fullname;
         if (!userInfo) {
             trans.rollback();
             return null;
         }
-        fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
+        let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
         
         let data = await db.ResetPassword.create(userDetails, {transaction: trans});
         

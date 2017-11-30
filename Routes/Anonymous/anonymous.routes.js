@@ -10,7 +10,8 @@ const passport = require('passport'),
 // Passport Strategy
 require('../../Configurations/Passport/passport-strategy');
 const CommonMiddleware = require("../../Configurations/middlewares/reset-password-check"),
-    {ValidateParams, ValidateBody, Schemas} = require('../../Configurations/middlewares/validation');
+    {ValidateParams, ValidateBody} = require('../../Configurations/middlewares/validation'),
+    {ParamSchemas, BodySchemas} = require('../../Application/Schemas/schema');
 
 //1: Facebook User SignIn
 router.post('/fbsign',
@@ -25,21 +26,22 @@ router.post('/signup',
 
 //3: Normal User SignIn
 router.post('/authenticate',
-    ValidateBody(Schemas.loginSchema),
-    // RequestMethods.CheckContentType.ApplicationJsonData,
-    // requireLogin,
+    RequestMethods.CheckContentType.ApplicationJsonData,
+    ValidateBody(BodySchemas.Login),
+    requireLogin,
     AnonymousController.Anonymous.AuthenticateUser);
 
 //4: Reset Password
 router.post('/resetpass',
     RequestMethods.CheckContentType.ApplicationJsonData,
+    ValidateBody(BodySchemas.ResetPassword),
     CommonMiddleware.VarifyResetPasswordPassKey,
     AnonymousController.Anonymous.ResetPassword);
 
 //4: test
 router.get('/:id/:myid',
-    ValidateParams(Schemas.idSchema, 'id'),
-    ValidateParams(Schemas.myidSchema, 'myid'),
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    // ValidateParams(Schemas.myidSchema, 'myid'),
     AnonymousController.Anonymous.Test);
 
 module.exports = router;
