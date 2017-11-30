@@ -3,7 +3,7 @@ let Joi = require('joi');
 module.exports = {
     ParamSchemas: {
         idSchema: Joi.object().keys({
-            param: Joi.string().regex(/^[a-z]{4}$/).required()
+            param: Joi.string().required()
         })
     },
     BodySchemas: {
