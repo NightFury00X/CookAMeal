@@ -19,7 +19,7 @@ exports.mssql = {
         freezeTableName: false
     },
     dialectOptions: {
-        instanceName: 'MSSQLSERVER14',
+        instanceName: 'MSSQLSERVER',
         requestTimeout: 30000
     },
     logging: false,
