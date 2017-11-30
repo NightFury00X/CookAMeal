@@ -8,13 +8,13 @@ module.exports = {
         user.is_normal = type;
         console.log('user: ', user);
         return 'JWT ' + jwt.sign(
-            user,
-            
+            user,            
             config.keys.secret,
             {expiresIn: '50y'}
         )
     },
-    generateTokenForResetPassword: (user) => {
+    generateTokenForResetPassword: (user, type) => {
+        user.is_normal = type;
         return 'JWT ' + jwt.sign(
             user,
             config.keys.secret,

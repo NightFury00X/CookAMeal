@@ -96,7 +96,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         await trans.commit();
         
         return {
-            token: generateToken(userType.userInfo),
+            token: generateToken(userType.userInfo, false),
             user: {
                 id: userType.id,
                 email: userProfileData.email,

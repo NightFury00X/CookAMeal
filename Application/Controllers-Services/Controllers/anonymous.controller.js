@@ -101,7 +101,7 @@ let Anonymous = {
             let randomKey = await CommonService.GenerateRandomKey();
             
             //get token by random key
-            let token = generateTokenForResetPassword({id: user.id, email: email});
+            let token = generateTokenForResetPassword({id: user.id, email: email}, true);
             
             //Add key to database            
             let data = await AnonymousService.AddResetPasswordDetails({
