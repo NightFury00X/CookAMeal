@@ -5,6 +5,7 @@ let JwtStrategy = require('passport-jwt').Strategy;
 let ExtractJwt = require('passport-jwt').ExtractJwt;
 let LocalStrategy = require('passport-local').Strategy;
 let CommonService = require('../../Application/Controllers-Services/Services/common.service');
+const CommonConfig = require("../Helpers/common-config");
 
 let localOptions = {
     usernameField: 'username'
@@ -13,8 +14,6 @@ let localOptions = {
 let localLogin = new LocalStrategy(localOptions, async (username, password, done) => {
     try {
         // Find user specified in email
-        
-        console.log('Checking normal user login...');
         let normalUserLogin = await db.User.findOne({
             where: {
                 email: username
@@ -27,7 +26,6 @@ let localLogin = new LocalStrategy(localOptions, async (username, password, done
         }
         
         // Check user is exist for reset password
-        console.log('Checking reset password user login...');
         let resetPasswordUserLogin = await db.ResetPassword.findOne({
             where: {
                 email: username
@@ -38,30 +36,15 @@ let localLogin = new LocalStrategy(localOptions, async (username, password, done
             let isMatch = await resetPasswordUserLogin.comparePasswords(password);
             if (isMatch) return done(null, resetPasswordUserLogin);
         }
-        done({error: 'Login failed. Please try again.'}, false);
-        //
-        //
-        //
-        //
-        // let user = await db.User.findOne({
-        //     where: {email: username}
-        // });
-        //
-        // // If user doesn't exists, handle it
-        // if (!user)
-        //     return done({error: 'Login failed. Please try again.'}, false);
-        //
-        // // Compare password
-        // let isMatch = await user.comparePasswords(password);
-        //
-        // // If  not matched
-        // if (!isMatch)
-        //     return done({error: 'Login failed. Please try again.'}, false);
-        //
-        // // Success return user
-        // done(null, user);
+        done({
+            message: 'Login failed. Please try again.',
+            status: CommonConfig.STATUS_CODE.OK
+        }, false);
     } catch (error) {
-        done(error, false);
+        done({
+            message: error,
+            status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+        }, false);
     }
 });
 
@@ -72,18 +55,23 @@ let jwtOptions = {
 
 let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     try {
-        // Find user specified in token        
-        console.log('User: ', payload);
+        // Find user specified in token
         let user = await db.UserType.findById(payload.id);
         
         // If user doesn't exists, handle it
         if (!user)
-            return done(null, false);
+            done({
+                message: 'Access Denied/Forbidden',
+                status: CommonConfig.STATUS_CODE.FORBIDDEN
+            }, false);
         
         // Otherwise, return the user);
         done(null, user);
     } catch (error) {
-        done(null, false);
+        done({
+            message: error,
+            status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+        }, false);
     }
 });
 

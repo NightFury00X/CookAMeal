@@ -5,17 +5,6 @@ let randomString = require('random-string'),
 
 CommonService = function () {
 };
-CommonService.prototype.CheckuserExistInResetPasswordByEmailID = async (email) => {
-    try {
-        return await db.ResetPassword.findOne({
-            attributes: ['id'],
-            where: {email: email}
-        });
-    } catch (error) {
-        console.log('error');
-        return error;
-    }
-};
 
 CommonService.prototype.CheckUserTypeByUserEmail = async (email) => {
     try {
@@ -103,6 +92,26 @@ CommonService.prototype.GetCategoryById = async (catId) => {
 
 CommonService.prototype.GenerateRandomKey = async () => {
     return randomString(CommonConfig.OPTIONS.RANDOM_KEYS);
+};
+
+CommonService.prototype.ChangePassword = async (userDetails) => {
+    try {
+        // TODO Check reset password is requested or not.
+        
+        // TODO If reset password requested, update the record in ResetPassword
+        
+        // TODO Update password field in user table
+        return await db.User.update(
+            {password: userDetails.password}, {
+                where: {
+                    user_type_id: userDetails.id,
+                    email: userDetails.email
+                }
+            });
+    }
+    catch (error) {
+        return error;
+    }
 };
 
 module.exports = new CommonService();

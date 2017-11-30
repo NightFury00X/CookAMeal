@@ -41,6 +41,7 @@ router.post('/resetpass',
 
 //5: Change Password
 router.put('/changepassword',
+    RequestMethods.CheckAuthorizationHeader,
     RequestMethods.CheckContentType.ApplicationJsonData,
     ValidateBody(BodySchemas.ChangePassword),
     requireAuth,

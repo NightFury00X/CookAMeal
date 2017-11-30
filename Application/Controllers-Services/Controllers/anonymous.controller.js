@@ -66,6 +66,7 @@ let Anonymous = {
     },
     AuthenticateUser: async (req, res, next) => {
         try {
+            console.log('Ok');
             let result = await AnonymousService.Authenticate(req.user.user_type_id, !req.user.random_key);
             result.type = !req.user.random_key;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
@@ -129,8 +130,15 @@ let Anonymous = {
     ChangePassword: async (req, res, next) => {
         try {
             // TODO Update user password
-            console.log(req.user);
-            return responseHelper.setSuccessResponse(req.user, res, CommonConfig.STATUS_CODE.OK);
+            let userDetails = {
+                id: req.user.id,
+                email: req.user.user_id,
+                password: req.body.password,
+                type: req.user.type
+            };
+            console.log('user: ', userDetails);
+            let data = await CommonService.ChangePassword(userDetails);
+            return responseHelper.setSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
