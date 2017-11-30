@@ -132,7 +132,7 @@ let Anonymous = {
     },
     ChangePassword: async (req, res, next) => {
         try {
-            // TODO Update user password
+            // Update user password
             let userDetails = {
                 id: req.user.id,
                 email: req.user.email,
@@ -140,7 +140,7 @@ let Anonymous = {
             };
             console.log('user: ', userDetails);
             let data = await CommonService.ChangePassword(userDetails);
-            return responseHelper.setSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK);
+            return responseHelper.setSuccessResponse('Password has been changed successfully.', res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

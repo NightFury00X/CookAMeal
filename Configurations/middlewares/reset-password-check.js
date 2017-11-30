@@ -41,7 +41,7 @@ CommonMiddleware.AccessToChangePassword = async (req, res, next) => {
             email: req.user.email
         }
     });
-    console.log('Data:===================> ', data);
+    
     next(null, data);
 };
 module.exports = CommonMiddleware;

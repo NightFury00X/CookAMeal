@@ -99,30 +99,56 @@ CommonService.prototype.GenerateUnique16DigitKey = async () => {
 };
 
 CommonService.prototype.ChangePassword = async (userDetails) => {
+    const trans = await db.sequelize.transaction();
     try {
-        // TODO Check reset password is requested or not.
+        // Check reset password is requested or not.
+        let records = await db.ResetPassword.findOne({
+            where: {
+                id: userDetails.id,
+                status: true,
+                is_valid: true
+            }
+        });
+        
+        if (!records) {
+            trans.rollback();
+            return null;
+        }
+        
+        // If reset password requested, update the record in ResetPassword
         let resetPasswordData = await db.ResetPassword.update({
-            is_valid: 0,
-            status: 0,
+            is_valid: false,
+            status: false,
         }, {
             where: {
                 id: userDetails.id,
                 email: userDetails.email
             }
-        });
-        // TODO If reset password requested, update the record in ResetPassword
+        }, {transaction: trans});
         
-        // TODO Update password field in user table
-        return await db.User.update({
+        if (!resetPasswordData) {
+            trans.rollback();
+            return null;
+        }
+        
+        // Update password field in user table
+        let userData = await db.User.update({
             password: userDetails.password
         }, {
             where: {
                 user_type_id: userDetails.id,
                 email: userDetails.email
             }
-        });
+        }, {transaction: trans});
+        
+        if (!userData) {
+            trans.rollback();
+            return null;
+        }
+        return await trans.commit();        
     }
     catch (error) {
+        await trans.rollback();
         return error;
     }
 };
