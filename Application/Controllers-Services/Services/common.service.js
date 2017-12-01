@@ -105,6 +105,14 @@ CommonService.prototype.GenerateUnique16DigitKey = async () => {
     return randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS);
 };
 
+CommonService.prototype.GetResetPasswordDataById = async (id) => {
+    try {
+        return await db.ResetPassword.findById(id);
+    } catch (error) {
+        return error;
+    }
+};
+
 CommonService.prototype.ChangePassword = async (userDetails) => {
     const trans = await db.sequelize.transaction();
     try {

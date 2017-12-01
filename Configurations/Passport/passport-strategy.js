@@ -35,7 +35,6 @@ let localLogin = new LocalStrategy(localOptions, async (username, password, done
         
         if (resetPasswordUserLogin) {
             // Compare password
-            console.log('resetPasswordUserLogin: ', resetPasswordUserLogin);
             let isMatch = await resetPasswordUserLogin.comparePasswords(password);
             if (isMatch) return done(null, resetPasswordUserLogin);
         }
@@ -58,11 +57,12 @@ let jwtOptions = {
 
 let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     try {
+        console.log(payload);
         // Find user specified in token
         let user = await db.UserType.findById(payload.id);
         
         if (!payload.is_normal && !payload.unique_key) {
-                        
+            
             // If user doesn't exists, handle it
             if (!user)
                 return done({
@@ -90,6 +90,7 @@ let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
                 }, false);
             
             // Otherwise, return the user);
+            user.user_role = payload.user_role;
             done(null, user);
         }
     } catch (error) {

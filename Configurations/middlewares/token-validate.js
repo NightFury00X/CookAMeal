@@ -10,11 +10,12 @@ CheckToken.IsUserTokenValid = async (req, res, next) => {
             user_type_id: userTypeId
         }
     });
+    
     let response = {
         message: 'You are not authorized to perform this action!',
         status: CommonConfig.STATUS_CODE.FORBIDDEN
-    };    
-   
+    };
+    
     // If  record exists, handle it
     if (isExists)
         return next(response, false);

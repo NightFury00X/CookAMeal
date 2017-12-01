@@ -39,13 +39,13 @@ router.post('/resetpass',
     CommonMiddleware.VarifyResetPasswordPassKey,
     AnonymousController.Anonymous.ResetPassword);
 
-//5: Change Password
-router.put('/changepassword',
-    RequestMethods.CheckAuthorizationHeader,
-    RequestMethods.CheckContentType.ApplicationJsonData,
-    ValidateBody(BodySchemas.ChangePassword),
-    requireAuth,
-    CommonMiddleware.AccessToChangePassword,
-    AnonymousController.Anonymous.ChangePassword);
+// //5: Change Password
+// router.put('/changepassword',
+//     RequestMethods.CheckAuthorizationHeader,
+//     RequestMethods.CheckContentType.ApplicationJsonData,
+//     ValidateBody(BodySchemas.ChangePassword),
+//     requireAuth,
+//     CommonMiddleware.AccessToChangePassword,
+//     AnonymousController.Anonymous.ChangePassword);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 let AuthService = require('../Services/auth-service'),
     responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
+const CommonService = require("../Services/common.service");
 
 let Auth = {
     LogOutUser: async (req, res, next) => {
@@ -18,7 +19,7 @@ let Auth = {
                 reasons: CommonConfig.REASONS.USER_LOGGED_OUT
             };
             let data = await AuthService.Logout(tokenDetails);
-            if(!data)
+            if (!data)
                 return next({
                     message: 'Unable to process your request.',
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
@@ -32,13 +33,25 @@ let Auth = {
     ChangePassword: async (req, res, next) => {
         try {
             // Update user password
-            // let userDetails = {
-            //     id: req.user.id,
-            //     email: req.user.email,
-            //     password: req.body.password
-            // };
-            //
-            // let data = await CommonService.ChangePassword(userDetails);
+            let userDetails = {
+                id: req.user.id,
+                email: req.user.email,
+                password: req.body.password
+            };
+            
+            const isMatch = await req.user.comparePasswords(req.body.old_password);
+            if (!isMatch)
+                return next({
+                    message: 'Password not matched. Please try again later.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
+            
+            let data = await CommonService.ChangePassword(userDetails);
+            if(!data)
+                return next({
+                    message: 'Unable to process your request.',
+                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+                }, false);
             return responseHelper.setSuccessResponse('Password has been changed successfully.', res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
