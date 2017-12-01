@@ -13,6 +13,7 @@ let localOptions = {
 
 let localLogin = new LocalStrategy(localOptions, async (username, password, done) => {
     try {
+        console.log('======================');
         // Find user specified in email
         let normalUserLogin = await db.User.findOne({
             where: {
@@ -57,12 +58,13 @@ let jwtOptions = {
 
 let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     try {
+        console.log('======================');
         console.log(payload);
         // Find user specified in token
         let user = await db.UserType.findById(payload.id);
         
-        if (!payload.is_normal && !payload.unique_key) {
-            
+        if (payload.is_normal && !payload.unique_key) {
+            console.log('======================');
             // If user doesn't exists, handle it
             if (!user)
                 return done({
@@ -73,22 +75,23 @@ let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
             // Otherwise, return the user);
             done(null, user);
         } else {
+            console.log('**********************');
             // Find user specified in token
-            let user = await db.ResetPassword.findOne({
+            let userForResetPassword = await db.ResetPassword.findOne({
                 where: {
                     unique_key: payload.unique_key,
                     is_valid: true,
                     status: true
                 }
             });
-            
+            console.log('**********************', userForResetPassword);
             // If user doesn't exists, handle it
-            if (!user)
+            if (!userForResetPassword)
                 return done({
                     message: 'Access Denied/Forbidden',
                     status: CommonConfig.STATUS_CODE.FORBIDDEN
                 }, false);
-            
+            console.log('**********************');
             // Otherwise, return the user);
             user.user_role = payload.user_role;
             done(null, user);

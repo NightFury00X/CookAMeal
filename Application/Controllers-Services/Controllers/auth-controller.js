@@ -36,23 +36,35 @@ let Auth = {
             let userDetails = {
                 id: req.user.id,
                 email: req.user.email,
-                password: req.body.password
+                password: req.body.new_password
             };
-            
-            const isMatch = await req.user.comparePasswords(req.body.old_password);
+            let userData = await CommonService.GetResetPasswordData(req.user.user_id);
+            console.log('=================================================================');
+            console.log(userData);
+            const isMatch = await userData.comparePasswords(req.body.old_password);
             if (!isMatch)
                 return next({
                     message: 'Password not matched. Please try again later.',
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
                 }, false);
             
+            
             let data = await CommonService.ChangePassword(userDetails);
-            if(!data)
+            if (!data)
                 return next({
                     message: 'Unable to process your request.',
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false);
-            return responseHelper.setSuccessResponse('Password has been changed successfully.', res, CommonConfig.STATUS_CODE.OK);
+    
+            console.log('i m here');
+            // Create token
+            let TokenData = await CommonService.GenerateTokenByUserTypeId(req.user.user_type_id);
+            
+            
+            return responseHelper.setSuccessResponse({
+                new_token: TokenData,
+                message: 'Password has been changed successfully.'
+            }, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

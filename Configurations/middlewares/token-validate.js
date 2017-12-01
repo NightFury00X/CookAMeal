@@ -15,13 +15,13 @@ CheckToken.IsUserTokenValid = async (req, res, next) => {
         message: 'You are not authorized to perform this action!',
         status: CommonConfig.STATUS_CODE.FORBIDDEN
     };
-    
+    console.log('======================');
     // If  record exists, handle it
     if (isExists)
         return next(response, false);
-    
+    console.log('------------------------');
     //Otherwise, return ok
-    next();
+    return next();
 };
 
 module.exports = CheckToken;

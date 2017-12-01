@@ -6,6 +6,18 @@ let randomString = require('random-string'),
 CommonService = function () {
 };
 
+CommonService.prototype.GetResetPasswordData = async (email) => {
+    try {
+        return await db.ResetPassword.findOne({
+            where: {
+                email: email
+            }
+        });
+    } catch (error) {
+        return error;
+    }
+};
+
 CommonService.prototype.GetUserTypeDetailsById = async (userId) => {
     try {
         return await db.UserType.findById(userId);
@@ -65,7 +77,6 @@ CommonService.prototype.GenerateToken = async (tokenData, userData) => {
 
 CommonService.prototype.GetCategories = async () => {
     try {
-        console.log('Inner');
         return await db.Category.findAll({
             attributes: ['id', 'name'],
             include: [
@@ -105,41 +116,35 @@ CommonService.prototype.GenerateUnique16DigitKey = async () => {
     return randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS);
 };
 
-CommonService.prototype.GetResetPasswordDataById = async (id) => {
-    try {
-        return await db.ResetPassword.findById(id);
-    } catch (error) {
-        return error;
-    }
-};
-
 CommonService.prototype.ChangePassword = async (userDetails) => {
     const trans = await db.sequelize.transaction();
     try {
-        // Check reset password is requested or not.
+        // Check reset password is requested or not.        
         let records = await db.ResetPassword.findOne({
             where: {
-                id: userDetails.id,
+                user_type_id: userDetails.id,
                 status: true,
                 is_valid: true
             }
         });
-        
+        console.log('u r here');
         if (!records) {
             trans.rollback();
             return null;
         }
-        
+        console.log('u r here');
+        // console.log(resetPasswordData);
         // If reset password requested, update the record in ResetPassword
         let resetPasswordData = await db.ResetPassword.update({
             is_valid: false,
             status: false,
         }, {
             where: {
-                id: userDetails.id,
-                email: userDetails.email
+                id: records.id,
+                email: records.email
             }
         }, {transaction: trans});
+    
         
         if (!resetPasswordData) {
             trans.rollback();
@@ -160,6 +165,7 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
             trans.rollback();
             return null;
         }
+        console.log('password changed');
         return await trans.commit();
     }
     catch (error) {
@@ -178,6 +184,33 @@ CommonService.prototype.InvalidateResetPasswordTokenData = async (id) => {
         });
     } catch (error) {
         return (error);
+    }
+};
+
+CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
+    try {
+        const userType = await db.UserType.findById(userId, {
+            include: [{
+                model: db.Profile,
+                include: [{
+                    model: db.MediaObject
+                }]
+            }]
+        });
+        if (!userType) return null;
+        return {
+            token: generateToken(userType.userInfo, false, false),
+            user: {
+                id: userType.id,
+                email: userType.Profile.email,
+                fullname: userType.Profile.fullName,
+                user_type: userType.user_type,
+                user_role: userType.user_role,
+                profile_url: userType.Profile.MediaObjects.length > 0 ? userType.Profile.MediaObjects[0].imageurl : ''
+            }
+        };
+    } catch (error) {
+        return error;
     }
 };
 

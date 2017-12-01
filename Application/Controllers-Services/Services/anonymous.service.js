@@ -116,10 +116,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
 AnonymousService.prototype.Authenticate = async (userTypeId, userTypeIdOrUniqueKey, type) => {
     try {
         let userType;
-        console.log('userTypeIdOrUniqueKey: ', userTypeIdOrUniqueKey);
-        console.log('Type: ', type);
         if (type && !userTypeIdOrUniqueKey) {
-            console.log('normal user.');
             userType = await db.UserType.findOne({
                 where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
                 include: [{
@@ -130,7 +127,6 @@ AnonymousService.prototype.Authenticate = async (userTypeId, userTypeIdOrUniqueK
                 }]
             });
         } else {
-            console.log('reset password user.');
             userType = await db.UserType.findOne({
                 where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
                 include: [{
@@ -184,7 +180,8 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email) 
             trans.rollback();
             return null;
         }
-        
+    
+        console.log('Sending mail ... Please wait......');
         let isSent = await Email.ToResetPassword({
             fullname: fullname,
             email: email,
@@ -231,6 +228,7 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
         let fullname = tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname;
         let keyValue = tokenData.ResetPasswords[0].random_key;
         
+        console.log('Sending mail ... Please wait......');
         return await Email.ToResetPassword({
             fullname: fullname,
             email: email,
