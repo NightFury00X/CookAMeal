@@ -56,7 +56,8 @@ exports.CONFIG = {
         extName: '.hbs'
     },
     EMAIL_OPTIONS: {
-        service: "gmail",
+        host: 'smtp.gmail.com',
+        port: 465,
         auth: {
             user: 'curacall2015@gmail.com',
             pass: 'Curacall_2015'
