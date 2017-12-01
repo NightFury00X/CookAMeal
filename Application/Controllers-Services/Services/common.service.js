@@ -6,6 +6,14 @@ let randomString = require('random-string'),
 CommonService = function () {
 };
 
+CommonService.prototype.GetUserTypeDetailsById = async (userId) => {
+    try {
+        return await db.UserType.findById(userId);
+    } catch (error) {
+        return error;
+    }
+};
+
 CommonService.prototype.CheckUserTypeByUserEmail = async (email) => {
     try {
         return await db.UserType.findOne({
@@ -13,7 +21,6 @@ CommonService.prototype.CheckUserTypeByUserEmail = async (email) => {
             where: {user_id: email}
         });
     } catch (error) {
-        console.log('error');
         return error;
     }
 };
@@ -145,11 +152,24 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
             trans.rollback();
             return null;
         }
-        return await trans.commit();        
+        return await trans.commit();
     }
     catch (error) {
         await trans.rollback();
         return error;
+    }
+};
+
+CommonService.prototype.InvalidateResetPasswordTokenData = async (id) => {
+    try {
+        return await db.ResetPassword.update({
+            is_valid: false,
+            status: false
+        }, {
+            where: {id: id}
+        });
+    } catch (error) {
+        return (error);
     }
 };
 

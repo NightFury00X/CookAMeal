@@ -6,7 +6,6 @@ CommonMiddleware.VarifyResetPasswordPassKey = async (req, res, next) => {
     try {
         let email = req.body.email;
         let isExists = await db.ResetPassword.findOne({
-            attributes: ['email'],
             where: {
                 email: email,
                 status: 1,
@@ -15,10 +14,14 @@ CommonMiddleware.VarifyResetPasswordPassKey = async (req, res, next) => {
         });
         
         // If  record exists, handle it
-        if (isExists)
-            req.tokenData = {
-                email: isExists.email
-            };
+        if (!isExists)
+            return next();
+        
+        req.tokenData = {
+            id: isExists.id,
+            email: isExists.email,
+            token: isExists.token.substring(4, isExists.length)
+        };
         
         //Otherwise, return ok
         next();

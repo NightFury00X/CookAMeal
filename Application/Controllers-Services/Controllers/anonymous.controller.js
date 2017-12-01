@@ -1,9 +1,11 @@
-let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
+let jwt = require('jsonwebtoken'),
+    responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
     AnonymousService = require('../Services/anonymous.service'),
     {generateTokenForResetPassword} = require('../../../Configurations/Helpers/authentication'),
     CommonService = require('../Services/common.service'),
     uploadFile = require('../../../Configurations/Helpers/file-upload-multer'),
-    CommonConfig = require('../../../Configurations/Helpers/common-config');
+    CommonConfig = require('../../../Configurations/Helpers/common-config'),
+    Config = require('../../../Configurations/Main');
 
 // The authentication controller.
 let Anonymous = {
@@ -66,8 +68,10 @@ let Anonymous = {
     },
     AuthenticateUser: async (req, res, next) => {
         try {
-            console.log('Request: ', req.user.id);
-            let result = await AnonymousService.Authenticate(req.user.user_type_id, req.user.id, !req.user.random_key);
+            console.log('req.user.user_type_id: ', req.user.user_type_id);
+            console.log('unique_key: ', req.user.unique_key);
+            console.log('req.user.random_key: ', !req.user.random_key);
+            let result = await AnonymousService.Authenticate(req.user.user_type_id, req.user.unique_key, !req.user.random_key);
             result.type = !req.user.random_key;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
@@ -77,6 +81,17 @@ let Anonymous = {
     ResetPassword: async (req, res, next) => {
         try {
             if (req.tokenData) {
+                // Check token is valid or not
+                let isVerified = await jwt.verify(req.tokenData.token, Config.keys.secret);
+                
+                if (!isVerified) {
+                    //update reset password token status to false
+                    await CommonService.InvalidateResetPasswordTokenData(req.tokenData.id);
+                    return next({
+                        message: 'Unable to process your request! Please try again later.',
+                        status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+                    }, false);
+                }
                 let data = await AnonymousService.SendResetPasswordKeyToMail(req.tokenData.email);
                 if (!data)
                     return next({
@@ -90,6 +105,7 @@ let Anonymous = {
                 }, res, CommonConfig.STATUS_CODE.OK);
             }
             const email = req.body.email;
+            
             let user = await CommonService.CheckUserTypeByUserEmail(email);
             
             if (!user)
@@ -98,20 +114,22 @@ let Anonymous = {
                     status: CommonConfig.STATUS_CODE.OK
                 }, false);
             
+            let userType = await CommonService.GetUserTypeDetailsById(user.id);
+            
             //Generate rendom password
             let randomKey = await CommonService.GenerateRandomKey();
             
+            let unique_key = await CommonService.GenerateUnique16DigitKey();
+            
             //get token by random key
-            let token = generateTokenForResetPassword({
-                id: user.id,
-                email: email
-            }, true);
+            let token = generateTokenForResetPassword(userType.userInfo, unique_key, false);
             
             //Add key to database            
             let data = await AnonymousService.AddResetPasswordDetails({
                 email: email,
                 temp_password: randomKey,
                 random_key: randomKey,
+                unique_key: unique_key,
                 token: token,
                 user_type_id: user.id
             }, email);
@@ -138,7 +156,7 @@ let Anonymous = {
                 email: req.user.email,
                 password: req.body.password
             };
-            console.log('user: ', userDetails);
+            
             let data = await CommonService.ChangePassword(userDetails);
             return responseHelper.setSuccessResponse('Password has been changed successfully.', res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {

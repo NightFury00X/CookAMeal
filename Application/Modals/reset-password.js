@@ -27,6 +27,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(500),
             allowNull: false
         },
+        unique_key: {
+            type: DataTypes.STRING(16),
+            allowNull: false
+        },
         is_valid: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

@@ -21,6 +21,7 @@ let localLogin = new LocalStrategy(localOptions, async (username, password, done
         });
         if (normalUserLogin) {
             // Compare password
+            console.log('normalUserLogin: ', normalUserLogin);
             let isMatch = await normalUserLogin.comparePasswords(password);
             if (isMatch) return done(null, normalUserLogin);
         }
@@ -34,6 +35,7 @@ let localLogin = new LocalStrategy(localOptions, async (username, password, done
         
         if (resetPasswordUserLogin) {
             // Compare password
+            console.log('resetPasswordUserLogin: ', resetPasswordUserLogin);
             let isMatch = await resetPasswordUserLogin.comparePasswords(password);
             if (isMatch) return done(null, resetPasswordUserLogin);
         }
@@ -56,10 +58,11 @@ let jwtOptions = {
 
 let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     try {
+        // Find user specified in token
+        let user = await db.UserType.findById(payload.id);
+        
         if (!payload.is_normal && !payload.unique_key) {
-            // Find user specified in token
-            let user = await db.UserType.findById(payload.id);
-            
+                        
             // If user doesn't exists, handle it
             if (!user)
                 return done({
@@ -73,7 +76,7 @@ let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
             // Find user specified in token
             let user = await db.ResetPassword.findOne({
                 where: {
-                    id: payload.unique_key,
+                    unique_key: payload.unique_key,
                     is_valid: true,
                     status: true
                 }

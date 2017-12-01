@@ -96,7 +96,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         await trans.commit();
         
         return {
-            token: generateToken(userType.userInfo, false),
+            token: generateToken(userType.userInfo, null, true),
             user: {
                 id: userType.id,
                 email: userProfileData.email,
@@ -113,20 +113,45 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     }
 };
 
-AnonymousService.prototype.Authenticate = async (userTypeId, uniqueKey, type) => {
+AnonymousService.prototype.Authenticate = async (userTypeId, userTypeIdOrUniqueKey, type) => {
     try {
-        let userType = await db.UserType.findOne({
-            where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
-            include: [{
-                model: db.Profile,
+        let userType;
+        console.log('userTypeIdOrUniqueKey: ', userTypeIdOrUniqueKey);
+        console.log('Type: ', type);
+        if (type && !userTypeIdOrUniqueKey) {
+            console.log('normal user.');
+            userType = await db.UserType.findOne({
+                where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
                 include: [{
-                    model: db.MediaObject
+                    model: db.Profile,
+                    include: [{
+                        model: db.MediaObject
+                    }]
                 }]
-            }]
-        });
+            });
+        } else {
+            console.log('reset password user.');
+            userType = await db.UserType.findOne({
+                where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
+                include: [{
+                    model: db.Profile,
+                    include: [{
+                        model: db.MediaObject
+                    }],
+                }, {
+                    model: db.ResetPassword,
+                    where: {
+                        unique_key: userTypeIdOrUniqueKey,
+                        user_type_id: userTypeId,
+                        is_valid: true,
+                        status: true
+                    }
+                }]
+            });
+        }
         
         return {
-            token: generateToken(userType.userInfo, uniqueKey, type),
+            token: !userTypeIdOrUniqueKey ? generateToken(userType.userInfo, false, false) : userType.ResetPasswords[0].token,
             user: {
                 id: userType.id,
                 email: userType.Profile.email,

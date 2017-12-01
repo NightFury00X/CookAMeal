@@ -31,7 +31,15 @@ let Auth = {
     },
     ChangePassword: async (req, res, next) => {
         try {
-            return responseHelper.setSuccessResponse('Change Password.', res, CommonConfig.STATUS_CODE.CREATED);
+            // Update user password
+            // let userDetails = {
+            //     id: req.user.id,
+            //     email: req.user.email,
+            //     password: req.body.password
+            // };
+            //
+            // let data = await CommonService.ChangePassword(userDetails);
+            return responseHelper.setSuccessResponse('Password has been changed successfully.', res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
