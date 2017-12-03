@@ -5,7 +5,7 @@ module.exports = (accessLevel) => {
     return (req, res, next) => {
         if (!(accessLevel & req.user.user_role)) {
             let response = {
-                message: 'You are not authorized to perform this action!',
+                message: CommonConfig.ERRORS.NON_AUTHORIZED,
                 status: CommonConfig.STATUS_CODE.FORBIDDEN
             };
             return next(response, false);

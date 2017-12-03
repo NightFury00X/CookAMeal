@@ -50,7 +50,7 @@ let Anonymous = {
 
             if (!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
                 return next({
-                    message: 'Bad Request.',
+                    message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
                 }, false);
 
@@ -69,9 +69,9 @@ let Anonymous = {
 
             if (req.user.token && !req.token_status) {
                 // TODO Invalidate token and inform user to reset password again.
-                console.log('token expired');
+
                 await CommonService.InvalidateResetPasswordTokenData(req.user.id);
-                return next({message: 'temporary password has been expired.'}, false);
+                return next({message: CommonConfig.ERRORS.TOKEN_EXPIRED}, false);
             }
 
             let userDetails = {
@@ -143,14 +143,14 @@ let Anonymous = {
 
             if (!flag)
                 return next({
-                    message: 'Unable to process your request! Please try again later.',
+                    message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.OK
                 }, false);
 
             console.log('We have sent an email to your registered email address. Thank you.');
             return responseHelper.setSuccessResponse({
                 email: email,
-                message: 'We have sent an email to your registered email address. Thank you.'
+                message: CommonConfig.SUCCESS.EMAIL_SENT
             }, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
@@ -166,7 +166,7 @@ let Anonymous = {
             };
 
             await CommonService.ChangePassword(userDetails);
-            return responseHelper.setSuccessResponse('Password has been changed successfully.', res, CommonConfig.STATUS_CODE.OK);
+            return responseHelper.setSuccessResponse(CommonConfig.SUCCESS.PASSWORD_CHANGED, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

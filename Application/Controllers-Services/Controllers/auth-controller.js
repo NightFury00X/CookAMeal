@@ -1,7 +1,7 @@
 let AuthService = require('../Services/auth-service'),
     responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
-    CommonConfig = require('../../../Configurations/Helpers/common-config');
-const CommonService = require("../Services/common.service");
+    CommonConfig = require('../../../Configurations/Helpers/common-config'),
+    CommonService = require("../Services/common.service");
 
 let Auth = {
     LogOutUser: async (req, res, next) => {
@@ -9,10 +9,10 @@ let Auth = {
             req.check('type').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
                 return next({
-                    message: 'Invalid request.',
+                    message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
                 }, false);
-            
+
             let tokenDetails = {
                 user_type_id: req.user.id,
                 token: req.get('Authorization'),
@@ -21,11 +21,11 @@ let Auth = {
             let data = await AuthService.Logout(tokenDetails);
             if (!data)
                 return next({
-                    message: 'Unable to process your request.',
+                    message: CommonConfig.ERRORS.INTERNAL_SERVER_ERROR,
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false);
-            
-            return responseHelper.setSuccessResponse({message: 'You have successfully logged out!'}, res, CommonConfig.STATUS_CODE.OK);
+
+            return responseHelper.setSuccessResponse({message: CommonConfig.SUCCESS.LOGGED_OUT}, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -43,25 +43,25 @@ let Auth = {
             const isMatch = await userData.comparePasswords(req.body.old_password);
             if (!isMatch)
                 return next({
-                    message: 'Password not matched. Please try again later.',
+                    message: CommonConfig.ERRORS.PASSWORD_NOT_MATCHED,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
                 }, false);
-            
-            
+
+
             let data = await CommonService.ChangePassword(userDetails);
             if (!data)
                 return next({
-                    message: 'Unable to process your request.',
+                    message: CommonConfig.ERRORS.INTERNAL_SERVER_ERROR,
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false);
 
             // Create token
             let TokenData = await CommonService.GenerateTokenByUserTypeId(req.user.user_type_id);
-            
-            
+
+
             return responseHelper.setSuccessResponse({
                 new_token: TokenData,
-                message: 'Password has been changed successfully.'
+                message: CommonConfig.SUCCESS.PASSWORD_CHANGED
             }, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);

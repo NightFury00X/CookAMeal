@@ -5,7 +5,6 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
 let Category = {
     GetAll: async (req, res, next) => {
         try {
-            console.log('Inner');
             let result = await CommonService.GetCategories();
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {

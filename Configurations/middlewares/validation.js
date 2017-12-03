@@ -29,7 +29,7 @@ module.exports = {
                 }
             } catch (error) {
                 return next({
-                    message: 'Something wrong in your request. please try again later!',
+                    message: CommonConfig.ERRORS.INTERNAL_SERVER_ERROR,
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false);
             }
@@ -61,7 +61,7 @@ module.exports = {
             } catch (error) {
                 console.log(error);
                 return next({
-                    message: 'Something wrong in your request. please try again later!',
+                    message: CommonConfig.ERRORS.INTERNAL_SERVER_ERROR,
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false);
             }

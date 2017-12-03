@@ -15,7 +15,7 @@ let Category = {
             
             if (!files || !files.category)
                 return next({
-                    message: 'Unable to create Category.',
+                    message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
                 }, false);
             

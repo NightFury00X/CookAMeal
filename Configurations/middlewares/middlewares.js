@@ -1,5 +1,5 @@
-let db = require('../../Application/Modals'),
-    jwt = require('jsonwebtoken'),
+let jwt = require('jsonwebtoken'),
+    db = require('../../Application/Modals'),
     config = require('../Main');
 
 module.exports = {

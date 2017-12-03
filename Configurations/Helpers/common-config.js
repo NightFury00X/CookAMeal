@@ -83,8 +83,29 @@ CommonConfig.WHITE_LIST = {
     IMAGE_EXTENSTIONS: ['.JPG', '.jpg', '.JPEG', '.jpeg', '.PNG', '.png']
 };
 
+CommonConfig.CONTENT_TYPE = {
+    JSON: 'application/json',
+    MULTIPART: 'multipart/form-data'
+};
+
 CommonConfig.ERRORS = {
-    INVALID_FILE_FORMAT: 'Invalid image file format. Please upload only .JPG, JPEG or .PNG only.'
+    LOGIN_FAILED: 'Invalid username or password. Login failed.',
+    ACCESS_DENIED: 'Access Denied/Forbidden',
+    INTERNAL_SERVER_ERROR: 'Something wrong in your request. please try again later.',
+    NON_AUTHORIZED: 'You are not authorized to perform this action.',
+    TOKEN_EXPIRED: 'Temporary password has been expired.',
+    HEADER_NOT_FOUND: 'Header not present in the request.',
+    CONTENT_TYPE_MULTIPART: 'Invalid Content Type. Content-Type: multipart/form-data required.',
+    CONTENT_TYPE_JSON: 'Invalid Content Type. Content-Type: applicatiotn/json required.',
+    INVALID_FILE_FORMAT: 'Invalid image file format. Please upload only .JPG, JPEG or .PNG only.',
+    CREATION: 'Unable to process your request! Please try again later.',
+    PASSWORD_NOT_MATCHED: 'Password not matched. Please try again later.'
+};
+
+CommonConfig.SUCCESS = {
+    EMAIL_SENT: 'We have sent an email to your registered email address. Thank you.',
+    PASSWORD_CHANGED: 'Password has been changed successfully.',
+    LOGGED_OUT: 'You have successfully logged out.'
 };
 
 CommonConfig.MAGIC_NUMBERS = {

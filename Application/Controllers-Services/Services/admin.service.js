@@ -29,12 +29,4 @@ AdminService.prototype.Add = async (userid, category, files) => {
     }
 };
 
-AdminService.prototype.Delete = async (catId) => {
-
-};
-
-AdminService.prototype.Update = async (category) => {
-
-};
-
 module.exports = new AdminService();

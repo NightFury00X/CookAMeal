@@ -7,8 +7,7 @@ RequestMethods.CheckAuthorizationHeader = function (req, res, next) {
     if (!content_type) {
         return next({
             status: CommonConfig.STATUS_CODE.BAD_REQUEST,
-            message: 'Header not present in the request!',
-            required: 'Authorization header.'
+            message: CommonConfig.ERRORS.HEADER_NOT_FOUND
         }, false);
     }
     req.content_type = content_type;
@@ -19,11 +18,10 @@ RequestMethods.CheckContentType = {
     ApplicationJsonData: function (req, res, next) {
         let content_type = req.get('Content-Type');
         console.log('Content-Type: ', content_type);
-        if (!content_type || content_type.split(';')[0] !== 'application/json') {
+        if (!content_type || content_type.split(';')[0] !== CommonConfig.CONTENT_TYPE.JSON) {
             return next({
                 status: CommonConfig.STATUS_CODE.BAD_REQUEST,
-                message: 'Invalid Content Type. Content-Type: applicatiotn/json required!',
-                required: 'Content-Type: application/json.'
+                message: CommonConfig.ERRORS.CONTENT_TYPE_JSON
             }, false);
         }
         req.content_type = content_type;
@@ -32,11 +30,10 @@ RequestMethods.CheckContentType = {
     ApplicationFormData: function (req, res, next) {
         let content_type = req.get('Content-Type');
         console.log('Content-Type: ', content_type);
-        if (!content_type || content_type.split(';')[0] !== 'multipart/form-data') {
+        if (!content_type || content_type.split(';')[0] !== CommonConfig.CONTENT_TYPE.MULTIPART) {
             return next({
                 status: CommonConfig.STATUS_CODE.BAD_REQUEST,
-                message: 'Invalid Content Type. Content-Type: multipart/form-data required!',
-                required: 'Content-Type: multipart/form-data.'
+                message: CommonConfig.ERRORS.CONTENT_TYPE_MULTIPART
             }, false);
         }
         req.content_type = content_type;

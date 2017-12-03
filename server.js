@@ -2,17 +2,17 @@
 
 let express = require('express'),
     bodyParser = require('body-parser'),
+    heltmet = require('helmet'),
+    winston = require('winston'),
     expressValidator = require('express-validator'),
     passport = require('passport'),
     errorHandler = require('errorhandler'),
-    db = require('./Application/Modals'),
-    heltmet = require('helmet'),
-    winston = require('winston'),
     DailyRotateFile = require('winston-daily-rotate-file'),
     expressWinston = require('express-winston'),
     compression = require("compression"),
     mkdirp = require('mkdirp'),
     fs = require('fs'),
+    db = require('./Application/Modals'),
     config = require('./Configurations/Main'),
     CommonConfig = require('./Configurations/Helpers/common-config');
 
@@ -177,10 +177,6 @@ app.use(function (req, res, next) {
 // Error Response Handler
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
-        if (err.isJoi) {
-            console.log('JoiError');
-        }
-
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
