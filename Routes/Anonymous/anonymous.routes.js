@@ -5,15 +5,15 @@ const router = require('express').Router(),
     RequestMethods = require('../../Configurations/middlewares/request-checker');
 
 const passport = require('passport'),
-    requireLogin = passport.authenticate('local', {session: false}),
-    requireAuth = passport.authenticate('jwt', {session: false});
+    requireLogin = passport.authenticate('local', {session: false});
 
 // Passport Strategy
 require('../../Configurations/Passport/passport-strategy');
-const CommonMiddleware = require("../../Configurations/middlewares/reset-password-check"),
-    {ValidateBody} = require('../../Configurations/middlewares/validation'),
-    {BodySchemas} = require('../../Application/Schemas/schema');
+const {ValidateBody} = require('../../Configurations/middlewares/validation'),
+    {BodySchemas} = require('../../Application/Schemas/schema'),
+    {Token} = require('../../Configurations/middlewares/middlewares');
 
+const {ResetPassword} = require('../../Configurations/middlewares/middlewares');
 //1: Facebook User SignIn
 router.post('/fbsign',
     RequestMethods.CheckContentType.ApplicationJsonData,
@@ -30,22 +30,14 @@ router.post('/authenticate',
     RequestMethods.CheckContentType.ApplicationJsonData,
     ValidateBody(BodySchemas.Login),
     requireLogin,
+    Token.VerifyResetPasswordToken,
     AnonymousController.Anonymous.AuthenticateUser);
 
 //4: Reset Password
 router.post('/resetpass',
     RequestMethods.CheckContentType.ApplicationJsonData,
     ValidateBody(BodySchemas.ResetPassword),
-    CommonMiddleware.VarifyResetPasswordPassKey,
+    ResetPassword.CheckPasswordIsGenerated,
     AnonymousController.Anonymous.ResetPassword);
-
-// //5: Change Password
-// router.put('/changepassword',
-//     RequestMethods.CheckAuthorizationHeader,
-//     RequestMethods.CheckContentType.ApplicationJsonData,
-//     ValidateBody(BodySchemas.ChangePassword),
-//     requireAuth,
-//     CommonMiddleware.AccessToChangePassword,
-//     AnonymousController.Anonymous.ChangePassword);
 
 module.exports = router;

@@ -13,23 +13,23 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         let userData = registrationData.user;
         if (userData.allergies)
             userData.allergies = JSON.stringify(userData.allergies);
-        
+
         let type = CommonConfig.USER_TYPE.NORMAL_USER;
-        
+
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbid) {
             let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid);
             if (!fb)
                 type = CommonConfig.USER_TYPE.FACEBOOK_USER;
         }
-        
+
         // Add user type
         let userType = await db.UserType.create({
             user_id: type === CommonConfig.USER_TYPE.NORMAL_USER ? userData.email : registrationData.facebook.fbid,
             user_type: type,
             user_role: userData.user_role
         }, {transaction: trans});
-        
+
         //add user login data
         if (type === CommonConfig.USER_TYPE.NORMAL_USER) {
             await db.User.create({
@@ -38,26 +38,26 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 password: userData.password
             }, {transaction: trans});
         }
-        
+
         //add user profile data
         let tempData = userData;
         delete tempData.password;
         tempData.user_type_id = userType.id;
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
-        
+
         //Adding user address and social
         registrationData.address.profile_id = userProfileData.id;
         registrationData.social.profile_id = userProfileData.id;
         await db.Address.create(registrationData.address, {transaction: trans});
         await db.Social.create(registrationData.social, {transaction: trans});
-        
-        
+
+
         //upload profile image
         let ProfileMediaObject;
-        let IdenitificateMediaObject;
-        let certificateMediaObject;
+        // let IdenitificateMediaObject;
+        // let certificateMediaObject;
         let identificationCardData;
-        
+
         if (files) {
             if (files.profile) {
                 let profileImage = files.profile[0];
@@ -69,18 +69,18 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             if (files.identification_card) {
                 //Adding Identification Card Details
                 if (registrationData.identification_card) {
-                    let identificationCard = registrationData.identification_card
+                    let identificationCard = registrationData.identification_card;
                     identificationCard.user_type_id = userType.id;
-                    
+
                     identificationCardData = await db.IdentificationCard.create(identificationCard, {transaction: trans});
                 }
-                
+
                 let identificationCardMedia = files.identification_card[0];
                 identificationCardMedia.identification_card_id = identificationCardData.id;
                 identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
                 identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
-                
-                IdenitificateMediaObject = await db.MediaObject.create(identificationCardMedia, {transaction: trans});
+
+                await db.MediaObject.create(identificationCardMedia, {transaction: trans});
             }
             if (files.certificate) {
                 let certificateData = await db.Certificate.create({profile_id: userProfileData.id}, {transaction: trans});
@@ -88,13 +88,13 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 certificateMedia.certificate_id = certificateData.id;
                 certificateMedia.object_type = CommonConfig.OBJECT_TYPE.CERTIFICATE;
                 certificateMedia.imageurl = CommonConfig.FILE_LOCATIONS.CERTIFICATE + certificateMedia.filename;
-                certificateMediaObject = await db.MediaObject.create(certificateMedia, {transaction: trans});
+                await db.MediaObject.create(certificateMedia, {transaction: trans});
             }
         }
-        
+
         // committing transaction
         await trans.commit();
-        
+
         return {
             token: generateToken(userType.userInfo, null, true),
             user: {
@@ -113,22 +113,12 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     }
 };
 
-AnonymousService.prototype.Authenticate = async (userTypeId, userTypeIdOrUniqueKey, type) => {
+AnonymousService.prototype.Authenticate = async (userDetails) => {
     try {
-        let userType;
-        if (type && !userTypeIdOrUniqueKey) {
-            userType = await db.UserType.findOne({
-                where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
-                include: [{
-                    model: db.Profile,
-                    include: [{
-                        model: db.MediaObject
-                    }]
-                }]
-            });
-        } else {
-            userType = await db.UserType.findOne({
-                where: {id: userTypeId, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
+        let userTypeDetails;
+        if (userDetails.token_status && userDetails.token_id) {
+            userTypeDetails = await db.UserType.findOne({
+                where: {id: userDetails.user_type_id, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
                 include: [{
                     model: db.Profile,
                     include: [{
@@ -137,24 +127,33 @@ AnonymousService.prototype.Authenticate = async (userTypeId, userTypeIdOrUniqueK
                 }, {
                     model: db.ResetPassword,
                     where: {
-                        unique_key: userTypeIdOrUniqueKey,
-                        user_type_id: userTypeId,
+                        id: userDetails.token_id,
                         is_valid: true,
                         status: true
                     }
                 }]
             });
+        } else {
+            userTypeDetails = await db.UserType.findOne({
+                where: {id: userDetails.user_type_id, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
+                include: [{
+                    model: db.Profile,
+                    include: [{
+                        model: db.MediaObject
+                    }]
+                }]
+            });
         }
-        
+
         return {
-            token: !userTypeIdOrUniqueKey ? generateToken(userType.userInfo, false, false) : userType.ResetPasswords[0].token,
+            token: !userDetails.token_status ? generateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
             user: {
-                id: userType.id,
-                email: userType.Profile.email,
-                fullname: userType.Profile.fullName,
-                user_type: userType.user_type,
-                user_role: userType.user_role,
-                profile_url: userType.Profile.MediaObjects.length > 0 ? userType.Profile.MediaObjects[0].imageurl : ''
+                id: userTypeDetails.id,
+                email: userTypeDetails.Profile.email,
+                fullname: userTypeDetails.Profile.fullName,
+                user_type: userTypeDetails.user_type,
+                user_role: userTypeDetails.user_role,
+                profile_url: userTypeDetails.Profile.MediaObjects.length > 0 ? userTypeDetails.Profile.MediaObjects[0].imageurl : ''
             }
         };
     } catch (error) {
@@ -162,40 +161,49 @@ AnonymousService.prototype.Authenticate = async (userTypeId, userTypeIdOrUniqueK
     }
 };
 
-AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email) => {
+AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, invalidate) => {
     const trans = await db.sequelize.transaction();
     try {
+        //invalidate token if token expired
+        if (invalidate) {
+            await db.ResetPassword.update({
+                is_valid: false,
+                status: false
+            }, {
+                where: {id: invalidate}
+            }, {transaction: trans});
+        }
         //get user info
         let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
-        
+
         if (!userInfo) {
             trans.rollback();
             return null;
         }
         let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
-        
+
         let data = await db.ResetPassword.create(userDetails, {transaction: trans});
-        
+
         if (!data) {
             trans.rollback();
             return null;
         }
-    
+
         console.log('Sending mail ... Please wait......');
         let isSent = await Email.ToResetPassword({
             fullname: fullname,
             email: email,
             key: userDetails.random_key
         });
-        
+
         if (!isSent) {
             trans.rollback();
             return null;
         }
-        
+
         // committing transaction
         await trans.commit();
-        
+
         return isSent;
     } catch (error) {
         // rollback transaction
@@ -221,20 +229,20 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
                 model: db.ResetPassword
             }]
         });
-        
+
         if (!tokenData)
             return null;
-        
+
         let fullname = tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname;
         let keyValue = tokenData.ResetPasswords[0].random_key;
-        
+
         console.log('Sending mail ... Please wait......');
         return await Email.ToResetPassword({
             fullname: fullname,
             email: email,
             key: keyValue
         });
-        
+
     } catch (error) {
         throw (error);
     }

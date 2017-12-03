@@ -1,9 +1,26 @@
 let randomString = require('random-string'),
     db = require('../../Modals'),
-    generateToken = require('../../../Configurations/Helpers/authentication'),
+    {generateToken} = require('../../../Configurations/Helpers/authentication'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 CommonService = function () {
+};
+
+CommonService.prototype.UserModel = {
+    GetDetailsByEmail: async (email) => {
+        return await db.UserType.findOne({where: {user_id: email}});
+    }
+};
+
+CommonService.prototype.Keys = {
+    RandomKeys: {
+        GenerateRandomKey: async () => {
+            return randomString(CommonConfig.OPTIONS.RANDOM_KEYS);
+        },
+        GenerateUnique16DigitKey: async () => {
+            return randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS);
+        }
+    }
 };
 
 CommonService.prototype.GetResetPasswordData = async (email) => {
@@ -12,25 +29,6 @@ CommonService.prototype.GetResetPasswordData = async (email) => {
             where: {
                 email: email
             }
-        });
-    } catch (error) {
-        return error;
-    }
-};
-
-CommonService.prototype.GetUserTypeDetailsById = async (userId) => {
-    try {
-        return await db.UserType.findById(userId);
-    } catch (error) {
-        return error;
-    }
-};
-
-CommonService.prototype.CheckUserTypeByUserEmail = async (email) => {
-    try {
-        return await db.UserType.findOne({
-            attributes: ['id'],
-            where: {user_id: email}
         });
     } catch (error) {
         return error;
@@ -144,13 +142,13 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 email: records.email
             }
         }, {transaction: trans});
-    
-        
+
+
         if (!resetPasswordData) {
             trans.rollback();
             return null;
         }
-        
+
         // Update password field in user table
         let userData = await db.User.update({
             password: userDetails.password
@@ -160,7 +158,7 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 email: userDetails.email
             }
         }, {transaction: trans});
-        
+
         if (!userData) {
             trans.rollback();
             return null;

@@ -38,9 +38,10 @@ let Auth = {
                 email: req.user.email,
                 password: req.body.new_password
             };
+
+            console.log('user: =>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', req.payload);
+
             let userData = await CommonService.GetResetPasswordData(req.user.user_id);
-            console.log('=================================================================');
-            console.log(userData);
             const isMatch = await userData.comparePasswords(req.body.old_password);
             if (!isMatch)
                 return next({
@@ -55,8 +56,7 @@ let Auth = {
                     message: 'Unable to process your request.',
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false);
-    
-            console.log('i m here');
+
             // Create token
             let TokenData = await CommonService.GenerateTokenByUserTypeId(req.user.user_type_id);
             
@@ -65,14 +65,6 @@ let Auth = {
                 new_token: TokenData,
                 message: 'Password has been changed successfully.'
             }, res, CommonConfig.STATUS_CODE.OK);
-        } catch (error) {
-            next(error);
-        }
-    },
-    GetUser: async (req, res, next) => {
-        try {
-            let result = await AuthService.GetUserData(req.user);
-            return responseHelper.setSuccessResponse({message: result}, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

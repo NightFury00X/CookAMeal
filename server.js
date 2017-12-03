@@ -176,13 +176,12 @@ app.use(function (req, res, next) {
 // Error Response Handler
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
-        // Do logging and user-friendly error message display
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
                 data: null,
-                error: {
-                    message: err.message,
+                error: err.message,
+                error_stack: {
                     error: err
                 }
             }
