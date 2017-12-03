@@ -12,7 +12,7 @@ CheckToken.IsUserTokenValid = async (req, res, next) => {
     });
     
     let response = {
-        message: 'You are not authorized to perform this action!',
+        message: CommonConfig.ERRORS.NON_AUTHORIZED,
         status: CommonConfig.STATUS_CODE.FORBIDDEN
     };
 
