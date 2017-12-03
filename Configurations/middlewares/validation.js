@@ -1,6 +1,12 @@
 let Joi = require('joi');
 const CommonConfig = require("../Helpers/common-config");
 
+var options = {
+    language: {
+        key: '{{key}} '
+    },
+};
+
 module.exports = {
     ValidateParams: (schema, name) => {
         return (req, res, next) => {
@@ -14,10 +20,10 @@ module.exports = {
                 } else {
                     if (!req.value)
                         req.value = {};
-                    
+
                     if (!req.value['params'])
                         req.value['params'] = {};
-                    
+
                     req.value['params'][name] = result.value.param;
                     next();
                 }
@@ -32,10 +38,15 @@ module.exports = {
     ValidateBody: (schema) => {
         return (req, res, next) => {
             try {
-                const result = Joi.validate(req.body, schema);
+                const result = Joi.validate(req.body, schema, options);
                 if (result.error) {
+                    let errors = [];
+                    let i = 1;
+                    result.error.details.forEach(function (detail) {
+                        errors.push(i++ + ': ' + detail.message);
+                    });
                     return next({
-                        message: result.error.message,
+                        message: errors,
                         status: CommonConfig.STATUS_CODE.BAD_REQUEST
                     }, false);
                 } else {
@@ -43,11 +54,12 @@ module.exports = {
                         req.value = {};
                     if (!req.value['body'])
                         req.value['body'] = {};
-                    
+
                     req.value['body'] = result.value;
                     next();
                 }
             } catch (error) {
+                console.log(error);
                 return next({
                     message: 'Something wrong in your request. please try again later!',
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR

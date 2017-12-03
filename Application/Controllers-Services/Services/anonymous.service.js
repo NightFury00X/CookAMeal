@@ -161,17 +161,21 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
     }
 };
 
-AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, invalidate) => {
+AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, token_data) => {
     const trans = await db.sequelize.transaction();
     try {
         //invalidate token if token expired
-        if (invalidate) {
-            await db.ResetPassword.update({
+        if (token_data && !token_data.token_status) {
+            let data = await db.ResetPassword.update({
                 is_valid: false,
                 status: false
             }, {
-                where: {id: invalidate}
+                where: {id: token_data.token_id}
             }, {transaction: trans});
+            if (!data) {
+                trans.rollback();
+                return null;
+            }
         }
         //get user info
         let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);

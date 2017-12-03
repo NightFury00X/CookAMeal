@@ -39,8 +39,6 @@ let Auth = {
                 password: req.body.new_password
             };
 
-            console.log('user: =>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', req.payload);
-
             let userData = await CommonService.GetResetPasswordData(req.user.user_id);
             const isMatch = await userData.comparePasswords(req.body.old_password);
             if (!isMatch)

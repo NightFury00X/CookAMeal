@@ -16,6 +16,7 @@ module.exports = {
                 });
 
                 req.reset_password_generated = !!result;
+
                 if (!result)
                     return next();
 
@@ -38,6 +39,10 @@ module.exports = {
                 next();
             }
             catch (error) {
+                if (error.name !== 'TokenExpiredError')
+                    return next(error);
+
+                req.token_status = false;
                 next(null, error);
             }
         }

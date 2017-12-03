@@ -66,6 +66,7 @@ let Anonymous = {
     },
     AuthenticateUser: async (req, res, next) => {
         try {
+
             if (req.user.token && !req.token_status) {
                 // TODO Invalidate token and inform user to reset password again.
                 console.log('token expired');
@@ -79,8 +80,6 @@ let Anonymous = {
                 token_id: req.token_status ? req.user.id : false,
                 token_status: !!req.token_status
             };
-
-            console.log(userDetails);
             let result = await AnonymousService.Authenticate(userDetails);
             result.type = !req.user.random_key;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
@@ -95,8 +94,6 @@ let Anonymous = {
 
             // If reset password not generated
             if (!req.reset_password_generated && !req.token_status && !req.token_data) {
-                // TODO generate new password and token
-                console.log('generate reset password and token.');
                 let userModel = await CommonService.UserModel.GetDetailsByEmail(email);
 
                 let temp_password = await CommonService.Keys.RandomKeys.GenerateRandomKey();
@@ -117,17 +114,7 @@ let Anonymous = {
                 if (!data)
                     flag = false;
             }
-
-            // If token expired
-            if (!req.token_status && req.reset_password_generated && !req.token_data) {
-                // TODO invalidate old Token
-                // TODO set flag to true to issue new token
-                console.log('Invalidate token');
-                console.log('generate new token and password');
-                let data = await CommonService.InvalidateResetPasswordTokenData(req.token_id);
-                if (!data)
-                    flag = false;
-
+            else if (req.reset_password_generated && !req.token_status && !req.token_data) {
                 let userModel = await CommonService.UserModel.GetDetailsByEmail(email);
 
                 let temp_password = await CommonService.Keys.RandomKeys.GenerateRandomKey();
@@ -144,15 +131,11 @@ let Anonymous = {
                     token: token,
                     unique_key: unique_key,
                     user_type_id: userModel.id
-                }, email, req.token_id);
+                }, email, {token_status: req.token_status, token_id: req.token_id});
                 if (!result)
                     flag = false;
             }
-
-            // If Token is valid and password already generated
-            if (req.token_data && req.reset_password_generated && req.token_status) {
-                // TODO get password and resend the email
-                console.log('sending password to mail.');
+            else if (req.reset_password_generated && req.token_data && req.token_status) {
                 let data = AnonymousService.SendResetPasswordKeyToMail(req.token_data.email);
                 if (!data)
                     flag = false;
@@ -164,6 +147,7 @@ let Anonymous = {
                     status: CommonConfig.STATUS_CODE.OK
                 }, false);
 
+            console.log('We have sent an email to your registered email address. Thank you.');
             return responseHelper.setSuccessResponse({
                 email: email,
                 message: 'We have sent an email to your registered email address. Thank you.'
