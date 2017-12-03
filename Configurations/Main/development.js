@@ -61,9 +61,9 @@ exports.CONFIG = {
     EMAIL_ENGINE_OPTIONS: {
         viewEngine: {
             extname: '.hbs',
-            layoutsDir: 'views/'
+            layoutsDir: 'Views/'
         },
-        viewPath: 'views/',
+        viewPath: 'Views/',
         extName: '.hbs'
     },
     EMAIL_OPTIONS: {

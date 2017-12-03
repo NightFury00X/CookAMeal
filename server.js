@@ -32,7 +32,7 @@ let logger = new (winston.Logger)({
 // Upload file folder
 let uploadFileLocation = __dirname + '/Uploads';
 
-let logLocation = __dirname + '/logs/errors';
+let logLocation = __dirname + '/Logs/Errors';
 
 mkdirp.sync(uploadFileLocation);
 mkdirp.sync(logLocation);
@@ -136,7 +136,7 @@ app.use(expressWinston.errorLogger({
             datePattern: '_dd-MM-yyyy.log',
             colorize: true,
             json: true,
-            filename: './logs/errors/error_log',
+            filename: './Logs/Errors/error_log',
             maxsize: 50 * 1024 * 1024,
             maxFiles: 10,
             zippedArchive: true
