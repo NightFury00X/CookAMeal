@@ -1,10 +1,11 @@
-let passport = require('passport');
-let db = require('../../Application/Modals');
-let config = require('../Main');
-let JwtStrategy = require('passport-jwt').Strategy;
-let ExtractJwt = require('passport-jwt').ExtractJwt;
-let LocalStrategy = require('passport-local').Strategy;
-const CommonConfig = require("../Helpers/common-config");
+let passport = require('passport'),
+    JwtStrategy = require('passport-jwt').Strategy,
+    ExtractJwt = require('passport-jwt').ExtractJwt,
+    LocalStrategy = require('passport-local').Strategy;
+
+let db = require('../../Application/Modals'),
+    config = require('../Main'),
+    CommonConfig = require("../Helpers/common-config");
 
 let localOptions = {
     usernameField: 'username'
@@ -27,18 +28,34 @@ let localLogin = new LocalStrategy(localOptions, async (username, password, done
         // Check user is exist for reset password
         let resetPasswordUserLogin = await db.ResetPassword.findOne({
             where: {
-                email: username
+                email: username,
+                is_valid: true,
+                status: true
             }
         });
 
         if (resetPasswordUserLogin) {
             // Compare password
             let isMatch = await resetPasswordUserLogin.comparePasswords(password);
+
             if (isMatch)
                 return done(null, resetPasswordUserLogin);
+        } else {
+            // Check token is expired
+            let temp = await db.ResetPassword.findOne({
+                where: {
+                    email: username,
+                    random_key: password
+                }
+            });
+            if (temp)
+                return done({
+                    message: CommonConfig.ERRORS.TOKEN_EXPIRED,
+                    status: CommonConfig.STATUS_CODE.OK
+                }, false);
         }
         done({
-            message: 'Login failed. Please try again.',
+            message: CommonConfig.ERRORS.LOGIN_FAILED,
             status: CommonConfig.STATUS_CODE.OK
         }, false);
     } catch (error) {
@@ -63,7 +80,7 @@ let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
             // If user doesn't exists, handle it
             if (!user)
                 return done({
-                    message: 'Access Denied/Forbidden',
+                    message: CommonConfig.ERRORS.ACCESS_DENIED,
                     status: CommonConfig.STATUS_CODE.FORBIDDEN
                 }, false);
 
@@ -82,7 +99,7 @@ let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
             // If user doesn't exists, handle it
             if (!userForResetPassword)
                 return done({
-                    message: 'Access Denied/Forbidden',
+                    message: CommonConfig.ERRORS.ACCESS_DENIED,
                     status: CommonConfig.STATUS_CODE.FORBIDDEN
                 }, false);
 
