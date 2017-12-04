@@ -92,10 +92,10 @@ let Anonymous = {
             let flag = true;
             let email = req.body.email;
 
+            console.log('Here :=> ', req.reset_password_generated, req.token_status, req.token_data);
             // If reset password not generated
             if (!req.reset_password_generated && !req.token_status && !req.token_data) {
                 let userModel = await CommonService.UserModel.GetDetailsByEmail(email);
-
                 let temp_password = await CommonService.Keys.RandomKeys.GenerateRandomKey();
 
                 let unique_key = await CommonService.Keys.RandomKeys.GenerateUnique16DigitKey();
