@@ -60,19 +60,13 @@ exports.CONFIG = {
         extName: '.hbs'
     },
     EMAIL_OPTIONS: {
-        // host: 'smtp.gmail.com',
-        // port: 587,
-        // secure: false, // use SSL
-        // debug: true,
-        // auth: {
-        //     user: 'curacall2015@gmail.com',
-        //     pass: 'Curacall_2015'
-        // }
-        host: 'smtp.ethereal.email',
-        port: 587,
+        host: 'smtp.gmail.com',
+        port: 25,
+        secure: false, // use SSL
+        debug: true,
         auth: {
-            user: 'k7vsuu5z2moo6cuv@ethereal.email',
-            pass: 'eSVWu4kTuYjURkpSHF'
+            user: 'curacall2015@gmail.com',
+            pass: 'Curacall_2015'
         }
     }
 };
