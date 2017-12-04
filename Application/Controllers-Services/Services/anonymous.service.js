@@ -150,17 +150,19 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
             return null;
     
         console.log('Tokoen Status: ', userDetails.token_status);
-        return {
-            token: !userDetails.token_status ? generateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
-            user: {
-                id: userTypeDetails.id,
-                email: userTypeDetails.Profile.email,
-                fullname: userTypeDetails.Profile.fullName,
-                user_type: userTypeDetails.user_type,
-                user_role: userTypeDetails.user_role,
-                profile_url: userTypeDetails.Profile.MediaObjects.length > 0 ? userTypeDetails.Profile.MediaObjects[0].imageurl : ''
-            }
-        };
+        let token;
+        if (userDetails.token_status)
+            return {
+                token: !userDetails.token_status ? generateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
+                user: {
+                    id: userTypeDetails.id,
+                    email: userTypeDetails.Profile.email,
+                    fullname: userTypeDetails.Profile.fullName,
+                    user_type: userTypeDetails.user_type,
+                    user_role: userTypeDetails.user_role,
+                    profile_url: userTypeDetails.Profile.MediaObjects.length > 0 ? userTypeDetails.Profile.MediaObjects[0].imageurl : ''
+                }
+            };
     } catch (error) {
         throw (error);
     }
