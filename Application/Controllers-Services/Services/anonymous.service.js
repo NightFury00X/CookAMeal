@@ -173,7 +173,7 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
                 where: {id: token_data.token_id}
             }, {transaction: trans});
             if (!data) {
-                trans.rollback();
+                await trans.rollback();
                 return null;
             }
         }
@@ -181,7 +181,7 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
         let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
 
         if (!userInfo) {
-            trans.rollback();
+            await trans.rollback();
             return null;
         }
         let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
@@ -189,7 +189,7 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
         let data = await db.ResetPassword.create(userDetails, {transaction: trans});
 
         if (!data) {
-            trans.rollback();
+            await trans.rollback();
             return null;
         }
 
@@ -201,10 +201,10 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
         });
 
         if (!isSent) {
-            trans.rollback();
+            await trans.rollback();
             return null;
         }
-
+        console.log('We have sent an email to your registered email address. Thank you.');
         // committing transaction
         await trans.commit();
 

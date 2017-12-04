@@ -146,8 +146,7 @@ let Anonymous = {
                     message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.OK
                 }, false);
-
-            console.log('We have sent an email to your registered email address. Thank you.');
+            
             return responseHelper.setSuccessResponse({
                 email: email,
                 message: CommonConfig.SUCCESS.EMAIL_SENT
