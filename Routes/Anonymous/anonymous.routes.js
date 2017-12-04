@@ -9,6 +9,7 @@ const passport = require('passport'),
 
 // Passport Strategy
 require('../../Configurations/Passport/passport-strategy');
+const FileUploader = require("../../Configurations/Helpers/file-upload-multer");
 const {ValidateBody} = require('../../Configurations/middlewares/validation'),
     {BodySchemas} = require('../../Application/Schemas/schema'),
     {Token} = require('../../Configurations/middlewares/middlewares');
@@ -23,6 +24,7 @@ router.post('/fbsign',
 //2: SignUp
 router.post('/signup',
     RequestMethods.CheckContentType.ApplicationFormData,
+    FileUploader.uploadDataFiles,
     AnonymousController.Anonymous.SignUp);
 
 //3: Normal User SignIn

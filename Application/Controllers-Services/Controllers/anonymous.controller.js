@@ -45,7 +45,7 @@ let Anonymous = {
     SignUp: async (req, res, next) => {
         try {
             //upload file
-            let files = await uploadFile(req, res, next);
+            // let files = await uploadFile(req, res, next);
     
             let registrationData = JSON.parse(req.body.details);
     
@@ -57,9 +57,9 @@ let Anonymous = {
     
             console.log('Data: ', registrationData);
             console.log('--------------------------------------------------------------------------');
-            console.log('Files: ', files);
+            console.log('Files: ', req.files);
     
-            let result = await AnonymousService.SignUp(registrationData, files);
+            let result = await AnonymousService.SignUp(registrationData, req.files);
             result.type = true;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
