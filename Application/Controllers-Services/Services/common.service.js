@@ -117,6 +117,7 @@ CommonService.prototype.GenerateUnique16DigitKey = async () => {
 CommonService.prototype.ChangePassword = async (userDetails) => {
     const trans = await db.sequelize.transaction();
     try {
+        
         // Check reset password is requested or not.        
         let records = await db.ResetPassword.findOne({
             where: {
@@ -125,13 +126,12 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 is_valid: true
             }
         });
-        console.log('u r here');
+        
         if (!records) {
             trans.rollback();
             return null;
         }
-        console.log('u r here');
-        // console.log(resetPasswordData);
+        
         // If reset password requested, update the record in ResetPassword
         let resetPasswordData = await db.ResetPassword.update({
             is_valid: false,
@@ -163,8 +163,10 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
             trans.rollback();
             return null;
         }
+        
         console.log('password changed');
-        return await trans.commit();
+        await trans.commit();
+        return userData;
     }
     catch (error) {
         await trans.rollback();

@@ -35,10 +35,11 @@ let Auth = {
             // Update user password
             let userDetails = {
                 id: req.user.id,
-                email: req.user.email,
+                email: req.user.user_id,
                 password: req.body.new_password
             };
-
+    
+            
             let userData = await CommonService.GetResetPasswordData(req.user.user_id);
             const isMatch = await userData.comparePasswords(req.body.old_password);
             if (!isMatch)
@@ -49,6 +50,8 @@ let Auth = {
 
 
             let data = await CommonService.ChangePassword(userDetails);
+            console.log('User Details: ', data);
+            
             if (!data)
                 return next({
                     message: CommonConfig.ERRORS.INTERNAL_SERVER_ERROR,

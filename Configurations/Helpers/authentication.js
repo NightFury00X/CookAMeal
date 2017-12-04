@@ -19,7 +19,7 @@ module.exports = {
         return 'JWT ' + jwt.sign(
             user,
             config.keys.secret,
-            {expiresIn: '1m'}
+            {expiresIn: '1h'}
         )
     }
 };

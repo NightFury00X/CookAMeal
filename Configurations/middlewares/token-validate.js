@@ -3,7 +3,7 @@ let CheckToken = {},
     CommonConfig = require("../Helpers/common-config");
 
 CheckToken.IsUserTokenValid = async (req, res, next) => {
-    const {userTypeId} = req.user.unique_key ? req.user.user_type_id : req.user.id;
+    let userTypeId = req.user.unique_key ? req.user.user_type_id : req.user.id;
     let isExists = await db.BlackListedToken.findOne({
         where: {
             token: req.get('Authorization'),
@@ -15,11 +15,11 @@ CheckToken.IsUserTokenValid = async (req, res, next) => {
         message: CommonConfig.ERRORS.NON_AUTHORIZED,
         status: CommonConfig.STATUS_CODE.FORBIDDEN
     };
-
+    
     // If  record exists, handle it
     if (isExists)
         return next(response, false);
-
+    
     //Otherwise, return ok
     return next();
 };

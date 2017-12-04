@@ -41,13 +41,13 @@
     "passport-jwt": "^3.0.1",
     "passport-local": "^1.0.0",
     "random-string": "^0.2.0",
-    "sequelize": "^4.23.2",
+    "sequelize": "^4.25.1",
     "sequelize-transactions": "^1.0.1",
     "tedious": "^2.2.0",
     "winston": "^2.4.0",
     "winston-daily-rotate-file": "^1.7.2"
   },
   "devDependencies": {
-    "@types/node": "^8.0.53"
+    "@types/node": "^8.0.54"
   }
 }
