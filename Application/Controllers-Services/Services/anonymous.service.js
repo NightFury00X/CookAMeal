@@ -13,23 +13,23 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         let userData = registrationData.user;
         if (userData.allergies)
             userData.allergies = JSON.stringify(userData.allergies);
-
+        
         let type = CommonConfig.USER_TYPE.NORMAL_USER;
-
+        
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbid) {
             let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid);
             if (!fb)
                 type = CommonConfig.USER_TYPE.FACEBOOK_USER;
         }
-
+        
         // Add user type
         let userType = await db.UserType.create({
             user_id: type === CommonConfig.USER_TYPE.NORMAL_USER ? userData.email : registrationData.facebook.fbid,
             user_type: type,
             user_role: userData.user_role
         }, {transaction: trans});
-
+        
         //add user login data
         if (type === CommonConfig.USER_TYPE.NORMAL_USER) {
             await db.User.create({
@@ -38,26 +38,26 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 password: userData.password
             }, {transaction: trans});
         }
-
+        
         //add user profile data
         let tempData = userData;
         delete tempData.password;
         tempData.user_type_id = userType.id;
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
-
+        
         //Adding user address and social
         registrationData.address.profile_id = userProfileData.id;
         registrationData.social.profile_id = userProfileData.id;
         await db.Address.create(registrationData.address, {transaction: trans});
         await db.Social.create(registrationData.social, {transaction: trans});
-
-
+        
+        
         //upload profile image
         let ProfileMediaObject;
         // let IdenitificateMediaObject;
         // let certificateMediaObject;
         let identificationCardData;
-
+        
         if (files) {
             if (files.profile) {
                 let profileImage = files.profile[0];
@@ -71,15 +71,15 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 if (registrationData.identification_card) {
                     let identificationCard = registrationData.identification_card;
                     identificationCard.user_type_id = userType.id;
-
+                    
                     identificationCardData = await db.IdentificationCard.create(identificationCard, {transaction: trans});
                 }
-
+                
                 let identificationCardMedia = files.identification_card[0];
                 identificationCardMedia.identification_card_id = identificationCardData.id;
                 identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
                 identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
-
+                
                 await db.MediaObject.create(identificationCardMedia, {transaction: trans});
             }
             if (files.certificate) {
@@ -91,10 +91,10 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 await db.MediaObject.create(certificateMedia, {transaction: trans});
             }
         }
-
+        
         // committing transaction
         await trans.commit();
-
+        
         return {
             token: generateToken(userType.userInfo, null, true),
             user: {
@@ -144,7 +144,7 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 }]
             });
         }
-
+        
         return {
             token: !userDetails.token_status ? generateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
             user: {
@@ -179,27 +179,28 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
         }
         //get user info
         let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
-
+        
         if (!userInfo) {
             await trans.rollback();
             return null;
         }
         let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
-
+        
         let data = await db.ResetPassword.create(userDetails, {transaction: trans});
-
+        
         if (!data) {
             await trans.rollback();
             return null;
         }
-
+        
         console.log('Sending mail ... Please wait......');
+        console.log('waiting...');
         let isSent = await Email.ToResetPassword({
             fullname: fullname,
             email: email,
             key: userDetails.random_key
         });
-
+        
         if (!isSent) {
             await trans.rollback();
             return null;
@@ -207,7 +208,7 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
         console.log('We have sent an email to your registered email address. Thank you.');
         // committing transaction
         await trans.commit();
-
+        
         return isSent;
     } catch (error) {
         // rollback transaction
@@ -233,20 +234,25 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
                 model: db.ResetPassword
             }]
         });
-
+        
         if (!tokenData)
             return null;
-
+        
         let fullname = tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname;
         let keyValue = tokenData.ResetPasswords[0].random_key;
-
+        
         console.log('Sending mail ... Please wait......');
-        return await Email.ToResetPassword({
+        let messageData = await Email.ToResetPassword({
             fullname: fullname,
             email: email,
             key: keyValue
         });
-
+        
+        console.log('We have sent an email to your registered email address. Thank you.');
+        if (!messageData)
+            return null;
+        
+        return messageData;
     } catch (error) {
         throw (error);
     }
