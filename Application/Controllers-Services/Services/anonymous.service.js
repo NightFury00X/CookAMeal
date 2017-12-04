@@ -117,7 +117,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
 AnonymousService.prototype.Authenticate = async (userDetails) => {
     try {
         let userTypeDetails;
-        console.log('user: ', userDetails);
         if (userDetails.token_status && userDetails.token_id) {
             userTypeDetails = await db.UserType.findOne({
                 where: {id: userDetails.user_type_id, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
@@ -146,6 +145,9 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 }]
             });
         }
+    
+        if (!userTypeDetails)
+            return null;
         
         return {
             token: !userDetails.token_status ? generateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
