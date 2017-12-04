@@ -19,15 +19,13 @@ exports.mssql = {
         freezeTableName: false
     },
     dialectOptions: {
-        instanceName: 'MSSQLSERVER',
-        requestTimeout: 30000
+        requestTimeout: 300000,
+        connectionTimeout: 300000,
     },
     logging: false,
     pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
+        idleTimeoutMillis: 300000,
+        max: 100
     }
 };
 

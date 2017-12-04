@@ -12,11 +12,15 @@ exports.mssql = {
         schema: "dbo",
         freezeTableName: false,
     },
+    dialectOptions: {
+        instanceName: 'MSSQLSERVER',
+        requestTimeout: 300000,
+        connectionTimeout: 300000,
+    },
     logging: true,
     pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
+        idleTimeoutMillis: 300000,
+        max: 100
     }
 };
 

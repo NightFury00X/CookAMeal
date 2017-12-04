@@ -67,11 +67,8 @@ let Anonymous = {
         }
     },
     AuthenticateUser: async (req, res, next) => {
-        try {
-    
+        try {         
             if (req.user.token && !req.token_status) {
-                // TODO Invalidate token and inform user to reset password again.
-        
                 await CommonService.InvalidateResetPasswordTokenData(req.user.id);
                 return next({message: CommonConfig.ERRORS.TOKEN_EXPIRED}, false);
             }

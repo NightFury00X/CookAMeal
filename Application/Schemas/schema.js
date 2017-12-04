@@ -26,6 +26,8 @@ module.exports = {
             preparation_method: Joi.string().required(),
             preparation_time: Joi.string().required(),
             cook_time: Joi.string().required(),
+            category_id: Joi.string().required(),
+            sub_category_id: Joi.string().required(),
             tags: Joi.string().required(),
             cost_per_serving: Joi.string().required(),
             available_servings: Joi.string().required(),
