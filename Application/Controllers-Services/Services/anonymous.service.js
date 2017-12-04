@@ -241,9 +241,6 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
         
         if (!tokenData)
             return null;
-        
-        // let fullname = tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname;
-        // let keyValue = tokenData.ResetPasswords[0].random_key;
     
         console.log('Sending mail ... Please wait......');
     
