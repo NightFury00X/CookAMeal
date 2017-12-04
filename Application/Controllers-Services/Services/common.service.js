@@ -15,10 +15,10 @@ CommonService.prototype.UserModel = {
 CommonService.prototype.Keys = {
     RandomKeys: {
         GenerateRandomKey: async () => {
-            return randomString(CommonConfig.OPTIONS.RANDOM_KEYS);
+            return await randomString(CommonConfig.OPTIONS.RANDOM_KEYS);
         },
         GenerateUnique16DigitKey: async () => {
-            return randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS);
+            return await randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS);
         }
     }
 };

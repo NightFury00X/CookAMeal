@@ -22,7 +22,6 @@ module.exports = {
             }
         };
         
-        let result = await transporter.sendMail(mailOptions);
-        return result;
+        return await transporter.sendMail(mailOptions);
     }
 };

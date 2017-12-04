@@ -79,6 +79,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 identificationCardMedia.identification_card_id = identificationCardData.id;
                 identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
                 identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
+                identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
                 
                 await db.MediaObject.create(identificationCardMedia, {transaction: trans});
             }
@@ -194,7 +195,7 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
         }
         
         console.log('Sending mail ... Please wait......');
-        console.log('waiting...');
+        
         let isSent = await Email.ToResetPassword({
             fullname: fullname,
             email: email,
@@ -238,14 +239,14 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
         if (!tokenData)
             return null;
         
-        let fullname = tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname;
-        let keyValue = tokenData.ResetPasswords[0].random_key;
+        // let fullname = tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname;
+        // let keyValue = tokenData.ResetPasswords[0].random_key;
         
         console.log('Sending mail ... Please wait......');
         return await Email.ToResetPassword({
-            fullname: fullname,
+            fullname: tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname,
             email: email,
-            key: keyValue
+            key: tokenData.ResetPasswords[0].random_key
         });
     } catch (error) {
         throw (error);
