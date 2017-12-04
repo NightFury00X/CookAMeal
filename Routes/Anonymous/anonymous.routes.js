@@ -24,7 +24,7 @@ router.post('/fbsign',
 //2: SignUp
 router.post('/signup',
     RequestMethods.CheckContentType.ApplicationFormData,
-    FileUploader.uploadDataFiles,
+    FileUploader.uploadFile,
     AnonymousController.Anonymous.SignUp);
 
 //3: Normal User SignIn
