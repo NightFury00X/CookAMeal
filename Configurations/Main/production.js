@@ -61,7 +61,9 @@ exports.CONFIG = {
     },
     EMAIL_OPTIONS: {
         host: 'smtp.gmail.com',
-        port: 587,
+        port: 465,
+        secure: false, // use SSL
+        debug: true,
         auth: {
             user: 'curacall2015@gmail.com',
             pass: 'Curacall_2015'
