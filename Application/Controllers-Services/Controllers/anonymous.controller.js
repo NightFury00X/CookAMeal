@@ -81,6 +81,9 @@ let Anonymous = {
                 token_status: !!req.token_status
             };
             let result = await AnonymousService.Authenticate(userDetails);
+    
+            console.log('Result: ', result);
+            
             if (!result)
                 return next({message: CommonConfig.ERRORS.LOGIN_FAILED}, false);
             
