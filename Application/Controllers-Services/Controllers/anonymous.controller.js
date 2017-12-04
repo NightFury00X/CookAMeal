@@ -92,7 +92,6 @@ let Anonymous = {
             let flag = true;
             let email = req.body.email;
 
-            console.log('Here :=> ', req.reset_password_generated, req.token_status, req.token_data);
             // If reset password not generated
             if (!req.reset_password_generated && !req.token_status && !req.token_data) {
                 let userModel = await CommonService.UserModel.GetDetailsByEmail(email);
@@ -101,7 +100,7 @@ let Anonymous = {
                 let unique_key = await CommonService.Keys.RandomKeys.GenerateUnique16DigitKey();
 
                 let token = await generateTokenForResetPassword(userModel.userInfo, unique_key, false);
-
+                
                 //add data to reset password
                 let data = await AnonymousService.AddResetPasswordDetails({
                     email: userModel.user_id,
@@ -136,7 +135,7 @@ let Anonymous = {
                     flag = false;
             }
             else if (req.reset_password_generated && req.token_data && req.token_status) {
-                let data = AnonymousService.SendResetPasswordKeyToMail(req.token_data.email);
+                let data = await AnonymousService.SendResetPasswordKeyToMail(req.token_data.email);
                 if (!data)
                     flag = false;
             }
@@ -146,6 +145,8 @@ let Anonymous = {
                     message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.OK
                 }, false);
+    
+            console.log('We have sent an email to your registered email address. Thank you.');
             
             return responseHelper.setSuccessResponse({
                 email: email,

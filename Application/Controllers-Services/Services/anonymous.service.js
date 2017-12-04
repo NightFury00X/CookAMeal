@@ -205,7 +205,7 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
             await trans.rollback();
             return null;
         }
-        console.log('We have sent an email to your registered email address. Thank you.');
+        
         // committing transaction
         await trans.commit();
         
@@ -242,17 +242,11 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
         let keyValue = tokenData.ResetPasswords[0].random_key;
         
         console.log('Sending mail ... Please wait......');
-        let messageData = await Email.ToResetPassword({
+        return await Email.ToResetPassword({
             fullname: fullname,
             email: email,
             key: keyValue
         });
-        
-        console.log('We have sent an email to your registered email address. Thank you.');
-        if (!messageData)
-            return null;
-        
-        return messageData;
     } catch (error) {
         throw (error);
     }
