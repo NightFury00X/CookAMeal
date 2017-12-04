@@ -53,38 +53,36 @@ let upload = multer({
 ]);
 
 let uploadFile = function (req, res, next) {
-    return new Promise((resolve, reject) => {
-        upload(req, res, function (error) {
-            if (error) return reject(error);
-            if (req.files) {
-                if (req.files.profile) {
-                    if (!CheckFile(req.files.profile))
-                        reject(next({
-                            message: 'You are uploading an invalid profile image file.',
-                            status: CommonConfig.STATUS_CODE.BAD_REQUEST
-                        }, false));
-                }
-                if (req.files.certificate) {
-                    if (!CheckFile(req.files.certificate)) reject(next({
-                        message: 'You are uploading an invalid certificate image file.',
+    upload(req, res, function (error) {
+        if (error) return next(error);
+        if (req.files) {
+            if (req.files.profile) {
+                if (!CheckFile(req.files.profile))
+                    return next({
+                        message: 'You are uploading an invalid profile image file.',
                         status: CommonConfig.STATUS_CODE.BAD_REQUEST
-                    }, false));
-                }
-                if (req.files.identification_card) {
-                    if (!CheckFile(req.files.identification_card)) reject(next({
-                        message: 'You are uploading an invalid identification card image file.',
-                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
-                    }, false));
-                }
-                if (req.files.category) {
-                    if (!CheckFile(req.files.category)) reject(next({
-                        message: 'You are uploading an invalid recipe image file.',
-                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
-                    }, false));
-                }
+                    }, false);
             }
-            return resolve(req.files);
-        });
+            if (req.files.certificate) {
+                if (!CheckFile(req.files.certificate)) return next({
+                    message: 'You are uploading an invalid certificate image file.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
+            }
+            if (req.files.identification_card) {
+                if (!CheckFile(req.files.identification_card)) return next({
+                    message: 'You are uploading an invalid identification card image file.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
+            }
+            if (req.files.category) {
+                if (!CheckFile(req.files.category)) return next({
+                    message: 'You are uploading an invalid recipe image file.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
+            }
+        }
+        return next();
     });
 };
 
