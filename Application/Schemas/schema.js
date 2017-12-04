@@ -8,7 +8,7 @@ module.exports = {
     },
     BodySchemas: {
         FbLogin: Joi.object().options({abortEarly: false}).keys({
-            fbid: Joi.string().required()
+            fbid: Joi.string().regex(/[0-9]/).required()
         }),
         Login: Joi.object().options({abortEarly: false}).keys({
             username: Joi.string().email().required(),
