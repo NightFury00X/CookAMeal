@@ -198,22 +198,22 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
         }
         
         console.log('Sending mail ... Please wait......');
-        
-        let isSent = await Email.ToResetPassword({
-            fullname: fullname,
-            email: email,
-            key: userDetails.random_key
-        });
-        
-        if (!isSent) {
-            await trans.rollback();
-            return null;
-        }
+    
+        // let isSent = await Email.ToResetPassword({
+        //     fullname: fullname,
+        //     email: email,
+        //     key: userDetails.random_key
+        // });
+        //
+        // if (!isSent) {
+        //     await trans.rollback();
+        //     return null;
+        // }
         
         // committing transaction
-        await trans.commit();
-        
-        return isSent;
+        return await trans.commit();
+    
+        // return isSent;
     } catch (error) {
         // rollback transaction
         await trans.rollback();
@@ -244,7 +244,8 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
         
         // let fullname = tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname;
         // let keyValue = tokenData.ResetPasswords[0].random_key;
-        
+    
+        return true;
         console.log('Sending mail ... Please wait......');
         return await Email.ToResetPassword({
             fullname: tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname,
