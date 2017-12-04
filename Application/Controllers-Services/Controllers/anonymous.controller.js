@@ -81,11 +81,9 @@ let Anonymous = {
                 token_status: !!req.token_status
             };
     
-            console.log('user: ', userDetails);
             let result = await AnonymousService.Authenticate(userDetails);
     
-            console.log('result: ', result);
-            // result.type = !req.user.random_key;
+            result.type = !req.user.random_key;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
