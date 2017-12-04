@@ -148,7 +148,8 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
     
         if (!userTypeDetails)
             return null;
-        
+    
+        console.log('Tokoen Status: ', userDetails.token_status);
         return {
             token: !userDetails.token_status ? generateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
             user: {
