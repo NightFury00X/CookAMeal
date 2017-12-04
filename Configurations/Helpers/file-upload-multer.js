@@ -19,6 +19,9 @@ let storage = multer.diskStorage({
             case CommonConfig.FILES.CATEGORY:
                 dest = CommonConfig.FOLDER_LOCATIONS.CATEGORY;
                 break;
+            case CommonConfig.FILES.RECIPE:
+                dest = CommonConfig.FOLDER_LOCATIONS.RECIPE;
+                break;
             default:
                 dest = CommonConfig.FOLDER_LOCATIONS.MIX;
                 break;
@@ -41,10 +44,13 @@ let upload = multer({
     // limits: {
     //     fileSize: 5000000
     // }
-}).fields([{name: CommonConfig.FILES.PROFILE, maxCount: 1}, {name: CommonConfig.FILES.CERTIFICATE, maxCount: 1}, {
-    name: CommonConfig.FILES.IDENTIFICATIONCARD,
-    maxCount: 1
-}, {name: CommonConfig.FILES.CATEGORY, maxCount: 1}]);
+}).fields([
+    {name: CommonConfig.FILES.PROFILE, maxCount: 1},
+    {name: CommonConfig.FILES.CERTIFICATE, maxCount: 1},
+    {name: CommonConfig.FILES.IDENTIFICATIONCARD, maxCount: 1},
+    {name: CommonConfig.FILES.CATEGORY, maxCount: 1},
+    {name: CommonConfig.FILES.RECIPE, maxCount: 2}
+]);
 
 let uploadFile = function (req, res, next) {
     return new Promise((resolve, reject) => {
@@ -82,6 +88,23 @@ let uploadFile = function (req, res, next) {
     });
 };
 
+let uploadDataFiles = function (req, res, next) {
+    upload(req, res, function (error) {
+        if (error) return next(error);
+        if (req.files) {
+            if (req.files.recipe) {
+                if (!CheckFile(req.files.recipe))
+                    next({
+                        message: 'You are uploading an invalid Recipe image.',
+                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                    }, false);
+            }
+        }
+        return next();
+    });
+};
+
+
 /**
  * @return {boolean}
  */
@@ -109,4 +132,10 @@ function CheckMagicNumbers(magic) {
         || magic === CommonConfig.MAGIC_NUMBERS.PNG) return true;
 }
 
-module.exports = uploadFile;
+
+let FileUploader = {
+    uploadFile: uploadFile,
+    uploadDataFiles: uploadDataFiles
+};
+
+module.exports = FileUploader;

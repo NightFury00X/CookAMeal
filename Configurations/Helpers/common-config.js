@@ -37,14 +37,16 @@ CommonConfig.OBJECT_TYPE = {
     PROFILE: 1,
     IDENTIFICATIONCARD: 2,
     CERTIFICATE: 3,
-    CATEGORY: 3
+    CATEGORY: 3,
+    RECIPE: 3
 };
 
 CommonConfig.FILES = {
     PROFILE: 'profile',
     IDENTIFICATIONCARD: 'identification_card',
     CERTIFICATE: 'certificate',
-    CATEGORY: 'category'
+    CATEGORY: 'category',
+    RECIPE: 'recipe'
 };
 
 CommonConfig.FOLDER_LOCATIONS = {
@@ -52,6 +54,7 @@ CommonConfig.FOLDER_LOCATIONS = {
     IDENTIFICATIONCARD: config.FOLDER_LOCATION + 'identification_cards/',
     CERTIFICATE: config.FOLDER_LOCATION + 'certificates/',
     CATEGORY: config.FOLDER_LOCATION + 'categories/',
+    RECIPE: config.FOLDER_LOCATION + 'recipe/',
     MIX: config.FOLDER_LOCATION + 'mix/',
 };
 
@@ -60,6 +63,7 @@ CommonConfig.FILE_LOCATIONS = {
     IDENTIFICATIONCARD: config.FILE_LOCATION + 'identification_cards/',
     CERTIFICATE: config.FILE_LOCATION + 'certificates/',
     CATEGORY: config.FILE_LOCATION + 'categories/',
+    RECIPE: config.FILE_LOCATION + 'recipe/',
     MIX: config.FILE_LOCATION + 'mix/',
 };
 

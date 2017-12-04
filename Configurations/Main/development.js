@@ -49,7 +49,8 @@ exports.UPLOAD_LOCATION = [
     {PATH: 'E:/Cook-A-Meal/uploads/profiles'},
     {PATH: 'E:/Cook-A-Meal/uploads/identification_cards'},
     {PATH: 'E:/Cook-A-Meal/uploads/certificates'},
-    {PATH: 'E:/Cook-A-Meal/uploads/categories'}
+    {PATH: 'E:/Cook-A-Meal/uploads/categories'},
+    {PATH: 'E:/Cook-A-Meal/uploads/recipe'}
 ];
 
 exports.DOMAIN = {

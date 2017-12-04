@@ -38,7 +38,8 @@ exports.UPLOAD_LOCATION = [
     {PATH: 'uploads/profiles'},
     {PATH: 'uploads/identification_cards'},
     {PATH: 'uploads/certificates'},
-    {PATH: 'uploads/categories'}
+    {PATH: 'uploads/categories'},
+    {PATH: 'uploads/recipe'}
 ];
 
 

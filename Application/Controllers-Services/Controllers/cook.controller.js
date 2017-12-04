@@ -12,6 +12,7 @@ let Recipe = {
             //upload file
             // let files = await uploadFile(req, res, next);
             // let a = await ValidateBody(BodySchemas.ChangePassword);
+            console.log(req.body);
             return responseHelper.setSuccessResponse('OK', res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);

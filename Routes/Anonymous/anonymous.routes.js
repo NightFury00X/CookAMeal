@@ -17,7 +17,7 @@ const {ResetPassword} = require('../../Configurations/middlewares/middlewares');
 //1: Facebook User SignIn
 router.post('/fbsign',
     RequestMethods.CheckContentType.ApplicationJsonData,
-    requireLogin,
+    ValidateBody(BodySchemas.FbLogin),
     AnonymousController.Anonymous.FbSignIn);
 
 //2: SignUp
