@@ -5,11 +5,6 @@ exports.app = app = {
     ssl: false
 };
 
-exports.logging = {
-    // http://www.senchalabs.org/connect/middleware-logger.html
-    express_format: '[:date] ":method :url HTTP/:http-version" :status :res[content-length] - :response-time ms ":referrer" :remote-addr'
-};
-
 exports.mssql = {
     dialect: 'mssql',
     host: 'localhost',
@@ -19,6 +14,7 @@ exports.mssql = {
         freezeTableName: false
     },
     dialectOptions: {
+        instanceName: 'MSSQLSERVER14',
         requestTimeout: 300000,
         connectionTimeout: 300000,
     },

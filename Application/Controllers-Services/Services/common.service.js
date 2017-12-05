@@ -117,7 +117,7 @@ CommonService.prototype.GenerateUnique16DigitKey = async () => {
 CommonService.prototype.ChangePassword = async (userDetails) => {
     const trans = await db.sequelize.transaction();
     try {
-        
+
         // Check reset password is requested or not.        
         let records = await db.ResetPassword.findOne({
             where: {
@@ -126,12 +126,12 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 is_valid: true
             }
         });
-        
+
         if (!records) {
             trans.rollback();
             return null;
         }
-        
+
         // If reset password requested, update the record in ResetPassword
         let resetPasswordData = await db.ResetPassword.update({
             is_valid: false,
@@ -142,13 +142,13 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 email: records.email
             }
         }, {transaction: trans});
-        
-        
+
+
         if (!resetPasswordData) {
             trans.rollback();
             return null;
         }
-        
+
         // Update password field in user table
         let userData = await db.User.update({
             password: userDetails.password
@@ -158,12 +158,12 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 email: userDetails.email
             }
         }, {transaction: trans});
-        
+
         if (!userData) {
             trans.rollback();
             return null;
         }
-        
+
         console.log('password changed');
         await trans.commit();
         return userData;
@@ -215,6 +215,13 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
 };
 
 CommonService.prototype.User = {
+    Logout: async (tokenDetails) => {
+        try {
+            return await db.BlackListedToken.create(tokenDetails);
+        } catch (error) {
+            throw (error);
+        }
+    },
     GetFullProfile: async (user_id) => {
         try {
             return await db.SubCategory.findAll({

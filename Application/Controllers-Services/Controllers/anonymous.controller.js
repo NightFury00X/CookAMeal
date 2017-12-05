@@ -2,7 +2,6 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
     AnonymousService = require('../Services/anonymous.service'),
     {generateTokenForResetPassword} = require('../../../Configurations/Helpers/authentication'),
     CommonService = require('../Services/common.service'),
-    uploadFile = require('../../../Configurations/Helpers/file-upload-multer'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 // The authentication controller.
@@ -44,9 +43,6 @@ let Anonymous = {
     },
     SignUp: async (req, res, next) => {
         try {
-            //upload file
-            // let files = await uploadFile(req, res, next);
-    
             let registrationData = JSON.parse(req.body.details);
     
             if (!registrationData || !registrationData.user || !registrationData.address || !registrationData.social)
@@ -174,7 +170,6 @@ let Anonymous = {
     },
 };
 
-//Check facebook user already in database or not
 let AnonymousController = {
     Anonymous: Anonymous
 };

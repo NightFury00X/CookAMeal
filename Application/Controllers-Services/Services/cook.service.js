@@ -1,7 +1,4 @@
-let randomString = require('random-string'),
-    db = require('../../Modals'),
-    {generateToken} = require('../../../Configurations/Helpers/authentication'),
-    CommonConfig = require('../../../Configurations/Helpers/common-config');
+let db = require('../../Modals');
 
 CookService = function () {
 };
@@ -17,7 +14,7 @@ CookService.prototype.Recipe = {
                 await trans.rollback();
                 return null;
             }
-            
+
             serving_days.recipe_id = recipeData.id;
             serving_days = serving_days[0];
             let daysData = await db.Day.create(serving_days, {transaction: trans});
@@ -25,7 +22,7 @@ CookService.prototype.Recipe = {
                 await trans.rollback();
                 return null;
             }
-            
+
             for (let index in ingredients) {
                 ingredients[index].recipe_id = recipeData.id;
                 let ingredientData = await db.Ingredient.create(ingredients[index], {transaction: trans});

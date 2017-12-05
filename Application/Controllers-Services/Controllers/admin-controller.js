@@ -1,26 +1,20 @@
 let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
     AdminService = require('../Services/admin.service'),
-    uploadFile = require('../../../Configurations/Helpers/file-upload-multer'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 let Category = {
     Add: async (req, res, next) => {
         try {
-            //upload file            
-            console.log('Request Body: ', req.body);
-            console.log('==============================================================');
-            console.log('Files: ', req.files);
-    
             if (!req.files || !req.files.category)
                 return next({
                     message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
                 }, false);
-            
+
             let categoryName = {
                 name: req.body.name
             };
-            let result = await AdminService.Add(req.user.id, categoryName, req.files);
+            let result = await AdminService.Category.Add(req.user.id, categoryName, req.files);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         }
         catch (error) {
@@ -57,7 +51,6 @@ let Allergy = {
     }
 };
 
-// The authentication controller.
 let AdminController = {
     Category: Category,
     SubCategory: SubCategory,

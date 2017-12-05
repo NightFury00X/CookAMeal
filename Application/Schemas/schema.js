@@ -18,7 +18,7 @@ module.exports = {
             email: Joi.string().email().required()
         }),
         ChangePassword: Joi.object().keys({
-            old_password: Joi.string().min(8).max(30).regex(/(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}/).required(),
+            old_password: Joi.string().min(8).max(30).required(),
             new_password: Joi.string().min(8).max(30).regex(/(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}/).required()
         }),
         Recipe: Joi.object().options({abortEarly: false}).keys({
