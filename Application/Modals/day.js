@@ -7,45 +7,44 @@ module.exports = function (sequelize, DataTypes) {
         id: {
             type: DataTypes.UUID,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            defaultValue: DataTypes.UUIDV4
         },
         mon: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            defaultValue: false
         },
         tue: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            defaultValue: false
         },
-        web: {
+        wed: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            defaultValue: false
         },
         thu: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            defaultValue: false
         },
         fri: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            defaultValue: false
         },
         sat: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            defaultValue: false
         },
         sun: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            defaultValue: false
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
-
+    
     // 2: The model options.
     let modelOptions = {
         underscored: true
     };
-
+    
     return sequelize.define('Day', modelDefinition, modelOptions);
 };

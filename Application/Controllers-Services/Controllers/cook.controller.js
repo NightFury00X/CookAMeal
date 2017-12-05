@@ -6,8 +6,15 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
 let Recipe = {
     Add: async (req, res, next) => {
         try {
-            console.log(req.body);
-            return responseHelper.setSuccessResponse(req.body, res, CommonConfig.STATUS_CODE.CREATED);
+            let recipeData = await CookService.Recipe.Add(req.body);
+        
+            if (!recipeData)
+                return next({
+                    message: CommonConfig.ERRORS.CREATION,
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
+        
+            return responseHelper.setSuccessResponse({Message: 'Your recipe added successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
         }

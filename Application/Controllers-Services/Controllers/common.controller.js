@@ -28,8 +28,62 @@ let Category = {
     }
 };
 
+let SubCategory = {
+    GetAll: async (req, res, next) => {
+        try {
+            let result = await CommonService.SubCategory.GettAll();
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    },
+    FindById: async (req, res, next) => {
+        try {
+            if (!req.params.id)
+                return next({
+                    message: 'Category not found.',
+                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+                }, false);
+            
+            let catId = req.params.id;
+            let result = await CommonService.GetCategoryById(catId);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    }
+};
+
+let Allergy = {
+    GetAll: async (req, res, next) => {
+        try {
+            let result = await CommonService.Allergy.GettAll();
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    },
+    FindById: async (req, res, next) => {
+        try {
+            if (!req.params.id)
+                return next({
+                    message: 'Category not found.',
+                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+                }, false);
+            
+            let catId = req.params.id;
+            let result = await CommonService.GetCategoryById(catId);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    }
+};
+
 let CommonController = {
-    Category: Category
+    Category: Category,
+    SubCategory: SubCategory,
+    Allergy: Allergy
 };
 
 module.exports = CommonController;

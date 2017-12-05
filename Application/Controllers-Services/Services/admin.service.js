@@ -17,15 +17,35 @@ AdminService.prototype.Add = async (userid, category, files) => {
             CategoryImage.object_type = CommonConfig.OBJECT_TYPE.CATEGORY;
             CategoryDataMedia = await db.MediaObject.create(CategoryImage, {transaction: trans});
         }
-
+    
         // commit transaction
         await trans.commit();
-
+    
         return {Category: categoryData, MediaObject: CategoryDataMedia};
     } catch (error) {
         // rollback transaction
         await trans.rollback();
         throw (error);
+    }
+};
+
+AdminService.prototype.SubCategory = {
+    Add: async (data) => {
+        try {
+            return db.SubCategory.create(data);
+        } catch (error) {
+            throw (error);
+        }
+    }
+};
+
+AdminService.prototype.Allergy = {
+    Add: async (data) => {
+        try {
+            return db.Allergy.create(data);
+        } catch (error) {
+            throw (error);
+        }
     }
 };
 

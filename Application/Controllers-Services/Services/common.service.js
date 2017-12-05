@@ -142,13 +142,13 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 email: records.email
             }
         }, {transaction: trans});
-
-
+    
+    
         if (!resetPasswordData) {
             trans.rollback();
             return null;
         }
-
+    
         // Update password field in user table
         let userData = await db.User.update({
             password: userDetails.password
@@ -158,7 +158,7 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 email: userDetails.email
             }
         }, {transaction: trans});
-
+    
         if (!userData) {
             trans.rollback();
             return null;
@@ -211,6 +211,30 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
         };
     } catch (error) {
         return error;
+    }
+};
+
+CommonService.prototype.SubCategory = {
+    GettAll: async () => {
+        try {
+            return await db.SubCategory.findAll({
+                attributes: ['id', 'name']
+            });
+        } catch (error) {
+            return error;
+        }
+    }
+};
+
+CommonService.prototype.Allergy = {
+    GettAll: async () => {
+        try {
+            return await db.Allergy.findAll({
+                attributes: ['id', 'name']
+            });
+        } catch (error) {
+            return error;
+        }
     }
 };
 

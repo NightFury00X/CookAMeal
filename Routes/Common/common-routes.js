@@ -11,4 +11,12 @@ router.get('/category',
 router.get('/category/:id',
     CommonController.Category.FindById);
 
+//1: Get All Allergies list
+router.get('/subcategory',
+    CommonController.SubCategory.GetAll);
+
+//1: Get All Allergies list
+router.get('/allergy',
+    CommonController.Allergy.GetAll);
+
 module.exports = router;

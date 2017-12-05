@@ -1,4 +1,4 @@
-// The Social Model.
+// The Address Model.
 'use strict';
 
 module.exports = function (sequelize, DataTypes) {
@@ -13,27 +13,23 @@ module.exports = function (sequelize, DataTypes) {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        qty: {
-            type: DataTypes.FLOAT,
-            allowNull: false
-        },
-        unit: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        cost: {
-            type: DataTypes.DECIMAL,
-            allowNull: false
+            validate: {
+                is: {
+                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
+                    msg: 'The category name you have entered is contains some bed characters.'
+                }
+            }
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
-
+    
     // 2: The model options.
     let modelOptions = {
         underscored: true
     };
     
-    return sequelize.define('Ingredient', modelDefinition, modelOptions);
+    let Allergy = sequelize.define('Allergy', modelDefinition, modelOptions);
+    
+    return Allergy;
 };

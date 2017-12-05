@@ -46,7 +46,7 @@ module.exports = {
                         errors.push(i++ + ': ' + detail.message);
                     });
                     return next({
-                        message: errors,
+                        message: 'Invalid input data.',
                         status: CommonConfig.STATUS_CODE.BAD_REQUEST
                     }, false);
                 } else {

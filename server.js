@@ -168,7 +168,6 @@ function startApp() {
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    console.log('sdfdsf');
     let err = new Error('The Route ' + req.url + ' is Not Found');
     err.status = 404;
     next(err);
@@ -177,6 +176,7 @@ app.use(function (req, res, next) {
 // Error Response Handler
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
+        console.log(err);
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,

@@ -6,14 +6,12 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
 let Category = {
     Add: async (req, res, next) => {
         try {
-            //upload file
-            let files = await uploadFile(req, res);
-            
+            //upload file            
             console.log('Request Body: ', req.body);
             console.log('==============================================================');
-            console.log('Files: ', files);
-            
-            if (!files || !files.category)
+            console.log('Files: ', req.files);
+    
+            if (!req.files || !req.files.category)
                 return next({
                     message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
@@ -22,19 +20,48 @@ let Category = {
             let categoryName = {
                 name: req.body.name
             };
-            let result = await AdminService.Add(req.user.id, categoryName, files);
+            let result = await AdminService.Add(req.user.id, categoryName, req.files);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         }
-        catch
-            (error) {
+        catch (error) {
             next(error);
+        }
+    }
+};
+
+let SubCategory = {
+    Add: async (req, res, next) => {
+        try {
+            let subCategory = req.body;
+            subCategory.user_type_id = req.user.id;
+            let result = await AdminService.SubCategory.Add(subCategory);
+            if (result)
+                return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+        } catch (error) {
+            return next(error);
+        }
+    }
+};
+
+let Allergy = {
+    Add: async (req, res, next) => {
+        try {
+            let allergy = req.body;
+            allergy.user_type_id = req.user.id;
+            let result = await AdminService.Allergy.Add(allergy);
+            if (result)
+                return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+        } catch (error) {
+            return next(error);
         }
     }
 };
 
 // The authentication controller.
 let AdminController = {
-    Category: Category
+    Category: Category,
+    SubCategory: SubCategory,
+    Allergy: Allergy
 };
 
 module.exports = AdminController;
