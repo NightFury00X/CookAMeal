@@ -2,6 +2,18 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
     CommonService = require('../Services/common.service'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
+let User = {
+    GetprofileDetails: async (req, res, next) => {
+        try {
+            let userId = req.user.id;
+            let result = await CommonService.User.GetFullProfile(userId);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    }
+};
+
 let Category = {
     GetAll: async (req, res, next) => {
         try {
@@ -81,6 +93,7 @@ let Allergy = {
 };
 
 let CommonController = {
+    User: User,
     Category: Category,
     SubCategory: SubCategory,
     Allergy: Allergy

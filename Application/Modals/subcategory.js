@@ -31,5 +31,9 @@ module.exports = function (sequelize, DataTypes) {
     
     let SubCategory = sequelize.define('SubCategory', modelDefinition, modelOptions);
     
+    SubCategory.associate = function (models) {
+        SubCategory.hasMany(models.Recipe, {onDelete: 'CASCADE'});
+    };
+    
     return SubCategory;
 };

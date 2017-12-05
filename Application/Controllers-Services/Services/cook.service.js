@@ -41,6 +41,45 @@ CookService.prototype.Recipe = {
             await trans.rollback();
             throw (error);
         }
+    },
+    GetAllRecipeBySubCategory: async (profileId) => {
+        try {
+            return await db.SubCategory.findAll({
+                attributes: ['id', 'name'],
+                include: [{
+                    attributes: ['id', 'dish_name', 'cost_per_serving', 'order_by_date_time'],
+                    model: db.Recipe,
+                    where: {
+                        profile_id: profileId
+                    },
+                    include: [{
+                        model: db.MediaObject
+                    }]
+                }]
+            });
+        } catch (error) {
+            throw (error);
+        }
+    },
+    GetAllRecipeBySubCategoryById: async (profileId, Id) => {
+        try {
+            return await db.SubCategory.findAll({
+                where: {id: Id},
+                attributes: ['id', 'name'],
+                include: [{
+                    attributes: ['id', 'dish_name', 'cost_per_serving', 'order_by_date_time'],
+                    model: db.Recipe,
+                    where: {
+                        profile_id: profileId
+                    },
+                    include: [{
+                        model: db.MediaObject
+                    }]
+                }]
+            });
+        } catch (error) {
+            throw (error);
+        }
     }
 };
 

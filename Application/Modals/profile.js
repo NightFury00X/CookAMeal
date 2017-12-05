@@ -120,7 +120,7 @@ module.exports = function (sequelize, DataTypes) {
         ProfileModel.hasOne(models.Social, { onDelete: 'CASCADE' });
         ProfileModel.hasOne(models.Certificate, { onDelete: 'CASCADE' });
         ProfileModel.hasOne(models.IdentificationCard, { onDelete: 'CASCADE' });
-        ProfileModel.hasOne(models.Recipe, { onDelete: 'CASCADE' });
+        ProfileModel.hasMany(models.Recipe, { onDelete: 'CASCADE' });
         ProfileModel.hasMany(models.MediaObject, { onDelete: 'CASCADE' });
     };
     

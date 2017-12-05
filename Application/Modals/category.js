@@ -33,6 +33,7 @@ module.exports = function (sequelize, DataTypes) {
     
     Category.associate = function (models) {
         Category.hasMany(models.MediaObject, { onDelete: 'CASCADE' });
+        Category.hasMany(models.Recipe, { onDelete: 'CASCADE' });
     };
     
     return Category;

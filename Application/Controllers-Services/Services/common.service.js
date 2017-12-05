@@ -31,7 +31,7 @@ CommonService.prototype.GetResetPasswordData = async (email) => {
             }
         });
     } catch (error) {
-        return error;
+        throw (error);
     }
 };
 
@@ -42,7 +42,7 @@ CommonService.prototype.CheckUserTypeByUserId = async (fbId) => {
             where: {user_id: fbId}
         });
     } catch (error) {
-        return error;
+        throw (error);
     }
 };
 
@@ -58,7 +58,7 @@ CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
             }]
         });
     } catch (error) {
-        return error;
+        throw (error);
     }
 };
 
@@ -69,7 +69,7 @@ CommonService.prototype.GenerateToken = async (tokenData, userData) => {
             userDetails: userData
         };
     } catch (error) {
-        return error;
+        throw (error);
     }
 };
 
@@ -90,7 +90,7 @@ CommonService.prototype.GetCategories = async () => {
             ]
         });
     } catch (error) {
-        return error;
+        throw (error);
     }
 };
 
@@ -142,13 +142,13 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 email: records.email
             }
         }, {transaction: trans});
-    
-    
+        
+        
         if (!resetPasswordData) {
             trans.rollback();
             return null;
         }
-    
+        
         // Update password field in user table
         let userData = await db.User.update({
             password: userDetails.password
@@ -158,7 +158,7 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                 email: userDetails.email
             }
         }, {transaction: trans});
-    
+        
         if (!userData) {
             trans.rollback();
             return null;
@@ -214,6 +214,53 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
     }
 };
 
+CommonService.prototype.User = {
+    GetFullProfile: async (user_id) => {
+        try {
+            return await db.SubCategory.findAll({
+                attributes: ['id', 'name'],
+                include: [{
+                    model: db.Recipe,
+                    where: {
+                        profile_id: 'e4d2e9b2-6673-4bec-aa39-85d34add646a'
+                    }
+                }]
+            });
+            // return await db.UserType.findById(user_id,
+            //     {
+            //         attributes: ['id', 'user_type', 'user_role'],
+            //         include: [{
+            //             attributes: ['id', 'firstname', 'lastname', 'phone', 'gender', 'description', 'diet_preference', 'allergies', 'card_type_bank_details', 'driving_distance'],
+            //             model: db.Profile,
+            //             include: [{
+            //                 attributes: ['id', 'street', 'city', 'state', 'zip_code', 'country'],
+            //                 model: db.Address
+            //             }, {
+            //                 attributes: ['id', 'facebook', 'linkedin'],
+            //                 model: db.Social
+            //             }, {
+            //                 attributes: ['id', 'imageurl'],
+            //                 model: db.MediaObject
+            //             }, {
+            //                 attributes: ['id'],
+            //                 model: db.IdentificationCard,
+            //                 include: [{model: db.MediaObject}]
+            //             }, {
+            //                 attributes: ['id'],
+            //                 model: db.Certificate,
+            //                 include: [{model: db.MediaObject}]
+            //             }, {
+            //                 attributes: ['id', 'dish_name'],
+            //                 model: db.Recipe
+            //             }]
+            //         }]
+            //     });
+        } catch (error) {
+            throw (error);
+        }
+    }
+};
+
 CommonService.prototype.SubCategory = {
     GettAll: async () => {
         try {
@@ -221,7 +268,7 @@ CommonService.prototype.SubCategory = {
                 attributes: ['id', 'name']
             });
         } catch (error) {
-            return error;
+            throw (error);
         }
     }
 };
@@ -233,7 +280,7 @@ CommonService.prototype.Allergy = {
                 attributes: ['id', 'name']
             });
         } catch (error) {
-            return error;
+            throw (error);
         }
     }
 };
