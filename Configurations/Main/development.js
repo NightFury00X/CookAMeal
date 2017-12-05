@@ -68,8 +68,11 @@ exports.CONFIG = {
     EMAIL_OPTIONS: {
         service: "gmail",
         auth: {
-            user: 'curacall2015@gmail.com',
-            pass: 'Curacall_2015'
+            // user: 'curacall2015@gmail.com',
+            // pass: 'Curacall_2015'
+    
+            user: 'cookamealtest@gmail.com',
+            pass: 'Admin@321'
         }
     }
 };

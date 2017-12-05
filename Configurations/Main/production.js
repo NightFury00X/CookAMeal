@@ -63,10 +63,9 @@ exports.CONFIG = {
         host: 'smtp.gmail.com',
         port: 587,
         secure: false, // use SSL
-        debug: true,
         auth: {
-            user: 'curacall2015@gmail.com',
-            pass: 'Curacall_2015'
+            user: 'cookamealtest@gmail.com',
+            pass: 'Admin@321'
         }
     }
 };
