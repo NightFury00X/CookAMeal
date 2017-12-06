@@ -25,6 +25,11 @@ let Recipe = {
     },
     Add: async (req, res, next) => {
         try {
+            console.log('========================================================');
+            console.log('Body: ', req.body);
+            console.log('========================================================');
+            console.log('File: ', req.files);
+            
             let recipeData = await CookService.Recipe.Add(req.body, req.files, req.user.id);
             if (!recipeData)
                 return next({
