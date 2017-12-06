@@ -25,10 +25,7 @@ let Recipe = {
     },
     Add: async (req, res, next) => {
         try {
-            console.log(req.body);
             let recipeData = await CookService.Recipe.Add(req.body, req.files, req.user.id);
-    
-            console.log('Data: ', recipeData);
             if (!recipeData)
                 return next({
                     message: CommonConfig.ERRORS.CREATION,

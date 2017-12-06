@@ -95,7 +95,7 @@ let Allergy = {
 const Recipe = {
     GetAllRecipeByCategoryId: async (req, res, next) => {
         try {
-            const category_id = req.value.params;
+            let category_id = req.value.params.id;
             const result = await CommonService.Recipe.FindAllByCategoryId(category_id);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {

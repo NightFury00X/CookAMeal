@@ -285,11 +285,23 @@ CommonService.prototype.User = {
 CommonService.prototype.Recipe = {
     FindAllByCategoryId: async (category_id) => {
         try {
-            return db.Recipe.findAll({
-                where: {
-                    category_id: category_id
-                }
+            return db.SubCategory.findAll({
+                attributes: ['id', 'name'],
+                include: [{
+                    model: db.Recipe,
+                    attributes: ['id', 'dish_name', 'cost_per_serving']
+                }]
             });
+            // return db.Recipe.findAll({
+            //     attributes: ['dish_name', 'cost_per_serving'],
+            //     include: [{
+            //         model: db.MediaObject,
+            //         attributes: ['id', 'imageurl']
+            //     }],
+            //     where: {
+            //         category_id: category_id
+            //     }
+            // });
         } catch (error) {
             throw (error);
         }

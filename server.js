@@ -191,10 +191,6 @@ if (app.get('env') === 'development') {
     });
 } else {
     app.use(function (err, req, res, next) {
-        // Do logging and user-friendly error message display
-        console.warn('==============================================================================');
-        console.error('Error: ', err);
-        console.warn('==============================================================================');
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
