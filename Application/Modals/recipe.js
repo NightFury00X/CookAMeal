@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
         },
         preparation_method: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         preparation_time: {
@@ -36,23 +36,23 @@ module.exports = function (sequelize, DataTypes) {
         },
         cost_per_serving: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         available_servings: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         order_by_date_time: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         pick_up_by_date_time: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         delivery_fee: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         total_cost_of_ingredients:{
           type:DataTypes.DECIMAL,
