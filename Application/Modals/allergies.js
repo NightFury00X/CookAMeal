@@ -31,5 +31,9 @@ module.exports = function (sequelize, DataTypes) {
     
     let Allergy = sequelize.define('Allergy', modelDefinition, modelOptions);
     
+    Allergy.associate = function (models) {
+        Allergy.hasMany(models.RecipeAllergy, {onDelete: 'CASCADE'});
+    };
+    
     return Allergy;
 };

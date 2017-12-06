@@ -1,30 +1,58 @@
-let db = require('../../Modals');
+let db = require('../../Modals'),
+    CommonService = require('./common.service');
+const CommonConfig = require("../../../Configurations/Helpers/common-config");
 
 CookService = function () {
 };
 
 CookService.prototype.Recipe = {
-    Add: async (recipe) => {
+    Add: async (recipe, files, user_type_id) => {
         const trans = await db.sequelize.transaction();
         try {
+            let allergies = JSON.parse(recipe.base_allergies);
             let serving_days = JSON.parse(recipe.serving_days);
-            console.log('Data: ', recipe);
             let ingredients = JSON.parse(recipe.ingredients);
-            let recipeData = await db.Recipe.create(recipe, {transaction: trans});
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(user_type_id);
+            recipe.profile_id = profile.id;
+            const recipeData = await db.Recipe.create(recipe, {transaction: trans});
             if (!recipeData) {
                 await trans.rollback();
                 return null;
             }
-
-            serving_days.recipe_id = recipeData.id;
+    
+            //add allergies
+            for (const index in allergies) {
+                allergies[index].recipe_id = recipeData.id;
+                let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans});
+                if (!allergydata) {
+                    await trans.rollback();
+                    return null;
+                }
+            }
+    
+            //store recipe image
+            for (let index in files.recipe) {
+                files.recipe[index].recipe_id = recipeData.id;
+                files.recipe[index].object_type = CommonConfig.OBJECT_TYPE.RECIPE;
+                files.recipe[index].imageurl = CommonConfig.FILE_LOCATIONS.RECIPE + files.recipe[index].filename;
+        
+                console.log(files.recipe[index]);
+                const recipeImage = await db.MediaObject.create(files.recipe[index], {transaction: trans});
+                console.log(recipeImage);
+                if (!recipeImage) {
+                    await trans.rollback();
+                    return null;
+                }
+            }
+    
             serving_days = serving_days[0];
-            let daysData = await db.Day.create(serving_days, {transaction: trans});
+            serving_days.recipe_id = recipeData.id;
+            const daysData = await db.Day.create(serving_days, {transaction: trans});
             if (!daysData) {
                 await trans.rollback();
                 return null;
             }
-
-            for (let index in ingredients) {
+            for (const index in ingredients) {
                 ingredients[index].recipe_id = recipeData.id;
                 let ingredientData = await db.Ingredient.create(ingredients[index], {transaction: trans});
                 if (!ingredientData) {
@@ -51,7 +79,15 @@ CookService.prototype.Recipe = {
                         profile_id: profileId
                     },
                     include: [{
-                        model: db.MediaObject
+                        attributes: ['id'],
+                        model: db.RecipeAllergy,
+                        include: [{
+                            attributes: ['id', 'name'],
+                            model: db.Allergy
+                        }]
+                    }, {
+                        model: db.MediaObject,
+                        attributes: ['imageurl']
                     }]
                 }]
             });

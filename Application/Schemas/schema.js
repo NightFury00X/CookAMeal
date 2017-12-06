@@ -19,7 +19,8 @@ module.exports = {
         }),
         ChangePassword: Joi.object().keys({
             old_password: Joi.string().min(8).max(30).required(),
-            new_password: Joi.string().min(8).max(30).regex(/(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}/).required()
+            new_password: Joi.string().min(8).max(30)
+                .regex(/(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}/).required()
         }),
         Recipe: Joi.object().options({abortEarly: false}).keys({
             dish_name: Joi.string().required().label('dish name'),
@@ -29,14 +30,15 @@ module.exports = {
             category_id: Joi.string().required(),
             sub_category_id: Joi.string().required(),
             tags: Joi.string().required(),
-            cost_per_serving: Joi.string().required(),
-            available_servings: Joi.string().required(),
-            order_by_date_time: Joi.string().required(),
-            pick_up_by_date_time: Joi.string().required(),
-            delivery_fee: Joi.string().required(),
+            cost_per_serving: Joi.string(),
+            available_servings: Joi.string(),
+            order_by_date_time: Joi.string(),
+            pick_up_by_date_time: Joi.string(),
+            delivery_fee: Joi.string(),
             total_cost_of_ingredients: Joi.string().required(),
             serving_days: Joi.any(),
             ingredients: Joi.any(),
+            base_allergies: Joi.any(),
             mon: Joi.number().allow(0, 1),
             tue: Joi.number().allow(0, 1),
             wed: Joi.number().allow(0, 1),

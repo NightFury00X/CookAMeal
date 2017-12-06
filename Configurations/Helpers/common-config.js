@@ -42,7 +42,7 @@ CommonConfig.OBJECT_TYPE = {
     IDENTIFICATIONCARD: 2,
     CERTIFICATE: 3,
     CATEGORY: 3,
-    RECIPE: 3
+    RECIPE: 4
 };
 
 CommonConfig.FILES = {

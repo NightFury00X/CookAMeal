@@ -17,7 +17,7 @@ exports.mssql = {
         timestamps: true,
         freezeTableName: false,
     },
-    raw: true,
+    raw: false,
     syncOnAssociation: true,
     timezone: timezone,
     dateStrings: true,

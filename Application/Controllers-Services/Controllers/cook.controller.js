@@ -6,8 +6,8 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
 let Recipe = {
     GetAllRecipeBySubCategory: async (req, res, next) => {
         try {
-            let result = await CookService.Recipe.GetAllRecipeBySubCategory('e4d2e9b2-6673-4bec-aa39-85d34add646a');
-            
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id);
+            let result = await CookService.Recipe.GetAllRecipeBySubCategory(profile.id);
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
@@ -25,8 +25,9 @@ let Recipe = {
     },
     Add: async (req, res, next) => {
         try {
-            let recipeData = await CookService.Recipe.Add(req.body);
-            
+            let recipeData = await CookService.Recipe.Add(req.body, req.files, req.user.id);
+    
+            console.log('Data: ', recipeData);
             if (!recipeData)
                 return next({
                     message: CommonConfig.ERRORS.CREATION,

@@ -73,6 +73,7 @@ module.exports = function (sequelize, DataTypes) {
         Recipe.hasOne(models.Day, { onDelete: 'CASCADE' });
         Recipe.hasMany(models.Ingredient, {onDelete: 'CASCADE'});
         Recipe.hasMany(models.MediaObject, { onDelete: 'CASCADE' });
+        Recipe.hasMany(models.RecipeAllergy, {onDelete: 'CASCADE'});
     };
 
     return Recipe;
