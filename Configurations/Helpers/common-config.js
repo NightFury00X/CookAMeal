@@ -1,9 +1,13 @@
 'use strict';
 let config = require('../Main');
 
-let CommonConfig = module.exports;
 
-let ROLES = CommonConfig.ROLES = {
+exports.DATE_FORMAT = 'MM/DD/YYYY';
+exports.DATE_TIME_FORMAT = 'MM/DD/YYYY h:mm a';
+
+const CommonConfig = module.exports;
+
+const ROLES = CommonConfig.ROLES = {
     COOK: 1,        //  0001
     CUSTOMER: 2,    //  0010
     ADMIN: 4,       //  0100

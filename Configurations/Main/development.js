@@ -1,3 +1,6 @@
+const timezone = 'UTC';
+process.env.TZ = timezone;
+
 exports.app = app = {
     title: 'Cook-A-Meal',
     host: 'localhost',
@@ -11,12 +14,21 @@ exports.mssql = {
     port: 1433, // Default port
     define: {
         schema: "dbo",
-        freezeTableName: false
+        timestamps: true,
+        freezeTableName: false,
     },
+    raw: true,
+    syncOnAssociation: true,
+    timezone: timezone,
+    dateStrings: true,
+    typeCast: true,
     dialectOptions: {
-        instanceName: 'MSSQLSERVER14',
+        instanceName: 'MSSQLSERVER',
         requestTimeout: 300000,
         connectionTimeout: 300000,
+        multipleStatements: true,
+        useUTC: true,
+        useIST: false
     },
     logging: false,
     pool: {
@@ -66,7 +78,7 @@ exports.CONFIG = {
         auth: {
             // user: 'curacall2015@gmail.com',
             // pass: 'Curacall_2015'
-    
+            
             user: 'cookamealtest@gmail.com',
             pass: 'Admin@321'
         }

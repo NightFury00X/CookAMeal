@@ -8,6 +8,7 @@ CookService.prototype.Recipe = {
         const trans = await db.sequelize.transaction();
         try {
             let serving_days = JSON.parse(recipe.serving_days);
+            console.log('Data: ', recipe);
             let ingredients = JSON.parse(recipe.ingredients);
             let recipeData = await db.Recipe.create(recipe, {transaction: trans});
             if (!recipeData) {

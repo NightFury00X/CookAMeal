@@ -10,11 +10,20 @@ exports.mssql = {
     dialect: 'mssql',
     define: {
         schema: "dbo",
+        timestamps: true,
         freezeTableName: false,
     },
+    raw: true,
+    syncOnAssociation: true,
+    timezone: timezone,
+    dateStrings: true,
+    typeCast: true,
     dialectOptions: {
         requestTimeout: 300000,
         connectionTimeout: 300000,
+        multipleStatements: true,
+        useUTC: true,
+        useIST: false
     },
     logging: true,
     pool: {
