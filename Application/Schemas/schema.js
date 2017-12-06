@@ -45,7 +45,8 @@ module.exports = {
             thu: Joi.number().allow(0, 1),
             fri: Joi.number().allow(0, 1),
             sat: Joi.number().allow(0, 1),
-            sun: Joi.number().allow(0, 1)
+            sun: Joi.number().allow(0, 1),
+            recipe: Joi.any()
         })
     }
 };
