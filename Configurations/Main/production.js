@@ -1,3 +1,6 @@
+const timezone = 'UTC';
+process.env.TZ = timezone;
+
 exports.app = app = {
     title: 'Cook-A-Meal',
     host: '132.148.87.196',
