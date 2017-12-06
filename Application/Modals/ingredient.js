@@ -15,15 +15,15 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
         },
         qty: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false
         },
         unit: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         cost: {
-            type: DataTypes.DECIMAL,
+            type: DataTypes.STRING,
             allowNull: false
         },
         updated_at: DataTypes.DATE,
