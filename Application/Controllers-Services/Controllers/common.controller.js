@@ -92,11 +92,24 @@ let Allergy = {
     }
 };
 
+const Recipe = {
+    GetAllRecipeByCategoryId: async (req, res, next) => {
+        try {
+            const category_id = req.value.params;
+            const result = await CommonService.Recipe.FindAllByCategoryId(category_id);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    }
+};
+
 let CommonController = {
     User: User,
     Category: Category,
     SubCategory: SubCategory,
-    Allergy: Allergy
+    Allergy: Allergy,
+    Recipe: Recipe
 };
 
 module.exports = CommonController;

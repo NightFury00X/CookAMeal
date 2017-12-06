@@ -280,8 +280,21 @@ CommonService.prototype.User = {
                 throw (error);
             }
         }
-}
-;
+};
+
+CommonService.prototype.Recipe = {
+    FindAllByCategoryId: async (category_id) => {
+        try {
+            return db.Recipe.findAll({
+                where: {
+                    category_id: category_id
+                }
+            });
+        } catch (error) {
+            throw (error);
+        }
+    }
+};
 
 CommonService.prototype.SubCategory = {
     GettAll: async () => {
