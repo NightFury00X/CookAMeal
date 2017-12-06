@@ -1,7 +1,7 @@
 let Joi = require('joi');
 const CommonConfig = require("../Helpers/common-config");
 
-var options = {
+const options = {
     language: {
         key: '{{key}} '
     },
@@ -23,7 +23,8 @@ module.exports = {
 
                     if (!req.value['params'])
                         req.value['params'] = {};
-
+    
+                    console.log('ID: ', result.value.param);
                     req.value['params'][name] = result.value.param;
                     next();
                 }
@@ -46,7 +47,8 @@ module.exports = {
                         errors.push(i++ + ': ' + detail.message);
                     });
                     return next({
-                        message: 'Invalid input data.',
+                        // message: 'Invalid input data.',
+                        message: errors,
                         status: CommonConfig.STATUS_CODE.BAD_REQUEST
                     }, false);
                 } else {
