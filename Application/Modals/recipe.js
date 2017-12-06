@@ -14,10 +14,6 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        ingredients: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         preparation_method: {
             type: DataTypes.TEXT,
             allowNull: false,
