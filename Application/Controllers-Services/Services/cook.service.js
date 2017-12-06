@@ -9,9 +9,15 @@ CookService.prototype.Recipe = {
     Add: async (recipe, files, user_type_id) => {
         const trans = await db.sequelize.transaction();
         try {
-            let allergies = JSON.parse(recipe.base_allergies);
-            let serving_days = JSON.parse(recipe.serving_days);
-            let ingredients = JSON.parse(recipe.ingredients);
+            let allergies;
+            let serving_days;
+            let ingredients;
+            if (recipe.base_allergies)
+                allergies = JSON.parse(recipe.base_allergies);
+            if (recipe.serving_days)
+                serving_days = JSON.parse(recipe.serving_days);
+            if (recipe.ingredients)
+                ingredients = JSON.parse(recipe.ingredients);
             const profile = await CommonService.User.GetProfileIdByUserTypeId(user_type_id);
             recipe.profile_id = profile.id;
             const recipeData = await db.Recipe.create(recipe, {transaction: trans});
@@ -35,7 +41,7 @@ CookService.prototype.Recipe = {
                 files.recipe[index].recipe_id = recipeData.id;
                 files.recipe[index].object_type = CommonConfig.OBJECT_TYPE.RECIPE;
                 files.recipe[index].imageurl = CommonConfig.FILE_LOCATIONS.RECIPE + files.recipe[index].filename;
-        
+    
                 console.log(files.recipe[index]);
                 const recipeImage = await db.MediaObject.create(files.recipe[index], {transaction: trans});
                 console.log(recipeImage);
