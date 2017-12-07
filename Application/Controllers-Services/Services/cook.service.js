@@ -51,12 +51,14 @@ CookService.prototype.Recipe = {
                 }
             }
     
-            serving_days = serving_days[0];
-            serving_days.recipe_id = recipeData.id;
-            const daysData = await db.Day.create(serving_days, {transaction: trans});
-            if (!daysData) {
-                await trans.rollback();
-                return null;
+            if (serving_days) {
+                serving_days = serving_days[0];
+                serving_days.recipe_id = recipeData.id;
+                const daysData = await db.Day.create(serving_days, {transaction: trans});
+                if (!daysData) {
+                    await trans.rollback();
+                    return null;
+                }
             }
             for (const index in ingredients) {
                 ingredients[index].recipe_id = recipeData.id;
