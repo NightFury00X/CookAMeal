@@ -53,6 +53,7 @@ CookService.prototype.Recipe = {
     
             if (serving_days) {
                 serving_days = serving_days[0];
+                console.log('Serving days: ', serving_days);
                 serving_days.recipe_id = recipeData.id;
                 const daysData = await db.Day.create(serving_days, {transaction: trans});
                 if (!daysData) {
