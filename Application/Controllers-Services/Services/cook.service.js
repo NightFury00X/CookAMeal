@@ -51,7 +51,7 @@ CookService.prototype.Recipe = {
                 }
             }
     
-            if (serving_days) {
+            if (serving_days.length > 0) {
                 serving_days = serving_days[0];
                 console.log('Serving days: ', serving_days);
                 serving_days.recipe_id = recipeData.id;
