@@ -41,22 +41,15 @@ CookService.prototype.Recipe = {
                 files.recipe[index].recipe_id = recipeData.id;
                 files.recipe[index].object_type = CommonConfig.OBJECT_TYPE.RECIPE;
                 files.recipe[index].imageurl = CommonConfig.FILE_LOCATIONS.RECIPE + files.recipe[index].filename;
-    
-                console.log(files.recipe[index]);
                 const recipeImage = await db.MediaObject.create(files.recipe[index], {transaction: trans});
-                console.log(recipeImage);
                 if (!recipeImage) {
                     await trans.rollback();
                     return null;
                 }
             }
-            console.log('Serving Days: ', serving_days);
             if (serving_days) {
-                console.log('Serving days: ', serving_days);
                 serving_days.recipe_id = recipeData.id;
                 const daysData = await db.Day.create(serving_days, {transaction: trans});
-                console.log('============================================');
-                console.log('days: ', daysData);
                 if (!daysData) {
                     await trans.rollback();
                     return null;

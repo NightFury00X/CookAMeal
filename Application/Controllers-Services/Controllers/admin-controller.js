@@ -10,7 +10,7 @@ let Category = {
                     message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
                 }, false);
-
+    
             let categoryName = {
                 name: req.body.name
             };
@@ -51,10 +51,25 @@ let Allergy = {
     }
 };
 
+let Units = {
+    Add: async (req, res, next) => {
+        try {
+            let unit = req.body;
+            unit.user_type_id = req.user.id;
+            let result = await AdminService.Units.Add(unit);
+            if (result)
+                return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+        } catch (error) {
+            return next(error);
+        }
+    }
+};
+
 let AdminController = {
     Category: Category,
     SubCategory: SubCategory,
-    Allergy: Allergy
+    Allergy: Allergy,
+    Units: Units
 };
 
 module.exports = AdminController;

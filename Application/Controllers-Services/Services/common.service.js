@@ -170,7 +170,7 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
     }
     catch (error) {
         await trans.rollback();
-        return error;
+        throw (error);
     }
 };
 
@@ -288,20 +288,13 @@ CommonService.prototype.Recipe = {
             return db.SubCategory.findAll({
                 attributes: ['id', 'name'],
                 include: [{
+                    where: {
+                        category_id: category_id
+                    },
                     model: db.Recipe,
                     attributes: ['id', 'dish_name', 'cost_per_serving']
                 }]
             });
-            // return db.Recipe.findAll({
-            //     attributes: ['dish_name', 'cost_per_serving'],
-            //     include: [{
-            //         model: db.MediaObject,
-            //         attributes: ['id', 'imageurl']
-            //     }],
-            //     where: {
-            //         category_id: category_id
-            //     }
-            // });
         } catch (error) {
             throw (error);
         }
@@ -325,6 +318,18 @@ CommonService.prototype.Allergy = {
         try {
             return await db.Allergy.findAll({
                 attributes: ['id', 'name']
+            });
+        } catch (error) {
+            throw (error);
+        }
+    }
+};
+
+CommonService.prototype.Units = {
+    GettAll: async () => {
+        try {
+            return await db.Unit.findAll({
+                attributes: ['id', 'unit_name', 'sort_name']
             });
         } catch (error) {
             throw (error);

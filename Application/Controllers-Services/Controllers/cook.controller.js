@@ -24,19 +24,13 @@ let Recipe = {
         }
     },
     Add: async (req, res, next) => {
-        try {
-            console.log('========================================================');
-            console.log('Body: ', req.body);
-            console.log('========================================================');
-            console.log('File: ', req.files);
-            
+        try {            
             let recipeData = await CookService.Recipe.Add(req.body, req.files, req.user.id);
             if (!recipeData)
                 return next({
                     message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
-                }, false);
-            
+                }, false);            
             return responseHelper.setSuccessResponse({Message: 'Your recipe added successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);

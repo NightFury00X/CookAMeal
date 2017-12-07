@@ -46,4 +46,14 @@ AdminService.prototype.Allergy = {
     }
 };
 
+AdminService.prototype.Units = {
+    Add: async (data) => {
+        try {
+            return db.Unit.create(data);
+        } catch (error) {
+            throw (error);
+        }
+    }
+};
+
 module.exports = new AdminService();

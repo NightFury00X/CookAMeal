@@ -1,4 +1,4 @@
-// The Social Model.
+// The Address Model.
 'use strict';
 
 module.exports = function (sequelize, DataTypes) {
@@ -10,26 +10,28 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        qty: {
+        unit_name: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        cost: {
+        sort_name: {
             type: DataTypes.STRING,
             allowNull: false
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
-
+    
     // 2: The model options.
     let modelOptions = {
         underscored: true
     };
     
-    return sequelize.define('Ingredient', modelDefinition, modelOptions);
+    let Unit = sequelize.define('Unit', modelDefinition, modelOptions);
+    
+    Unit.associate = function (models) {
+        Unit.hasOne(models.Ingredient, {onDelete: 'CASCADE'});
+    };
+    
+    return Unit;
 };

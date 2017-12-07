@@ -67,6 +67,7 @@ module.exports = function (sequelize, DataTypes) {
         UserTypeModel.hasMany(models.ResetPassword, {onDelete: 'CASCADE'});
         UserTypeModel.hasMany(models.Allergy, {onDelete: 'CASCADE'});
         UserTypeModel.hasMany(models.SubCategory, {onDelete: 'CASCADE'});
+        UserTypeModel.hasMany(models.Unit, {onDelete: 'CASCADE'});
     };
     
     return UserTypeModel;

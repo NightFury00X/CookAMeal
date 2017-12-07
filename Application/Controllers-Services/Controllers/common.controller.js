@@ -92,6 +92,32 @@ let Allergy = {
     }
 };
 
+let Units = {
+    GetAll: async (req, res, next) => {
+        try {
+            let result = await CommonService.Units.GettAll();
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    },
+    FindById: async (req, res, next) => {
+        try {
+            if (!req.params.id)
+                return next({
+                    message: 'Category not found.',
+                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
+                }, false);
+            
+            let catId = req.params.id;
+            let result = await CommonService.GetCategoryById(catId);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    }
+};
+
 const Recipe = {
     GetAllRecipeByCategoryId: async (req, res, next) => {
         try {
@@ -109,7 +135,8 @@ let CommonController = {
     Category: Category,
     SubCategory: SubCategory,
     Allergy: Allergy,
-    Recipe: Recipe
+    Recipe: Recipe,
+    Units: Units
 };
 
 module.exports = CommonController;

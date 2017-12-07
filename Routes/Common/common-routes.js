@@ -21,6 +21,9 @@ router.get('/subcategory',
 router.get('/allergy',
     CommonController.Allergy.GetAll);
 
+//1: Get All Allergies list
+router.get('/unit',
+    CommonController.Units.GetAll);
 
 //1: Get All Recipe list by category Id
 router.get('/recipe/:id',
