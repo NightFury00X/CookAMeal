@@ -55,6 +55,8 @@ CookService.prototype.Recipe = {
                 console.log('Serving days: ', serving_days);
                 serving_days.recipe_id = recipeData.id;
                 const daysData = await db.Day.create(serving_days, {transaction: trans});
+                console.log('============================================');
+                console.log('days: ', daysData);
                 if (!daysData) {
                     await trans.rollback();
                     return null;
