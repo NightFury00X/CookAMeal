@@ -30,11 +30,11 @@ module.exports = {
             category_id: Joi.string().required(),
             sub_category_id: Joi.string().required(),
             tags: Joi.string().required(),
-            cost_per_serving: Joi.string(),
-            available_servings: Joi.string(),
-            order_by_date_time: Joi.string(),
-            pick_up_by_date_time: Joi.string(),
-            delivery_fee: Joi.string(),
+            cost_per_serving: Joi.string().allow('', null),
+            available_servings: Joi.string().allow('', null),
+            order_by_date_time: Joi.string().allow('', null),
+            pick_up_by_date_time: Joi.string().allow('', null),
+            delivery_fee: Joi.string().allow('', null),
             total_cost_of_ingredients: Joi.string().required(),
             serving_days: Joi.any(),
             ingredients: Joi.any(),
@@ -47,6 +47,10 @@ module.exports = {
             sat: Joi.number().allow(0, 1),
             sun: Joi.number().allow(0, 1),
             recipe: Joi.any()
+        }),
+        Unit: Joi.object().keys({
+            unit_name: Joi.string().required(),
+            sort_name: Joi.string().required()
         })
     }
 };
