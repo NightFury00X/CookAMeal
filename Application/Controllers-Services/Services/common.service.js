@@ -303,22 +303,6 @@ CommonService.prototype.Recipe = {
                     }]
                 }]
             });
-            //
-            // return db.SubCategory.findAll({
-            //     attributes: ['id', 'name'],
-            //     include: [{
-            //         where: {
-            //             category_id: category_id
-            //         },
-            //         model: db.Recipe,
-            //         limit: 5,
-            //         attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id'],
-            //         include: [{
-            //             model: db.MediaObject,
-            //             attributes: ['id', 'imageurl']
-            //         }]
-            //     }]
-            // });
         } catch (error) {
             throw (error);
         }
