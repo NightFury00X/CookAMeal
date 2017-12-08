@@ -2,6 +2,7 @@ let randomString = require('random-string'),
     db = require('../../Modals'),
     {generateToken} = require('../../../Configurations/Helpers/authentication'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
+const Sequelize = require("sequelize");
 
 CommonService = function () {
 };
@@ -283,26 +284,71 @@ CommonService.prototype.User = {
 };
 
 CommonService.prototype.Recipe = {
+    FindRecipeByCatIdAndSubIds: async (category_id, sub_category_id) => {
+        return await db.Recipe.findAll({
+            attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time'],
+            where: {
+                category_id: category_id,
+                sub_category_id: sub_category_id
+            },
+            include: [{
+                model: db.Ingredient
+            }, {
+                required: true,
+                attributes: ['id', 'imageurl'],
+                model: db.MediaObject
+            }]
+        });
+    },
+    FindRecipeById: async (recipe_id) => {
+        return await db.Recipe.findById(recipe_id, {
+            attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time'],
+            include: [{
+                model: db.Ingredient
+            }, {
+                required: true,
+                attributes: ['id', 'imageurl'],
+                model: db.MediaObject
+            }]
+        });
+    },
     FindAllByCategoryId: async (category_id) => {
         try {
             return db.SubCategory.findAll({
+                required: false,
                 attributes: ['id', 'name'],
                 include: [{
                     model: db.Recipe,
-                    distinct: true,
-                    attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id'],
-                    // where: {
-                    //     sub_category_id: {$col: 'SubCategory.id'}
-                    // },
-                    limit: 5,
+                    attributes: ['dish_name', 'cost_per_serving', 'sub_category_id'],
+                    where: {
+                        // sub_category_id: {$col: 'SubCategory.id'},
+                        category_id: category_id
+                    },
                     required: true,
+                    limit: 5,
                     include: [{
-                        distinct: true,
+                        required: true,
                         model: db.MediaObject,
                         attributes: ['id', 'imageurl']
                     }]
                 }]
             });
+    
+            // return db.SubCategory.findAll({
+            //     attributes: ['id', 'name'],
+            //     include: [{
+            //         where: {
+            //             category_id: category_id
+            //         },
+            //         model: db.Recipe,
+            //         limit: 5,
+            //         attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id'],
+            //         include: [{
+            //             model: db.MediaObject,
+            //             attributes: ['id', 'imageurl']
+            //         }]
+            //     }]
+            // });
         } catch (error) {
             throw (error);
         }

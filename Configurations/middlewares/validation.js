@@ -9,7 +9,9 @@ const options = {
 
 module.exports = {
     ValidateParams: (schema, name) => {
+        console.log('Hello');
         return (req, res, next) => {
+            console.log('Ok', req['params'][name]);
             try {
                 const result = Joi.validate({param: req['params'][name]}, schema);
                 if (result.error) {

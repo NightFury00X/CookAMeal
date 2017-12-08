@@ -128,6 +128,25 @@ let Units = {
 };
 
 const Recipe = {
+    GetRecipeListByCategoryAndSubCategoryIds: async (req, res, next) => {
+        try {
+            const category_id = req.value.params.catid;
+            const sub_category_id = req.value.params.subid;
+            const result = await CommonService.Recipe.FindRecipeByCatIdAndSubIds(category_id, sub_category_id);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    },
+    GetRecipeById: async (req, res, next) => {
+        try {
+            const recipe_id = req.value.params.id;
+            const result = await CommonService.Recipe.FindRecipeById(recipe_id);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    },
     GetAllRecipeByCategoryId: async (req, res, next) => {
         try {
             let category_id = req.value.params.id;

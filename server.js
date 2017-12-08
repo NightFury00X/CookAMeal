@@ -54,6 +54,13 @@ app.use(bodyParser.json());
 
 app.use(expressValidator());
 
+app.use(function (req, res, next) {
+    for (let item in req.body) {
+        req.sanitize(item).escape();
+    }
+    next();
+});
+
 //To make requests lighter and load faster
 app.use(compression());
 
@@ -70,7 +77,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
     res.header('Access-Control-Allow-Credentials', 'true');
-
+    
     //intercepts OPTIONS method
     if ('OPTIONS' === req.method) {
         //respond with 200
@@ -159,7 +166,7 @@ function startApp() {
     let app_url = protocol + '://' + config.app.host + ':' + port;
     let env = process.env.NODE_ENV
         ? ('[' + process.env.NODE_ENV + ']') : '[development]';
-
+    
     logger.info('Initiated...', env);
     server.listen(port, function () {
         logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);

@@ -29,9 +29,15 @@ router.get('/allergy',
 router.get('/unit',
     CommonController.Units.GetAll);
 
-//1: Get All Recipe list by category Id
+//1: Get All Recipe details by Id
+router.get('/category/:catid/sub-category/:subid/recipe-list',
+    ValidateParams(ParamSchemas.idSchema, 'catid'),
+    ValidateParams(ParamSchemas.idSchema, 'subid'),
+    CommonController.Recipe.GetRecipeListByCategoryAndSubCategoryIds);
+
+//1: Get All Recipe details by Id
 router.get('/recipe/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
-    CommonController.Recipe.GetAllRecipeByCategoryId);
+    CommonController.Recipe.GetRecipeById);
 
 module.exports = router;
