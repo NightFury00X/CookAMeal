@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
+    "test": "test mocha",
     "build:dev": "set NODE_ENV=development& nodemon clusters.js",
     "build:prod": "set NODE_ENV=production& nodemon clusters.js"
   },
@@ -32,7 +33,6 @@
     "random-string": "^0.2.0",
     "sequelize": "^4.27.0",
     "sequelize-transactions": "^1.0.1",
-    "tedious": "^2.1.5",
     "winston": "^2.4.0",
     "winston-daily-rotate-file": "^1.7.2"
   },

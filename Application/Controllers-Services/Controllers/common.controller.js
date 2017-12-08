@@ -37,6 +37,15 @@ let Category = {
         } catch (error) {
             next(error);
         }
+    },
+    GetAllRecipeByCategoryId: async (req, res, next) => {
+        try {
+            let category_id = req.value.params.id;
+            const result = await CommonService.Recipe.FindAllByCategoryId(category_id);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
     }
 };
 

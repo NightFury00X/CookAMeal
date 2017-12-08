@@ -9,11 +9,15 @@ const router = require('express').Router(),
 router.get('/category',
     CommonController.Category.GetAll);
 
-//1: Get All Category by Id
+//2: Get All Category by Id
 router.get('/category/:id',
     CommonController.Category.FindById);
 
-//1: Get All Allergies list
+router.get('/category/:id/sub-category/recipe-list',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    CommonController.Category.GetAllRecipeByCategoryId);
+
+//3: Get All Sub-Category list
 router.get('/subcategory',
     CommonController.SubCategory.GetAll);
 
