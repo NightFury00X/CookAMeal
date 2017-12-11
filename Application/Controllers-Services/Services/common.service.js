@@ -66,7 +66,7 @@ CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
 CommonService.prototype.GenerateToken = async (tokenData, userData) => {
     try {
         return {
-            token: generateToken(tokenData),
+            token: generateToken(tokenData, false, true),
             userDetails: userData
         };
     } catch (error) {

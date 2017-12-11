@@ -7,6 +7,9 @@ module.exports = {
     generateToken: (user, uniqueKey, type) => {
         user.is_normal = type;
         user.unique_key = uniqueKey;
+    
+        console.log('=================================');
+        console.log('Token Data: ', user);
         return 'JWT ' + jwt.sign(
             user,
             config.keys.secret,
