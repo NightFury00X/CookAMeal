@@ -146,7 +146,14 @@ const Recipe = {
     GetRecipeById: async (req, res, next) => {
         try {
             const recipe_id = req.value.params.id;
-            const result = await CommonService.Recipe.FindRecipeById(recipe_id);
+            const recipe_details = await CommonService.Recipe.FindRecipeById(recipe_id);
+            const cook_recipes = await CommonService.Recipe.FindAllRecipeByCookId(recipe_details[0].id);
+            const similar_recipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryId(recipe_details[0].Recipes[0].sub_category_id);
+            const result = {
+                recipe_details: recipe_details,
+                cook_recipes: cook_recipes,
+                similar_recipes: similar_recipes
+            };
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);

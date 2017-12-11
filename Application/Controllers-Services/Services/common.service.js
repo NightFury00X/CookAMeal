@@ -301,14 +301,24 @@ CommonService.prototype.Recipe = {
         });
     },
     FindRecipeById: async (recipe_id) => {
-        return await db.Recipe.findById(recipe_id, {
-            attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time'],
+        return await db.Profile.findAll({
+            attributes: ['id', 'firstname', 'lastname', 'email'],
             include: [{
-                model: db.Ingredient
+                model: db.MediaObject,
+                attributes: ['id', 'imageurl']
             }, {
-                required: true,
-                attributes: ['id', 'imageurl'],
-                model: db.MediaObject
+                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
+                model: db.Recipe,
+                where: {
+                    id: recipe_id
+                },
+                include: [{
+                    model: db.Ingredient
+                }, {
+                    required: true,
+                    attributes: ['id', 'imageurl'],
+                    model: db.MediaObject
+                }]
             }]
         });
     },
@@ -333,22 +343,40 @@ CommonService.prototype.Recipe = {
                     }]
                 }]
             });
-    
-            // return db.SubCategory.findAll({
-            //     attributes: ['id', 'name'],
-            //     include: [{
-            //         where: {
-            //             category_id: category_id
-            //         },
-            //         model: db.Recipe,
-            //         limit: 5,
-            //         attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id'],
-            //         include: [{
-            //             model: db.MediaObject,
-            //             attributes: ['id', 'imageurl']
-            //         }]
-            //     }]
-            // });
+        } catch (error) {
+            throw (error);
+        }
+    },
+    FindAllRecipeByCookId: async (cook_id) => {
+        try {
+            return await db.Recipe.findAll({
+                required: true,
+                where: {
+                    profile_id: cook_id
+                },
+                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
+                include: [{
+                    model: db.MediaObject,
+                    attributes: ['id', 'imageurl']
+                }]
+            })
+        } catch (error) {
+            throw (error);
+        }
+    },
+    FindSimilarRecipesBySubCategoryId: async (sub_category_id) => {
+        try {
+            return await db.Recipe.findAll({
+                required: true,
+                where: {
+                    sub_category_id: sub_category_id
+                },
+                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
+                include: [{
+                    model: db.MediaObject,
+                    attributes: ['id', 'imageurl']
+                }]
+            });
         } catch (error) {
             throw (error);
         }

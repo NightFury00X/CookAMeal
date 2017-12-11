@@ -22,32 +22,34 @@
       <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Routes/Common/common-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="35" column="46" lean-forward="true" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+            <state relative-caret-position="418">
+              <caret line="40" column="36" lean-forward="false" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="138" column="23" lean-forward="false" selection-start-line="138" selection-start-column="23" selection-end-line="138" selection-end-column="23" />
+            <state relative-caret-position="524">
+              <caret line="149" column="112" lean-forward="true" selection-start-line="149" selection-start-column="112" selection-end-line="149" selection-end-column="112" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="358" column="12" lean-forward="false" selection-start-line="358" selection-start-column="4" selection-end-line="358" selection-end-column="12" />
+            <state relative-caret-position="256">
+              <caret line="308" column="47" lean-forward="true" selection-start-line="308" selection-start-column="47" selection-end-line="308" selection-end-column="47" />
               <folding>
-                <element signature="e#8574#11205#0" expanded="false" />
-                <element signature="e#11759#11977#0" expanded="false" />
-                <element signature="e#12012#12245#0" expanded="false" />
+                <element signature="e#8648#9210#0" expanded="false" />
+                <element signature="e#10125#10951#0" expanded="false" />
+                <element signature="e#10999#11602#0" expanded="false" />
+                <element signature="e#12843#13061#0" expanded="false" />
+                <element signature="e#13096#13329#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -151,8 +153,8 @@
         <option value="$PROJECT_DIR$/Routes/Common/common-routes.js" />
         <option value="$PROJECT_DIR$/Routes/Admin/admin.routes.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/admin-controller.js" />
-        <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js" />
+        <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
       </list>
     </option>
   </component>
@@ -385,21 +387,7 @@
       <workItem from="1512736549006" duration="2219000" />
       <workItem from="1512744915371" duration="56000" />
       <workItem from="1512970593327" duration="512000" />
-      <workItem from="1512971134528" duration="1257000" />
-    </task>
-    <task id="LOCAL-00183" summary="Changed password functionality fixed.">
-      <created>1512371604294</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1512371604294</updated>
-    </task>
-    <task id="LOCAL-00184" summary="Changed password functionality fixed">
-      <created>1512371736914</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1512371736914</updated>
+      <workItem from="1512971134528" duration="3418000" />
     </task>
     <task id="LOCAL-00185" summary="Changed password functionality fixed">
       <created>1512371834310</created>
@@ -730,11 +718,25 @@
       <option name="project" value="LOCAL" />
       <updated>1512744945727</updated>
     </task>
-    <option name="localTasksCounter" value="232" />
+    <task id="LOCAL-00232" summary="Updated API to get recipe list by category id and sub category id.">
+      <created>1512974163354</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1512974163354</updated>
+    </task>
+    <task id="LOCAL-00233" summary="Updated API to get recipe list by category id and sub category id.">
+      <created>1512974296682</created>
+      <option name="number" value="00233" />
+      <option name="presentableId" value="LOCAL-00233" />
+      <option name="project" value="LOCAL" />
+      <updated>1512974296683</updated>
+    </task>
+    <option name="localTasksCounter" value="234" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="577154000" />
+    <option name="totallyTimeSpent" value="579315000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -823,7 +825,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Added Scheme name." />
     <MESSAGE value="register user as facebook user or normal user." />
     <MESSAGE value="Change database mysql to mssql." />
     <MESSAGE value="Update fb id" />
@@ -848,7 +849,8 @@
     <MESSAGE value="Add following functionality&#10;1: Add category.&#10;2: Add Sub-category.&#10;3: Add Allergy.&#10;4: Get all categories.&#10;6: Get all sub-categories.&#10;7: Get all allergies.&#10;8: Add Recipe." />
     <MESSAGE value="Added New API to get recipe details for dashboard by category id." />
     <MESSAGE value="Added New API to get recipe details for dashboard by category id.&#10;Added new API to get recipe list by category id and sub category id.&#10;&#10;Added new API to get recipe details by recipe id." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added New API to get recipe details for dashboard by category id.&#10;Added new API to get recipe list by category id and sub category id.&#10;&#10;Added new API to get recipe details by recipe id." />
+    <MESSAGE value="Updated API to get recipe list by category id and sub category id." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated API to get recipe list by category id and sub category id." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1195,29 +1197,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Routes/Common/common-routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="35" column="46" lean-forward="true" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+        <state relative-caret-position="418">
+          <caret line="40" column="36" lean-forward="false" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="524">
+          <caret line="149" column="112" lean-forward="true" selection-start-line="149" selection-start-column="112" selection-end-line="149" selection-end-column="112" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="358" column="12" lean-forward="false" selection-start-line="358" selection-start-column="4" selection-end-line="358" selection-end-column="12" />
+        <state relative-caret-position="256">
+          <caret line="308" column="47" lean-forward="true" selection-start-line="308" selection-start-column="47" selection-end-line="308" selection-end-column="47" />
           <folding>
-            <element signature="e#8574#11205#0" expanded="false" />
-            <element signature="e#11759#11977#0" expanded="false" />
-            <element signature="e#12012#12245#0" expanded="false" />
+            <element signature="e#8648#9210#0" expanded="false" />
+            <element signature="e#10125#10951#0" expanded="false" />
+            <element signature="e#10999#11602#0" expanded="false" />
+            <element signature="e#12843#13061#0" expanded="false" />
+            <element signature="e#13096#13329#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="138" column="23" lean-forward="false" selection-start-line="138" selection-start-column="23" selection-end-line="138" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
