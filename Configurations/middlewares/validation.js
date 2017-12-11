@@ -9,9 +9,7 @@ const options = {
 
 module.exports = {
     ValidateParams: (schema, name) => {
-        console.log('Hello');
         return (req, res, next) => {
-            console.log('Ok', req['params'][name]);
             try {
                 const result = Joi.validate({param: req['params'][name]}, schema);
                 if (result.error) {
@@ -26,7 +24,6 @@ module.exports = {
                     if (!req.value['params'])
                         req.value['params'] = {};
     
-                    console.log('ID: ', result.value.param);
                     req.value['params'][name] = result.value.param;
                     next();
                 }
@@ -63,7 +60,6 @@ module.exports = {
                     next();
                 }
             } catch (error) {
-                console.log(error);
                 return next({
                     message: CommonConfig.ERRORS.INTERNAL_SERVER_ERROR,
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR

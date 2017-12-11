@@ -66,7 +66,6 @@ CookService.prototype.Recipe = {
             await trans.commit();
             return true;
         } catch (error) {
-            console.log(error);
             await trans.rollback();
             throw (error);
         }

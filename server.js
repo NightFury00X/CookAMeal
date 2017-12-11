@@ -183,7 +183,6 @@ app.use(function (req, res, next) {
 // Error Response Handler
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
-        console.log(err);
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,

@@ -165,7 +165,6 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
             return null;
         }
     
-        console.log('password changed');
         await trans.commit();
         return userData;
     }

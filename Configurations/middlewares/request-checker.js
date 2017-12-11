@@ -3,7 +3,6 @@ let RequestMethods = {},
 
 RequestMethods.CheckAuthorizationHeader = function (req, res, next) {
     let content_type = req.get('Authorization');
-    console.log('Authorization: ', content_type);
     if (!content_type) {
         return next({
             status: CommonConfig.STATUS_CODE.BAD_REQUEST,
@@ -17,7 +16,6 @@ RequestMethods.CheckAuthorizationHeader = function (req, res, next) {
 RequestMethods.CheckContentType = {
     ApplicationJsonData: function (req, res, next) {
         let content_type = req.get('Content-Type');
-        console.log('Content-Type: ', content_type);
         if (!content_type || content_type.split(';')[0] !== CommonConfig.CONTENT_TYPE.JSON) {
             return next({
                 status: CommonConfig.STATUS_CODE.BAD_REQUEST,
@@ -29,7 +27,6 @@ RequestMethods.CheckContentType = {
     },
     ApplicationFormData: function (req, res, next) {
         let content_type = req.get('Content-Type');
-        console.log('Content-Type: ', content_type);
         if (!content_type || content_type.split(';')[0] !== CommonConfig.CONTENT_TYPE.MULTIPART) {
             return next({
                 status: CommonConfig.STATUS_CODE.BAD_REQUEST,

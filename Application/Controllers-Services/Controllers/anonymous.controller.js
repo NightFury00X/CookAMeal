@@ -51,10 +51,6 @@ let Anonymous = {
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
                 }, false);
     
-            console.log('Data: ', registrationData);
-            console.log('--------------------------------------------------------------------------');
-            console.log('Files: ', req.files);
-    
             let result = await AnonymousService.SignUp(registrationData, req.files);
             result.type = true;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
