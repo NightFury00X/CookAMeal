@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js" />
       <change beforePath="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -42,14 +41,11 @@
       <file leaf-file-name="common.service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="308" column="47" lean-forward="true" selection-start-line="308" selection-start-column="47" selection-end-line="308" selection-end-column="47" />
+            <state relative-caret-position="-274">
+              <caret line="329" column="26" lean-forward="false" selection-start-line="329" selection-start-column="26" selection-end-line="329" selection-end-column="26" />
               <folding>
-                <element signature="e#8648#9210#0" expanded="false" />
-                <element signature="e#10125#10951#0" expanded="false" />
-                <element signature="e#10999#11602#0" expanded="false" />
-                <element signature="e#12843#13061#0" expanded="false" />
-                <element signature="e#13096#13329#0" expanded="false" />
+                <element signature="e#13187#13405#0" expanded="false" />
+                <element signature="e#13440#13673#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -387,14 +383,7 @@
       <workItem from="1512736549006" duration="2219000" />
       <workItem from="1512744915371" duration="56000" />
       <workItem from="1512970593327" duration="512000" />
-      <workItem from="1512971134528" duration="3418000" />
-    </task>
-    <task id="LOCAL-00185" summary="Changed password functionality fixed">
-      <created>1512371834310</created>
-      <option name="number" value="00185" />
-      <option name="presentableId" value="LOCAL-00185" />
-      <option name="project" value="LOCAL" />
-      <updated>1512371834310</updated>
+      <workItem from="1512971134528" duration="3743000" />
     </task>
     <task id="LOCAL-00186" summary="Changed password functionality fixed">
       <created>1512372122980</created>
@@ -732,11 +721,18 @@
       <option name="project" value="LOCAL" />
       <updated>1512974296683</updated>
     </task>
-    <option name="localTasksCounter" value="234" />
+    <task id="LOCAL-00234" summary="Updated API to get recipe list by category id and sub category id.">
+      <created>1512976317408</created>
+      <option name="number" value="00234" />
+      <option name="presentableId" value="LOCAL-00234" />
+      <option name="project" value="LOCAL" />
+      <updated>1512976317408</updated>
+    </task>
+    <option name="localTasksCounter" value="235" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="579315000" />
+    <option name="totallyTimeSpent" value="579640000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1213,14 +1209,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="308" column="47" lean-forward="true" selection-start-line="308" selection-start-column="47" selection-end-line="308" selection-end-column="47" />
+        <state relative-caret-position="-274">
+          <caret line="329" column="26" lean-forward="false" selection-start-line="329" selection-start-column="26" selection-end-line="329" selection-end-column="26" />
           <folding>
-            <element signature="e#8648#9210#0" expanded="false" />
-            <element signature="e#10125#10951#0" expanded="false" />
-            <element signature="e#10999#11602#0" expanded="false" />
-            <element signature="e#12843#13061#0" expanded="false" />
-            <element signature="e#13096#13329#0" expanded="false" />
+            <element signature="e#13187#13405#0" expanded="false" />
+            <element signature="e#13440#13673#0" expanded="false" />
           </folding>
         </state>
       </provider>

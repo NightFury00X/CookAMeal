@@ -285,32 +285,12 @@ CommonService.prototype.User = {
 
 CommonService.prototype.Recipe = {
     FindRecipeByCatIdAndSubIds: async (category_id, sub_category_id) => {
-        return await db.Recipe.findAll({
-            attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time'],
-            where: {
-                category_id: category_id,
-                sub_category_id: sub_category_id
-            },
-            include: [{
-                model: db.Ingredient
-            }, {
-                required: true,
-                attributes: ['id', 'imageurl'],
-                model: db.MediaObject
-            }]
-        });
-    },
-    FindRecipeById: async (recipe_id) => {
-        return await db.Profile.findAll({
-            attributes: ['id', 'firstname', 'lastname', 'email'],
-            include: [{
-                model: db.MediaObject,
-                attributes: ['id', 'imageurl']
-            }, {
-                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
-                model: db.Recipe,
+        try {
+            return await db.Recipe.findAll({
+                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time'],
                 where: {
-                    id: recipe_id
+                    category_id: category_id,
+                    sub_category_id: sub_category_id
                 },
                 include: [{
                     model: db.Ingredient
@@ -319,8 +299,36 @@ CommonService.prototype.Recipe = {
                     attributes: ['id', 'imageurl'],
                     model: db.MediaObject
                 }]
-            }]
-        });
+            });
+        } catch (error) {
+            throw (error);
+        }
+    },
+    FindRecipeById: async (recipe_id) => {
+        try {
+            return await db.Profile.findAll({
+                attributes: ['id', 'firstname', 'lastname', 'email'],
+                include: [{
+                    model: db.MediaObject,
+                    attributes: ['id', 'imageurl']
+                }, {
+                    attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
+                    model: db.Recipe,
+                    where: {
+                        id: recipe_id
+                    },
+                    include: [{
+                        model: db.Ingredient
+                    }, {
+                        required: true,
+                        attributes: ['id', 'imageurl'],
+                        model: db.MediaObject
+                    }]
+                }]
+            });
+        } catch (error) {
+            throw (error);
+        }
     },
     FindAllByCategoryId: async (category_id) => {
         try {
@@ -350,6 +358,7 @@ CommonService.prototype.Recipe = {
     FindAllRecipeByCookId: async (cook_id) => {
         try {
             return await db.Recipe.findAll({
+                limit: 10,
                 required: true,
                 where: {
                     profile_id: cook_id
@@ -367,6 +376,7 @@ CommonService.prototype.Recipe = {
     FindSimilarRecipesBySubCategoryId: async (sub_category_id) => {
         try {
             return await db.Recipe.findAll({
+                limit: 10,
                 required: true,
                 where: {
                     sub_category_id: sub_category_id
