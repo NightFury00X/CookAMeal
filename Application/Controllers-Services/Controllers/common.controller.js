@@ -138,7 +138,6 @@ const Recipe = {
                 sub_category: sub_category_details,
                 recipes: result
             };
-            // result.sub_category = sub_category_details;
             return responseHelper.setSuccessResponse(results, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
