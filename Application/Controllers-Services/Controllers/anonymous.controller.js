@@ -31,7 +31,7 @@ let Anonymous = {
                 fullname: userDetails.Profile.fullName,
                 user_type: userDetails.user_type,
                 user_role: userDetails.user_role,
-                is_normal: type,
+                is_normal: true,
                 unique_key: false,
                 profile_url: userDetails.Profile.MediaObjects.length > 0 ? userDetails.Profile.MediaObjects[0].imageurl : ''
             };
