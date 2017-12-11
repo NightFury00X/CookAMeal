@@ -306,7 +306,7 @@ CommonService.prototype.Recipe = {
     FindRecipeById: async (recipe_id) => {
         try {
             return await db.Profile.findOne({
-                attributes: ['id', 'firstname', 'lastname', 'email'],
+                attributes: ['id', 'email', 'firstname', 'lastname'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageurl']
@@ -317,6 +317,9 @@ CommonService.prototype.Recipe = {
                         id: recipe_id
                     },
                     include: [{
+    
+                        model: db.Rating
+                    }, {
                         attributes: ['id', 'name', 'qty', 'cost'],
                         model: db.Ingredient,
                         include: [{
@@ -341,7 +344,7 @@ CommonService.prototype.Recipe = {
                 attributes: ['id', 'name'],
                 include: [{
                     model: db.Recipe,
-                    attributes: ['dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time'],
+                    attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time'],
                     where: {
                         // sub_category_id: {$col: 'SubCategory.id'},
                         category_id: category_id
