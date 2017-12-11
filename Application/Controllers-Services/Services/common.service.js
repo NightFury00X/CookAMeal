@@ -339,17 +339,16 @@ CommonService.prototype.Recipe = {
     FindAllByCategoryId: async (category_id) => {
         try {
             return db.SubCategory.findAll({
-                required: false,
                 attributes: ['id', 'name'],
                 include: [{
                     model: db.Recipe,
-                    attributes: ['dish_name', 'cost_per_serving', 'sub_category_id'],
+                    attributes: ['dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time'],
                     where: {
                         // sub_category_id: {$col: 'SubCategory.id'},
                         category_id: category_id
                     },
                     required: true,
-                    limit: 5,
+                    limit: 10,
                     include: [{
                         required: true,
                         model: db.MediaObject,
