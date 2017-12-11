@@ -306,7 +306,7 @@ CommonService.prototype.Recipe = {
     },
     FindRecipeById: async (recipe_id) => {
         try {
-            return await db.Profile.findAll({
+            return await db.Profile.findOne({
                 attributes: ['id', 'firstname', 'lastname', 'email'],
                 include: [{
                     model: db.MediaObject,
