@@ -31,6 +31,8 @@ let Anonymous = {
                 fullname: userDetails.Profile.fullName,
                 user_type: userDetails.user_type,
                 user_role: userDetails.user_role,
+                is_normal: type,
+                unique_key: false,
                 profile_url: userDetails.Profile.MediaObjects.length > 0 ? userDetails.Profile.MediaObjects[0].imageurl : ''
             };
     
@@ -63,21 +65,21 @@ let Anonymous = {
         }
     },
     AuthenticateUser: async (req, res, next) => {
-        try {         
+        try {
             if (req.user.token && !req.token_status) {
                 await CommonService.InvalidateResetPasswordTokenData(req.user.id);
                 return next({message: CommonConfig.ERRORS.TOKEN_EXPIRED}, false);
             }
-    
+        
             let userDetails = {
                 user_id: !req.token_status ? req.user.id : false,
                 user_type_id: req.user.user_type_id,
                 token_id: req.token_status ? req.user.id : false,
                 token_status: !!req.token_status
             };
-    
+        
             let result = await AnonymousService.Authenticate(userDetails);
-    
+        
             result.type = !req.user.random_key;
             return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
