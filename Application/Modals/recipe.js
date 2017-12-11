@@ -72,12 +72,5 @@ module.exports = function (sequelize, DataTypes) {
         Recipe.hasMany(models.RecipeAllergy, {onDelete: 'CASCADE'});
     };
     
-    sequelize.query('select * from profile', {
-        type: sequelize.QueryTypes.SELECT,
-        model: Recipe
-    }).then(function (result) {
-        console.log('Result: =>    ', result);
-    });
-    
     return Recipe;
 };

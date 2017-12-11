@@ -25,11 +25,19 @@ module.exports = function (sequelize, DataTypes) {
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
-
+    
     // 2: The model options.
     let modelOptions = {
         underscored: true
     };
     
-    return sequelize.define('Ingredient', modelDefinition, modelOptions);
+    let Ingredient = sequelize.define('Ingredient', modelDefinition, modelOptions);
+    
+    Ingredient.associate = function (models) {
+        Ingredient.belongsTo(models.Unit, {onDelete: 'CASCADE'});
+    };
+    
+    return Ingredient;
+    
+    
 };

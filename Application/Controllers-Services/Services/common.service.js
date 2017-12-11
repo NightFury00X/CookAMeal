@@ -318,7 +318,13 @@ CommonService.prototype.Recipe = {
                         id: recipe_id
                     },
                     include: [{
-                        model: db.Ingredient
+                        attributes: ['id', 'name', 'qty', 'cost'],
+                        model: db.Ingredient,
+                        include: [{
+                            required: true,
+                            attributes: ['id', 'unit_name', 'sort_name'],
+                            model: db.Unit
+                        }]
                     }, {
                         required: true,
                         attributes: ['id', 'imageurl'],
@@ -358,6 +364,9 @@ CommonService.prototype.Recipe = {
     FindAllRecipeByCookId: async (cook_id) => {
         try {
             return await db.Recipe.findAll({
+                order: [
+                    [Sequelize.fn('NEWID')]
+                ],
                 limit: 10,
                 required: true,
                 where: {
@@ -376,6 +385,9 @@ CommonService.prototype.Recipe = {
     FindSimilarRecipesBySubCategoryId: async (sub_category_id) => {
         try {
             return await db.Recipe.findAll({
+                order: [
+                    [Sequelize.fn('NEWID')]
+                ],
                 limit: 10,
                 required: true,
                 where: {

@@ -29,9 +29,9 @@ module.exports = function (sequelize, DataTypes) {
     
     let Unit = sequelize.define('Unit', modelDefinition, modelOptions);
     
-    Unit.associate = function (models) {
-        Unit.hasOne(models.Ingredient, {onDelete: 'CASCADE'});
-    };
-    
+    // Unit.associate = function (models) {
+    //     Unit.hasMany(models.Ingredient, {onDelete: 'CASCADE'});
+    // };
+    //
     return Unit;
 };
