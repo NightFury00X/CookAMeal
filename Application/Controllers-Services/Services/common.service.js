@@ -356,6 +356,15 @@ CommonService.prototype.Recipe = {
 };
 
 CommonService.prototype.SubCategory = {
+    FindById: async (sub_category_id) => {
+        try {
+            return await db.SubCategory.findById(sub_category_id, {
+                attributes: ['id', 'name']
+            });
+        } catch (error) {
+            throw (error);
+        }
+    },
     GettAll: async () => {
         try {
             return await db.SubCategory.findAll({

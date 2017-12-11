@@ -132,8 +132,14 @@ const Recipe = {
         try {
             const category_id = req.value.params.catid;
             const sub_category_id = req.value.params.subid;
-            const result = await CommonService.Recipe.FindRecipeByCatIdAndSubIds(category_id, sub_category_id);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            const sub_category_details = await CommonService.SubCategory.FindById(sub_category_id);
+            let result = await CommonService.Recipe.FindRecipeByCatIdAndSubIds(category_id, sub_category_id);
+            let results = {
+                sub_category: sub_category_details,
+                recipes: result
+            };
+            // result.sub_category = sub_category_details;
+            return responseHelper.setSuccessResponse(results, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
