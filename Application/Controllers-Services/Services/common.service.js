@@ -317,9 +317,6 @@ CommonService.prototype.Recipe = {
                         id: recipe_id
                     },
                     include: [{
-    
-                        model: db.Rating
-                    }, {
                         attributes: ['id', 'name', 'qty', 'cost'],
                         model: db.Ingredient,
                         include: [{
