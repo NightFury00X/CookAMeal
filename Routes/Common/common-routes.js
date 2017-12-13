@@ -41,4 +41,9 @@ router.get('/recipe/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.Recipe.GetRecipeById);
 
+// Get Cook profile
+router.get('/cook-profile/:id',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    CommonController.User.GetCookprofile);
+
 module.exports = router;

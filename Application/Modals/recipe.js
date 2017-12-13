@@ -64,6 +64,14 @@ module.exports = function (sequelize, DataTypes) {
     
     // 2: The model options.
     let modelOptions = {
+        getterMethods: {
+            preparation_time_in_minute() {
+                return ConvertToMinute(this.preparation_time);
+            },
+            cook_time_in_minute() {
+                return ConvertToMinute(this.cook_time);
+            }
+        },
         underscored: true
     };
     
@@ -79,3 +87,19 @@ module.exports = function (sequelize, DataTypes) {
     
     return Recipe;
 };
+
+
+/**
+ * @return {number}
+ */
+function ConvertToMinute(time) {
+    if (time) {
+        let temp_time = time.split(':');
+        let hrs = temp_time[0];
+        let hours = (hrs / 60);
+        let rhours = Math.floor(hours);
+        let minutes = (hrs - rhours) * 60;
+        let mnt = temp_time[1];
+        return minutes + parseInt(mnt);
+    }
+}

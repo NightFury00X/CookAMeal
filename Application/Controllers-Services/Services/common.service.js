@@ -215,6 +215,18 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
 };
 
 CommonService.prototype.User = {
+    GetCookProfileDetailsById: async (profile_id) => {
+        try {
+            return await db.Profile.findById(profile_id, {
+                include: [{
+                    model: db.MediaObject,
+                    attributes: ['id', 'imageurl']
+                }]
+            });
+        } catch (error) {
+            throw (error);
+        }
+    },
     GetProfileIdByUserTypeId: async (user_type_id) => {
         try {
             return db.Profile.findOne({

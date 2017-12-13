@@ -3,6 +3,15 @@ let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 let User = {
+    GetCookprofile: async (req, res, next) => {
+        try {
+            const profile_id = req.value.params.id;
+            const result = await CommonService.User.GetCookProfileDetailsById(profile_id);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    },
     GetprofileDetails: async (req, res, next) => {
         try {
             let userId = req.user.id;
@@ -158,10 +167,10 @@ const Recipe = {
                 const recipe_id = convertedJSON[inner].id;
                 const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id);
                 const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
-        
+    
                 // Check recipe is marked favorite or not
                 const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
-        
+    
                 convertedJSON[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
                 convertedJSON[inner].Favorite = !favorite ? false : favorite.is_favorite;
             }
@@ -186,7 +195,7 @@ const Recipe = {
     
             const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id);
             const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
-            const result = {                            
+            const result = {
                 recipe_details: recipe_details,
                 rating: !rating[0].rating ? 0 : rating[0].rating,
                 favorite: !favorite ? 0 : favorite.is_favorite,
