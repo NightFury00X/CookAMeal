@@ -8,7 +8,7 @@ let Recipe = {
         try {
             const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id);
             let result = await CookService.Recipe.GetAllRecipeBySubCategory(profile.id);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -17,8 +17,8 @@ let Recipe = {
         try {
             let id = req.params['id'];
             let result = await CookService.Recipe.GetAllRecipeBySubCategoryById('e4d2e9b2-6673-4bec-aa39-85d34add646a', id);
-            
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+    
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
