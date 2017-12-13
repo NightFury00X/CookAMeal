@@ -45,8 +45,8 @@ let Recipe = {
                 profile_id: profile.id,
                 recipe_id: req.body.recipe_id
             };
-            const result = await CommonService.Recipe.MarkFavorite(favorite);
-            return responseHelper.setSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.CREATED);
+            await CommonService.Recipe.MarkFavorite(favorite);
+            return responseHelper.setSuccessResponse({Message: 'Recipe marked favorite successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
         }
