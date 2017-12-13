@@ -49,10 +49,10 @@ let Category = {
             for (const outer in convertedJSON) {
                 for (const inner in convertedJSON[outer].Recipes) {
                     const recipe_id = convertedJSON[outer].Recipes[inner].id;
-            
+    
                     // Get racipe ratings
                     const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
-            
+    
                     // Check recipe is marked favorite or not
                     const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
                     convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
@@ -151,12 +151,19 @@ const Recipe = {
             const category_id = req.value.params.catid;
             const sub_category_id = req.value.params.subid;
             const sub_category_details = await CommonService.SubCategory.FindById(sub_category_id);
-            let result = await CommonService.Recipe.FindRecipeByCatIdAndSubIds(category_id, sub_category_id);
-    
+            const result = await CommonService.Recipe.FindRecipeByCatIdAndSubIds(category_id, sub_category_id);
+            
             let convertedJSON = JSON.parse(JSON.stringify(result));
-            for (let inner in convertedJSON) {
-                let RatingDetails = await CommonService.Recipe.FindRatingByRecipeId(convertedJSON[inner].id);
-                convertedJSON[inner].Rating = RatingDetails;
+            for (const inner in convertedJSON) {
+                const recipe_id = convertedJSON[inner].id;
+                const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id);
+                const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
+        
+                // Check recipe is marked favorite or not
+                const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
+        
+                convertedJSON[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
+                convertedJSON[inner].Favorite = !favorite ? false : favorite.is_favorite;
             }
             
             let results = {
@@ -171,14 +178,18 @@ const Recipe = {
     GetRecipeById: async (req, res, next) => {
         try {
             const recipe_id = req.value.params.id;
-            let recipe_details = await CommonService.Recipe.FindRecipeById(recipe_id);
+            const recipe_details = await CommonService.Recipe.FindRecipeById(recipe_id);
             const rating = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
             
             const cook_recipes = await CommonService.Recipe.FindAllRecipeByCookId(recipe_details.id);
             const similar_recipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryId(recipe_details.Recipes[0].sub_category_id);
-            const result = {
+    
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id);
+            const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
+            const result = {                            
                 recipe_details: recipe_details,
-                rating: rating[0],
+                rating: !rating[0].rating ? 0 : rating[0].rating,
+                favorite: !favorite ? 0 : favorite.is_favorite,
                 cook_recipes: cook_recipes,
                 similar_recipes: similar_recipes
             };

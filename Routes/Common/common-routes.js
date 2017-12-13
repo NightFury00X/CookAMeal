@@ -13,10 +13,6 @@ router.get('/category',
 router.get('/category/:id',
     CommonController.Category.FindById);
 
-router.get('/category/:id/sub-category/recipe-list',
-    ValidateParams(ParamSchemas.idSchema, 'id'),
-    CommonController.Category.GetAllRecipeByCategoryId);
-
 //3: Get All Sub-Category list
 router.get('/subcategory',
     CommonController.SubCategory.GetAll);
@@ -28,6 +24,11 @@ router.get('/allergy',
 //1: Get All Allergies list
 router.get('/unit',
     CommonController.Units.GetAll);
+
+//1: Get All Recipe details by Id
+router.get('/category/:id/sub-category/recipe-list',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    CommonController.Category.GetAllRecipeByCategoryId);
 
 //1: Get All Recipe details by Id
 router.get('/category/:catid/sub-category/:subid/recipe-list',
