@@ -90,7 +90,7 @@ module.exports = function (sequelize, DataTypes) {
 
 
 /**
- * @return {number}
+ * @return {string}
  */
 function ConvertToMinute(time) {
     if (time) {
@@ -100,6 +100,6 @@ function ConvertToMinute(time) {
         let rhours = Math.floor(hours);
         let minutes = (hrs - rhours) * 60;
         let mnt = temp_time[1];
-        return minutes + parseInt(mnt);
+        return (minutes + parseInt(mnt)) + ' Minutes';
     }
 }
