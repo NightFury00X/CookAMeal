@@ -221,7 +221,7 @@ CommonService.prototype.User = {
                 where: {
                     user_type_id: user_type_id
                 },
-                attributes: ['id']
+                attributes: ['id', 'firstname', 'lastname']
             })
         } catch (error) {
             throw (error);
@@ -408,6 +408,37 @@ CommonService.prototype.Recipe = {
                     attributes: ['id', 'imageurl']
                 }]
             });
+        } catch (error) {
+            throw (error);
+        }
+    },
+    MarkFavorite: async (favorite_date) => {
+        try {
+            return await db.Favorite.create(favorite_date);
+        } catch (error) {
+            throw (error);
+        }
+    },
+    GetFavoriteListByProfileId: async (profile_id) => {
+        try {
+            return await db.Favorite.findAll({
+                where: {
+                    profile_id: profile_id,
+                    is_favorite: true
+                }
+            })
+        } catch (error) {
+            throw (error);
+        }
+    },
+    CheckRecipeIsFavoriteByRecipeIdAndProfileId: async (profile_id, recipe_id) => {
+        try {
+            return await db.Favorite.findOne({
+                where: {
+                    profile_id: profile_id,
+                    recipe_id: recipe_id
+                }
+            })
         } catch (error) {
             throw (error);
         }

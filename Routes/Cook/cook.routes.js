@@ -28,5 +28,12 @@ router.post('/recipe',
     ValidateBody(BodySchemas.Recipe),
     CookController.Recipe.Add);
 
+router.post('/favorite',
+    RequestMethods.CheckContentType.ApplicationJsonData,
+    CookController.Recipe.MarkFavorite);
+
+router.get('/favorite',
+    CookController.Recipe.GetMarkedFavoriteList);
+
 
 module.exports = router;

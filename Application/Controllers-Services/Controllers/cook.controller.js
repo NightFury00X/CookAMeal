@@ -24,14 +24,40 @@ let Recipe = {
         }
     },
     Add: async (req, res, next) => {
-        try {            
+        try {
             let recipeData = await CookService.Recipe.Add(req.body, req.files, req.user.id);
             if (!recipeData)
                 return next({
                     message: CommonConfig.ERRORS.CREATION,
                     status: CommonConfig.STATUS_CODE.BAD_REQUEST
-                }, false);            
+                }, false);
             return responseHelper.setSuccessResponse({Message: 'Your recipe added successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
+        } catch (error) {
+            next(error);
+        }
+    },
+    MarkFavorite: async (req, res, next) => {
+        try {
+            // Get profile ID
+            const user_id = req.user.id;
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(user_id);
+            const favorite = {
+                profile_id: profile.id,
+                recipe_id: req.body.recipe_id
+            };
+            const result = await CommonService.Recipe.MarkFavorite(favorite);
+            return responseHelper.setSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.CREATED);
+        } catch (error) {
+            next(error);
+        }
+    },
+    GetMarkedFavoriteList: async (req, res, next) => {
+        try {
+            // Get profile ID
+            const user_id = req.user.id;
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(user_id);
+            const result = await CommonService.Recipe.GetFavoriteListByProfileId(profile.id);
+            return responseHelper.setSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

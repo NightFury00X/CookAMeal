@@ -46,6 +46,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        serve: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         delivery_fee: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -60,31 +64,6 @@ module.exports = function (sequelize, DataTypes) {
     
     // 2: The model options.
     let modelOptions = {
-        getterMethods: {
-            rating() {
-                // sequelize.model('Rating').findAll({
-                //     attributes: ['id', 'rating']
-                // }).then(function (data) {
-                //     const d = JSON.stringify(data);
-                //     // console.log('data: ', JSON.parse(d));
-                //     return 3.5// JSON.parse(d)
-                // });
-                // let data = await sequelize.model('Rating').findAll({
-                //     where: {
-                //         recipe_id: this.id
-                //     },
-                //     attributes: ['id', 'rating']
-                // });
-                // let d = JSON.stringify(data);
-                // d = JSON.parse(d);
-                // console.log('data here: ', d);
-                // return 3.5;
-                // console.log('Data: ', ratings);
-                // // console.log('da');
-                // // let rating = this.Association
-                // return rating.rating;
-            }
-        },
         underscored: true
     };
     
@@ -100,14 +79,3 @@ module.exports = function (sequelize, DataTypes) {
     
     return Recipe;
 };
-
-
-function GetRating(sequelize) {
-    sequelize.model('Rating').findAll({
-        attributes: ['id', 'rating']
-    }).then(function (data) {
-        const d = JSON.stringify(data);
-        // console.log('data: ', JSON.parse(d));
-        return JSON.parse(d)
-    });
-}

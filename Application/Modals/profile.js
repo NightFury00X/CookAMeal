@@ -116,13 +116,14 @@ module.exports = function (sequelize, DataTypes) {
     let ProfileModel = sequelize.define('Profile', modelDefinition, modelOptions);
     
     ProfileModel.associate = function (models) {
-        ProfileModel.hasOne(models.Address, { onDelete: 'CASCADE' });
-        ProfileModel.hasOne(models.Social, { onDelete: 'CASCADE' });
-        ProfileModel.hasOne(models.Certificate, { onDelete: 'CASCADE' });
-        ProfileModel.hasOne(models.IdentificationCard, { onDelete: 'CASCADE' });
-        ProfileModel.hasMany(models.Recipe, { onDelete: 'CASCADE' });
-        ProfileModel.hasMany(models.MediaObject, { onDelete: 'CASCADE' });
+        ProfileModel.hasOne(models.Address, {onDelete: 'CASCADE'});
+        ProfileModel.hasOne(models.Social, {onDelete: 'CASCADE'});
+        ProfileModel.hasOne(models.Certificate, {onDelete: 'CASCADE'});
+        ProfileModel.hasOne(models.IdentificationCard, {onDelete: 'CASCADE'});
+        ProfileModel.hasMany(models.Recipe, {onDelete: 'CASCADE'});
+        ProfileModel.hasMany(models.MediaObject, {onDelete: 'CASCADE'});
         ProfileModel.hasMany(models.Rating, {onDelete: 'CASCADE'});
+        ProfileModel.hasMany(models.Favorite, {onDelete: 'CASCADE'});
     };
     
     return ProfileModel;
