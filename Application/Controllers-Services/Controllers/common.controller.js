@@ -41,8 +41,17 @@ let Category = {
     GetAllRecipeByCategoryId: async (req, res, next) => {
         try {
             let category_id = req.value.params.id;
-            const result = await CommonService.Recipe.FindAllByCategoryId(category_id);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            let result = await CommonService.Recipe.FindAllByCategoryId(category_id);
+    
+            let convertedJSON = JSON.parse(JSON.stringify(result));
+            for (let outer in convertedJSON) {
+                for (let inner in convertedJSON[outer].Recipes) {
+                    let RatingDetails = await CommonService.Recipe.FindRatingByRecipeId(convertedJSON[outer].Recipes[inner].id);
+                    convertedJSON[outer].Recipes[inner].Rating = RatingDetails;
+                }
+            }
+            return responseHelper.setSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK);
+            
         } catch (error) {
             next(error);
         }
@@ -134,9 +143,17 @@ const Recipe = {
             const sub_category_id = req.value.params.subid;
             const sub_category_details = await CommonService.SubCategory.FindById(sub_category_id);
             let result = await CommonService.Recipe.FindRecipeByCatIdAndSubIds(category_id, sub_category_id);
+    
+            let convertedJSON = JSON.parse(JSON.stringify(result));
+            for (let inner in convertedJSON) {
+                console.log('recipe: ', convertedJSON[inner].id);
+                let RatingDetails = await CommonService.Recipe.FindRatingByRecipeId(convertedJSON[inner].id);
+                convertedJSON[inner].Rating = RatingDetails;
+            }              
+            
             let results = {
                 sub_category: sub_category_details,
-                recipes: result
+                recipes: convertedJSON
             };
             return responseHelper.setSuccessResponse(results, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
@@ -146,11 +163,14 @@ const Recipe = {
     GetRecipeById: async (req, res, next) => {
         try {
             const recipe_id = req.value.params.id;
-            const recipe_details = await CommonService.Recipe.FindRecipeById(recipe_id);
+            let recipe_details = await CommonService.Recipe.FindRecipeById(recipe_id);
+            const rating = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
+            
             const cook_recipes = await CommonService.Recipe.FindAllRecipeByCookId(recipe_details.id);
             const similar_recipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryId(recipe_details.Recipes[0].sub_category_id);
             const result = {
                 recipe_details: recipe_details,
+                rating: rating[0],
                 cook_recipes: cook_recipes,
                 similar_recipes: similar_recipes
             };

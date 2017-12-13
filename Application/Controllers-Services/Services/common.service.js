@@ -335,10 +335,21 @@ CommonService.prototype.Recipe = {
             throw (error);
         }
     },
+    FindRatingByRecipeId: async (recipe_id) => {
+        try {
+            return db.Rating.findAll({
+                where: {recipe_id: recipe_id},
+                attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'rating']]
+            });
+        } catch (error) {
+            throw (error);
+        }
+    },
     FindAllByCategoryId: async (category_id) => {
         try {
             return db.SubCategory.findAll({
                 attributes: ['id', 'name'],
+    
                 include: [{
                     model: db.Recipe,
                     attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time'],
