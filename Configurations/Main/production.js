@@ -76,8 +76,8 @@ exports.CONFIG = {
         port: 587,
         secure: false, // use SSL
         auth: {
-            user: 'cookamealtest@gmail.com',
-            pass: 'Admin@321'
+            user: 'curacall2015@gmail.com',
+            pass: 'Curacall_2015'
         }
     }
 };
