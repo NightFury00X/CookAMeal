@@ -330,6 +330,15 @@ CommonService.prototype.User = {
 };
 
 CommonService.prototype.Recipe = {
+    FindRecipeIsExist: async (recipe_id) => {
+        try {
+            return await db.Recipe.findById(recipe_id, {
+                attributes: ['id']
+            })
+        } catch (error) {
+            throw (error);
+        }
+    },
     FindRecipeByCatIdAndSubIds: async (category_id, sub_category_id) => {
         try {
             return await db.Recipe.findAll({
@@ -473,9 +482,19 @@ CommonService.prototype.Recipe = {
             throw (error);
         }
     },
-    MarkFavorite: async (favorite_date) => {
+    MarkFavorite: async (favorite_data, is_fav) => {
         try {
-            return await db.Favorite.create(favorite_date);
+            if (!is_fav)
+                return await db.Favorite.create(favorite_data);
+            else
+                return await db.Favorite.destroy({
+                    where: {
+                        [Op.and]: [{
+                            recipe_id: favorite_data.recipe_id,
+                            profile_id: favorite_data.profile_id
+                        }]
+                    }
+                });
         } catch (error) {
             throw (error);
         }

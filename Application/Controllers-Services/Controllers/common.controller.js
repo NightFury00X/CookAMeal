@@ -225,8 +225,21 @@ const Recipe = {
                 profile_id: profile.id,
                 recipe_id: req.body.recipe_id
             };
-            await CommonService.Recipe.MarkFavorite(favorite);
-            return responseHelper.setSuccessResponse({Message: 'Recipe marked favorite successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
+    
+            // check recipe id is exist
+            const recipe = await CommonService.Recipe.FindRecipeIsExist(favorite.recipe_id);
+    
+            if (!recipe)
+                throw new Error('Invalid Recipe.');
+    
+            //check recipe marked favorite by user
+            const is_favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(favorite.profile_id, favorite.recipe_id);
+    
+            const flag = !!is_favorite;
+    
+            await CommonService.Recipe.MarkFavorite(favorite, flag);
+            const msg = !flag ? 'Recipe marked favorite successfully.' : 'Recipe un-marked favorite successfully.';
+            return responseHelper.setSuccessResponse({Message: msg}, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
         }
