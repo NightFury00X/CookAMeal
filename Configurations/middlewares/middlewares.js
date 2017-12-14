@@ -1,4 +1,6 @@
 let jwt = require('jsonwebtoken'),
+    Sequelize = require("sequelize"),
+    Op = Sequelize.Op,
     db = require('../../Application/Modals'),
     config = require('../Main');
 
@@ -9,9 +11,11 @@ module.exports = {
                 let email = req.body.email;
                 let result = await db.ResetPassword.findOne({
                     where: {
-                        email: email,
-                        status: true,
-                        is_valid: true
+                        [Op.and]: [{
+                            email: email,
+                            status: true,
+                            is_valid: true
+                        }]
                     }
                 });
                 
@@ -19,11 +23,12 @@ module.exports = {
                 req.token_data = false;
                 req.token_data = false;
                 req.reset_password_generated = !!result;
+    
+    
+                req.token_id = result ? result.id : null;
                 
                 if (!result)
                     return next();
-                
-                req.token_id = result.id;
                 
                 let token = result.token.substring(4, result.length);
                 
