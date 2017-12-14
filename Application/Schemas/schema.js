@@ -39,6 +39,7 @@ module.exports = {
             serving_days: Joi.any(),
             ingredients: Joi.any(),
             base_allergies: Joi.any(),
+            serve: Joi.string(),
             mon: Joi.number().allow(0, 1),
             tue: Joi.number().allow(0, 1),
             wed: Joi.number().allow(0, 1),

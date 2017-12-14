@@ -30,7 +30,7 @@ exports.mssql = {
         useUTC: true,
         useIST: false
     },
-    logging: true,
+    logging: console.log,
     pool: {
         idleTimeoutMillis: 300000,
         max: 100

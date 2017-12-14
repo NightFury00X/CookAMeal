@@ -48,7 +48,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         serve: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         delivery_fee: {
             type: DataTypes.STRING,
