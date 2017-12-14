@@ -26,7 +26,6 @@ module.exports = {
     
                 req.token_id = result ? result.id : null;
     
-                console.log('Result: ', req.token_id);
                 if (!result)
                     return next();
                 

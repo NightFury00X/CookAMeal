@@ -193,7 +193,7 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
             }, {
                 where: {
                     id: {
-                        [Op.eq]: token_id
+                        [Op.eq]: token_data.token_id
                     }
                 }
             }, {transaction: trans});
