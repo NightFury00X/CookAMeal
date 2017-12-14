@@ -239,7 +239,10 @@ const Recipe = {
     
             await CommonService.Recipe.MarkFavorite(favorite, flag);
             const msg = !flag ? 'Recipe marked favorite successfully.' : 'Recipe un-marked favorite successfully.';
-            return responseHelper.setSuccessResponse({Message: msg}, res, CommonConfig.STATUS_CODE.CREATED);
+            return responseHelper.setSuccessResponse({
+                Message: msg,
+                favorite: !flag
+            }, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
         }
