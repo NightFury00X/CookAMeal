@@ -22,12 +22,12 @@ module.exports = {
                 req.token_status = false;
                 req.token_data = false;
                 req.token_data = false;
-                req.reset_password_generated = !!result;   
-    
-                req.token_id = result ? result.id : null;
-    
+                req.reset_password_generated = !!result;
+                
                 if (!result)
                     return next();
+    
+                req.token_id = result.id;
                 
                 let token = result.token.substring(4, result.length);
                 
