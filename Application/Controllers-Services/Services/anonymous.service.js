@@ -226,6 +226,8 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
             key: userDetails.random_key
         });
     
+        console.log('mail Info: ', isSent);
+        
         if (!isSent) {
             await trans.rollback();
             return null;
