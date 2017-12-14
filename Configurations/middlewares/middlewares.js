@@ -22,8 +22,7 @@ module.exports = {
                 req.token_status = false;
                 req.token_data = false;
                 req.token_data = false;
-                req.reset_password_generated = !!result;
-    
+                req.reset_password_generated = !!result;   
     
                 req.token_id = result ? result.id : null;
                 
