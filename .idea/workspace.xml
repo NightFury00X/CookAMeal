@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/cook.controller.js" afterPath="$PROJECT_DIR$/Application/Controllers-Services/Controllers/cook.controller.js" />
-      <change beforePath="$PROJECT_DIR$/Routes/Common/common-routes.js" afterPath="$PROJECT_DIR$/Routes/Common/common-routes.js" />
+      <change beforePath="$PROJECT_DIR$/Routes/Cook/cook.routes.js" afterPath="$PROJECT_DIR$/Routes/Cook/cook.routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -80,17 +78,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Routes/Common/common-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="54" column="35" lean-forward="false" selection-start-line="54" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
+            <state relative-caret-position="602">
+              <caret line="52" column="29" lean-forward="true" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="149">
@@ -113,8 +111,8 @@
       <file leaf-file-name="cook.routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Routes/Cook/cook.routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="32" column="30" lean-forward="false" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
+            <state relative-caret-position="164">
+              <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -226,10 +224,10 @@
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Services/anonymous.service.js" />
         <option value="$PROJECT_DIR$/Configurations/Main/development.js" />
         <option value="$PROJECT_DIR$/Configurations/Main/production.js" />
-        <option value="$PROJECT_DIR$/Routes/Cook/cook.routes.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/cook.controller.js" />
         <option value="$PROJECT_DIR$/Application/Controllers-Services/Controllers/common.controller.js" />
         <option value="$PROJECT_DIR$/Routes/Common/common-routes.js" />
+        <option value="$PROJECT_DIR$/Routes/Cook/cook.routes.js" />
       </list>
     </option>
   </component>
@@ -473,14 +471,7 @@
       <workItem from="1513143491592" duration="6619000" />
       <workItem from="1513150356632" duration="5722000" />
       <workItem from="1513228744416" duration="1277000" />
-      <workItem from="1513230187014" duration="10059000" />
-    </task>
-    <task id="LOCAL-00217" summary="Add following functionality&#10;1: Add category.&#10;2: Add Sub-category.&#10;3: Add Allergy.&#10;4: Get all categories.&#10;6: Get all sub-categories.&#10;7: Get all allergies.&#10;8: Add Recipe.">
-      <created>1512557071078</created>
-      <option name="number" value="00217" />
-      <option name="presentableId" value="LOCAL-00217" />
-      <option name="project" value="LOCAL" />
-      <updated>1512557071078</updated>
+      <workItem from="1513230187014" duration="10167000" />
     </task>
     <task id="LOCAL-00218" summary="Add following functionality&#10;1: Add category.&#10;2: Add Sub-category.&#10;3: Add Allergy.&#10;4: Get all categories.&#10;6: Get all sub-categories.&#10;7: Get all allergies.&#10;8: Add Recipe.">
       <created>1512561383084</created>
@@ -818,11 +809,18 @@
       <option name="project" value="LOCAL" />
       <updated>1513244191602</updated>
     </task>
-    <option name="localTasksCounter" value="266" />
+    <task id="LOCAL-00266" summary="Fixed rating service.&#10;Fixed new API mark recipe as favorite and get all favorite recipes.">
+      <created>1513244678234</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1513244678234</updated>
+    </task>
+    <option name="localTasksCounter" value="267" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="635248000" />
+    <option name="totallyTimeSpent" value="635356000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1336,26 +1334,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Routes/Cook/cook.routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="32" column="30" lean-forward="false" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Application/Controllers-Services/Controllers/cook.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="858">
           <caret line="37" column="5" lean-forward="false" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Routes/Common/common-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="54" column="35" lean-forward="false" selection-start-line="54" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -1375,6 +1357,22 @@
             <element signature="e#8621#8938#0" expanded="false" />
             <element signature="e#8984#9564#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Routes/Cook/cook.routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Routes/Common/common-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="52" column="29" lean-forward="true" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
