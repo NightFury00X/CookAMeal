@@ -116,6 +116,9 @@ let Anonymous = {
                 let token = await generateTokenForResetPassword(userModel.userInfo, unique_key, false);
     
                 //add data to reset password
+                console.log('=======================================');
+                console.log(req.token_id);
+                console.log('=======================================');
                 let result = await AnonymousService.AddResetPasswordDetails({
                     email: userModel.user_id,
                     temp_password: temp_password,
