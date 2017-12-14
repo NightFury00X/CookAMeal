@@ -4,6 +4,7 @@ const router = require('express').Router(),
     CommonController = require('../../Application/Controllers-Services/Controllers/common.controller'),
     {ValidateParams, ValidateBody} = require('../../Configurations/middlewares/validation'),
     {ParamSchemas, BodySchemas} = require('../../Application/Schemas/schema');
+const RequestMethods = require("../../Configurations/middlewares/request-checker");
 
 //1: Get All Category list
 router.get('/category',
@@ -45,5 +46,12 @@ router.get('/recipe/:id',
 router.get('/cook-profile/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.User.GetCookprofile);
+
+router.post('/favorite',
+    RequestMethods.CheckContentType.ApplicationJsonData,
+    CommonController.Recipe.MarkFavorite);
+
+router.get('/favorite',
+    CommonController.Recipe.GetMarkedFavoriteList);
 
 module.exports = router;

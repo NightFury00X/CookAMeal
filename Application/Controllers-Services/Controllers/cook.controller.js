@@ -35,32 +35,6 @@ let Recipe = {
         } catch (error) {
             next(error);
         }
-    },
-    MarkFavorite: async (req, res, next) => {
-        try {
-            // Get profile ID
-            const user_id = req.user.id;
-            const profile = await CommonService.User.GetProfileIdByUserTypeId(user_id);
-            const favorite = {
-                profile_id: profile.id,
-                recipe_id: req.body.recipe_id
-            };
-            await CommonService.Recipe.MarkFavorite(favorite);
-            return responseHelper.setSuccessResponse({Message: 'Recipe marked favorite successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
-        } catch (error) {
-            next(error);
-        }
-    },
-    GetMarkedFavoriteList: async (req, res, next) => {
-        try {
-            // Get profile ID
-            const user_id = req.user.id;
-            const profile = await CommonService.User.GetProfileIdByUserTypeId(user_id);
-            const result = await CommonService.Recipe.GetFavoriteListByProfileId(profile.id);
-            return responseHelper.setSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.OK);
-        } catch (error) {
-            next(error);
-        }
     }
 };
 
