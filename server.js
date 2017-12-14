@@ -201,7 +201,10 @@ if (app.get('env') === 'development') {
             {
                 success: false,
                 data: null,
-                error: err.message
+                error: err.message,
+                error_stack: {
+                    error: err
+                }
             }
         );
         next();
