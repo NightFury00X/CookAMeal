@@ -1,4 +1,4 @@
-let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
+const {ResponseHelpers} = require('../../../Configurations/Helpers/helper'),
     CommonConfig = require('../../../Configurations/Helpers/common-config'),
     CommonService = require("../Services/common.service");
 
@@ -22,7 +22,7 @@ let Auth = {
                     message: CommonConfig.ERRORS.INTERNAL_SERVER_ERROR,
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false);
-            return responseHelper.setSuccessResponse({message: CommonConfig.SUCCESS.LOGGED_OUT}, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse({message: CommonConfig.SUCCESS.LOGGED_OUT}, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -48,7 +48,7 @@ let Auth = {
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false);
             let TokenData = await CommonService.GenerateTokenByUserTypeId(req.user.user_type_id);
-            return responseHelper.setSuccessResponse({
+            return ResponseHelpers.SetSuccessResponse({
                 new_token: TokenData,
                 message: CommonConfig.SUCCESS.PASSWORD_CHANGED
             }, res, CommonConfig.STATUS_CODE.OK);

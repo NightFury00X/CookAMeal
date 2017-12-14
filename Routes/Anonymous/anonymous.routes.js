@@ -2,7 +2,11 @@
 
 const router = require('express').Router(),
     AnonymousController = require('../../Application/Controllers-Services/Controllers/anonymous.controller'),
-    RequestMethods = require('../../Configurations/middlewares/request-checker');
+    {
+        RequestMethodsMiddlewares,
+        TokenMiddlewares,
+        ResetPasswordMiddlewares
+    } = require('../../Configurations/middlewares/middlewares');
 
 const passport = require('passport'),
     requireLogin = passport.authenticate('local', {session: false});
@@ -11,35 +15,33 @@ const passport = require('passport'),
 require('../../Configurations/Passport/passport-strategy');
 const FileUploader = require("../../Configurations/Helpers/file-upload-multer");
 const {ValidateBody} = require('../../Configurations/middlewares/validation'),
-    {BodySchemas} = require('../../Application/Schemas/schema'),
-    {Token} = require('../../Configurations/middlewares/middlewares');
+    {BodySchemas} = require('../../Application/Schemas/schema');
 
-const {ResetPassword} = require('../../Configurations/middlewares/middlewares');
 //1: Facebook User SignIn
 router.post('/fbsign',
-    RequestMethods.CheckContentType.ApplicationJsonData,
+    RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.FbLogin),
     AnonymousController.Anonymous.FbSignIn);
 
 //2: SignUp
 router.post('/signup',
-    RequestMethods.CheckContentType.ApplicationFormData,
+    RequestMethodsMiddlewares.ApplicationFormData,
     FileUploader.uploadFile,
     AnonymousController.Anonymous.SignUp);
 
 //3: Normal User SignIn
 router.post('/authenticate',
-    RequestMethods.CheckContentType.ApplicationJsonData,
+    RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.Login),
     requireLogin,
-    Token.VerifyResetPasswordToken,
+    TokenMiddlewares.VerifyResetPasswordToken,
     AnonymousController.Anonymous.AuthenticateUser);
 
 //4: Reset Password
 router.post('/resetpass',
-    RequestMethods.CheckContentType.ApplicationJsonData,
+    RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.ResetPassword),
-    ResetPassword.CheckPasswordIsGenerated,
+    ResetPasswordMiddlewares.CheckPasswordIsGenerated,
     AnonymousController.Anonymous.ResetPassword);
 
 module.exports = router;

@@ -2,20 +2,22 @@
 
 const router = require('express').Router();
 const AuthController = require('../../Application/Controllers-Services/Controllers/auth-controller');
-const RequestMethods = require('../../Configurations/middlewares/request-checker');
-const CommonMiddleware = require("../../Configurations/middlewares/reset-password-check");
 const {ValidateBody} = require("../../Configurations/middlewares/validation"),
-    {BodySchemas} = require('../../Application/Schemas/schema');
+    {BodySchemas} = require('../../Application/Schemas/schema'),
+    {
+        RequestMethodsMiddlewares,
+    } = require('../../Configurations/middlewares/middlewares');
 
 //1: Logout
 router.post('/logout',
-    RequestMethods.CheckContentType.ApplicationJsonData,
+    RequestMethodsMiddlewares.ApplicationJsonData,
     AuthController.Auth.LogOutUser);
 
 //5: Change Password
 router.put('/changepassword',
-    RequestMethods.CheckContentType.ApplicationJsonData,
+    RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.ChangePassword),
+    
     AuthController.Auth.ChangePassword);
 
 module.exports = router;

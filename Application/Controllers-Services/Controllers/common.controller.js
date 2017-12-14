@@ -1,4 +1,4 @@
-let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
+const {ResponseHelpers} = require('../../../Configurations/Helpers/helper'),
     CommonService = require('../Services/common.service'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
@@ -7,16 +7,7 @@ let User = {
         try {
             const profile_id = req.value.params.id;
             const result = await CommonService.User.GetCookProfileDetailsById(profile_id);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
-        } catch (error) {
-            next(error);
-        }
-    },
-    GetprofileDetails: async (req, res, next) => {
-        try {
-            let userId = req.user.id;
-            let result = await CommonService.User.GetFullProfile(userId);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -27,7 +18,7 @@ let Category = {
     GetAll: async (req, res, next) => {
         try {
             let result = await CommonService.GetCategories();
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -42,7 +33,7 @@ let Category = {
             
             let catId = req.params.id;
             let result = await CommonService.GetCategoryById(catId);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -56,19 +47,23 @@ let Category = {
             
             let convertedJSON = JSON.parse(JSON.stringify(result));
             for (const outer in convertedJSON) {
-                for (const inner in convertedJSON[outer].Recipes) {
-                    const recipe_id = convertedJSON[outer].Recipes[inner].id;
-    
-                    // Get racipe ratings
-                    const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
-    
-                    // Check recipe is marked favorite or not
-                    const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
-                    convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
-                    convertedJSON[outer].Recipes[inner].Favorite = !favorite ? false : favorite.is_favorite;
+                if (convertedJSON.hasOwnProperty(outer)) {
+                    for (const inner in convertedJSON[outer].Recipes) {
+                        if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
+                            const recipe_id = convertedJSON[outer].Recipes[inner].id;
+                
+                            // Get racipe ratings
+                            const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
+                
+                            // Check recipe is marked favorite or not
+                            const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
+                            convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
+                            convertedJSON[outer].Recipes[inner].Favorite = !favorite ? false : favorite.is_favorite;
+                        }
+                    }
                 }
             }
-            return responseHelper.setSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK);
             
         } catch (error) {
             next(error);
@@ -80,7 +75,7 @@ let SubCategory = {
     GetAll: async (req, res, next) => {
         try {
             let result = await CommonService.SubCategory.GettAll();
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -95,7 +90,7 @@ let SubCategory = {
             
             let catId = req.params.id;
             let result = await CommonService.GetCategoryById(catId);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -106,7 +101,7 @@ let Allergy = {
     GetAll: async (req, res, next) => {
         try {
             let result = await CommonService.Allergy.GettAll();
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -121,7 +116,7 @@ let Allergy = {
             
             let catId = req.params.id;
             let result = await CommonService.GetCategoryById(catId);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -132,7 +127,7 @@ let Units = {
     GetAll: async (req, res, next) => {
         try {
             let result = await CommonService.Units.GettAll();
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -147,7 +142,7 @@ let Units = {
             
             let catId = req.params.id;
             let result = await CommonService.GetCategoryById(catId);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -164,22 +159,24 @@ const Recipe = {
             
             let convertedJSON = JSON.parse(JSON.stringify(result));
             for (const inner in convertedJSON) {
-                const recipe_id = convertedJSON[inner].id;
-                const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id);
-                const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
-    
-                // Check recipe is marked favorite or not
-                const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
-    
-                convertedJSON[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
-                convertedJSON[inner].Favorite = !favorite ? false : favorite.is_favorite;
+                if (convertedJSON.hasOwnProperty(inner)) {
+                    const recipe_id = convertedJSON[inner].id;
+                    const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id);
+                    const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
+        
+                    // Check recipe is marked favorite or not
+                    const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(profile.id, recipe_id);
+        
+                    convertedJSON[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
+                    convertedJSON[inner].Favorite = !favorite ? false : favorite.is_favorite;
+                }
             }
             
             let results = {
                 sub_category: sub_category_details,
                 recipes: convertedJSON
             };
-            return responseHelper.setSuccessResponse(results, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(results, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -202,7 +199,7 @@ const Recipe = {
                 cook_recipes: cook_recipes,
                 similar_recipes: similar_recipes
             };
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -211,7 +208,7 @@ const Recipe = {
         try {
             let category_id = req.value.params.id;
             const result = await CommonService.Recipe.FindAllByCategoryId(category_id);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -230,8 +227,8 @@ const Recipe = {
             const recipe = await CommonService.Recipe.FindRecipeIsExist(favorite.recipe_id);
     
             if (!recipe)
-                throw new Error('Invalid Recipe.');
-    
+                next('Invalid Recipe.');
+            
             //check recipe marked favorite by user
             const is_favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndProfileId(favorite.profile_id, favorite.recipe_id);
     
@@ -239,7 +236,7 @@ const Recipe = {
     
             await CommonService.Recipe.MarkFavorite(favorite, flag);
             const msg = !flag ? 'Recipe marked favorite successfully.' : 'Recipe un-marked favorite successfully.';
-            return responseHelper.setSuccessResponse({
+            return ResponseHelpers.SetSuccessResponse({
                 Message: msg,
                 favorite: !flag
             }, res, CommonConfig.STATUS_CODE.CREATED);
@@ -253,7 +250,7 @@ const Recipe = {
             const user_id = req.user.id;
             const profile = await CommonService.User.GetProfileIdByUserTypeId(user_id);
             const result = await CommonService.Recipe.GetFavoriteListByProfileId(profile.id);
-            return responseHelper.setSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

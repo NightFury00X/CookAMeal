@@ -2,7 +2,7 @@ const randomString = require('random-string'),
     Sequelize = require("sequelize"),
     Op = Sequelize.Op,
     db = require('../../Modals'),
-    {generateToken} = require('../../../Configurations/Helpers/authentication'),
+    {AuthenticationHelpers} = require('../../../Configurations/Helpers/helper'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 CommonService = function () {
@@ -83,7 +83,7 @@ CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
 CommonService.prototype.GenerateToken = async (tokenData, userData) => {
     try {
         return {
-            token: generateToken(tokenData, false, true),
+            token: AuthenticationHelpers.GenerateToken(tokenData, false, true),
             userDetails: userData
         };
     } catch (error) {
@@ -232,7 +232,7 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
         });
         if (!userType) return null;
         return {
-            token: generateToken(userType.userInfo, false, false),
+            token: AuthenticationHelpers.GenerateToken(userType.userInfo, false, false),
             user: {
                 id: userType.id,
                 email: userType.Profile.email,
@@ -281,52 +281,7 @@ CommonService.prototype.User = {
         } catch (error) {
             throw (error);
         }
-    },
-    GetFullProfile:
-        async (user_id) => {
-            try {
-                return await db.SubCategory.findAll({
-                    attributes: ['id', 'name'],
-                    include: [{
-                        model: db.Recipe,
-                        where: {
-                            profile_id: 'e4d2e9b2-6673-4bec-aa39-85d34add646a'
-                        }
-                    }]
-                });
-                // return await db.UserType.findById(user_id,
-                //     {
-                //         attributes: ['id', 'user_type', 'user_role'],
-                //         include: [{
-                //             attributes: ['id', 'firstname', 'lastname', 'phone', 'gender', 'description', 'diet_preference', 'allergies', 'card_type_bank_details', 'driving_distance'],
-                //             model: db.Profile,
-                //             include: [{
-                //                 attributes: ['id', 'street', 'city', 'state', 'zip_code', 'country'],
-                //                 model: db.Address
-                //             }, {
-                //                 attributes: ['id', 'facebook', 'linkedin'],
-                //                 model: db.Social
-                //             }, {
-                //                 attributes: ['id', 'imageurl'],
-                //                 model: db.MediaObject
-                //             }, {
-                //                 attributes: ['id'],
-                //                 model: db.IdentificationCard,
-                //                 include: [{model: db.MediaObject}]
-                //             }, {
-                //                 attributes: ['id'],
-                //                 model: db.Certificate,
-                //                 include: [{model: db.MediaObject}]
-                //             }, {
-                //                 attributes: ['id', 'dish_name'],
-                //                 model: db.Recipe
-                //             }]
-                //         }]
-                //     });
-            } catch (error) {
-                throw (error);
-            }
-        }
+    }
 };
 
 CommonService.prototype.Recipe = {

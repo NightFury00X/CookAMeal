@@ -2,15 +2,12 @@
 
 const router = require('express').Router();
 const CookController = require('../../Application/Controllers-Services/Controllers/cook.controller');
-const RequestMethods = require("../../Configurations/middlewares/request-checker");
 const FileUploader = require('../../Configurations/Helpers/file-upload-multer');
-const CommonController = require("../../Application/Controllers-Services/Controllers/common.controller");
 const {ValidateParams, ValidateBody} = require('../../Configurations/middlewares/validation'),
-    {ParamSchemas, BodySchemas} = require('../../Application/Schemas/schema');
-
-//1: Get All Category list
-router.get('/user',
-    CommonController.User.GetprofileDetails);
+    {ParamSchemas, BodySchemas} = require('../../Application/Schemas/schema'),
+    {
+        RequestMethodsMiddlewares,
+    } = require('../../Configurations/middlewares/middlewares');
 
 //2: Get All Recipe list By Sub Category
 router.get('/GetAllRecipeBySubCategory',
@@ -23,10 +20,9 @@ router.get('/GetAllRecipeBySubCategory/:id',
 
 //4: Add Recipe
 router.post('/recipe',
-    RequestMethods.CheckContentType.ApplicationFormData,
+    RequestMethodsMiddlewares.ApplicationFormData,
     FileUploader.uploadDataFiles,
     ValidateBody(BodySchemas.Recipe),
     CookController.Recipe.Add);
-
 
 module.exports = router;

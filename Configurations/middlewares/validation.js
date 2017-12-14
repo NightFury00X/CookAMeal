@@ -1,5 +1,5 @@
-let Joi = require('joi');
-const CommonConfig = require("../Helpers/common-config");
+const Joi = require('joi'),
+    CommonConfig = require("../Helpers/common-config");
 
 const options = {
     language: {
@@ -20,7 +20,7 @@ module.exports = {
                 } else {
                     if (!req.value)
                         req.value = {};
-
+    
                     if (!req.value['params'])
                         req.value['params'] = {};
     
@@ -55,7 +55,7 @@ module.exports = {
                         req.value = {};
                     if (!req.value['body'])
                         req.value['body'] = {};
-
+    
                     req.value['body'] = result.value;
                     next();
                 }

@@ -2,9 +2,8 @@ const Sequelize = require("sequelize"),
     Op = Sequelize.Op,
     db = require('../../Modals'),
     CommonService = require('./common.service'),
-    {generateToken} = require('../../../Configurations/Helpers/authentication'),
-    CommonConfig = require('../../../Configurations/Helpers/common-config'),
-    Email = require('../../../Configurations/Helpers/send-email');
+    {AuthenticationHelpers, MailingHelpers} = require('../../../Configurations/Helpers/helper'),
+    CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 AnonymousService = function () {
 };
@@ -99,7 +98,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         await trans.commit();
     
         return {
-            token: generateToken(userType.userInfo, null, true),
+            token: AuthenticationHelpers.GenerateToken(userType.userInfo, null, true),
             user: {
                 id: userType.id,
                 email: userProfileData.email,
@@ -167,7 +166,7 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
             return null;
     
         return {
-            token: !userDetails.token_status ? generateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
+            token: !userDetails.token_status ? AuthenticationHelpers.GenerateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
             user: {
                 id: userTypeDetails.id,
                 email: userTypeDetails.Profile.email,
@@ -220,7 +219,7 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
     
         console.log('Sending mail ... Please wait......');
     
-        let isSent = await Email.ToResetPassword({
+        let isSent = await MailingHelpers.ToResetPassword({
             fullname: fullname,
             email: email,
             key: userDetails.random_key
@@ -274,7 +273,7 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
     
         console.log('Sending mail ... Please wait......');
     
-        return await Email.ToResetPassword({
+        return await MailingHelpers.ToResetPassword({
             fullname: tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname,
             email: email,
             key: tokenData.ResetPasswords[0].random_key

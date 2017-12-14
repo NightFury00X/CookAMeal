@@ -1,8 +1,7 @@
-let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
-    AnonymousService = require('../Services/anonymous.service'),
-    {generateTokenForResetPassword} = require('../../../Configurations/Helpers/authentication'),
+const AnonymousService = require('../Services/anonymous.service'),
     CommonService = require('../Services/common.service'),
-    CommonConfig = require('../../../Configurations/Helpers/common-config');
+    CommonConfig = require('../../../Configurations/Helpers/common-config'),
+    {ResponseHelpers, AuthenticationHelpers} = require('../../../Configurations/Helpers/helper');
 
 // The authentication controller.
 let Anonymous = {
@@ -36,7 +35,7 @@ let Anonymous = {
     
             let result = await CommonService.GenerateToken(userDetails.userInfo, userData);
             result.type = true;
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -53,7 +52,7 @@ let Anonymous = {
     
             let result = await AnonymousService.SignUp(registrationData, req.files);
             result.type = true;
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             next(error);
         }
@@ -64,18 +63,18 @@ let Anonymous = {
                 await CommonService.InvalidateResetPasswordTokenData(req.user.id);
                 return next({message: CommonConfig.ERRORS.TOKEN_EXPIRED}, false);
             }
-        
+    
             let userDetails = {
                 user_id: !req.token_status ? req.user.id : false,
                 user_type_id: req.user.user_type_id,
                 token_id: req.token_status ? req.user.id : false,
                 token_status: !!req.token_status
             };
-        
+    
             let result = await AnonymousService.Authenticate(userDetails);
-        
+    
             result.type = !req.user.random_key;
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
@@ -92,7 +91,7 @@ let Anonymous = {
     
                 let unique_key = await CommonService.Keys.RandomKeys.GenerateUnique16DigitKey();
     
-                let token = await generateTokenForResetPassword(userModel.userInfo, unique_key, false);
+                let token = await AuthenticationHelpers.GenerateTokenForResetPassword(userModel.userInfo, unique_key, false);
                 
                 //add data to reset password
                 let data = await AnonymousService.AddResetPasswordDetails({
@@ -113,8 +112,8 @@ let Anonymous = {
     
                 let unique_key = await CommonService.Keys.RandomKeys.GenerateUnique16DigitKey();
     
-                let token = await generateTokenForResetPassword(userModel.userInfo, unique_key, false);
-    
+                let token = await AuthenticationHelpers.GenerateTokenForResetPassword(userModel.userInfo, unique_key, false);
+                
                 //add data to reset password
                 let result = await AnonymousService.AddResetPasswordDetails({
                     email: userModel.user_id,
@@ -140,8 +139,8 @@ let Anonymous = {
                 }, false);
     
             console.log('We have sent an email to your registered email address. Thank you.');
-            
-            return responseHelper.setSuccessResponse({
+    
+            return ResponseHelpers.SetSuccessResponse({
                 email: email,
                 message: CommonConfig.SUCCESS.EMAIL_SENT
             }, res, CommonConfig.STATUS_CODE.OK);
@@ -159,7 +158,7 @@ let Anonymous = {
             };
     
             await CommonService.ChangePassword(userDetails);
-            return responseHelper.setSuccessResponse(CommonConfig.SUCCESS.PASSWORD_CHANGED, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(CommonConfig.SUCCESS.PASSWORD_CHANGED, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

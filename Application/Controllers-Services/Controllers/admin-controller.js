@@ -1,6 +1,6 @@
-let responseHelper = require('../../../Configurations/Helpers/ResponseHandler'),
-    AdminService = require('../Services/admin.service'),
-    CommonConfig = require('../../../Configurations/Helpers/common-config');
+const AdminService = require('../Services/admin.service'),
+    CommonConfig = require('../../../Configurations/Helpers/common-config'),
+    {ResponseHelpers} = require('../../../Configurations/Helpers/helper');
 
 let Category = {
     Add: async (req, res, next) => {
@@ -15,7 +15,7 @@ let Category = {
                 name: req.body.name
             };
             let result = await AdminService.Category.Add(req.user.id, categoryName, req.files);
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         }
         catch (error) {
             next(error);
@@ -30,7 +30,7 @@ let SubCategory = {
             subCategory.user_type_id = req.user.id;
             let result = await AdminService.SubCategory.Add(subCategory);
             if (result)
-                return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+                return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             return next(error);
         }
@@ -44,7 +44,7 @@ let Allergy = {
             allergy.user_type_id = req.user.id;
             let result = await AdminService.Allergy.Add(allergy);
             if (result)
-                return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+                return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             return next(error);
         }
@@ -58,7 +58,7 @@ let Units = {
             unit.user_type_id = req.user.id;
             let result = await AdminService.Units.Add(unit);
             if (result)
-                return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
+                return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED);
         } catch (error) {
             return next(error);
         }

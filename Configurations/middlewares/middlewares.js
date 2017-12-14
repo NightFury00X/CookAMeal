@@ -1,11 +1,88 @@
-let jwt = require('jsonwebtoken'),
+const jwt = require('jsonwebtoken'),
     Sequelize = require("sequelize"),
     Op = Sequelize.Op,
     db = require('../../Application/Modals'),
-    config = require('../Main');
+    config = require('../Main'),
+    CommonConfig = require("../Helpers/common-config");
 
 module.exports = {
-    ResetPassword: {
+    CommonMiddlewares: {
+        CheckAuthorizationHeader: async (req, res, next) => {
+            let content_type = req.get('Authorization');
+            if (!content_type) {
+                return next({
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST,
+                    message: CommonConfig.ERRORS.HEADER_NOT_FOUND
+                }, false);
+            }
+            req.content_type = content_type;
+            next(null, req);
+        }
+    },
+    RequestMethodsMiddlewares: {
+        ApplicationJsonData: async (req, res, next) => {
+            let content_type = req.get('Content-Type');
+            if (!content_type || content_type.split(';')[0] !== CommonConfig.CONTENT_TYPE.JSON) {
+                return next({
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST,
+                    message: CommonConfig.ERRORS.CONTENT_TYPE_JSON
+                }, false);
+            }
+            req.content_type = content_type;
+            next();
+        },
+        ApplicationFormData: async (req, res, next) => {
+            let content_type = req.get('Content-Type');
+            if (!content_type || content_type.split(';')[0] !== CommonConfig.CONTENT_TYPE.MULTIPART) {
+                return next({
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST,
+                    message: CommonConfig.ERRORS.CONTENT_TYPE_MULTIPART
+                }, false);
+            }
+            req.content_type = content_type;
+            next();
+        }
+    },
+    AuthorizationMiddlewares: {
+        AccessLevel: (access_level) => {
+            return (req, res, next) => {
+                if (!(access_level & req.user.user_role)) {
+                    let response = {
+                        message: CommonConfig.ERRORS.NON_AUTHORIZED,
+                        status: CommonConfig.STATUS_CODE.FORBIDDEN
+                    };
+                    return next(response, false);
+                }
+                next();
+            }
+        }
+    },
+    TokenValidatorsMiddlewares: {
+        CheckUserTokenIsValid: async (req, res, next) => {
+            const userTypeId = req.user.unique_key ? req.user.user_type_id : req.user.id;
+            const isExists = await db.BlackListedToken.findOne({
+                where: {
+                    [Op.and]: [{
+                        token: req.get('Authorization'),
+                        user_type_id: userTypeId
+                    }]
+                }
+            });
+            
+            const response = {
+                message: CommonConfig.ERRORS.NON_AUTHORIZED,
+                status: CommonConfig.STATUS_CODE.FORBIDDEN
+            };
+            
+            // If  record exists, handle it
+            if (isExists)
+                return next(response, false);
+            
+            //Otherwise, return ok
+            return next();
+        }
+    },
+    ResetPasswordMiddlewares: {
         CheckPasswordIsGenerated: async (req, res, next) => {
             try {
                 let email = req.body.email;
@@ -54,7 +131,7 @@ module.exports = {
             }
         }
     },
-    Token: {
+    TokenMiddlewares: {
         VerifyResetPasswordToken: async (req, res, next) => {
             try {
                 // If normal user login
