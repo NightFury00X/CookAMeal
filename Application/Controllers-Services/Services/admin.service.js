@@ -1,4 +1,4 @@
-let db = require('../../Modals'),
+const db = require('../../Modals'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
 
 AdminService = function () {

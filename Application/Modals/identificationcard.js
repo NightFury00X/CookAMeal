@@ -1,6 +1,7 @@
 // The Social Model.
 'use strict';
 
+const CommonConfig = require("../../Configurations/Helpers/common-config");
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
@@ -13,6 +14,9 @@ module.exports = function (sequelize, DataTypes) {
         type: {
             type: DataTypes.STRING,
             allowNull: false,
+            set(value) {
+                this.setDataValue('type', CommonConfig.toTitleCase(value));
+            }
         },
         type_id: {
             type: DataTypes.STRING,

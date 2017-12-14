@@ -1,6 +1,8 @@
-let db = require('../../Modals'),
-    CommonService = require('./common.service');
-const CommonConfig = require("../../../Configurations/Helpers/common-config");
+const Sequelize = require("sequelize"),
+    Op = Sequelize.Op,
+    db = require('../../Modals'),
+    CommonService = require('./common.service'),
+    CommonConfig = require("../../../Configurations/Helpers/common-config");
 
 CookService = function () {
 };
@@ -28,23 +30,27 @@ CookService.prototype.Recipe = {
     
             //add allergies
             for (const index in allergies) {
-                allergies[index].recipe_id = recipeData.id;
-                let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans});
-                if (!allergydata) {
-                    await trans.rollback();
-                    return null;
+                if (allergies.hasOwnProperty(index)) {
+                    allergies[index].recipe_id = recipeData.id;
+                    let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans});
+                    if (!allergydata) {
+                        await trans.rollback();
+                        return null;
+                    }
                 }
             }
-    
+            
             //store recipe image
             for (let index in files.recipe) {
-                files.recipe[index].recipe_id = recipeData.id;
-                files.recipe[index].object_type = CommonConfig.OBJECT_TYPE.RECIPE;
-                files.recipe[index].imageurl = CommonConfig.FILE_LOCATIONS.RECIPE + files.recipe[index].filename;
-                const recipeImage = await db.MediaObject.create(files.recipe[index], {transaction: trans});
-                if (!recipeImage) {
-                    await trans.rollback();
-                    return null;
+                if (files.recipe.hasOwnProperty(index)) {
+                    files.recipe[index].recipe_id = recipeData.id;
+                    files.recipe[index].object_type = CommonConfig.OBJECT_TYPE.RECIPE;
+                    files.recipe[index].imageurl = CommonConfig.FILE_LOCATIONS.RECIPE + files.recipe[index].filename;
+                    const recipeImage = await db.MediaObject.create(files.recipe[index], {transaction: trans});
+                    if (!recipeImage) {
+                        await trans.rollback();
+                        return null;
+                    }
                 }
             }
             if (serving_days) {
@@ -56,11 +62,13 @@ CookService.prototype.Recipe = {
                 }
             }
             for (const index in ingredients) {
-                ingredients[index].recipe_id = recipeData.id;
-                let ingredientData = await db.Ingredient.create(ingredients[index], {transaction: trans});
-                if (!ingredientData) {
-                    await trans.rollback();
-                    return null;
+                if (ingredients.hasOwnProperty(index)) {
+                    ingredients[index].recipe_id = recipeData.id;
+                    let ingredientData = await db.Ingredient.create(ingredients[index], {transaction: trans});
+                    if (!ingredientData) {
+                        await trans.rollback();
+                        return null;
+                    }
                 }
             }
             await trans.commit();
@@ -78,7 +86,9 @@ CookService.prototype.Recipe = {
                     attributes: ['id', 'dish_name', 'cost_per_serving', 'order_by_date_time'],
                     model: db.Recipe,
                     where: {
-                        profile_id: profileId
+                        profile_id: {
+                            [Op.eq]: profileId
+                        }
                     },
                     include: [{
                         attributes: ['id'],
@@ -100,13 +110,19 @@ CookService.prototype.Recipe = {
     GetAllRecipeBySubCategoryById: async (profileId, Id) => {
         try {
             return await db.SubCategory.findAll({
-                where: {id: Id},
+                where: {
+                    id: {
+                        [Op.eq]: Id
+                    }
+                },
                 attributes: ['id', 'name'],
                 include: [{
                     attributes: ['id', 'dish_name', 'cost_per_serving', 'order_by_date_time'],
                     model: db.Recipe,
                     where: {
-                        profile_id: profileId
+                        profile_id: {
+                            [Op.eq]: profileId
+                        }
                     },
                     include: [{
                         model: db.MediaObject

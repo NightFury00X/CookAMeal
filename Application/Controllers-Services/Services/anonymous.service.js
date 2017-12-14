@@ -1,4 +1,6 @@
-let db = require('../../Modals'),
+const Sequelize = require("sequelize"),
+    Op = Sequelize.Op,
+    db = require('../../Modals'),
     CommonService = require('./common.service'),
     {generateToken} = require('../../../Configurations/Helpers/authentication'),
     CommonConfig = require('../../../Configurations/Helpers/common-config'),
@@ -13,23 +15,23 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         let userData = registrationData.user;
         if (userData.allergies)
             userData.allergies = JSON.stringify(userData.allergies);
-
+    
         let type = CommonConfig.USER_TYPE.NORMAL_USER;
-
+    
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbid) {
             let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid);
             if (!fb)
                 type = CommonConfig.USER_TYPE.FACEBOOK_USER;
         }
-
+    
         // Add user type
         let userType = await db.UserType.create({
             user_id: type === CommonConfig.USER_TYPE.NORMAL_USER ? userData.email : registrationData.facebook.fbid,
             user_type: type,
             user_role: userData.user_role
         }, {transaction: trans});
-
+    
         //add user login data
         if (type === CommonConfig.USER_TYPE.NORMAL_USER) {
             await db.User.create({
@@ -38,26 +40,26 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 password: userData.password
             }, {transaction: trans});
         }
-
+    
         //add user profile data
         let tempData = userData;
         delete tempData.password;
         tempData.user_type_id = userType.id;
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
-
+    
         //Adding user address and social
         registrationData.address.profile_id = userProfileData.id;
         registrationData.social.profile_id = userProfileData.id;
         await db.Address.create(registrationData.address, {transaction: trans});
         await db.Social.create(registrationData.social, {transaction: trans});
-
-
+    
+    
         //upload profile image
         let ProfileMediaObject;
         // let IdenitificateMediaObject;
         // let certificateMediaObject;
         let identificationCardData;
-
+    
         if (files) {
             if (files.profile) {
                 let profileImage = files.profile[0];
@@ -71,16 +73,16 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 if (registrationData.identification_card) {
                     let identificationCard = registrationData.identification_card;
                     identificationCard.user_type_id = userType.id;
-
+    
                     identificationCardData = await db.IdentificationCard.create(identificationCard, {transaction: trans});
                 }
-
+    
                 let identificationCardMedia = files.identification_card[0];
                 identificationCardMedia.identification_card_id = identificationCardData.id;
                 identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
                 identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
                 identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
-
+    
                 await db.MediaObject.create(identificationCardMedia, {transaction: trans});
             }
             if (files.certificate) {
@@ -92,10 +94,10 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 await db.MediaObject.create(certificateMedia, {transaction: trans});
             }
         }
-
+    
         // committing transaction
         await trans.commit();
-
+    
         return {
             token: generateToken(userType.userInfo, null, true),
             user: {
@@ -117,9 +119,15 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
 AnonymousService.prototype.Authenticate = async (userDetails) => {
     try {
         let userTypeDetails;
+        console.log('=============================================================');
         if (userDetails.token_status && userDetails.token_id) {
             userTypeDetails = await db.UserType.findOne({
-                where: {id: userDetails.user_type_id, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
+                where: {
+                    [Op.and]: [{
+                        id: userDetails.user_type_id,
+                        user_type: CommonConfig.USER_TYPE.NORMAL_USER
+                    }]
+                },
                 include: [{
                     model: db.Profile,
                     include: [{
@@ -128,15 +136,23 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 }, {
                     model: db.ResetPassword,
                     where: {
-                        id: userDetails.token_id,
-                        is_valid: true,
-                        status: true
+                        [Op.and]: [{
+                            id: userDetails.token_id,
+                            is_valid: true,
+                            status: true
+                        }]
                     }
                 }]
-            });
+            })
+            ;
         } else {
             userTypeDetails = await db.UserType.findOne({
-                where: {id: userDetails.user_type_id, user_type: CommonConfig.USER_TYPE.NORMAL_USER},
+                where: {
+                    [Op.and]: [{
+                        id: userDetails.user_type_id,
+                        user_type: CommonConfig.USER_TYPE.NORMAL_USER
+                    }]
+                },
                 include: [{
                     model: db.Profile,
                     include: [{
@@ -145,10 +161,11 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 }]
             });
         }
-
+    
+        console.log('=============================================================');
         if (!userTypeDetails)
             return null;
-
+    
         return {
             token: !userDetails.token_status ? generateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
             user: {
@@ -174,7 +191,11 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
                 is_valid: false,
                 status: false
             }, {
-                where: {id: token_data.token_id}
+                where: {
+                    id: {
+                        [Op.eq]: token_id
+                    }
+                }
             }, {transaction: trans});
             if (!data) {
                 await trans.rollback();
@@ -183,36 +204,36 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
         }
         //get user info
         let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
-
+    
         if (!userInfo) {
             await trans.rollback();
             return null;
         }
         let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
-
+    
         let data = await db.ResetPassword.create(userDetails, {transaction: trans});
-
+    
         if (!data) {
             await trans.rollback();
             return null;
         }
-
+    
         console.log('Sending mail ... Please wait......');
-
+    
         let isSent = await Email.ToResetPassword({
             fullname: fullname,
             email: email,
             key: userDetails.random_key
         });
-
+    
         if (!isSent) {
             await trans.rollback();
             return null;
         }
-
+    
         // committing transaction
         await trans.commit();
-
+    
         return isSent;
     } catch (error) {
         // rollback transaction
@@ -226,24 +247,31 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
         //get user info
         let tokenData = await db.UserType.findOne({
             where: {
-                user_id: email
+                user_id: {
+                    [Op.eq]: email
+                }
             },
             attributes: ['id'],
             include: [{
                 attributes: ['firstname', 'lastname'],
                 model: db.Profile
             }, {
-                where: {status: 1, is_valid: 1},
+                where: {
+                    [Op.and]: [{
+                        status: 1,
+                        is_valid: 1
+                    }]
+                },
                 attributes: ['random_key'],
                 model: db.ResetPassword
             }]
         });
-
+    
         if (!tokenData)
             return null;
-
+    
         console.log('Sending mail ... Please wait......');
-
+    
         return await Email.ToResetPassword({
             fullname: tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname,
             email: email,

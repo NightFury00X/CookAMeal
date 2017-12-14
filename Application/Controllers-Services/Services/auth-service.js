@@ -1,7 +1,4 @@
-let db = require('../../Modals'),
-    config = require('../../../Configurations/Main'),
-    generateToken = require('../../../Configurations/Helpers/authentication'),
-    commonService = require('./anonymous.service');
+let db = require('../../Modals');
 
 
 AuthService = function () {

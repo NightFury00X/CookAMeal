@@ -33,6 +33,9 @@ module.exports = function (sequelize, DataTypes) {
                     args: ["^[a-z]+$", 'i'],
                     msg: 'The first name you have entered is contains some bed characters.'
                 }
+            },
+            set(value) {
+                this.setDataValue('firstname', CommonConfig.toTitleCase(value));
             }
         },
         lastname: {
@@ -43,6 +46,9 @@ module.exports = function (sequelize, DataTypes) {
                     args: ["^[a-z]+$", 'i'],
                     msg: 'The last name you have entered is contains some bed characters.'
                 }
+            },
+            set(value) {
+                this.setDataValue('lastname', CommonConfig.toTitleCase(value));
             }
         },
         phone: {

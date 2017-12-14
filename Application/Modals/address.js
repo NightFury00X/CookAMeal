@@ -1,6 +1,7 @@
 // The Address Model.
 'use strict';
 
+const CommonConfig = require("../../Configurations/Helpers/common-config");
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
@@ -22,6 +23,9 @@ module.exports = function (sequelize, DataTypes) {
                     args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The city you have entered is contains some bed characters.'
                 }
+            },
+            set(value) {
+                this.setDataValue('city', CommonConfig.toTitleCase(value));
             }
         },
         state: {
@@ -32,6 +36,9 @@ module.exports = function (sequelize, DataTypes) {
                     args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The state you have entered is contains some bed characters.'
                 }
+            },
+            set(value) {
+                this.setDataValue('state', CommonConfig.toTitleCase(value));
             }
         },
         zip_code: {
@@ -52,6 +59,9 @@ module.exports = function (sequelize, DataTypes) {
                     args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The country you have entered is contains some bed characters.'
                 }
+            },
+            set(value) {
+                this.setDataValue('country', CommonConfig.toTitleCase(value));
             }
         },
         updated_at: DataTypes.DATE,

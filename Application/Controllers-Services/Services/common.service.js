@@ -1,15 +1,22 @@
-let randomString = require('random-string'),
+const randomString = require('random-string'),
+    Sequelize = require("sequelize"),
+    Op = Sequelize.Op,
     db = require('../../Modals'),
     {generateToken} = require('../../../Configurations/Helpers/authentication'),
     CommonConfig = require('../../../Configurations/Helpers/common-config');
-const Sequelize = require("sequelize");
 
 CommonService = function () {
 };
 
 CommonService.prototype.UserModel = {
     GetDetailsByEmail: async (email) => {
-        return await db.UserType.findOne({where: {user_id: email}});
+        return await db.UserType.findOne({
+            where: {
+                user_id: {
+                    [Op.eq]: [email]
+                }
+            }
+        });
     }
 };
 
@@ -28,7 +35,9 @@ CommonService.prototype.GetResetPasswordData = async (email) => {
     try {
         return await db.ResetPassword.findOne({
             where: {
-                email: email
+                email: {
+                    [Op.eq]: [email]
+                }
             }
         });
     } catch (error) {
@@ -40,7 +49,11 @@ CommonService.prototype.CheckUserTypeByUserId = async (fbId) => {
     try {
         return await db.UserType.findOne({
             attributes: ['id'],
-            where: {user_id: fbId}
+            where: {
+                user_id: {
+                    [Op.eq]: [fbId]
+                }
+            }
         });
     } catch (error) {
         throw (error);
@@ -50,7 +63,11 @@ CommonService.prototype.CheckUserTypeByUserId = async (fbId) => {
 CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
     try {
         return await db.UserType.findOne({
-            where: {id: userTypeId},
+            where: {
+                id: {
+                    [Op.eq]: [userTypeId]
+                }
+            },
             include: [{
                 model: db.Profile,
                 include: [{
@@ -99,7 +116,11 @@ CommonService.prototype.GetCategoryById = async (catId) => {
     try {
         return await db.Category.findOne({
             attributes: ['id', 'name'],
-            where: {id: catId},
+            where: {
+                id: {
+                    [Op.eq]: [catId]
+                }
+            },
             include: [{model: db.MediaObject, attributes: ['imageurl']}]
         });
     } catch (error) {
@@ -122,9 +143,13 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
         // Check reset password is requested or not.        
         let records = await db.ResetPassword.findOne({
             where: {
-                user_type_id: userDetails.id,
-                status: true,
-                is_valid: true
+                user_type_id: {
+                    [Op.eq]: [userDetails.id]
+                },
+                [Op.and]: [{
+                    status: true,
+                    is_valid: true
+                }]
             }
         });
     
@@ -139,8 +164,10 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
             status: false,
         }, {
             where: {
-                id: records.id,
-                email: records.email
+                [Op.and]: [{
+                    id: records.id,
+                    email: records.email
+                }]
             }
         }, {transaction: trans});
     
@@ -155,8 +182,10 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
             password: userDetails.password
         }, {
             where: {
-                user_type_id: userDetails.id,
-                email: userDetails.email
+                [Op.and]: [{
+                    id: userDetails.id,
+                    email: userDetails.email
+                }]
             }
         }, {transaction: trans});
     
@@ -180,7 +209,11 @@ CommonService.prototype.InvalidateResetPasswordTokenData = async (id) => {
             is_valid: false,
             status: false
         }, {
-            where: {id: id}
+            where: {
+                id: {
+                    [Op.eq]: id
+                }
+            }
         });
     } catch (error) {
         return (error);
@@ -231,7 +264,9 @@ CommonService.prototype.User = {
         try {
             return db.Profile.findOne({
                 where: {
-                    user_type_id: user_type_id
+                    user_type_id: {
+                        [Op.eq]: [user_type_id]
+                    }
                 },
                 attributes: ['id', 'firstname', 'lastname']
             })
@@ -300,8 +335,10 @@ CommonService.prototype.Recipe = {
             return await db.Recipe.findAll({
                 attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time'],
                 where: {
-                    category_id: category_id,
-                    sub_category_id: sub_category_id
+                    [Op.and]: [{
+                        category_id: category_id,
+                        sub_category_id: sub_category_id
+                    }]
                 },
                 include: [{
                     model: db.Ingredient
@@ -326,7 +363,9 @@ CommonService.prototype.Recipe = {
                     attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
                     model: db.Recipe,
                     where: {
-                        id: recipe_id
+                        id: {
+                            [Op.eq]: recipe_id
+                        }
                     },
                     include: [{
                         attributes: ['id', 'name', 'qty', 'cost'],
@@ -350,7 +389,11 @@ CommonService.prototype.Recipe = {
     FindRatingByRecipeId: async (recipe_id) => {
         try {
             return db.Rating.findAll({
-                where: {recipe_id: recipe_id},
+                where: {
+                    recipe_id: {
+                        [Op.eq]: recipe_id
+                    }
+                },
                 attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'rating']]
             });
         } catch (error) {
@@ -367,7 +410,9 @@ CommonService.prototype.Recipe = {
                     attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time'],
                     where: {
                         // sub_category_id: {$col: 'SubCategory.id'},
-                        category_id: category_id
+                        category_id: {
+                            [Op.eq]: [category_id]
+                        }
                     },
                     required: true,
                     limit: 10,
@@ -391,7 +436,9 @@ CommonService.prototype.Recipe = {
                 limit: 10,
                 required: true,
                 where: {
-                    profile_id: cook_id
+                    profile_id: {
+                        [Op.eq]: cook_id
+                    }
                 },
                 attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
                 include: [{
@@ -412,7 +459,9 @@ CommonService.prototype.Recipe = {
                 limit: 10,
                 required: true,
                 where: {
-                    sub_category_id: sub_category_id
+                    sub_category_id: {
+                        [Op.eq]: sub_category_id
+                    }
                 },
                 attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
                 include: [{
@@ -435,8 +484,10 @@ CommonService.prototype.Recipe = {
         try {
             return await db.Favorite.findAll({
                 where: {
-                    profile_id: profile_id,
-                    is_favorite: true
+                    [Op.and]: [{
+                        profile_id: profile_id,
+                        is_favorite: true
+                    }]
                 }
             })
         } catch (error) {
@@ -447,8 +498,10 @@ CommonService.prototype.Recipe = {
         try {
             return await db.Favorite.findOne({
                 where: {
-                    profile_id: profile_id,
-                    recipe_id: recipe_id
+                    [Op.and]: [{
+                        profile_id: profile_id,
+                        recipe_id: recipe_id
+                    }]
                 }
             })
         } catch (error) {

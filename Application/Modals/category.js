@@ -1,6 +1,7 @@
 // The Address Model.
 'use strict';
 
+const CommonConfig = require("../../Configurations/Helpers/common-config");
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
@@ -18,6 +19,9 @@ module.exports = function (sequelize, DataTypes) {
                     args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
                     msg: 'The category name you have entered is contains some bed characters.'
                 }
+            },
+            set(value) {
+                this.setDataValue('name', CommonConfig.toTitleCase(value));
             }
         },
         updated_at: DataTypes.DATE,

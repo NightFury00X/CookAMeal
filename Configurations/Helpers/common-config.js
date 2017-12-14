@@ -138,3 +138,9 @@ CommonConfig.EMAIL_FROM = 'Cook-A-Meal';
 CommonConfig.REG_EXP = {
     PASSWORD: /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}$/
 };
+
+CommonConfig.toTitleCase = function (str) {
+    return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+};
