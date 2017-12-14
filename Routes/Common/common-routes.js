@@ -49,6 +49,7 @@ router.get('/cook-profile/:id',
 
 router.post('/favorite',
     RequestMethods.CheckContentType.ApplicationJsonData,
+    ValidateBody(BodySchemas.Favorite),
     CommonController.Recipe.MarkFavorite);
 
 router.get('/favorite',

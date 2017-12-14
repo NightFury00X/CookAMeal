@@ -52,6 +52,9 @@ module.exports = {
         Unit: Joi.object().keys({
             unit_name: Joi.string().required(),
             sort_name: Joi.string().required()
-        })
+        }),
+        Favorite: Joi.object().keys({
+            recipe_id: Joi.string().required()
+        }),
     }
 };
