@@ -324,7 +324,7 @@ CommonService.prototype.Recipe = {
                     model: db.MediaObject,
                     attributes: ['id', 'imageurl']
                 }, {
-                    attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
+                    attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'serve', 'category_id', 'sub_category_id'],
                     model: db.Recipe,
                     where: {
                         id: {
@@ -404,7 +404,7 @@ CommonService.prototype.Recipe = {
                         [Op.eq]: cook_id
                     }
                 },
-                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
+                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'serve', 'category_id', 'sub_category_id'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageurl']

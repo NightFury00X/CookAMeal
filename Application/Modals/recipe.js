@@ -53,7 +53,8 @@ module.exports = function (sequelize, DataTypes) {
         },
         serve: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: true,
+            defaultValue: 0
         },
         delivery_fee: {
             type: DataTypes.STRING,
