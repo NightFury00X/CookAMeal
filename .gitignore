@@ -1,7 +1,7 @@
 /node_modules
 /.vscode
 ### Node template
-# Logs
+# logs
 logs
 *.log
 npm-debug.log*
@@ -66,7 +66,6 @@ log/
 /Public/
 Cook-A-Meal.rar
 web.config
-Configurations/Errors/
 Uploads/
 config/
 migrations/
