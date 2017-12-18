@@ -8,26 +8,33 @@ let Anonymous = {
         try {
             req.check('fbid').notEmpty();
             if (req.validationErrors() || req.validationErrors().length > 0)
-                return ResponseHelpers.SetBadRequestResponse('Invalid request.', res);
-            const fbId = req.body.fbid;
-            const user = await CommonService.CheckUserTypeByUserId(fbId);
+                return next({
+                    message: 'Unable to connect with facebook.',
+                    status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                }, false);
+            let fbId = req.body.fbid;
+            let user = await CommonService.CheckUserTypeByUserId(fbId);
             if (!user)
-                return ResponseHelpers.SetSuccessResponse('facebook user not exist.', res, CommonConfig.STATUS_CODE.OK);
-            const userDetails = await CommonService.GetUserDetailsByUserTypeId(user.id);
-            if (!userDetails)
-                return ResponseHelpers.SetSuccessResponse('facebook user not exist.', res, CommonConfig.STATUS_CODE.OK);
-            const userData = {
+                return next({
+                    message: 'facebook user not exist.',
+                    status: CommonConfig.STATUS_CODE.OK
+                }, false);
+    
+            // Get User Details
+            let userDetails = await CommonService.GetUserDetailsByUserTypeId(user.id);
+    
+            //Generate Token        
+            let userData = {
                 id: userDetails.userid,
                 fullname: userDetails.Profile.fullName,
                 user_type: userDetails.user_type,
                 user_role: userDetails.user_role,
                 profile_url: userDetails.Profile.MediaObjects.length > 0 ? userDetails.Profile.MediaObjects[0].imageurl : ''
             };
+    
             let result = await CommonService.GenerateToken(userDetails.userInfo, userData);
-            if (!result)
-                return ResponseHelpers.SetNotFoundResponse('facebook user not exist.', res);
             result.type = true;
-            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }
