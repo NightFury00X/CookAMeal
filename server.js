@@ -116,6 +116,7 @@ db.sequelize.sync(
     .catch(function (error) {
         throw new Error(error);
     });
+
 function startApp() {
     let protocol = config.app.ssl ? 'https' : 'http';
     let port = process.env.PORT || config.app.port;
@@ -126,6 +127,7 @@ function startApp() {
         logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);
     });
 }
+
 app.use(function (req, res, next) {
     let err = new Error('The Route ' + req.url + ' is Not Found');
     err.status = 404;
@@ -140,7 +142,8 @@ if (app.get('env') === 'development') {
                 error: err.message,
                 error_stack: {
                     error: err
-                }
+                },
+                status: err.status
             }
         );
         next();
@@ -151,7 +154,8 @@ if (app.get('env') === 'development') {
             {
                 success: false,
                 data: null,
-                error: err.message
+                error: err.message,
+                status: err.status
             }
         );
         next();

@@ -34,7 +34,7 @@ let Anonymous = {
     
             let result = await CommonService.GenerateToken(userDetails.userInfo, userData);
             result.type = true;
-            return responseHelper.setSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
             next(error);
         }

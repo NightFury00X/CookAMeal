@@ -11,7 +11,8 @@ module.exports = {
             let response = {
                 "success": true,
                 data: data,
-                "error": null
+                "error": null,
+                "status": statusCode
             };
             this.SetResponse(statusCode, response, res);
         },
