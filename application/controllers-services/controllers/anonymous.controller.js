@@ -12,10 +12,10 @@ let Anonymous = {
             const fbId = req.body.fbid;
             const user = await CommonService.CheckUserTypeByUserId(fbId);
             if (!user)
-                return ResponseHelpers.SetNotFoundResponse('facebook user not exist.', res);
+                return ResponseHelpers.SetSuccessResponse('facebook user not exist.', res);
             const userDetails = await CommonService.GetUserDetailsByUserTypeId(user.id);
             if (!userDetails)
-                return ResponseHelpers.SetNotFoundResponse('facebook user not exist.', res);
+                return ResponseHelpers.SetSuccessResponse('facebook user not exist.', res);
             const userData = {
                 id: userDetails.userid,
                 fullname: userDetails.Profile.fullName,
