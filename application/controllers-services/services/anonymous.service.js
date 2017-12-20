@@ -55,10 +55,9 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         // let IdenitificateMediaObject;
         // let certificateMediaObject;
         let identificationCardData;
-    
-        console.log('Files: ', files);
         if (files) {
             if (files.profile) {
+                console.log('Profile Files: ', files.profile);
                 let profileImage = files.profile[0];
                 profileImage.profile_id = userProfileData.id;
                 profileImage.object_type = CommonConfig.OBJECT_TYPE.PROFILE;
@@ -66,7 +65,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 ProfileMediaObject = await db.MediaObject.create(profileImage, {transaction: trans});
             }
             if (files.identification_card) {
-                //Adding Identification Card Details
+                console.log('identification_card Files: ', files.identification_card);
                 if (registrationData.identification_card) {
                     let identificationCard = registrationData.identification_card;
                     identificationCard.user_type_id = userType.id;
@@ -83,6 +82,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 await db.MediaObject.create(identificationCardMedia, {transaction: trans});
             }
             if (files.certificate) {
+                console.log('certificate Files: ', files.certificate);
                 let certificateData = await db.Certificate.create({profile_id: userProfileData.id}, {transaction: trans});
                 let certificateMedia = files.certificate[0];
                 certificateMedia.certificate_id = certificateData.id;
