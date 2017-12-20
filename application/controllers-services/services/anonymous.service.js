@@ -14,10 +14,8 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     try {
         let userData = registrationData.user;
         if (userData.allergies)
-            userData.allergies = JSON.stringify(userData.allergies);
-    
+            userData.allergies = JSON.stringify(userData.allergies);    
         let type = CommonConfig.USER_TYPE.NORMAL_USER;
-    
         //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbid) {
             let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid);
