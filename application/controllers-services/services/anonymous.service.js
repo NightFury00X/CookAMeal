@@ -13,22 +13,18 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
     try {
         let userData = registrationData.user;
         if (userData.allergies)
-            userData.allergies = JSON.stringify(userData.allergies);    
+            userData.allergies = JSON.stringify(userData.allergies);
         let type = CommonConfig.USER_TYPE.NORMAL_USER;
-        //checking facebook id if exist
         if (registrationData.facebook && registrationData.facebook.fbid) {
             let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid);
             if (!fb)
                 type = CommonConfig.USER_TYPE.FACEBOOK_USER;
         }
-    
-        // Add user type
         let userType = await db.UserType.create({
             user_id: type === CommonConfig.USER_TYPE.NORMAL_USER ? userData.email : registrationData.facebook.fbid,
             user_type: type,
             user_role: userData.user_role
         }, {transaction: trans});
-        //add user login data
         if (type === CommonConfig.USER_TYPE.NORMAL_USER) {
             await db.User.create({
                 user_type_id: userType.id,
@@ -36,28 +32,18 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 password: userData.password
             }, {transaction: trans});
         }
-    
-        //add user profile data
         let tempData = userData;
         delete tempData.password;
         tempData.user_type_id = userType.id;
         let userProfileData = await db.Profile.create(tempData, {transaction: trans});
-    
-        //Adding user address and social
         registrationData.address.profile_id = userProfileData.id;
         registrationData.social.profile_id = userProfileData.id;
         await db.Address.create(registrationData.address, {transaction: trans});
         await db.Social.create(registrationData.social, {transaction: trans});
-    
-    
-        //upload profile image
         let ProfileMediaObject;
-        // let IdenitificateMediaObject;
-        // let certificateMediaObject;
         let identificationCardData;
         if (files) {
             if (files.profile) {
-                console.log('Profile Files: ', files.profile);
                 let profileImage = files.profile[0];
                 profileImage.profile_id = userProfileData.id;
                 profileImage.object_type = CommonConfig.OBJECT_TYPE.PROFILE;
@@ -65,24 +51,19 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 ProfileMediaObject = await db.MediaObject.create(profileImage, {transaction: trans});
             }
             if (files.identification_card) {
-                console.log('identification_card Files: ', files.identification_card);
                 if (registrationData.identification_card) {
                     let identificationCard = registrationData.identification_card;
                     identificationCard.user_type_id = userType.id;
-    
                     identificationCardData = await db.IdentificationCard.create(identificationCard, {transaction: trans});
+                    let identificationCardMedia = files.identification_card[0];
+                    identificationCardMedia.identification_card_id = identificationCardData.id;
+                    identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
+                    identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
+                    identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
+                    await db.MediaObject.create(identificationCardMedia, {transaction: trans});
                 }
-    
-                let identificationCardMedia = files.identification_card[0];
-                identificationCardMedia.identification_card_id = identificationCardData.id;
-                identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
-                identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
-                identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
-    
-                await db.MediaObject.create(identificationCardMedia, {transaction: trans});
             }
             if (files.certificate) {
-                console.log('certificate Files: ', files.certificate);
                 let certificateData = await db.Certificate.create({profile_id: userProfileData.id}, {transaction: trans});
                 let certificateMedia = files.certificate[0];
                 certificateMedia.certificate_id = certificateData.id;
@@ -91,10 +72,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 await db.MediaObject.create(certificateMedia, {transaction: trans});
             }
         }
-    
-        // committing transaction
         await trans.commit();
-    
         return {
             token: AuthenticationHelpers.GenerateToken(userType.userInfo, null, true),
             user: {
@@ -107,7 +85,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             }
         };
     } catch (error) {
-        // rollback transaction
         await trans.rollback();
         throw (error);
     }

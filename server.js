@@ -155,10 +155,7 @@ if (app.get('env') === 'development') {
                 success: false,
                 data: null,
                 error: err.message,
-                status: err.status,
-                error_stack: {
-                    error: err
-                },
+                status: err.status
             }
         );
         next();
