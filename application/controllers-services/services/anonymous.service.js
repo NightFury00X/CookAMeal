@@ -9,7 +9,6 @@ AnonymousService = function () {
 };
 
 AnonymousService.prototype.SignUp = async (registrationData, files) => {
-    console.log('Req body: ', registrationData);
     const trans = await db.sequelize.transaction();
     try {
         let userData = registrationData.user;
@@ -29,7 +28,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             user_type: type,
             user_role: userData.user_role
         }, {transaction: trans});
-    
         //add user login data
         if (type === CommonConfig.USER_TYPE.NORMAL_USER) {
             await db.User.create({
@@ -58,6 +56,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         // let certificateMediaObject;
         let identificationCardData;
     
+        console.log('Files: ', files);
         if (files) {
             if (files.profile) {
                 let profileImage = files.profile[0];
