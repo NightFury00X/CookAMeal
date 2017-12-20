@@ -9,6 +9,7 @@ AnonymousService = function () {
 };
 
 AnonymousService.prototype.SignUp = async (registrationData, files) => {
+    console.log('Rdeq body: ', registrationData);
     const trans = await db.sequelize.transaction();
     try {
         let userData = registrationData.user;
