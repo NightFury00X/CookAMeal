@@ -83,15 +83,10 @@ let Category = {
                     for (const inner in convertedJSON[outer].Recipes) {
                         if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const recipe_id = convertedJSON[outer].Recipes[inner].id;
-    
-                            // Get racipe ratings
                             const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
-    
-                            // Check recipe is marked favorite or not
-                            const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(profile.id, recipe_id);
+                            const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(user_id, recipe_id);
                             convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
                             convertedJSON[outer].Recipes[inner].Favorite = !!favorite;
-                            console.log('Fav: ', !!favorite);
                         }
                     }
                 }
