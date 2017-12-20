@@ -54,8 +54,7 @@ module.exports = {
             sort_name: Joi.string().required()
         }),
         Favorite: Joi.object().keys({
-            recipe_id: Joi.string().required(),
-            comment: Joi.string().required()
+            recipe_id: Joi.string().required()
         }),
     }
 };
