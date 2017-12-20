@@ -27,8 +27,6 @@ CookService.prototype.Recipe = {
                 await trans.rollback();
                 return null;
             }
-    
-            //add allergies
             for (const index in allergies) {
                 if (allergies.hasOwnProperty(index)) {
                     allergies[index].recipe_id = recipeData.id;
@@ -39,14 +37,8 @@ CookService.prototype.Recipe = {
                     }
                 }
             }
-    
-            console.log('files: ', files);
-            console.log('========================================================');
-            //store recipe image
             for (let index in files.recipe) {
                 if (files.recipe.hasOwnProperty(index)) {
-                    console.log('files: ', files.recipe[index]);
-                    console.log('========================================================');
                     files.recipe[index].recipe_id = recipeData.id;
                     files.recipe[index].object_type = CommonConfig.OBJECT_TYPE.RECIPE;
                     files.recipe[index].imageurl = CommonConfig.FILE_LOCATIONS.RECIPE + files.recipe[index].filename;

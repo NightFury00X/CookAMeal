@@ -264,7 +264,6 @@ const Recipe = {
         try {
             const user_id = req.user.id;
             const favorite = {
-                comment: req.body.comment,
                 user_type_id: user_id,
                 recipe_id: req.body.recipe_id
             };
