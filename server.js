@@ -6,7 +6,6 @@ let express = require('express'),
     passport = require('passport'),
     errorHandler = require('errorhandler'),
     winston = require('winston'),
-    DailyRotateFile = require('winston-daily-rotate-file'),
     expressWinston = require('express-winston'),
     compression = require("compression"),
     mkdirp = require('mkdirp'),
@@ -14,6 +13,7 @@ let express = require('express'),
     db = require('./application/modals'),
     config = require('./configurations/main'),
     CommonConfig = require('./configurations/helpers/common-config');
+require('winston-daily-rotate-file');
 
 let logger = new (winston.Logger)({
     expressFormat: true,

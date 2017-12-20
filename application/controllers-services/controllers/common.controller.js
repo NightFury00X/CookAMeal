@@ -28,7 +28,7 @@ let User = {
                             const tempRecipeId = cookRecipesToJSON[outer].Recipes[inner].id;
                             const tempFav = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(profileId, tempRecipeId);
                             const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId);
-                            cookRecipesToJSON[outer].Recipes[inner].favorite = !tempFav ? false : tempFav.is_favorite;
+                            cookRecipesToJSON[outer].Recipes[inner].favorite = !!tempFav;
                             cookRecipesToJSON[outer].Recipes[inner].rating = !tempRating[0].rating ? 0 : tempRating[0].rating;
                         }
                     }
@@ -41,6 +41,17 @@ let User = {
             };
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
+            next(error);
+        }
+    },
+    GetAllReviewsByProfileId: async (req, res, next) => {
+        try {
+            const userId = req.user.id;
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId);
+            const result = await CommonService.User.FindAllReviewsByProfileId(profile.id);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        }
+        catch (error) {
             next(error);
         }
     }
@@ -192,7 +203,7 @@ const Recipe = {
                     const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipe_id);
                     const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(profile.id, recipe_id);
                     convertedJSON[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
-                    convertedJSON[inner].Favorite = !favorite ? false : favorite.is_favorite;
+                    convertedJSON[inner].Favorite = !!favorite;
                 }
             }
             let results = {
@@ -219,7 +230,7 @@ const Recipe = {
                     const tempRecipeId = cookRecipesToJSON[index].id;
                     const tempFav = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(profile.id, tempRecipeId);
                     const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId);
-                    cookRecipesToJSON[index].favorite = !tempFav ? false : tempFav.is_favorite;
+                    cookRecipesToJSON[index].favorite = !!tempFav;
                     cookRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating;
                 }
             }
@@ -230,7 +241,7 @@ const Recipe = {
                     const tempRecipeId = similarRecipesToJSON[index].id;
                     const tempFav = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(profile.id, tempRecipeId);
                     const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId);
-                    similarRecipesToJSON[index].favorite = !tempFav ? false : tempFav.is_favorite;
+                    similarRecipesToJSON[index].favorite = !!tempFav;
                     similarRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating;
                 }
             }
@@ -238,7 +249,7 @@ const Recipe = {
             const result = {
                 recipe_details: recipeDetails,
                 rating: !rating[0].rating ? 0 : rating[0].rating,
-                favorite: !favorite ? 0 : favorite.is_favorite,
+                favorite: !!favorite,
                 cook_recipes: cookRecipesToJSON,
                 similar_recipes: similarRecipesToJSON
             };

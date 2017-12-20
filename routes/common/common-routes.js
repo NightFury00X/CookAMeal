@@ -62,4 +62,7 @@ router.post('/favorite/recipe',
 router.get('/favorite/recipe',
     CommonController.Recipe.GetRecipeMarkedFavoriteList);
 
+router.get('/review/profile',
+    CommonController.User.GetAllReviewsByProfileId);
+
 module.exports = router;

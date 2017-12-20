@@ -248,6 +248,31 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
 };
 
 CommonService.prototype.User = {
+    FindAllReviewsByProfileId: async (profileId) => {
+        try {
+            return await db.UserType.findAll({
+                attributes: ['id'],
+                include: [{
+                    attributes: ['id', 'comments', 'rating'],
+                    model: db.Review,
+                    where: {
+                        profile_id: {
+                            [Op.eq]: profileId
+                        }
+                    }
+                }, {
+                    attributes: ['id', 'firstname', 'lastname'],
+                    model: db.Profile,
+                    include: [{
+                        model: db.MediaObject,
+                        attributes: ['id', 'imageurl']
+                    }]
+                }]
+            });
+        } catch (error) {
+            throw (error);
+        }
+    },
     FindProfileRatingByProfileId: async (profileId) => {
         try {
             return await db.Review.findAll({
