@@ -75,7 +75,8 @@ CookService.prototype.Recipe = {
                     }
                 }
             }
-            await trans.commit();
+            await trans.rollback();
+            // await trans.commit();
             return true;
         } catch (error) {
             await trans.rollback();
