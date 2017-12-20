@@ -90,7 +90,7 @@ let Category = {
                             // Check recipe is marked favorite or not
                             const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(profile.id, recipe_id);
                             convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating;
-                            convertedJSON[outer].Recipes[inner].Favorite = !favorite ? false : favorite.is_favorite;
+                            convertedJSON[outer].Recipes[inner].Favorite = !!favorite;
                             console.log('Fav: ', !!favorite);
                         }
                     }
