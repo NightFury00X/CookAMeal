@@ -53,7 +53,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             if (files.identification_card) {
                 if (registrationData.identification_card) {
                     let identificationCard = registrationData.identification_card;
-                    identificationCard.user_type_id = userType.id;
+                    identificationCard.profile_id = userProfileData.id;
                     identificationCardData = await db.IdentificationCard.create(identificationCard, {transaction: trans});
                     let identificationCardMedia = files.identification_card[0];
                     identificationCardMedia.identification_card_id = identificationCardData.id;
