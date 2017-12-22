@@ -14,12 +14,6 @@ module.exports = function (sequelize, DataTypes) {
         name: {
             type: DataTypes.STRING(100),
             allowNull: false,
-            validate: {
-                is: {
-                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
-                    msg: 'The category name you have entered is contains some bed characters.'
-                }
-            },
             set(value) {
                 this.setDataValue('name', CommonConfig.toTitleCase(value));
             }
