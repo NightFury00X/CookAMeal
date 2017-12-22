@@ -36,7 +36,6 @@ module.exports = function (sequelize, DataTypes) {
         Category.hasMany(models.Recipe,
             {
                 foreignKey: {
-                    name: 'recipe_id',
                     allowNull: false,
                     onDelete: 'CASCADE'
                 }

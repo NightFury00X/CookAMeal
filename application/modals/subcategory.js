@@ -38,7 +38,6 @@ module.exports = function (sequelize, DataTypes) {
     SubCategory.associate = function (models) {
         SubCategory.hasMany(models.Recipe, {
             foreignKey: {
-                name: 'sub_category_id',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }

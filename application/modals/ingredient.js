@@ -40,7 +40,6 @@ module.exports = function (sequelize, DataTypes) {
     Ingredient.associate = function (models) {
         Ingredient.belongsTo(models.Unit, {
             foreignKey: {
-                name: 'unit_id',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }

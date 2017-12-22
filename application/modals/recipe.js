@@ -86,14 +86,12 @@ module.exports = function (sequelize, DataTypes) {
     Recipe.associate = function (models) {
         Recipe.hasOne(models.Day, {
             foreignKey: {
-                name: 'recipe_id',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         });
         Recipe.hasMany(models.Ingredient, {
             foreignKey: {
-                name: 'recipe_id',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
@@ -103,7 +101,6 @@ module.exports = function (sequelize, DataTypes) {
         });
         Recipe.hasMany(models.RecipeAllergy, {
             foreignKey: {
-                name: 'recipe_id',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
