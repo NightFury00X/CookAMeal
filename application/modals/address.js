@@ -92,8 +92,6 @@ module.exports = function (sequelize, DataTypes) {
 // Hashes the password for a user object.
 async function FindConutryDetails(address) {
     const currencyDetails = await Country.GetCourrencyDetailsByCountryName(address.country);
-    console.log('country: ', address.country);
-    console.log('Symbol: ', currencyDetails.symbol);
     address.currency_code = currencyDetails.code;
     address.currency_symbol = currencyDetails.symbol;
 }
