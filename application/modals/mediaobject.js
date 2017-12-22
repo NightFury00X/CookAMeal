@@ -5,33 +5,33 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         originalname: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
         },
         encoding: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false
         },
         mimetype: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false
         },
         destination: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(200),
             allowNull: false
         },
         filename: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false
         },
         imageurl: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(200),
             allowNull: false
         },
         size: {
@@ -51,7 +51,5 @@ module.exports = function (sequelize, DataTypes) {
         underscored: true
     };
     
-    let MediaObject = sequelize.define('MediaObject', modelDefinition, modelOptions);
-    
-    return MediaObject;
+    return sequelize.define('MediaObject', modelDefinition, modelOptions);
 };

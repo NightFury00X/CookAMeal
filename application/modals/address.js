@@ -1,22 +1,23 @@
 // The Address Model.
 'use strict';
+const Country = require('../../configurations/helpers/helper').Country;
 
 const CommonConfig = require("../../configurations/helpers/common-config");
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         street: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
         },
         city: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(50),
             allowNull: false,
             validate: {
                 is: {
@@ -29,7 +30,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         state: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(50),
             allowNull: false,
             validate: {
                 is: {
@@ -42,7 +43,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         zip_code: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(8),
             allowNull: false,
             validate: {
                 isNumeric: {
@@ -52,7 +53,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         country: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(50),
             allowNull: false,
             validate: {
                 is: {
@@ -64,14 +65,35 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('country', CommonConfig.toTitleCase(value));
             }
         },
+        currency_code: {
+            type: DataTypes.STRING(5),
+            allowNull: false
+        },
+        currency_symbol: {
+            type: DataTypes.STRING(10),
+            allowNull: false
+        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };
     
     // 2: The model options.
     let modelOptions = {
+        hooks: {
+            beforeValidate: FindConutryDetails
+        },
         underscored: true
     };
     
     return sequelize.define('Address', modelDefinition, modelOptions);
 };
+
+
+// Hashes the password for a user object.
+async function FindConutryDetails(address) {
+    const currencyDetails = await Country.GetCourrencyDetailsByCountryName(address.country);
+    console.log('country: ', address.country);
+    console.log('Symbol: ', currencyDetails.symbol);
+    address.currency_code = currencyDetails.code;
+    address.currency_symbol = currencyDetails.symbol;
+}

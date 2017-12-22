@@ -4,8 +4,23 @@ const nodemailer = require("nodemailer"),
     CommonConfig = require("./common-config"),
     config = require("../main/development");
 
+const countries = require('country-data').countries,
+    lookup = require('country-data').lookup;
 
 module.exports = {
+    Country: {
+        GetCourrencyDetailsByCountryName: async (countryName) => {
+            try {
+                const contry = await countries.all;
+                console.log('Country Details; ', contry);
+                const countryDetails = await lookup.countries({name: countryName})[0];
+                console.log('Country Details; ', contry);
+                return await lookup.currencies({code: countryDetails.currencies})[0];
+            } catch (error) {
+                return null;
+            }
+        }
+    },
     ResponseHelpers: {
         SetSuccessResponse: function (data, res, statusCode) {
             let response = {

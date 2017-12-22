@@ -7,13 +7,13 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
             validate: {
                 is: {
@@ -37,7 +37,9 @@ module.exports = function (sequelize, DataTypes) {
     let Allergy = sequelize.define('Allergy', modelDefinition, modelOptions);
     
     Allergy.associate = function (models) {
-        Allergy.hasMany(models.RecipeAllergy, {onDelete: 'CASCADE'});
+        Allergy.hasMany(models.RecipeAllergy, {
+            onDelete: 'CASCADE'
+        });
     };
     
     return Allergy;

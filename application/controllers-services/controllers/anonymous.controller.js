@@ -143,7 +143,7 @@ let Anonymous = {
         } catch (error) {
             next(error);
         }
-    },
+    }
 };
 
 let AnonymousController = {

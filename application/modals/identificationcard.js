@@ -6,20 +6,20 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         type: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
             set(value) {
                 this.setDataValue('type', CommonConfig.toTitleCase(value));
             }
         },
         type_id: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(50),
             allowNull: false,
         },
         country: {
@@ -38,7 +38,9 @@ module.exports = function (sequelize, DataTypes) {
     let IdentificationCard = sequelize.define('IdentificationCard', modelDefinition, modelOptions);
     
     IdentificationCard.associate = function (models) {
-        IdentificationCard.hasOne(models.MediaObject, { onDelete: 'CASCADE' });
+        IdentificationCard.hasOne(models.MediaObject, {
+            onDelete: 'CASCADE'
+        });
     };
     
     return IdentificationCard;

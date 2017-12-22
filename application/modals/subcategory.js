@@ -6,10 +6,10 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         name: {
             type: DataTypes.STRING,
@@ -36,7 +36,13 @@ module.exports = function (sequelize, DataTypes) {
     let SubCategory = sequelize.define('SubCategory', modelDefinition, modelOptions);
     
     SubCategory.associate = function (models) {
-        SubCategory.hasMany(models.Recipe, {onDelete: 'CASCADE'});
+        SubCategory.hasMany(models.Recipe, {
+            foreignKey: {
+                name: 'sub_category_id',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
     };
     
     return SubCategory;

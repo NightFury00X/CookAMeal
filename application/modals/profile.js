@@ -5,13 +5,13 @@ let CommonConfig = require('../../configurations/helpers/common-config');
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         email: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
             unique: {
                 args: true,
@@ -26,7 +26,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         firstname: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
             validate: {
                 is: {
@@ -39,7 +39,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         lastname: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
             validate: {
                 is: {
@@ -52,7 +52,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         phone: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(12),
             allowNull: false,
             validate: {
                 isNumeric: {
@@ -122,14 +122,45 @@ module.exports = function (sequelize, DataTypes) {
     let ProfileModel = sequelize.define('Profile', modelDefinition, modelOptions);
     
     ProfileModel.associate = function (models) {
-        ProfileModel.hasOne(models.Address, {onDelete: 'CASCADE'});
-        ProfileModel.hasOne(models.Social, {onDelete: 'CASCADE'});
-        ProfileModel.hasOne(models.Certificate, {onDelete: 'CASCADE'});
-        ProfileModel.hasOne(models.IdentificationCard, {onDelete: 'CASCADE'});
-        ProfileModel.hasMany(models.Recipe, {onDelete: 'CASCADE'});
-        ProfileModel.hasMany(models.MediaObject, {onDelete: 'CASCADE'});
-        ProfileModel.hasMany(models.Review, {onDelete: 'CASCADE'});
-        ProfileModel.hasMany(models.Favorite, {onDelete: 'CASCADE'});
+        ProfileModel.hasOne(models.Address, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        ProfileModel.hasOne(models.Social, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        ProfileModel.hasOne(models.Certificate, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        ProfileModel.hasOne(models.IdentificationCard, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        ProfileModel.hasMany(models.Recipe, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        ProfileModel.hasMany(models.MediaObject, {
+            onDelete: 'CASCADE'
+        });
+        ProfileModel.hasMany(models.Review, {
+            onDelete: 'CASCADE'
+        });
+        ProfileModel.hasMany(models.Favorite, {
+            onDelete: 'CASCADE'
+        });
     };
     
     return ProfileModel;

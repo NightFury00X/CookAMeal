@@ -6,24 +6,24 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
             set(value) {
                 this.setDataValue('name', CommonConfig.toTitleCase(value));
             }
         },
         qty: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(20),
             allowNull: false
         },
         cost: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(20),
             allowNull: false
         },
         updated_at: DataTypes.DATE,
@@ -38,7 +38,13 @@ module.exports = function (sequelize, DataTypes) {
     let Ingredient = sequelize.define('Ingredient', modelDefinition, modelOptions);
     
     Ingredient.associate = function (models) {
-        Ingredient.belongsTo(models.Unit, {onDelete: 'CASCADE'});
+        Ingredient.belongsTo(models.Unit, {
+            foreignKey: {
+                name: 'unit_id',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
     };
     
     return Ingredient;

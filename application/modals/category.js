@@ -6,13 +6,13 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
             validate: {
                 is: {
@@ -36,8 +36,17 @@ module.exports = function (sequelize, DataTypes) {
     let Category = sequelize.define('Category', modelDefinition, modelOptions);
     
     Category.associate = function (models) {
-        Category.hasMany(models.MediaObject, { onDelete: 'CASCADE' });
-        Category.hasMany(models.Recipe, { onDelete: 'CASCADE' });
+        Category.hasMany(models.MediaObject, {
+            onDelete: 'CASCADE'
+        });
+        Category.hasMany(models.Recipe,
+            {
+                foreignKey: {
+                    name: 'recipe_id',
+                    allowNull: false,
+                    onDelete: 'CASCADE'
+                }
+            });
     };
     
     return Category;

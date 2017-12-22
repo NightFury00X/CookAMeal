@@ -7,13 +7,13 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         dish_name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(150),
             allowNull: false,
             set(value) {
                 this.setDataValue('dish_name', CommonConfig.toTitleCase(value));
@@ -84,17 +84,39 @@ module.exports = function (sequelize, DataTypes) {
     let Recipe = sequelize.define('Recipe', modelDefinition, modelOptions);
     
     Recipe.associate = function (models) {
-        Recipe.hasOne(models.Day, {onDelete: 'CASCADE'});
-        Recipe.hasMany(models.Ingredient, {onDelete: 'CASCADE'});
-        Recipe.hasMany(models.MediaObject, {onDelete: 'CASCADE'});
-        Recipe.hasMany(models.RecipeAllergy, {onDelete: 'CASCADE'});
-        Recipe.hasMany(models.Review, {onDelete: 'CASCADE'});
-        Recipe.hasMany(models.Favorite, {onDelete: 'CASCADE'});
+        Recipe.hasOne(models.Day, {
+            foreignKey: {
+                name: 'recipe_id',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        Recipe.hasMany(models.Ingredient, {
+            foreignKey: {
+                name: 'recipe_id',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        Recipe.hasMany(models.MediaObject, {
+            onDelete: 'CASCADE'
+        });
+        Recipe.hasMany(models.RecipeAllergy, {
+            foreignKey: {
+                name: 'recipe_id',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        Recipe.hasMany(models.Review, {
+            onDelete: 'CASCADE'
+        });
+        Recipe.hasMany(models.Favorite, {
+            onDelete: 'CASCADE'
+        });
     };
-    
     return Recipe;
 };
-
 
 /**
  * @return {string}

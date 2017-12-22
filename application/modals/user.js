@@ -6,10 +6,10 @@ let bcrypt = require('bcrypt');
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         email: {
             type: DataTypes.STRING,

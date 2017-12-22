@@ -5,10 +5,10 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
@@ -22,8 +22,12 @@ module.exports = function (sequelize, DataTypes) {
     let RecipeAllergy = sequelize.define('RecipeAllergy', modelDefinition, modelOptions);
     
     RecipeAllergy.associate = function (models) {
-        RecipeAllergy.belongsTo(models.Recipe, {onDelete: 'CASCADE'});
-        RecipeAllergy.belongsTo(models.Allergy, {onDelete: 'CASCADE'});
+        RecipeAllergy.belongsTo(models.Recipe, {
+            onDelete: 'CASCADE'
+        });
+        RecipeAllergy.belongsTo(models.Allergy, {
+            onDelete: 'CASCADE'
+        });
     };
     
     return RecipeAllergy;

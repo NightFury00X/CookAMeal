@@ -5,9 +5,10 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4
+            allowNull: false,
+            autoIncrement: true
         },
         mon: {
             type: DataTypes.BOOLEAN,

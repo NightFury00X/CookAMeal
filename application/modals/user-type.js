@@ -5,10 +5,10 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT(10),
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         user_id: {
             type: DataTypes.STRING,
@@ -58,15 +58,67 @@ module.exports = function (sequelize, DataTypes) {
     };
     let UserTypeModel = sequelize.define('UserType', modelDefinition, modelOptions);
     UserTypeModel.associate = function (models) {
-        UserTypeModel.hasOne(models.User, {onDelete: 'CASCADE'});
-        UserTypeModel.hasOne(models.Profile, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.BlackListedToken, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.ResetPassword, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.Allergy, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.SubCategory, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.Unit, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.Review, {onDelete: 'CASCADE'});
-        UserTypeModel.hasMany(models.Favorite, {onDelete: 'CASCADE'});
+        UserTypeModel.hasOne(models.User, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        UserTypeModel.hasOne(models.Profile, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        UserTypeModel.hasMany(models.BlackListedToken, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        UserTypeModel.hasMany(models.ResetPassword, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        UserTypeModel.hasMany(models.Allergy, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        // UserTypeModel.hasMany(models.Category, {
+        //     foreignKey: {
+        //         name: 'created_by',
+        //         allowNull: false,
+        //         onDelete: 'CASCADE'
+        //     }
+        // });
+        UserTypeModel.hasMany(models.SubCategory, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        UserTypeModel.hasMany(models.Unit, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        UserTypeModel.hasMany(models.Review, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        UserTypeModel.hasMany(models.Favorite, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
     };
     return UserTypeModel;
 };

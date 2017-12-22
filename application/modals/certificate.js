@@ -5,10 +5,10 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.UUID,
+            type: DataTypes.BIGINT,
             primaryKey: true,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
@@ -22,7 +22,9 @@ module.exports = function (sequelize, DataTypes) {
     let Certificate = sequelize.define('Certificate', modelDefinition, modelOptions);
     
     Certificate.associate = function (models) {
-        Certificate.hasMany(models.MediaObject, { onDelete: 'CASCADE' });
+        Certificate.hasMany(models.MediaObject, {
+            onDelete: 'CASCADE'
+        });
     };
     
     return Certificate;
