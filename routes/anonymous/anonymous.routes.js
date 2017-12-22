@@ -44,7 +44,4 @@ router.post('/resetpass',
     ResetPasswordMiddlewares.CheckPasswordIsGenerated,
     AnonymousController.Anonymous.ResetPassword);
 
-
-router.post('/currency',
-    AnonymousController.Anonymous.Currency);
 module.exports = router;
