@@ -56,5 +56,15 @@ module.exports = {
         Favorite: Joi.object().keys({
             recipe_id: Joi.string().required()
         }),
+        RecipeReview: Joi.object().keys({
+            recipe_id: Joi.string().required(),
+            rating: Joi.string().required(),
+            comments: Joi.string().required()
+        }),
+        ProfileReview: Joi.object().keys({
+            profile_id: Joi.string().required(),
+            rating: Joi.string().required(),
+            comments: Joi.string().required()
+        })
     }
 };

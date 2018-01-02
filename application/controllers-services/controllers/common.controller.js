@@ -301,12 +301,58 @@ const Recipe = {
     }
 };
 
+const ReviewDetails = {
+    RecipeReview: async (req, res, next) => {
+        try {
+            const user_id = req.user.id;
+            const review = {
+                recipe_id: req.body.recipe_id,
+                rating: req.body.rating,
+                comments: req.body.comments,
+                user_type_id: user_id
+            };
+            const isExist = await CommonService.Review.CheckRecipeId(review.recipe_id);
+            if (!isExist)
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit review.'}, res, CommonConfig.STATUS_CODE.OK);
+            const result = await CommonService.Review.Recipe(review);
+            if (!result)
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit review.'}, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse({Message: 'Review submitted successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
+        } catch (error) {
+            next(error);
+        }
+    },
+    ProfileReview: async (req, res, next) => {
+        try {
+            const user_id = req.user.id;
+            const review = {
+                profile_id: req.body.profile_id,
+                rating: req.body.rating,
+                comments: req.body.comments,
+                user_type_id: user_id
+            };
+            
+            const isExist = await CommonService.Review.CheckUserId(review.profile_id);
+            if (!isExist)
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit review.'}, res, CommonConfig.STATUS_CODE.OK);
+            
+            const result = await CommonService.Review.Profile(review);
+            if (!result)
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit review.'}, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse({Message: 'Review submitted successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
+        } catch (error) {
+            next(error);
+        }
+    },
+};
+
 let CommonController = {
     User: User,
     Category: Category,
     SubCategory: SubCategory,
     Allergy: Allergy,
     Recipe: Recipe,
+    ReviewDetails: ReviewDetails,
     Units: Units
 };
 

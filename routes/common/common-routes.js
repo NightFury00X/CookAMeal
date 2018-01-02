@@ -59,6 +59,14 @@ router.post('/favorite/recipe',
 //     ValidateBody(BodySchemas.Favorite),
 //     CommonController.Recipe.MarkProfileAsFavorite);
 
+router.post('/review/recipe',
+    ValidateBody(BodySchemas.RecipeReview),
+    CommonController.ReviewDetails.RecipeReview);
+
+router.post('/review/profile',
+    ValidateBody(BodySchemas.ProfileReview),
+    CommonController.ReviewDetails.ProfileReview);
+
 router.get('/favorite/recipe',
     CommonController.Recipe.GetRecipeMarkedFavoriteList);
 

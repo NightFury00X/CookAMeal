@@ -617,6 +617,37 @@ CommonService.prototype.Recipe = {
     }
 };
 
+CommonService.prototype.Review = {
+    CheckRecipeId: async (recipeId) => {
+        try {
+            return await db.Recipe.findById(recipeId);
+        } catch (error) {
+            throw(error);
+        }
+    },
+    CheckUserId: async (profileId) => {
+        try {
+            return await db.UserType.findById(profileId);
+        } catch (error) {
+            throw(error);
+        }
+    },
+    Recipe: async (reviewDetails) => {
+        try {
+            return await db.Review.create(reviewDetails);
+        } catch (error) {
+            throw(error);
+        }
+    },
+    Profile: async (reviewDetails) => {
+        try {
+            return await db.Review.create(reviewDetails);
+        } catch (error) {
+            throw(error);
+        }
+    }
+};
+
 CommonService.prototype.SubCategory = {
     FindById: async (subCategoryId) => {
         try {
