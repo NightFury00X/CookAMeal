@@ -54,6 +54,9 @@ router.post('/favorite/recipe',
     ValidateBody(BodySchemas.Favorite),
     CommonController.Recipe.MarkRecipeAsFavorite);
 
+router.get('/favorite/recipe',
+    CommonController.Recipe.GetRecipeMarkedFavoriteList);
+
 // router.post('/favorite/profile',
 //     RequestMethodsMiddlewares.ApplicationJsonData,
 //     ValidateBody(BodySchemas.Favorite),
@@ -67,10 +70,10 @@ router.post('/review/profile',
     ValidateBody(BodySchemas.ProfileReview),
     CommonController.ReviewDetails.ProfileReview);
 
-router.get('/favorite/recipe',
-    CommonController.Recipe.GetRecipeMarkedFavoriteList);
-
 router.get('/review/profile',
     CommonController.User.GetAllReviewsByProfileId);
+
+router.get('/geo',
+    CommonController.User.geo);
 
 module.exports = router;

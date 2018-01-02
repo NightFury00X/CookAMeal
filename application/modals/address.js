@@ -73,6 +73,12 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(10),
             allowNull: false
         },
+        latitude: {
+            type: DataTypes.DECIMAL
+        },
+        longitude: {
+            type: DataTypes.DECIMAL
+        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     };

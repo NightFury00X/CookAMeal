@@ -1,6 +1,7 @@
 const {ResponseHelpers} = require('../../../configurations/helpers/helper'),
     CommonService = require('../services/common.service'),
-    CommonConfig = require('../../../configurations/helpers/common-config');
+    CommonConfig = require('../../../configurations/helpers/common-config'),
+    GeoLOcation = require('../../../configurations/helpers/geo-location-helper');
 
 let User = {
     GetCookprofile: async (req, res, next) => {
@@ -50,6 +51,21 @@ let User = {
             const userId = req.user.id;
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userId);
             const result = await CommonService.User.FindAllReviewsByProfileId(profile.id);
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        }
+        catch (error) {
+            next(error);
+        }
+    },
+    geo: async (req, res, next) => {
+        try {
+            const data = {
+                address: 'cynoteck dehradun',
+                state: 'uttarakhand',
+                city: 'dehradun',
+                zipCode: '248001'
+            };
+            const result = await await GeoLOcation.geocoder.geocode(`${data.address}, ${data.state}, ${data.city} ${data.zipCode}`);
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
         }
         catch (error) {
@@ -224,7 +240,7 @@ const Recipe = {
             if (!recipeDetails)
                 return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.RECIPE.NOT_FOUND, res);
             const rating = await CommonService.Recipe.FindRatingByRecipeId(recipeId);
-            const cookRecipes = await CommonService.Recipe.FindAllRecipeByCookIdExcludeSelectedRecipe(recipeDetails.id, recipeId);
+            const cookRecipes = await CommonService.Recipe.FindAllRecipeByCookIdExcludeSelectedRecipe(profile.id, recipeId);
             let cookRecipesToJSON = JSON.parse(JSON.stringify(cookRecipes));
             for (const index in cookRecipesToJSON) {
                 if (cookRecipesToJSON.hasOwnProperty(index)) {
