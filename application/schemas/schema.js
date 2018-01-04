@@ -65,6 +65,11 @@ module.exports = {
             profile_id: Joi.string().required(),
             rating: Joi.string().required(),
             comments: Joi.string().required()
+        }),
+        Feedback: Joi.object().keys({
+            feedbackType: Joi.string().required().allow('bug', 'feedback'),
+            feedbackAs: Joi.string().required().allow('cook', 'customer'),
+            comments: Joi.string().required()
         })
     }
 };

@@ -119,6 +119,12 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         });
+        UserTypeModel.hasMany(models.Feedback, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
     };
     return UserTypeModel;
 };

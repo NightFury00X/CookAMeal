@@ -617,6 +617,17 @@ CommonService.prototype.Recipe = {
     }
 };
 
+CommonService.prototype.Feedback = {
+    Add: async (feedback) => {
+        try {
+            return await db.Feedback.create(feedback);
+        }
+        catch (error) {
+            throw (error);
+        }
+    }
+};
+
 CommonService.prototype.Review = {
     CheckRecipeId: async (recipeId) => {
         try {

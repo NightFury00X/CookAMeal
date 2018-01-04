@@ -73,6 +73,11 @@ router.post('/review/profile',
 router.get('/review/profile',
     CommonController.User.GetAllReviewsByProfileId);
 
+
+router.post('/feedback',
+    ValidateBody(BodySchemas.Feedback),
+    CommonController.Feedback.Add);
+
 router.get('/geo',
     CommonController.User.geo);
 

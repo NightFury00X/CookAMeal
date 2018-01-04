@@ -362,6 +362,24 @@ const ReviewDetails = {
     },
 };
 
+const Feedback = {
+    Add: async (req, res, next) => {
+        try {
+            const userId = req.user.id;
+            let feedback = req.body;
+            feedback.user_type_id = userId;
+            let result = await CommonService.Feedback.Add(feedback);
+            console.log(result);
+            if (!result)
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit you feedback.'}, res, CommonConfig.STATUS_CODE.OK);
+            return ResponseHelpers.SetSuccessResponse({Message: 'Feedback submitted successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+};
+
 let CommonController = {
     User: User,
     Category: Category,
@@ -369,7 +387,8 @@ let CommonController = {
     Allergy: Allergy,
     Recipe: Recipe,
     ReviewDetails: ReviewDetails,
-    Units: Units
+    Units: Units,
+    Feedback: Feedback
 };
 
 module.exports = CommonController;
