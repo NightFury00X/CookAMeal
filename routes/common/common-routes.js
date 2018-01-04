@@ -63,10 +63,12 @@ router.get('/favorite/recipe',
 //     CommonController.Recipe.MarkProfileAsFavorite);
 
 router.post('/review/recipe',
+    RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.RecipeReview),
     CommonController.ReviewDetails.RecipeReview);
 
 router.post('/review/profile',
+    RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.ProfileReview),
     CommonController.ReviewDetails.ProfileReview);
 
@@ -75,6 +77,7 @@ router.get('/review/profile',
 
 
 router.post('/feedback',
+    RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.Feedback),
     CommonController.Feedback.Add);
 
