@@ -68,7 +68,7 @@ module.exports = {
         }),
         Feedback: Joi.object().keys({
             feedbackType: Joi.string().required().allow('bug', 'feedback'),
-            feedbackAs: Joi.string().required().allow('cook', 'customer'),
+            feedbackAs: Joi.string().required().allow('cook', 'customer', 'Cook', 'Customer', 'COOK', 'CUSTOMER'),
             comments: Joi.string().required()
         })
     }

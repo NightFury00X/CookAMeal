@@ -25,7 +25,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isIn: {
-                    args: [['cook', 'customer']],
+                    args: [['cook', 'customer', 'Cook', 'Customer', 'COOK', 'CUSTOMER']],
                     msg: "Invalid user type."
                 }
             }
