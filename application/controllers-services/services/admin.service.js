@@ -60,4 +60,14 @@ AdminService.prototype.Units = {
     }
 };
 
+AdminService.prototype.PaymentMethod = {
+    Add: async (data) => {
+        try {
+            return db.PaymentMethod.create(data);
+        } catch (error) {
+            throw (error);
+        }
+    }
+};
+
 module.exports = new AdminService();

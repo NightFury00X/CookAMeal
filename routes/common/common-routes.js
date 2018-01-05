@@ -81,6 +81,15 @@ router.post('/feedback',
     ValidateBody(BodySchemas.Feedback),
     CommonController.Feedback.Add);
 
+router.get('/payment-method',
+    CommonController.PaymentMethod.GetAll);
+
+router.get('/order/prepare-data/:id',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    CommonController.Order.PrepareData);
+
+
+
 router.get('/geo',
     CommonController.User.geo);
 

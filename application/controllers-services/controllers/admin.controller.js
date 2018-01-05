@@ -73,11 +73,27 @@ let Units = {
     }
 };
 
+let PaymentMethod = {
+    Add: async (req, res, next) => {
+        try {
+            let paymentMethod = req.body;
+            paymentMethod.user_type_id = req.user.id;
+            let result = await AdminService.PaymentMethod.Add(paymentMethod);
+            if (!result)
+                return ResponseHelpers.SetErrorResponse('Unable to add payment method.', res);
+            return ResponseHelpers.SetSuccessResponse({message: 'Payment method added successfully.'}, res, CommonConfig.STATUS_CODE.CREATED);
+        } catch (error) {
+            return next(error);
+        }
+    }
+};
+
 let AdminController = {
     Category: Category,
     SubCategory: SubCategory,
     Allergy: Allergy,
-    Units: Units
+    Units: Units,
+    PaymentMethod: PaymentMethod
 };
 
 module.exports = AdminController;

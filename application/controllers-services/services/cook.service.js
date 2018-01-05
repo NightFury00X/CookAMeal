@@ -128,6 +128,20 @@ CookService.prototype.Recipe = {
         } catch (error) {
             throw (error);
         }
+    },
+    GetDeliveryFeesByRecipeId: async (recipeId) => {
+        try {
+            return db.Recipe.findOne({
+                attributes: ['delivery_fee'],
+                where: {
+                    id: {
+                        [Op.eq]: recipeId
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
     }
 };
 

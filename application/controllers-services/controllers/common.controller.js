@@ -1,5 +1,6 @@
 const {ResponseHelpers} = require('../../../configurations/helpers/helper'),
     CommonService = require('../services/common.service'),
+    CookService = require('../services/cook.service'),
     CommonConfig = require('../../../configurations/helpers/common-config'),
     GeoLOcation = require('../../../configurations/helpers/geo-location-helper');
 
@@ -204,6 +205,17 @@ let Units = {
     }
 };
 
+let PaymentMethod = {
+    GetAll: async (req, res, next) => {
+        try {
+            let result = await CommonService.PaymentMethod.GettAll();
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    }
+};
+
 const Recipe = {
     GetRecipeListByCategoryAndSubCategoryIds: async (req, res, next) => {
         try {
@@ -380,6 +392,24 @@ const Feedback = {
     }
 };
 
+let Order = {
+    PrepareData: async (req, res, next) => {
+        try {
+            const recipeId = req.value.params.id;
+            const paymentMethods = await CommonService.PaymentMethod.GettAll();
+            const deliveryFees = await  CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId);
+            const prepareData = {
+                paymentMethods: paymentMethods,
+                deliveryFees: deliveryFees.delivery_fee,
+                tax: 5
+            };
+            return ResponseHelpers.SetSuccessResponse(prepareData, res, CommonConfig.STATUS_CODE.OK);
+        } catch (error) {
+            next(error);
+        }
+    }
+};
+
 let CommonController = {
     User: User,
     Category: Category,
@@ -388,7 +418,9 @@ let CommonController = {
     Recipe: Recipe,
     ReviewDetails: ReviewDetails,
     Units: Units,
-    Feedback: Feedback
+    PaymentMethod: PaymentMethod,
+    Feedback: Feedback,
+    Order: Order
 };
 
 module.exports = CommonController;

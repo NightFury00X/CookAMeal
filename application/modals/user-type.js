@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.BIGINT(10),
+            type: DataTypes.BIGINT,
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
@@ -120,6 +120,12 @@ module.exports = function (sequelize, DataTypes) {
             }
         });
         UserTypeModel.hasMany(models.Feedback, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        });
+        UserTypeModel.hasMany(models.PaymentMethod, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
