@@ -397,10 +397,14 @@ let Order = {
         try {
             const recipeId = req.value.params.id;
             const paymentMethods = await CommonService.PaymentMethod.GettAll();
-            const deliveryFees = await  CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId);
+            const recipeData = await  CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId);
+            const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profile_id);
             const prepareData = {
                 paymentMethods: paymentMethods,
-                deliveryFees: deliveryFees.delivery_fee,
+                deliveryFees: {
+                    fees: recipeData.delivery_fee,
+                    currencySymbol: currencySymbol.currency_symbol
+                },
                 tax: 5
             };
             return ResponseHelpers.SetSuccessResponse(prepareData, res, CommonConfig.STATUS_CODE.OK);

@@ -248,6 +248,20 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
 };
 
 CommonService.prototype.User = {
+    GetCurrencySymbolByProfileId: async (profileId) => {
+        try {
+            return await db.Address.findOne({
+                attributes: ['currency_symbol'],
+                where: {
+                    profile_id: {
+                        [Op.eq]: profileId
+                    }
+                }
+            });
+        } catch (error) {
+            throw (error);
+        }
+    },
     FindAllReviewsByProfileId: async (profileId) => {
         try {
             return await db.UserType.findAll({
