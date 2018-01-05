@@ -132,7 +132,7 @@ CookService.prototype.Recipe = {
     GetDeliveryFeesByRecipeId: async (recipeId) => {
         try {
             return db.Recipe.findOne({
-                attributes: ['delivery_fee', 'profile_id'],
+                attributes: ['cost_per_serving', 'available_servings', 'delivery_fee', 'profile_id'],
                 where: {
                     id: {
                         [Op.eq]: recipeId

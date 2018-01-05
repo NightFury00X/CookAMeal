@@ -400,12 +400,14 @@ let Order = {
             const recipeData = await  CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId);
             const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profile_id);
             const prepareData = {
-                paymentMethods: paymentMethods,
-                deliveryFees: {
-                    fees: recipeData.delivery_fee,
+                PaymentMethods: paymentMethods,
+                RecipeDetails: {
+                    costPerServing: parseFloat(recipeData.cost_per_serving),
+                    availableServings: parseFloat(recipeData.cost_per_serving),
+                    deliveryFees: parseFloat(recipeData.delivery_fee),
                     currencySymbol: currencySymbol.currency_symbol
                 },
-                tax: 5
+                Tax: parseFloat(5)
             };
             return ResponseHelpers.SetSuccessResponse(prepareData, res, CommonConfig.STATUS_CODE.OK);
         } catch (error) {
