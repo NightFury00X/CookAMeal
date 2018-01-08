@@ -411,7 +411,6 @@ let Order = {
             const userId = req.user.id
             let orderDetails = req.body
             let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
-            console.log('Data: ========================== ', orderDetails)
             orderDetails.user_type_id = userId
             const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
             if (!result) {

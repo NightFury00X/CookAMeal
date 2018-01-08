@@ -163,9 +163,6 @@ if (app.get('env') === 'development') {
                 success: false,
                 data: null,
                 error: errorMessage,
-                errorStack: {
-                    error: err
-                },
                 status: err.status
             }
         )
