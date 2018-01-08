@@ -694,6 +694,7 @@ CommonService.prototype.Order = {
                 if (recipesToJson.hasOwnProperty(index)) {
                     recipesToJson[index].order_id = order.id
                 }
+                console.log('==========================================', recipesToJson)
             }
             for (const recipe of recipesToJson) {
                 const orderItem = await db.OrderItem.create(recipe, {transaction: trans})
