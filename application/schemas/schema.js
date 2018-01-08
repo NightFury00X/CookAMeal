@@ -75,11 +75,11 @@ module.exports = {
             comments: Joi.string().required()
         }),
         Order: Joi.object().keys({
-            orderType: Joi.number().required().allow(0, 1),
+            orderType: Joi.string().required().allow('0', '1'),
             spiceLevel: Joi.string().required().allow('Mild', 'Medium', 'Hot'),
-            orderServings: Joi.number().required(),
+            orderServings: Joi.string().required(),
             specialInstruction: Joi.string().required(),
-            deliveryType: Joi.number().required(),
+            deliveryType: Joi.string().required(),
             deliveryFee: Joi.string().required(),
             pickUpTime: Joi.string().required(),
             taxes: Joi.string().required(),
