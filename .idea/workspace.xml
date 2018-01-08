@@ -1,69 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="eslint added. (new)&#10;Order food API. (new)&#10;Fixed some issues.">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.eslintrc" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/application/modals/order-items.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/application/modals/order.js" />
+    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/admin.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/admin.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/anonymous.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/anonymous.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/customer.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/customer.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/admin.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/admin.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/base-service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/base-service.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/address.js" afterPath="$PROJECT_DIR$/application/modals/address.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/allergies.js" afterPath="$PROJECT_DIR$/application/modals/allergies.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/category.js" afterPath="$PROJECT_DIR$/application/modals/category.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/certificate.js" afterPath="$PROJECT_DIR$/application/modals/certificate.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/day.js" afterPath="$PROJECT_DIR$/application/modals/day.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/favorite.js" afterPath="$PROJECT_DIR$/application/modals/favorite.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/feedback.js" afterPath="$PROJECT_DIR$/application/modals/feedback.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/identificationcard.js" afterPath="$PROJECT_DIR$/application/modals/identificationcard.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/index.js" afterPath="$PROJECT_DIR$/application/modals/index.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/ingredient.js" afterPath="$PROJECT_DIR$/application/modals/ingredient.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/mediaobject.js" afterPath="$PROJECT_DIR$/application/modals/mediaobject.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/paymentMethod.js" afterPath="$PROJECT_DIR$/application/modals/paymentMethod.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/profile.js" afterPath="$PROJECT_DIR$/application/modals/profile.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/recipe-allergies.js" afterPath="$PROJECT_DIR$/application/modals/recipe-allergies.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/recipe.js" afterPath="$PROJECT_DIR$/application/modals/recipe.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/reset-password.js" afterPath="$PROJECT_DIR$/application/modals/reset-password.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/review.js" afterPath="$PROJECT_DIR$/application/modals/review.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/social.js" afterPath="$PROJECT_DIR$/application/modals/social.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/subcategory.js" afterPath="$PROJECT_DIR$/application/modals/subcategory.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/token-blacklist.js" afterPath="$PROJECT_DIR$/application/modals/token-blacklist.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/unit.js" afterPath="$PROJECT_DIR$/application/modals/unit.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/user-type.js" afterPath="$PROJECT_DIR$/application/modals/user-type.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/user.js" afterPath="$PROJECT_DIR$/application/modals/user.js" />
+      <change beforePath="$PROJECT_DIR$/application/modals/order.js" afterPath="$PROJECT_DIR$/application/modals/order.js" />
       <change beforePath="$PROJECT_DIR$/application/schemas/schema.js" afterPath="$PROJECT_DIR$/application/schemas/schema.js" />
-      <change beforePath="$PROJECT_DIR$/clusters.js" afterPath="$PROJECT_DIR$/clusters.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/helpers/common-config.js" afterPath="$PROJECT_DIR$/configurations/helpers/common-config.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/helpers/file-upload-multer.js" afterPath="$PROJECT_DIR$/configurations/helpers/file-upload-multer.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/helpers/geo-location-helper.js" afterPath="$PROJECT_DIR$/configurations/helpers/geo-location-helper.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/helpers/helper.js" afterPath="$PROJECT_DIR$/configurations/helpers/helper.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/main/development.js" afterPath="$PROJECT_DIR$/configurations/main/development.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/main/index.js" afterPath="$PROJECT_DIR$/configurations/main/index.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/main/production.js" afterPath="$PROJECT_DIR$/configurations/main/production.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/middlewares/middlewares.js" afterPath="$PROJECT_DIR$/configurations/middlewares/middlewares.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/middlewares/validation.js" afterPath="$PROJECT_DIR$/configurations/middlewares/validation.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/passport/passport-strategy.js" afterPath="$PROJECT_DIR$/configurations/passport/passport-strategy.js" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change beforePath="$PROJECT_DIR$/routes/admin/admin.routes.js" afterPath="$PROJECT_DIR$/routes/admin/admin.routes.js" />
-      <change beforePath="$PROJECT_DIR$/routes/anonymous/anonymous.routes.js" afterPath="$PROJECT_DIR$/routes/anonymous/anonymous.routes.js" />
-      <change beforePath="$PROJECT_DIR$/routes/auth/auth-routes.js" afterPath="$PROJECT_DIR$/routes/auth/auth-routes.js" />
-      <change beforePath="$PROJECT_DIR$/routes/common/common-routes.js" afterPath="$PROJECT_DIR$/routes/common/common-routes.js" />
-      <change beforePath="$PROJECT_DIR$/routes/cook/cook.routes.js" afterPath="$PROJECT_DIR$/routes/cook/cook.routes.js" />
-      <change beforePath="$PROJECT_DIR$/routes/routes.js" afterPath="$PROJECT_DIR$/routes/routes.js" />
-      <change beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
-      <change beforePath="$PROJECT_DIR$/views/resetpassword.hbs" afterPath="$PROJECT_DIR$/views/resetpassword.hbs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -78,21 +20,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server.js">
+      <file leaf-file-name="production.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/configurations/main/production.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="159" column="87" lean-forward="false" selection-start-line="159" selection-start-column="87" selection-end-line="159" selection-end-column="87" />
+            <state relative-caret-position="462">
+              <caret line="30" column="18" lean-forward="false" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="development.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configurations/main/development.js">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="33" column="21" lean-forward="true" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
+            <state relative-caret-position="198">
+              <caret line="27" column="12" lean-forward="false" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -101,8 +43,8 @@
       <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4884">
-              <caret line="193" column="53" lean-forward="true" selection-start-line="193" selection-start-column="53" selection-end-line="193" selection-end-column="53" />
+            <state relative-caret-position="316">
+              <caret line="417" column="93" lean-forward="true" selection-start-line="417" selection-start-column="93" selection-end-line="417" selection-end-column="93" />
               <folding>
                 <element signature="e#3936#6062#0" expanded="false" />
               </folding>
@@ -110,11 +52,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/modals/index.js">
+      <file leaf-file-name="common-config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/configurations/helpers/common-config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state relative-caret-position="143">
+              <caret line="136" column="49" lean-forward="false" selection-start-line="136" selection-start-column="49" selection-end-line="136" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="order.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/modals/order.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="19" column="25" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="allergies.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/allergies.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="22">
+              <caret line="16" column="36" lean-forward="true" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="profile.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="51" column="13" lean-forward="false" selection-start-line="49" selection-start-column="12" selection-end-line="51" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="91" column="31" lean-forward="true" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="schema.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/schemas/schema.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="211">
+              <caret line="80" column="30" lean-forward="false" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -128,73 +120,6 @@
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="file-upload-multer.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/configurations/helpers/file-upload-multer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="36" column="14" lean-forward="false" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="14" />
-              <folding>
-                <element signature="e#219#1086#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="recipe.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/modals/recipe.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="133" column="26" lean-forward="false" selection-start-line="133" selection-start-column="26" selection-end-line="133" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="anonymous.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="160" column="12" lean-forward="false" selection-start-line="160" selection-start-column="12" selection-end-line="160" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="481" column="6" lean-forward="false" selection-start-line="481" selection-start-column="6" selection-end-line="481" selection-end-column="6" />
-              <folding>
-                <element signature="e#374#596#0" expanded="false" />
-                <element signature="e#629#917#0" expanded="false" />
-                <element signature="e#983#1220#0" expanded="false" />
-                <element signature="e#1286#1551#0" expanded="false" />
-                <element signature="e#1628#2026#0" expanded="false" />
-                <element signature="e#2099#2303#0" expanded="false" />
-                <element signature="e#2357#2827#0" expanded="false" />
-                <element signature="e#2888#3230#0" expanded="false" />
-                <element signature="e#3288#3349#0" expanded="false" />
-                <element signature="e#17682#17852#0" expanded="false" />
-                <element signature="e#17887#18606#0" expanded="false" />
-                <element signature="e#18646#19114#0" expanded="false" />
-                <element signature="e#19150#19366#0" expanded="false" />
-                <element signature="e#19400#19631#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="clusters.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/clusters.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="45" lean-forward="true" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -253,7 +178,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/modals/reset-password.js" />
         <option value="$PROJECT_DIR$/application/modals/review.js" />
         <option value="$PROJECT_DIR$/application/modals/social.js" />
         <option value="$PROJECT_DIR$/application/modals/token-blacklist.js" />
@@ -288,14 +212,11 @@
         <option value="$PROJECT_DIR$/application/modals/user-type.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" />
         <option value="$PROJECT_DIR$/application/modals/order-items.js" />
-        <option value="$PROJECT_DIR$/application/modals/order.js" />
-        <option value="$PROJECT_DIR$/application/schemas/schema.js" />
         <option value="$PROJECT_DIR$/configurations/middlewares/middlewares.js" />
         <option value="$PROJECT_DIR$/configurations/middlewares/validation.js" />
         <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
-        <option value="$PROJECT_DIR$/configurations/helpers/common-config.js" />
         <option value="$PROJECT_DIR$/application/modals/index.js" />
         <option value="$PROJECT_DIR$/configurations/main/development.js" />
         <option value="$PROJECT_DIR$/application/modals/recipe.js" />
@@ -304,6 +225,10 @@
         <option value="$PROJECT_DIR$/clusters.js" />
         <option value="$PROJECT_DIR$/configurations/main/index.js" />
         <option value="$PROJECT_DIR$/configurations/helpers/file-upload-multer.js" />
+        <option value="$PROJECT_DIR$/configurations/main/production.js" />
+        <option value="$PROJECT_DIR$/configurations/helpers/common-config.js" />
+        <option value="$PROJECT_DIR$/application/schemas/schema.js" />
+        <option value="$PROJECT_DIR$/application/modals/order.js" />
       </list>
     </option>
   </component>
@@ -414,6 +339,12 @@
               <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="controllers-services" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="modals" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
@@ -596,28 +527,7 @@
       <workItem from="1515156422586" duration="2891000" />
       <workItem from="1515163546186" duration="317000" />
       <workItem from="1515391612447" duration="117000" />
-      <workItem from="1515391814322" duration="10814000" />
-    </task>
-    <task id="LOCAL-00270" summary="Fixed rating service.&#10;Fixed new API mark recipe as favorite and get all favorite recipes.">
-      <created>1513245313127</created>
-      <option name="number" value="00270" />
-      <option name="presentableId" value="LOCAL-00270" />
-      <option name="project" value="LOCAL" />
-      <updated>1513245313127</updated>
-    </task>
-    <task id="LOCAL-00271" summary="Fixed rating service.&#10;Fixed new API mark recipe as favorite and get all favorite recipes.">
-      <created>1513246541691</created>
-      <option name="number" value="00271" />
-      <option name="presentableId" value="LOCAL-00271" />
-      <option name="project" value="LOCAL" />
-      <updated>1513246541691</updated>
-    </task>
-    <task id="LOCAL-00272" summary="Fixed rating service.&#10;Fixed new API mark recipe as favorite and get all favorite recipes.">
-      <created>1513247179791</created>
-      <option name="number" value="00272" />
-      <option name="presentableId" value="LOCAL-00272" />
-      <option name="project" value="LOCAL" />
-      <updated>1513247179791</updated>
+      <workItem from="1515391814322" duration="12839000" />
     </task>
     <task id="LOCAL-00273" summary="Fixed issues">
       <created>1513261100437</created>
@@ -941,11 +851,32 @@
       <option name="project" value="LOCAL" />
       <updated>1515394385886</updated>
     </task>
-    <option name="localTasksCounter" value="319" />
+    <task id="LOCAL-00319" summary="eslint added. (new)&#10;Order food API. (new)&#10;Fixed some issues.">
+      <created>1515406831937</created>
+      <option name="number" value="00319" />
+      <option name="presentableId" value="LOCAL-00319" />
+      <option name="project" value="LOCAL" />
+      <updated>1515406831937</updated>
+    </task>
+    <task id="LOCAL-00320" summary="Remove Sequelize logging.">
+      <created>1515407114840</created>
+      <option name="number" value="00320" />
+      <option name="presentableId" value="LOCAL-00320" />
+      <option name="project" value="LOCAL" />
+      <updated>1515407114840</updated>
+    </task>
+    <task id="LOCAL-00321" summary="Remove Sequelize logging.">
+      <created>1515407693704</created>
+      <option name="number" value="00321" />
+      <option name="presentableId" value="LOCAL-00321" />
+      <option name="project" value="LOCAL" />
+      <updated>1515407693704</updated>
+    </task>
+    <option name="localTasksCounter" value="322" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="761910000" />
+    <option name="totallyTimeSpent" value="763935000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -961,12 +892,12 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3536184" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.74013156" sideWeight="0.51664144" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.4969743" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34210527" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40953946" sideWeight="0.48335856" order="20" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3125" sideWeight="0.48335856" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2473525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1035,7 +966,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Added&#10;1. Get all categories list.&#10;2. Get category by category Id." />
     <MESSAGE value="Fixed Application/json type data" />
     <MESSAGE value="Fixed API Routing." />
     <MESSAGE value="Fixed API Routing 404 Error." />
@@ -1060,7 +990,8 @@
     <MESSAGE value="New API:&#10;1. Add Payment Methods.&#10;2. Get All Payment Methods.&#10;3. Prepare recipe order data." />
     <MESSAGE value="fix available servings value in prepare for order details." />
     <MESSAGE value="eslint added. (new)&#10;Order food API. (new)&#10;Fixed some issues." />
-    <option name="LAST_COMMIT_MESSAGE" value="eslint added. (new)&#10;Order food API. (new)&#10;Fixed some issues." />
+    <MESSAGE value="Remove Sequelize logging." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove Sequelize logging." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1130,24 +1061,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/allergies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198">
-          <caret line="16" column="36" lean-forward="true" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/configurations/helpers/geo-location-helper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configurations/main/production.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -1306,26 +1223,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="129" column="11" lean-forward="true" selection-start-line="124" selection-start-column="8" selection-end-line="129" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/order-items.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/order.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="62" column="19" lean-forward="false" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -1370,60 +1271,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/schemas/schema.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="76" column="8" lean-forward="false" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="92" column="30" lean-forward="false" selection-start-line="92" selection-start-column="30" selection-end-line="92" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configurations/helpers/common-config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="114" column="32" lean-forward="false" selection-start-line="114" selection-start-column="32" selection-end-line="114" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4884">
-          <caret line="193" column="53" lean-forward="true" selection-start-line="193" selection-start-column="53" selection-end-line="193" selection-end-column="53" />
-          <folding>
-            <element signature="e#3936#6062#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/configurations/main/development.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="33" column="21" lean-forward="true" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="159" column="87" lean-forward="false" selection-start-line="159" selection-start-column="87" selection-end-line="159" selection-end-column="87" />
           <folding />
         </state>
       </provider>
@@ -1475,6 +1326,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/configurations/helpers/file-upload-multer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="43" column="21" lean-forward="true" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
+          <folding>
+            <element signature="e#219#1086#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="159" column="87" lean-forward="false" selection-start-line="159" selection-start-column="87" selection-end-line="159" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configurations/main/production.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="30" column="18" lean-forward="false" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/configurations/main/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1485,13 +1362,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/configurations/helpers/file-upload-multer.js">
+    <entry file="file://$PROJECT_DIR$/application/modals/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="36" column="14" lean-forward="false" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="14" />
+        <state relative-caret-position="198">
+          <caret line="27" column="12" lean-forward="false" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="417" column="93" lean-forward="true" selection-start-line="417" selection-start-column="93" selection-end-line="417" selection-end-column="93" />
           <folding>
-            <element signature="e#219#1086#0" expanded="false" />
+            <element signature="e#3936#6062#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configurations/helpers/common-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="136" column="49" lean-forward="false" selection-start-line="136" selection-start-column="49" selection-end-line="136" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/allergies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="16" column="36" lean-forward="true" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="51" column="13" lean-forward="false" selection-start-line="49" selection-start-column="12" selection-end-line="51" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="91" column="31" lean-forward="true" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/schemas/schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="80" column="30" lean-forward="false" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/order.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="19" column="25" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>

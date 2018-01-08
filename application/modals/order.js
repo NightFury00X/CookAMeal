@@ -9,6 +9,22 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             autoIncrement: true
         },
+        orderType: {
+            type: DataTypes.STRING(12),
+            validate: {
+                isIn: {
+                    args: [['Hire-a-Cook', 'Order-Food']],
+                    msg: 'Invalid spice Level.'
+                }
+            },
+            set (value) {
+                if (parseInt(value) === 0) {
+                    this.setDataValue('orderType', 'Hire-a-Cook')
+                } else {
+                    this.setDataValue('orderType', 'Order-Food')
+                }
+            }
+        },
         spiceLevel: {
             type: DataTypes.STRING(100),
             validate: {
@@ -22,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        spiceInstruction: {
+        specialInstruction: {
             type: DataTypes.TEXT,
             allowNull: false
         },
