@@ -75,7 +75,7 @@ module.exports = {
             comments: Joi.string().required()
         }),
         Order: Joi.object().keys({
-            orderType: Joi.string().required().allow('0', '1'),
+            orderType: Joi.string().required(),
             spiceLevel: Joi.string().required().allow('Mild', 'Medium', 'Hot'),
             orderServings: Joi.string().required(),
             specialInstruction: Joi.string().required(),
