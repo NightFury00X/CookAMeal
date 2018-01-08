@@ -270,6 +270,7 @@ const Recipe = {
             }
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
+            console.log('Error: ', error)
             next(error)
         }
     },
