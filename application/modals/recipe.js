@@ -127,7 +127,7 @@ module.exports = function (sequelize, DataTypes) {
 function ConvertToMinute (time) {
     if (time) {
         let tempTime = time.split(':')
-        let hrs = temp_time[0]
+        let hrs = tempTime[0]
         let hours = (hrs / 60)
         let rhours = Math.floor(hours)
         let minutes = (hrs - rhours) * 60
