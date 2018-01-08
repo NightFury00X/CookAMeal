@@ -686,14 +686,14 @@ CommonService.prototype.Order = {
         const trans = await db.sequelize.transaction()
         try {
             const order = await db.Order.create(orderDetails, {transaction: trans})
+            if (!order) {
+                trans.rollback()
+                return null
+            }
             for (const index in recipesToJson) {
                 if (recipesToJson.hasOwnProperty(index)) {
                     recipesToJson[index].order_id = order.id
                 }
-            }
-            if (!order) {
-                trans.rollback()
-                return null
             }
             for (const recipe of recipesToJson) {
                 const orderItem = await db.OrderItem.create(recipe, {transaction: trans})

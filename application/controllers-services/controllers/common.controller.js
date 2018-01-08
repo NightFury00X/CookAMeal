@@ -410,7 +410,6 @@ let Order = {
         try {
             const userId = req.user.id
             let orderDetails = req.body
-            console.log('Order: ', orderDetails)
             let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
             orderDetails.user_type_id = userId
             const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
