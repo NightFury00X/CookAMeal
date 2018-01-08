@@ -134,7 +134,7 @@ CommonConfig.ERRORS = {
         FAILURE: 'Unable to submit you feedback.'
     },
     ORDER: {
-        SUCCESS: 'Your order placed successfully',
+        SUCCESS: 'Your order placed successfully.',
         FAILURE: 'Your order couldn"t completed.'
     }
 }
