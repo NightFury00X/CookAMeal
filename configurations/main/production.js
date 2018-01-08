@@ -28,7 +28,7 @@ exports.mssql = {
         useUTC: true,
         useIST: false
     },
-    logging: true,
+    logging: false,
     pool: {
         idleTimeoutMillis: 300000,
         max: 100
