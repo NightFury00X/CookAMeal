@@ -1,5 +1,5 @@
-BaseService = function() {
+BaseService = function () {
 
-};
+}
 
-module.exports = BaseService;
+module.exports = BaseService

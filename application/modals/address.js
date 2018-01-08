@@ -1,8 +1,8 @@
 // The Address Model.
-'use strict';
-const Country = require('../../configurations/helpers/helper').Country;
+'use strict'
+const Country = require('../../configurations/helpers/helper').Country
 
-const CommonConfig = require("../../configurations/helpers/common-config");
+const CommonConfig = require('../../configurations/helpers/common-config')
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
@@ -14,19 +14,19 @@ module.exports = function (sequelize, DataTypes) {
         },
         street: {
             type: DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: false
         },
         city: {
             type: DataTypes.STRING(50),
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
+                    args: ['^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$', 'i'],
                     msg: 'The city you have entered is contains some bed characters.'
                 }
             },
-            set(value) {
-                this.setDataValue('city', CommonConfig.toTitleCase(value));
+            set (value) {
+                this.setDataValue('city', CommonConfig.toTitleCase(value))
             }
         },
         state: {
@@ -34,12 +34,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
+                    args: ['^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$', 'i'],
                     msg: 'The state you have entered is contains some bed characters.'
                 }
             },
-            set(value) {
-                this.setDataValue('state', CommonConfig.toTitleCase(value));
+            set (value) {
+                this.setDataValue('state', CommonConfig.toTitleCase(value))
             }
         },
         zip_code: {
@@ -47,7 +47,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isNumeric: {
-                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
+                    args: ['^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$', 'i'],
                     msg: 'The zipcode you have entered is contains some bed characters.'
                 }
             }
@@ -57,12 +57,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$", 'i'],
+                    args: ['^^[a-zA-Z-,]+(\\s{0,1}[a-zA-Z-, ])*$', 'i'],
                     msg: 'The country you have entered is contains some bed characters.'
                 }
             },
-            set(value) {
-                this.setDataValue('country', CommonConfig.toTitleCase(value));
+            set (value) {
+                this.setDataValue('country', CommonConfig.toTitleCase(value))
             }
         },
         currency_code: {
@@ -81,23 +81,22 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
-    
+    }
+
     // 2: The model options.
     let modelOptions = {
         hooks: {
             beforeValidate: FindConutryDetails
         },
         underscored: true
-    };
-    
-    return sequelize.define('Address', modelDefinition, modelOptions);
-};
+    }
 
+    return sequelize.define('Address', modelDefinition, modelOptions)
+}
 
 // Hashes the password for a user object.
-async function FindConutryDetails(address) {
-    const currencyDetails = await Country.GetCourrencyDetailsByCountryName(address.country);
-    address.currency_code = currencyDetails.code;
-    address.currency_symbol = currencyDetails.symbol;
+async function FindConutryDetails (address) {
+    const currencyDetails = await Country.GetCourrencyDetailsByCountryName(address.country)
+    address.currency_code = currencyDetails.code
+    address.currency_symbol = currencyDetails.symbol
 }

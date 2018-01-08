@@ -1,21 +1,21 @@
-const timezone = 'UTC';
-process.env.TZ = timezone;
+const timezone = 'UTC'
+process.env.TZ = timezone
 
 exports.app = app = {
     title: 'cook-A-Meal',
     host: 'localhost',
     port: 8081,
     ssl: false
-};
+}
 
 exports.mssql = {
     dialect: 'mssql',
     host: 'localhost',
     port: 1433, // Default port
     define: {
-        schema: "dbo",
+        schema: 'dbo',
         timestamps: true,
-        freezeTableName: false,
+        freezeTableName: false
     },
     raw: false,
     syncOnAssociation: true,
@@ -30,26 +30,27 @@ exports.mssql = {
         useUTC: true,
         useIST: false
     },
-    logging: console.log,
+    // logging: console.log,
+    logging: false,
     pool: {
         idleTimeoutMillis: 300000,
         max: 100
     }
-};
+}
 
 exports.user = {
     dbname: 'cookameal',
     user: 'sa',
     password: 'Admin@123'
-};
+}
 
 exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
-};
+}
 
-exports.FOLDER_LOCATION = 'E:/cook-A-Meal/uploads/';
+exports.FOLDER_LOCATION = 'E:/cook-A-Meal/uploads/'
 
-exports.FILE_LOCATION = 'E:/cook-A-Meal/uploads/';
+exports.FILE_LOCATION = 'E:/cook-A-Meal/uploads/'
 
 exports.UPLOAD_LOCATION = [
     {PATH: 'E:/cook-A-Meal/uploads/profiles'},
@@ -57,11 +58,11 @@ exports.UPLOAD_LOCATION = [
     {PATH: 'E:/cook-A-Meal/uploads/certificates'},
     {PATH: 'E:/cook-A-Meal/uploads/categories'},
     {PATH: 'E:/cook-A-Meal/uploads/recipe'}
-];
+]
 
 exports.DOMAIN = {
     NAME: 'E:/cook-A-Meal/'
-};
+}
 
 exports.CONFIG = {
     EMAIL_ENGINE_OPTIONS: {
@@ -73,10 +74,10 @@ exports.CONFIG = {
         extName: '.hbs'
     },
     EMAIL_OPTIONS: {
-        service: "gmail",
+        service: 'gmail',
         auth: {
             user: 'curacall2015@gmail.com',
             pass: 'Curacall_2015'
         }
     }
-};
+}

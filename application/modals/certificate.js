@@ -1,5 +1,5 @@
 // The Certificate Model.
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
@@ -12,20 +12,20 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
-    
+    }
+
     // 2: The model options.
     let modelOptions = {
         underscored: true
-    };
-    
-    let Certificate = sequelize.define('Certificate', modelDefinition, modelOptions);
-    
+    }
+
+    let Certificate = sequelize.define('Certificate', modelDefinition, modelOptions)
+
     Certificate.associate = function (models) {
         Certificate.hasMany(models.MediaObject, {
             onDelete: 'CASCADE'
-        });
-    };
-    
-    return Certificate;
-};
+        })
+    }
+
+    return Certificate
+}

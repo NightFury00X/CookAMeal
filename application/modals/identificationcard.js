@@ -1,7 +1,7 @@
 // The Identification Model.
-'use strict';
+'use strict'
 
-const CommonConfig = require("../../configurations/helpers/common-config");
+const CommonConfig = require('../../configurations/helpers/common-config')
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
@@ -14,13 +14,13 @@ module.exports = function (sequelize, DataTypes) {
         type: {
             type: DataTypes.STRING(100),
             allowNull: false,
-            set(value) {
-                this.setDataValue('type', CommonConfig.toTitleCase(value));
+            set (value) {
+                this.setDataValue('type', CommonConfig.toTitleCase(value))
             }
         },
         type_id: {
             type: DataTypes.STRING(50),
-            allowNull: false,
+            allowNull: false
         },
         country: {
             type: DataTypes.STRING,
@@ -28,20 +28,20 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
-    
+    }
+
     // 2: The model options.
     let modelOptions = {
         underscored: true
-    };
-    
-    let IdentificationCard = sequelize.define('IdentificationCard', modelDefinition, modelOptions);
-    
+    }
+
+    let IdentificationCard = sequelize.define('IdentificationCard', modelDefinition, modelOptions)
+
     IdentificationCard.associate = function (models) {
         IdentificationCard.hasOne(models.MediaObject, {
             onDelete: 'CASCADE'
-        });
-    };
-    
-    return IdentificationCard;
-};
+        })
+    }
+
+    return IdentificationCard
+}

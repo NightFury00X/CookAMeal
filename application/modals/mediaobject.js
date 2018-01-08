@@ -1,5 +1,5 @@
 // The MediaObject Model.
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         originalname: {
             type: DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: false
         },
         encoding: {
             type: DataTypes.STRING(100),
@@ -44,12 +44,12 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
-    
+    }
+
     // 2: The model options.
     let modelOptions = {
         underscored: true
-    };
-    
-    return sequelize.define('MediaObject', modelDefinition, modelOptions);
-};
+    }
+
+    return sequelize.define('MediaObject', modelDefinition, modelOptions)
+}

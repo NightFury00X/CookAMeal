@@ -1,5 +1,5 @@
 // The TokenBlackList Model.
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
@@ -12,20 +12,20 @@ module.exports = function (sequelize, DataTypes) {
         },
         token: {
             type: DataTypes.STRING(500),
-            allowNull: false,
+            allowNull: false
         },
         reasons: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
-    
+    }
+
     // 2: The model options.
     let modelOptions = {
         underscored: true
-    };
-    
-    return sequelize.define('BlackListedToken', modelDefinition, modelOptions);
-};
+    }
+
+    return sequelize.define('BlackListedToken', modelDefinition, modelOptions)
+}

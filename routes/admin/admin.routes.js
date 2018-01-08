@@ -1,41 +1,38 @@
-'use strict';
+'use strict'
 
-const router = require('express').Router(),
-    AdminController = require('../../application/controllers-services/controllers/admin.controller'),
-    FileUploader = require("../../configurations/helpers/file-upload-multer"),
-    {ValidateBody} = require('../../configurations/middlewares/validation'),
-    {BodySchemas} = require('../../application/schemas/schema'),
-    {
-        RequestMethodsMiddlewares,
-    } = require('../../configurations/middlewares/middlewares');
+const router = require('express').Router()
+const AdminController = require('../../application/controllers-services/controllers/admin.controller')
+const FileUploader = require('../../configurations/helpers/file-upload-multer')
+const {ValidateBody} = require('../../configurations/middlewares/validation')
+const {BodySchemas} = require('../../application/schemas/schema')
+const {RequestMethodsMiddlewares} = require('../../configurations/middlewares/middlewares')
 
-//1: Add Category
+// 1: Add Category
 router.post('/category',
     RequestMethodsMiddlewares.ApplicationFormData,
     FileUploader.uploadFile,
-    AdminController.Category.Add);
+    AdminController.Category.Add)
 
-//2: Add Sub Category
+// 2: Add Sub Category
 router.post('/subcategory',
     RequestMethodsMiddlewares.ApplicationJsonData,
-    AdminController.SubCategory.Add);
+    AdminController.SubCategory.Add)
 
-//3: Add Allergy
+// 3: Add Allergy
 router.post('/allergy',
     RequestMethodsMiddlewares.ApplicationJsonData,
-    AdminController.Allergy.Add);
+    AdminController.Allergy.Add)
 
-
-//3: Add Units
+// 3: Add Units
 router.post('/unit',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.Unit),
-    AdminController.Units.Add);
+    AdminController.Units.Add)
 
-//3: Add Payment Method
+// 3: Add Payment Method
 router.post('/payment-method',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.PaymentMethod),
-    AdminController.PaymentMethod.Add);
+    AdminController.PaymentMethod.Add)
 
-module.exports = router;
+module.exports = router

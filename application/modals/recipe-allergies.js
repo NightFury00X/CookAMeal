@@ -1,5 +1,5 @@
 // The RecipeAllergies Model.
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
@@ -12,23 +12,23 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
-    
+    }
+
     // 2: The model options.
     let modelOptions = {
         underscored: true
-    };
-    
-    let RecipeAllergy = sequelize.define('RecipeAllergy', modelDefinition, modelOptions);
-    
+    }
+
+    let RecipeAllergy = sequelize.define('RecipeAllergy', modelDefinition, modelOptions)
+
     RecipeAllergy.associate = function (models) {
         RecipeAllergy.belongsTo(models.Recipe, {
             onDelete: 'CASCADE'
-        });
+        })
         RecipeAllergy.belongsTo(models.Allergy, {
             onDelete: 'CASCADE'
-        });
-    };
-    
-    return RecipeAllergy;
-};
+        })
+    }
+
+    return RecipeAllergy
+}

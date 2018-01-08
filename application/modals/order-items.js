@@ -1,6 +1,5 @@
-// The Rating Model.
+// The Order Model.
 'use strict'
-
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
@@ -9,14 +8,6 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
-        },
-        rating: {
-            type: DataTypes.FLOAT,
-            defaultValue: 0,
-            allowNull: false
-        },
-        comments: {
-            type: DataTypes.TEXT
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
@@ -27,5 +18,5 @@ module.exports = function (sequelize, DataTypes) {
         underscored: true
     }
 
-    return sequelize.define('Review', modelDefinition, modelOptions)
+    return sequelize.define('OrderItem', modelDefinition, modelOptions)
 }

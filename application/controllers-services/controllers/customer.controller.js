@@ -1,4 +1,4 @@
 // The authentication controller.
-const CustomerController = {};
+const CustomerController = {}
 
-module.exports = CustomerController;
+module.exports = CustomerController

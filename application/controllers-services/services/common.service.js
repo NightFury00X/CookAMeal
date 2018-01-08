@@ -1,12 +1,12 @@
-const randomString = require('random-string'),
-    Sequelize = require("sequelize"),
-    Op = Sequelize.Op,
-    db = require('../../modals'),
-    {AuthenticationHelpers} = require('../../../configurations/helpers/helper'),
-    CommonConfig = require('../../../configurations/helpers/common-config');
+const randomString = require('random-string')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+const db = require('../../modals')
+const {AuthenticationHelpers} = require('../../../configurations/helpers/helper')
+const CommonConfig = require('../../../configurations/helpers/common-config')
 
 CommonService = function () {
-};
+}
 
 CommonService.prototype.UserModel = {
     GetDetailsByEmail: async (email) => {
@@ -16,20 +16,20 @@ CommonService.prototype.UserModel = {
                     [Op.eq]: [email]
                 }
             }
-        });
+        })
     }
-};
+}
 
 CommonService.prototype.Keys = {
     RandomKeys: {
         GenerateRandomKey: async () => {
-            return await randomString(CommonConfig.OPTIONS.RANDOM_KEYS);
+            return await randomString(CommonConfig.OPTIONS.RANDOM_KEYS)
         },
         GenerateUnique16DigitKey: async () => {
-            return await randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS);
+            return await randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS)
         }
     }
-};
+}
 
 CommonService.prototype.GetResetPasswordData = async (email) => {
     try {
@@ -39,11 +39,11 @@ CommonService.prototype.GetResetPasswordData = async (email) => {
                     [Op.eq]: [email]
                 }
             }
-        });
+        })
     } catch (error) {
-        throw (error);
+        throw (error)
     }
-};
+}
 
 CommonService.prototype.CheckUserTypeByUserId = async (fbId) => {
     try {
@@ -54,11 +54,11 @@ CommonService.prototype.CheckUserTypeByUserId = async (fbId) => {
                     [Op.eq]: [fbId]
                 }
             }
-        });
+        })
     } catch (error) {
-        throw (error);
+        throw (error)
     }
-};
+}
 
 CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
     try {
@@ -74,22 +74,22 @@ CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
                     model: db.MediaObject
                 }]
             }]
-        });
+        })
     } catch (error) {
-        throw (error);
+        throw (error)
     }
-};
+}
 
 CommonService.prototype.GenerateToken = async (tokenData, userData) => {
     try {
         return {
             token: AuthenticationHelpers.GenerateToken(tokenData, false, true),
             userDetails: userData
-        };
+        }
     } catch (error) {
-        throw (error);
+        throw (error)
     }
-};
+}
 
 CommonService.prototype.GetCategories = async () => {
     try {
@@ -106,11 +106,11 @@ CommonService.prototype.GetCategories = async () => {
                     }
                 }
             ]
-        });
+        })
     } catch (error) {
-        throw (error);
+        throw (error)
     }
-};
+}
 
 CommonService.prototype.GetCategoryById = async (catId) => {
     try {
@@ -122,25 +122,24 @@ CommonService.prototype.GetCategoryById = async (catId) => {
                 }
             },
             include: [{model: db.MediaObject, attributes: ['imageurl']}]
-        });
+        })
     } catch (error) {
-        return error;
+        return error
     }
-};
+}
 
 CommonService.prototype.GenerateRandomKey = async () => {
-    return randomString(CommonConfig.OPTIONS.RANDOM_KEYS);
-};
+    return randomString(CommonConfig.OPTIONS.RANDOM_KEYS)
+}
 
 CommonService.prototype.GenerateUnique16DigitKey = async () => {
-    return randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS);
-};
+    return randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS)
+}
 
 CommonService.prototype.ChangePassword = async (userDetails) => {
-    const trans = await db.sequelize.transaction();
+    const trans = await db.sequelize.transaction()
     try {
-    
-        // Check reset password is requested or not.        
+        // Check reset password is requested or not.
         let records = await db.ResetPassword.findOne({
             where: {
                 user_type_id: {
@@ -151,17 +150,17 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                     is_valid: true
                 }]
             }
-        });
-    
+        })
+
         if (!records) {
-            trans.rollback();
-            return null;
+            trans.rollback()
+            return null
         }
-    
+
         // If reset password requested, update the record in ResetPassword
         let resetPasswordData = await db.ResetPassword.update({
             is_valid: false,
-            status: false,
+            status: false
         }, {
             where: {
                 [Op.and]: [{
@@ -169,14 +168,13 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                     email: records.email
                 }]
             }
-        }, {transaction: trans});
-    
-    
+        }, {transaction: trans})
+
         if (!resetPasswordData) {
-            trans.rollback();
-            return null;
+            trans.rollback()
+            return null
         }
-    
+
         // Update password field in user table
         let userData = await db.User.update({
             password: userDetails.password
@@ -187,21 +185,20 @@ CommonService.prototype.ChangePassword = async (userDetails) => {
                     email: userDetails.email
                 }]
             }
-        }, {transaction: trans});
-    
+        }, {transaction: trans})
+
         if (!userData) {
-            trans.rollback();
-            return null;
+            trans.rollback()
+            return null
         }
-    
-        await trans.commit();
-        return userData;
+
+        await trans.commit()
+        return userData
+    } catch (error) {
+        await trans.rollback()
+        throw (error)
     }
-    catch (error) {
-        await trans.rollback();
-        throw (error);
-    }
-};
+}
 
 CommonService.prototype.InvalidateResetPasswordTokenData = async (id) => {
     try {
@@ -214,11 +211,11 @@ CommonService.prototype.InvalidateResetPasswordTokenData = async (id) => {
                     [Op.eq]: id
                 }
             }
-        });
+        })
     } catch (error) {
-        return (error);
+        return (error)
     }
-};
+}
 
 CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
     try {
@@ -229,8 +226,8 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
                     model: db.MediaObject
                 }]
             }]
-        });
-        if (!userType) return null;
+        })
+        if (!userType) return null
         return {
             token: AuthenticationHelpers.GenerateToken(userType.userInfo, false, false),
             user: {
@@ -241,11 +238,11 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
                 user_role: userType.user_role,
                 profile_url: userType.Profile.MediaObjects.length > 0 ? userType.Profile.MediaObjects[0].imageurl : ''
             }
-        };
+        }
     } catch (error) {
-        throw (error);
+        throw (error)
     }
-};
+}
 
 CommonService.prototype.User = {
     GetCurrencySymbolByProfileId: async (profileId) => {
@@ -257,9 +254,9 @@ CommonService.prototype.User = {
                         [Op.eq]: profileId
                     }
                 }
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindAllReviewsByProfileId: async (profileId) => {
@@ -282,9 +279,9 @@ CommonService.prototype.User = {
                         attributes: ['id', 'imageurl']
                     }]
                 }]
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindProfileRatingByProfileId: async (profileId) => {
@@ -298,7 +295,7 @@ CommonService.prototype.User = {
                 attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'rating']]
             })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindCookAllCategoriesByProfileId: async (profileId) => {
@@ -313,11 +310,11 @@ CommonService.prototype.User = {
                         profile_id: {
                             [Op.eq]: profileId
                         }
-                    },
+                    }
                 }]
             })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     GetCookProfileDetailsById: async (profileId) => {
@@ -328,9 +325,9 @@ CommonService.prototype.User = {
                     model: db.MediaObject,
                     attributes: ['id', 'imageurl']
                 }]
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     GetProfileIdByUserTypeId: async (userTypeId) => {
@@ -344,18 +341,17 @@ CommonService.prototype.User = {
                 attributes: ['id', 'firstname', 'lastname']
             })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
-        
     },
     Logout: async (tokenDetails) => {
         try {
-            return await db.BlackListedToken.create(tokenDetails);
+            return await db.BlackListedToken.create(tokenDetails)
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     }
-};
+}
 
 CommonService.prototype.Recipe = {
     FindRecipeIsExist: async (recipeId) => {
@@ -364,7 +360,7 @@ CommonService.prototype.Recipe = {
                 attributes: ['id']
             })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindRecipeByCatIdAndSubIds: async (categoryId, subCategoryId) => {
@@ -384,9 +380,9 @@ CommonService.prototype.Recipe = {
                     attributes: ['id', 'imageurl'],
                     model: db.MediaObject
                 }]
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindRecipeById: async (recipeId) => {
@@ -416,9 +412,9 @@ CommonService.prototype.Recipe = {
                         model: db.MediaObject
                     }]
                 }]
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindRatingByRecipeId: async (recipeId) => {
@@ -430,9 +426,9 @@ CommonService.prototype.Recipe = {
                     }
                 },
                 attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'rating']]
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindAllRecipeByProfileId: async (profileId) => {
@@ -452,16 +448,16 @@ CommonService.prototype.Recipe = {
                         attributes: ['id', 'imageurl']
                     }]
                 }]
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindAllByCategoryId: async (categoryId) => {
         try {
             return db.SubCategory.findAll({
                 attributes: ['id', 'name'],
-    
+
                 include: [{
                     model: db.Recipe,
                     attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time'],
@@ -479,31 +475,9 @@ CommonService.prototype.Recipe = {
                         attributes: ['id', 'imageurl']
                     }]
                 }]
-            });
-        } catch (error) {
-            throw (error);
-        }
-    },
-    FindAllRecipeByCookId: async (profileId) => {
-        try {
-            return await db.Recipe.findAll({
-                order: [
-                    [Sequelize.fn('NEWID')]
-                ],
-                limit: 10,
-                where: {
-                    profile_id: {
-                        [Op.eq]: profileId,
-                    }
-                },
-                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'serve', 'category_id', 'sub_category_id'],
-                include: [{
-                    model: db.MediaObject,
-                    attributes: ['id', 'imageurl']
-                }]
             })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindAllRecipeByCookIdExcludeSelectedRecipe: async (profileId, recipeId) => {
@@ -516,7 +490,7 @@ CommonService.prototype.Recipe = {
                 where: {
                     [Op.and]: [{
                         profile_id: {
-                            [Op.eq]: profileId,
+                            [Op.eq]: profileId
                         },
                         id: {
                             [Op.ne]: recipeId
@@ -530,30 +504,7 @@ CommonService.prototype.Recipe = {
                 }]
             })
         } catch (error) {
-            throw (error);
-        }
-    },
-    FindSimilarRecipesBySubCategoryId: async (subCategoryId) => {
-        try {
-            return await db.Recipe.findAll({
-                order: [
-                    [Sequelize.fn('NEWID')]
-                ],
-                limit: 10,
-                required: true,
-                where: {
-                    sub_category_id: {
-                        [Op.eq]: subCategoryId
-                    }
-                },
-                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id'],
-                include: [{
-                    model: db.MediaObject,
-                    attributes: ['id', 'imageurl']
-                }]
-            });
-        } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     FindSimilarRecipesBySubCategoryIdExcludeSelectedCookRecipe: async (subCategoryId, profileId) => {
@@ -579,16 +530,16 @@ CommonService.prototype.Recipe = {
                     model: db.MediaObject,
                     attributes: ['id', 'imageurl']
                 }]
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     MarkFavorite: async (favoriteData, isFav) => {
         try {
-            if (!isFav)
-                return await db.Favorite.create(favoriteData);
-            else
+            if (!isFav) {
+                return await db.Favorite.create(favoriteData)
+            } else {
                 return await db.Favorite.destroy({
                     where: {
                         [Op.and]: [{
@@ -596,9 +547,10 @@ CommonService.prototype.Recipe = {
                             user_type_id: favoriteData.user_type_id
                         }]
                     }
-                });
+                })
+            }
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     GetFavoriteRecipeListByUserId: async (userId) => {
@@ -612,7 +564,7 @@ CommonService.prototype.Recipe = {
                 }
             })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     CheckRecipeIsFavoriteByRecipeIdAndUserId: async (userId, recipeId) => {
@@ -626,108 +578,137 @@ CommonService.prototype.Recipe = {
                 }
             })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     }
-};
+}
 
 CommonService.prototype.Feedback = {
     Add: async (feedback) => {
         try {
-            return await db.Feedback.create(feedback);
-        }
-        catch (error) {
-            throw (error);
+            return await db.Feedback.create(feedback)
+        } catch (error) {
+            throw (error)
         }
     }
-};
+}
 
 CommonService.prototype.Review = {
     CheckRecipeId: async (recipeId) => {
         try {
-            return await db.Recipe.findById(recipeId);
+            return await db.Recipe.findById(recipeId)
         } catch (error) {
-            throw(error);
+            throw (error)
         }
     },
     CheckUserId: async (profileId) => {
         try {
-            return await db.UserType.findById(profileId);
+            return await db.UserType.findById(profileId)
         } catch (error) {
-            throw(error);
+            throw (error)
         }
     },
     Recipe: async (reviewDetails) => {
         try {
-            return await db.Review.create(reviewDetails);
+            return await db.Review.create(reviewDetails)
         } catch (error) {
-            throw(error);
+            throw (error)
         }
     },
     Profile: async (reviewDetails) => {
         try {
-            return await db.Review.create(reviewDetails);
+            return await db.Review.create(reviewDetails)
         } catch (error) {
-            throw(error);
+            throw (error)
         }
     }
-};
+}
 
 CommonService.prototype.SubCategory = {
     FindById: async (subCategoryId) => {
         try {
             return await db.SubCategory.findById(subCategoryId, {
                 attributes: ['id', 'name']
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     },
     GettAll: async () => {
         try {
             return await db.SubCategory.findAll({
                 attributes: ['id', 'name']
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     }
-};
+}
 
 CommonService.prototype.Allergy = {
     GettAll: async () => {
         try {
             return await db.Allergy.findAll({
                 attributes: ['id', 'name']
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     }
-};
+}
 
 CommonService.prototype.Units = {
     GettAll: async () => {
         try {
             return await db.Unit.findAll({
                 attributes: ['id', 'unit_name', 'sort_name']
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     }
-};
+}
 
 CommonService.prototype.PaymentMethod = {
     GettAll: async () => {
         try {
             return await db.PaymentMethod.findAll({
                 attributes: ['id', 'name']
-            });
+            })
         } catch (error) {
-            throw (error);
+            throw (error)
         }
     }
-};
+}
 
-module.exports = new CommonService();
+CommonService.prototype.Order = {
+    PlaceOrder: async (orderDetails, recipesToJson) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const order = await db.Order.create(orderDetails, {transaction: trans})
+            for (const index in recipesToJson) {
+                if (recipesToJson.hasOwnProperty(index)) {
+                    recipesToJson[index].order_id = order.id
+                }
+            }
+            if (!order) {
+                trans.rollback()
+                return null
+            }
+            for (const recipe of recipesToJson) {
+                const orderItem = await db.OrderItem.create(recipe, {transaction: trans})
+                if (!orderItem) {
+                    trans.rollback()
+                    return null
+                }
+            }
+            trans.commit()
+            return true
+        } catch (error) {
+            trans.rollback()
+            throw (error)
+        }
+    }
+}
+
+module.exports = new CommonService()

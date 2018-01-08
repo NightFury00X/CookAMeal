@@ -1,7 +1,7 @@
 // The Recipe Model.
-'use strict';
+'use strict'
 
-const CommonConfig = require("../../configurations/helpers/common-config");
+const CommonConfig = require('../../configurations/helpers/common-config')
 
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
@@ -15,41 +15,41 @@ module.exports = function (sequelize, DataTypes) {
         dish_name: {
             type: DataTypes.STRING(150),
             allowNull: false,
-            set(value) {
-                this.setDataValue('dish_name', CommonConfig.toTitleCase(value));
-            },
+            set (value) {
+                this.setDataValue('dish_name', CommonConfig.toTitleCase(value))
+            }
         },
         preparation_method: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: false
         },
         preparation_time: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         cook_time: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         tags: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
         cost_per_serving: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: true
         },
         available_servings: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: true
         },
         order_by_date_time: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: true
         },
         pick_up_by_date_time: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: true
         },
         serve: {
             type: DataTypes.INTEGER,
@@ -58,7 +58,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         delivery_fee: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: true
         },
         total_cost_of_ingredients: {
             type: DataTypes.DECIMAL,
@@ -66,66 +66,72 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
-    
+    }
+
     // 2: The model options.
     let modelOptions = {
         getterMethods: {
-            preparation_time_in_minute() {
-                return ConvertToMinute(this.preparation_time);
+            preparation_time_in_minute () {
+                return ConvertToMinute(this.preparation_time)
             },
-            cook_time_in_minute() {
-                return ConvertToMinute(this.cook_time);
+            cook_time_in_minute () {
+                return ConvertToMinute(this.cook_time)
             }
         },
         underscored: true
-    };
-    
-    let Recipe = sequelize.define('Recipe', modelDefinition, modelOptions);
-    
+    }
+
+    let Recipe = sequelize.define('Recipe', modelDefinition, modelOptions)
+
     Recipe.associate = function (models) {
         Recipe.hasOne(models.Day, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
-        });
+        })
         Recipe.hasMany(models.Ingredient, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
-        });
+        })
         Recipe.hasMany(models.MediaObject, {
             onDelete: 'CASCADE'
-        });
+        })
         Recipe.hasMany(models.RecipeAllergy, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
-        });
+        })
         Recipe.hasMany(models.Review, {
             onDelete: 'CASCADE'
-        });
+        })
         Recipe.hasMany(models.Favorite, {
             onDelete: 'CASCADE'
-        });
-    };
-    return Recipe;
-};
+        })
+        Recipe.hasMany(models.OrderItem, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+    }
+    return Recipe
+}
 
 /**
  * @return {string}
  */
-function ConvertToMinute(time) {
+function ConvertToMinute (time) {
     if (time) {
-        let temp_time = time.split(':');
-        let hrs = temp_time[0];
-        let hours = (hrs / 60);
-        let rhours = Math.floor(hours);
-        let minutes = (hrs - rhours) * 60;
-        let mnt = temp_time[1];
-        return (minutes + parseInt(mnt)) + ' Minutes';
+        let tempTime = time.split(':')
+        let hrs = temp_time[0]
+        let hours = (hrs / 60)
+        let rhours = Math.floor(hours)
+        let minutes = (hrs - rhours) * 60
+        let mnt = tempTime[1]
+        return (minutes + parseInt(mnt)) + ' Minutes'
     }
 }

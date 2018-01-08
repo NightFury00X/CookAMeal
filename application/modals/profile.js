@@ -1,6 +1,6 @@
 // The Profile Model.
-'use strict';
-let CommonConfig = require('../../configurations/helpers/common-config');
+'use strict'
+let CommonConfig = require('../../configurations/helpers/common-config')
 
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
@@ -30,12 +30,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^[a-z]+$", 'i'],
+                    args: ['^[a-z]+$', 'i'],
                     msg: 'The first name you have entered is contains some bed characters.'
                 }
             },
-            set(value) {
-                this.setDataValue('firstname', CommonConfig.toTitleCase(value));
+            set (value) {
+                this.setDataValue('firstname', CommonConfig.toTitleCase(value))
             }
         },
         lastname: {
@@ -43,12 +43,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 is: {
-                    args: ["^[a-z]+$", 'i'],
+                    args: ['^[a-z]+$', 'i'],
                     msg: 'The last name you have entered is contains some bed characters.'
                 }
             },
-            set(value) {
-                this.setDataValue('lastname', CommonConfig.toTitleCase(value));
+            set (value) {
+                this.setDataValue('lastname', CommonConfig.toTitleCase(value))
             }
         },
         phone: {
@@ -67,7 +67,7 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 isIn: {
                     args: [['m', 'M', 'f', 'F']],
-                    msg: "Must be valid gender Male or Female."
+                    msg: 'Must be valid gender Male or Female.'
                 }
             }
         },
@@ -86,7 +86,7 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 isIn: {
                     args: [['1', '2']],
-                    msg: "Invalid user type."
+                    msg: 'Invalid user type.'
                 }
             }
         },
@@ -107,61 +107,61 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
+    }
 
-// 2: The model options.
+    // 2: The model options.
     let modelOptions = {
         underscored: true,
         getterMethods: {
-            fullName() {
-                return this.firstname + ' ' + this.lastname;
+            fullName () {
+                return this.firstname + ' ' + this.lastname
             }
         }
-    };
-    
-    let ProfileModel = sequelize.define('Profile', modelDefinition, modelOptions);
-    
+    }
+
+    let ProfileModel = sequelize.define('Profile', modelDefinition, modelOptions)
+
     ProfileModel.associate = function (models) {
         ProfileModel.hasOne(models.Address, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
-        });
+        })
         ProfileModel.hasOne(models.Social, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
-        });
+        })
         ProfileModel.hasOne(models.Certificate, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
-        });
+        })
         ProfileModel.hasOne(models.IdentificationCard, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
-        });
+        })
         ProfileModel.hasMany(models.Recipe, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
-        });
+        })
         ProfileModel.hasMany(models.MediaObject, {
             onDelete: 'CASCADE'
-        });
+        })
         ProfileModel.hasMany(models.Review, {
             onDelete: 'CASCADE'
-        });
+        })
         ProfileModel.hasMany(models.Favorite, {
             onDelete: 'CASCADE'
-        });
-    };
-    
-    return ProfileModel;
-};
+        })
+    }
+
+    return ProfileModel
+}

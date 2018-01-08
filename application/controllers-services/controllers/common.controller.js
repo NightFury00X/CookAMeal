@@ -85,14 +85,10 @@ let Category = {
     FindById: async (req, res, next) => {
         try {
             if (!req.params.id) {
-                return next({
-                    message: 'Category not found.',
-                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
-                }, false)
+                return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.CATEGORY.NOT_FOUND, res)
             }
-
-            let catId = req.params.id
-            let result = await CommonService.GetCategoryById(catId)
+            const catId = req.params.id
+            const result = await CommonService.GetCategoryById(catId)
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -128,7 +124,7 @@ let Category = {
 let SubCategory = {
     GetAll: async (req, res, next) => {
         try {
-            let result = await CommonService.SubCategory.GettAll()
+            const result = await CommonService.SubCategory.GettAll()
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -137,14 +133,10 @@ let SubCategory = {
     FindById: async (req, res, next) => {
         try {
             if (!req.params.id) {
-                return next({
-                    message: 'Category not found.',
-                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
-                }, false)
+                return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.SUB_CATEGORY.NOT_FOUND, res)
             }
-
-            let catId = req.params.id
-            let result = await CommonService.GetCategoryById(catId)
+            const catId = req.params.id
+            const result = await CommonService.GetCategoryById(catId)
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -155,7 +147,7 @@ let SubCategory = {
 let Allergy = {
     GetAll: async (req, res, next) => {
         try {
-            let result = await CommonService.Allergy.GettAll()
+            const result = await CommonService.Allergy.GettAll()
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -164,14 +156,10 @@ let Allergy = {
     FindById: async (req, res, next) => {
         try {
             if (!req.params.id) {
-                return next({
-                    message: 'Category not found.',
-                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
-                }, false)
+                return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.ALLERGY.NOT_FOUND, res)
             }
-
-            let catId = req.params.id
-            let result = await CommonService.GetCategoryById(catId)
+            const catId = req.params.id
+            const result = await CommonService.GetCategoryById(catId)
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -182,7 +170,7 @@ let Allergy = {
 let Units = {
     GetAll: async (req, res, next) => {
         try {
-            let result = await CommonService.Units.GettAll()
+            const result = await CommonService.Units.GettAll()
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -191,14 +179,10 @@ let Units = {
     FindById: async (req, res, next) => {
         try {
             if (!req.params.id) {
-                return next({
-                    message: 'Category not found.',
-                    status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
-                }, false)
+                return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.UNIT.NOT_FOUND, res)
             }
-
-            let catId = req.params.id
-            let result = await CommonService.GetCategoryById(catId)
+            const catId = req.params.id
+            const result = await CommonService.GetCategoryById(catId)
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -307,12 +291,12 @@ const Recipe = {
             }
             const recipe = await CommonService.Recipe.FindRecipeIsExist(favorite.recipe_id)
             if (!recipe) {
-                return ResponseHelpers.SetNotFoundResponse('Recipe is not found.', res)
+                return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.RECIPE.NOT_FOUND, res)
             }
             const isFavorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(favorite.user_type_id, favorite.recipe_id)
             const flag = !!isFavorite
             await CommonService.Recipe.MarkFavorite(favorite, flag)
-            const msg = !flag ? 'Recipe marked favorite successfully.' : 'Recipe un-marked favorite successfully.'
+            const msg = !flag ? CommonConfig.ERRORS.RECIPE.MARKED : CommonConfig.ERRORS.RECIPE.UNMARKED
             return ResponseHelpers.SetSuccessResponse({
                 Message: msg,
                 favorite: !flag
@@ -344,13 +328,13 @@ const ReviewDetails = {
             }
             const isExist = await CommonService.Review.CheckRecipeId(review.recipe_id)
             if (!isExist) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit review.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.REVIEW.FAILURE, res)
             }
             const result = await CommonService.Review.Recipe(review)
             if (!result) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit review.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.REVIEW.FAILURE, res)
             }
-            return ResponseHelpers.SetSuccessResponse({Message: 'Review submitted successfully.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse({Message: CommonConfig.ERRORS.REVIEW.SUCCESS}, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
@@ -367,14 +351,14 @@ const ReviewDetails = {
 
             const isExist = await CommonService.Review.CheckUserId(review.profile_id)
             if (!isExist) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit review.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.REVIEW.FAILURE, res)
             }
 
             const result = await CommonService.Review.Profile(review)
             if (!result) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit review.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.REVIEW.FAILURE, res)
             }
-            return ResponseHelpers.SetSuccessResponse({Message: 'Review submitted successfully.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse({Message: CommonConfig.ERRORS.REVIEW.SUCCESS}, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
@@ -390,9 +374,9 @@ const Feedback = {
             let result = await CommonService.Feedback.Add(feedback)
             console.log(result)
             if (!result) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to submit you feedback.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.FEEDBACK.FAILURE, res)
             }
-            return ResponseHelpers.SetSuccessResponse({Message: 'Feedback submitted successfully.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse({Message: CommonConfig.ERRORS.FEEDBACK.SUCCESS}, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
@@ -417,6 +401,21 @@ let Order = {
                 Tax: parseFloat(5)
             }
             return ResponseHelpers.SetSuccessResponse(prepareData, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+    MakeOrder: async (req, res, next) => {
+        try {
+            const userId = req.user.id
+            let orderDetails = req.body
+            let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
+            orderDetails.user_type_id = userId
+            const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
+            if (!result) {
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+            return ResponseHelpers.SetSuccessResponse({Message: CommonConfig.ERRORS.ORDER.SUCCESS}, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }

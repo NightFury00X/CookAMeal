@@ -1,5 +1,5 @@
 // The Favorite Model.
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
@@ -16,7 +16,7 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 isIn: {
                     args: [['bug', 'feedback']],
-                    msg: "Invalid feedback type."
+                    msg: 'Invalid feedback type.'
                 }
             }
         },
@@ -26,7 +26,7 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 isIn: {
                     args: [['cook', 'customer', 'Cook', 'Customer', 'COOK', 'CUSTOMER']],
-                    msg: "Invalid user type."
+                    msg: 'Invalid user type.'
                 }
             }
         },
@@ -36,12 +36,12 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
-    
+    }
+
     // 2: The model options.
     let modelOptions = {
         underscored: true
-    };
-    
-    return sequelize.define('Feedback', modelDefinition, modelOptions);
-};
+    }
+
+    return sequelize.define('Feedback', modelDefinition, modelOptions)
+}

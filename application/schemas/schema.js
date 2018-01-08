@@ -1,4 +1,4 @@
-let Joi = require('joi');
+let Joi = require('joi')
 
 module.exports = {
     ParamSchemas: {
@@ -73,6 +73,17 @@ module.exports = {
             feedbackType: Joi.string().required().allow('bug', 'feedback'),
             feedbackAs: Joi.string().required().allow('cook', 'customer', 'Cook', 'Customer', 'COOK', 'CUSTOMER'),
             comments: Joi.string().required()
+        }),
+        Order: Joi.object().keys({
+            spiceLevel: Joi.string().required().allow('Mild', 'Medium', 'Hot'),
+            orderServings: Joi.number().required(),
+            spiceInstruction: Joi.string().required(),
+            deliveryType: Joi.number().required(),
+            deliveryFee: Joi.string().required(),
+            pickUpTime: Joi.string().required(),
+            taxes: Joi.string().required(),
+            totalAmount: Joi.string().required(),
+            recipes: Joi.any().required()
         })
     }
-};
+}

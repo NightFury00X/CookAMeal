@@ -1,78 +1,80 @@
-const Sequelize = require("sequelize"),
-    Op = Sequelize.Op,
-    db = require('../../modals'),
-    CommonService = require('./common.service'),
-    {AuthenticationHelpers, MailingHelpers} = require('../../../configurations/helpers/helper'),
-    CommonConfig = require('../../../configurations/helpers/common-config');
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+const db = require('../../modals')
+const CommonService = require('./common.service')
+const {AuthenticationHelpers, MailingHelpers} = require('../../../configurations/helpers/helper')
+const CommonConfig = require('../../../configurations/helpers/common-config')
 
 AnonymousService = function () {
-};
+}
 
 AnonymousService.prototype.SignUp = async (registrationData, files) => {
-    const trans = await db.sequelize.transaction();
+    const trans = await db.sequelize.transaction()
     try {
-        let userData = registrationData.user;
-        if (userData.allergies)
-            userData.allergies = JSON.stringify(userData.allergies);
-        let type = CommonConfig.USER_TYPE.NORMAL_USER;
+        let userData = registrationData.user
+        if (userData.allergies) {
+            userData.allergies = JSON.stringify(userData.allergies)
+        }
+        let type = CommonConfig.USER_TYPE.NORMAL_USER
         if (registrationData.facebook && registrationData.facebook.fbid) {
-            let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid);
-            if (!fb)
-                type = CommonConfig.USER_TYPE.FACEBOOK_USER;
+            let fb = await CommonService.CheckUserTypeByUserId(registrationData.facebook.fbid)
+            if (!fb) {
+                type = CommonConfig.USER_TYPE.FACEBOOK_USER
+            }
         }
         let userType = await db.UserType.create({
             user_id: type === CommonConfig.USER_TYPE.NORMAL_USER ? userData.email : registrationData.facebook.fbid,
             user_type: type,
             user_role: userData.user_role
-        }, {transaction: trans});
+        }, {transaction: trans})
         if (type === CommonConfig.USER_TYPE.NORMAL_USER) {
             await db.User.create({
                 user_type_id: userType.id,
                 email: userData.email,
                 password: userData.password
-            }, {transaction: trans});
+            }, {transaction: trans})
         }
-        let tempData = userData;
-        delete tempData.password;
-        tempData.user_type_id = userType.id;
-        let userProfileData = await db.Profile.create(tempData, {transaction: trans});
-        registrationData.address.profile_id = userProfileData.id;
-        registrationData.social.profile_id = userProfileData.id;
-        await db.Address.create(registrationData.address, {transaction: trans});
-        await db.Social.create(registrationData.social, {transaction: trans});
-        let ProfileMediaObject;
-        let identificationCardData;
+        let tempData = userData
+        delete tempData.password
+        tempData.user_type_id = userType.id
+        let userProfileData = await db.Profile.create(tempData, {transaction: trans})
+        registrationData.address.profile_id = userProfileData.id
+        registrationData.social.profile_id = userProfileData.id
+        await db.Address.create(registrationData.address, {transaction: trans})
+        await db.Social.create(registrationData.social, {transaction: trans})
+        let ProfileMediaObject
+        let identificationCardData
         if (files) {
             if (files.profile) {
-                let profileImage = files.profile[0];
-                profileImage.profile_id = userProfileData.id;
-                profileImage.object_type = CommonConfig.OBJECT_TYPE.PROFILE;
-                profileImage.imageurl = CommonConfig.FILE_LOCATIONS.PROFILE + profileImage.filename;
-                ProfileMediaObject = await db.MediaObject.create(profileImage, {transaction: trans});
+                let profileImage = files.profile[0]
+                profileImage.profile_id = userProfileData.id
+                profileImage.object_type = CommonConfig.OBJECT_TYPE.PROFILE
+                profileImage.imageurl = CommonConfig.FILE_LOCATIONS.PROFILE + profileImage.filename
+                ProfileMediaObject = await db.MediaObject.create(profileImage, {transaction: trans})
             }
             if (files.identification_card) {
                 if (registrationData.identification_card) {
-                    let identificationCard = registrationData.identification_card;
-                    identificationCard.profile_id = userProfileData.id;
-                    identificationCardData = await db.IdentificationCard.create(identificationCard, {transaction: trans});
-                    let identificationCardMedia = files.identification_card[0];
-                    identificationCardMedia.identification_card_id = identificationCardData.id;
-                    identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD;
-                    identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
-                    identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename;
-                    await db.MediaObject.create(identificationCardMedia, {transaction: trans});
+                    let identificationCard = registrationData.identification_card
+                    identificationCard.profile_id = userProfileData.id
+                    identificationCardData = await db.IdentificationCard.create(identificationCard, {transaction: trans})
+                    let identificationCardMedia = files.identification_card[0]
+                    identificationCardMedia.identification_card_id = identificationCardData.id
+                    identificationCardMedia.object_type = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD
+                    identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename
+                    identificationCardMedia.imageurl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename
+                    await db.MediaObject.create(identificationCardMedia, {transaction: trans})
                 }
             }
             if (files.certificate) {
-                let certificateData = await db.Certificate.create({profile_id: userProfileData.id}, {transaction: trans});
-                let certificateMedia = files.certificate[0];
-                certificateMedia.certificate_id = certificateData.id;
-                certificateMedia.object_type = CommonConfig.OBJECT_TYPE.CERTIFICATE;
-                certificateMedia.imageurl = CommonConfig.FILE_LOCATIONS.CERTIFICATE + certificateMedia.filename;
-                await db.MediaObject.create(certificateMedia, {transaction: trans});
+                let certificateData = await db.Certificate.create({profile_id: userProfileData.id}, {transaction: trans})
+                let certificateMedia = files.certificate[0]
+                certificateMedia.certificate_id = certificateData.id
+                certificateMedia.object_type = CommonConfig.OBJECT_TYPE.CERTIFICATE
+                certificateMedia.imageurl = CommonConfig.FILE_LOCATIONS.CERTIFICATE + certificateMedia.filename
+                await db.MediaObject.create(certificateMedia, {transaction: trans})
             }
         }
-        await trans.commit();
+        await trans.commit()
         return {
             token: AuthenticationHelpers.GenerateToken(userType.userInfo, null, true),
             user: {
@@ -83,16 +85,16 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 user_role: userType.user_role,
                 profile_url: ProfileMediaObject ? ProfileMediaObject.imageurl : ''
             }
-        };
+        }
     } catch (error) {
-        await trans.rollback();
-        throw (error);
+        await trans.rollback()
+        throw (error)
     }
-};
+}
 
 AnonymousService.prototype.Authenticate = async (userDetails) => {
     try {
-        let userTypeDetails;
+        let userTypeDetails
         if (userDetails.token_status && userDetails.token_id) {
             userTypeDetails = await db.UserType.findOne({
                 where: {
@@ -105,7 +107,7 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                     model: db.Profile,
                     include: [{
                         model: db.MediaObject
-                    }],
+                    }]
                 }, {
                     model: db.ResetPassword,
                     where: {
@@ -117,7 +119,6 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                     }
                 }]
             })
-            ;
         } else {
             userTypeDetails = await db.UserType.findOne({
                 where: {
@@ -132,10 +133,11 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                         model: db.MediaObject
                     }]
                 }]
-            });
+            })
         }
-        if (!userTypeDetails)
-            return null;
+        if (!userTypeDetails) {
+            return null
+        }
         return {
             token: !userDetails.token_status ? AuthenticationHelpers.GenerateToken(userTypeDetails.userInfo, false, true) : userTypeDetails.ResetPasswords[0].token,
             user: {
@@ -146,17 +148,17 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 user_role: userTypeDetails.user_role,
                 profile_url: userTypeDetails.Profile.MediaObjects.length > 0 ? userTypeDetails.Profile.MediaObjects[0].imageurl : ''
             }
-        };
+        }
     } catch (error) {
-        throw (error);
+        throw (error)
     }
-};
+}
 
-AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, token_data) => {
-    const trans = await db.sequelize.transaction();
+AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, tokenData) => {
+    const trans = await db.sequelize.transaction()
     try {
-        //invalidate token if token expired
-        if (token_data && !token_data.token_status) {
+        // invalidate token if token expired
+        if (tokenData && !token_data.token_status) {
             let data = await db.ResetPassword.update({
                 is_valid: false,
                 status: false
@@ -166,57 +168,57 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
                         [Op.eq]: token_data.token_id
                     }
                 }
-            }, {transaction: trans});
+            }, {transaction: trans})
             if (!data) {
-                await trans.rollback();
-                return null;
+                await trans.rollback()
+                return null
             }
         }
-        //get user info
-        let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id);
-    
+        // get user info
+        let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.user_type_id)
+
         if (!userInfo) {
-            await trans.rollback();
-            return null;
+            await trans.rollback()
+            return null
         }
-        let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname;
-    
-        let data = await db.ResetPassword.create(userDetails, {transaction: trans});
-    
+        let fullname = userInfo.Profile.firstname + ' ' + userInfo.Profile.lastname
+
+        let data = await db.ResetPassword.create(userDetails, {transaction: trans})
+
         if (!data) {
-            await trans.rollback();
-            return null;
+            await trans.rollback()
+            return null
         }
-    
-        console.log('Sending mail ... Please wait......');
-    
+
+        console.log('Sending mail ... Please wait......')
+
         let isSent = await MailingHelpers.ToResetPassword({
             fullname: fullname,
             email: email,
             key: userDetails.random_key
-        });
-    
-        console.log('mail Info: ', isSent);
-        
+        })
+
+        console.log('mail Info: ', isSent)
+
         if (!isSent) {
-            await trans.rollback();
-            return null;
+            await trans.rollback()
+            return null
         }
-    
+
         // committing transaction
-        await trans.commit();
-    
-        return isSent;
+        await trans.commit()
+
+        return isSent
     } catch (error) {
         // rollback transaction
-        await trans.rollback();
-        throw (error);
+        await trans.rollback()
+        throw (error)
     }
-};
+}
 
 AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
     try {
-        //get user info
+        // get user info
         let tokenData = await db.UserType.findOne({
             where: {
                 user_id: {
@@ -237,21 +239,22 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
                 attributes: ['random_key'],
                 model: db.ResetPassword
             }]
-        });
-    
-        if (!tokenData)
-            return null;
-    
-        console.log('Sending mail ... Please wait......');
-    
+        })
+
+        if (!tokenData) {
+            return null
+        }
+
+        console.log('Sending mail ... Please wait......')
+
         return await MailingHelpers.ToResetPassword({
             fullname: tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname,
             email: email,
             key: tokenData.ResetPasswords[0].random_key
-        });
+        })
     } catch (error) {
-        throw (error);
+        throw (error)
     }
-};
+}
 
-module.exports = new AnonymousService();
+module.exports = new AnonymousService()

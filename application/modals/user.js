@@ -1,7 +1,7 @@
 // The User Model.
-'use strict';
+'use strict'
 
-let bcrypt = require('bcrypt');
+let bcrypt = require('bcrypt')
 
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
@@ -32,36 +32,36 @@ module.exports = function (sequelize, DataTypes) {
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
-    };
+    }
 
-// 2: The model options.
+    // 2: The model options.
     let modelOptions = {
         hooks: {
             beforeValidate: hashPassword
         },
         underscored: true
-    };
-    
-    const UserModel = sequelize.define('User', modelDefinition, modelOptions);
-    
+    }
+
+    const UserModel = sequelize.define('User', modelDefinition, modelOptions)
+
     // Adding an instance level method
     UserModel.prototype.comparePasswords = function (password) {
-        return comparePasswords(password, this.password);
-    };
-    
-    return UserModel;
-};
+        return comparePasswords(password, this.password)
+    }
+
+    return UserModel
+}
 
 // Compares two passwords.
-async function comparePasswords(password, pwd) {
-    return await bcrypt.compare(password, pwd);
+async function comparePasswords (password, pwd) {
+    return await bcrypt.compare(password, pwd)
 }
 
 // Hashes the password for a user object.
-function hashPassword(user) {
+function hashPassword (user) {
     if (user.changed('password')) {
         return bcrypt.hash(user.password, 10).then(function (password) {
-            user.password = password;
-        });
+            user.password = password
+        })
     }
 }

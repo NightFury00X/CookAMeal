@@ -1,20 +1,20 @@
-const timezone = 'UTC';
-process.env.TZ = timezone;
+const timezone = 'UTC'
+process.env.TZ = timezone
 
 exports.app = app = {
     title: 'cook-A-Meal',
     host: '132.148.87.196',
     port: 5151,
     ssl: false
-};
+}
 
 exports.mssql = {
     host: '132.148.87.196',
     dialect: 'mssql',
     define: {
-        schema: "dbo",
+        schema: 'dbo',
         timestamps: true,
-        freezeTableName: false,
+        freezeTableName: false
     },
     raw: false,
     syncOnAssociation: true,
@@ -33,21 +33,21 @@ exports.mssql = {
         idleTimeoutMillis: 300000,
         max: 100
     }
-};
+}
 
 exports.user = {
     dbname: 'cookameal',
     user: 'cookamealuser',
     password: 'Ngy97%h1'
-};
+}
 
 exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
-};
+}
 
-exports.FOLDER_LOCATION = 'uploads/';
+exports.FOLDER_LOCATION = 'uploads/'
 
-exports.FILE_LOCATION = 'http://cookamealapi.cynotecksandbox.com/uploads/';
+exports.FILE_LOCATION = 'http://cookamealapi.cynotecksandbox.com/uploads/'
 
 exports.UPLOAD_LOCATION = [
     {PATH: 'uploads/profiles'},
@@ -55,12 +55,11 @@ exports.UPLOAD_LOCATION = [
     {PATH: 'uploads/certificates'},
     {PATH: 'uploads/categories'},
     {PATH: 'uploads/recipe'}
-];
-
+]
 
 exports.DOMAIN = {
     NAME: 'uploads/'
-};
+}
 
 exports.CONFIG = {
     EMAIL_ENGINE_OPTIONS: {
@@ -72,10 +71,10 @@ exports.CONFIG = {
         extName: '.hbs'
     },
     EMAIL_OPTIONS: {
-        service: "gmail",
+        service: 'gmail',
         auth: {
             user: 'curacall2015@gmail.com',
             pass: 'Curacall_2015'
         }
     }
-};
+}

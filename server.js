@@ -1,61 +1,67 @@
-'use strict';
-let express = require('express'),
-    bodyParser = require('body-parser'),
-    heltmet = require('helmet'),
-    expressValidator = require('express-validator'),
-    passport = require('passport'),
-    errorHandler = require('errorhandler'),
-    winston = require('winston'),
-    expressWinston = require('express-winston'),
-    compression = require("compression"),
-    mkdirp = require('mkdirp'),
-    fs = require('fs'),
-    db = require('./application/modals'),
-    config = require('./configurations/main'),
-    CommonConfig = require('./configurations/helpers/common-config');
-require('winston-daily-rotate-file');
+'use strict'
+let express = require('express')
+let bodyParser = require('body-parser')
+let heltmet = require('helmet')
+let expressValidator = require('express-validator')
+let passport = require('passport')
+let errorHandler = require('errorhandler')
+let winston = require('winston')
+let expressWinston = require('express-winston')
+let compression = require('compression')
+let mkdirp = require('mkdirp')
+let fs = require('fs')
+let db = require('./application/modals')
+let config = require('./configurations/main')
+let CommonConfig = require('./configurations/helpers/common-config')
+let path = require('path')
+require('winston-daily-rotate-file')
 
 let logger = new (winston.Logger)({
     expressFormat: true,
     transports: [
         new winston.transports.Console({
             json: false,
-            colorize: true,
+            colorize: true
         })
     ]
-});
-let uploadFileLocation = __dirname + '/uploads';
-let logLocation = __dirname + '/logs/errors';
-mkdirp.sync(uploadFileLocation);
-mkdirp.sync(logLocation);
+})
+let uploadFileLocation = path.resolve('/uploads')
+let logLocation = path.resolve('/logs/errors')
+mkdirp.sync(uploadFileLocation)
+mkdirp.sync(logLocation)
 config.UPLOAD_LOCATION.forEach(function (location) {
-    if (!fs.existsSync(location.PATH))
-        fs.mkdirSync(location.PATH);
-});
-let app = express();
-let server = require('http').createServer(app);
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(expressValidator());
-app.use(function (req, res, next) {
-    for (let item in req.body) {
-        if (req.body.hasOwnProperty(item))
-            req.sanitize(item).escape();
+    if (!fs.existsSync(location.PATH)) {
+        fs.mkdirSync(location.PATH)
     }
-    next();
-});
-app.use(compression());
-app.use(errorHandler());
-app.use(passport.initialize());
+})
+let app = express()
+let server = require('http').createServer(app)
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+app.use(expressValidator())
+// app.use(function (req, res, next) {
+//     for (let item in req.body) {
+//         if (req.body.hasOwnProperty(item)) {
+//             req.sanitize(item).escape()
+//         }
+//     }
+//     next()
+// })
+app.use(compression())
+app.use(errorHandler())
+app.use(passport.initialize())
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    if ('OPTIONS' === req.method) res.send(200);
-    else next();
-});
-app.use(heltmet());
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
+    res.header('Access-Control-Allow-Credentials', 'true')
+    if (req.method === 'OPTIONS') {
+        res.send(200)
+    } else {
+        next()
+    }
+})
+app.use(heltmet())
 app.use(expressWinston.logger({
     expressFormat: true,
     colorize: true,
@@ -70,28 +76,28 @@ app.use(expressWinston.logger({
     requestWhitelist: ['url', 'headers', 'method', 'httpVersion', 'originalUrl', 'query'],
     statusLevels: true, // default value
     level: function (req, res) {
-        let level = "";
+        let level = ''
         if (res.statusCode >= 100) {
-            level = "info";
+            level = 'info'
         }
         if (res.statusCode >= 400) {
-            level = "warn";
+            level = 'warn'
         }
         if (res.statusCode >= 500) {
-            level = "error";
+            level = 'error'
         }
         // Ops is worried about hacking attempts so make Unauthorized and Forbidden critical
         if (res.statusCode === 401 || res.statusCode === 403) {
-            level = "critical";
+            level = 'critical'
         }
         // No one should be using the old path, so always warn for those
-        if (req.path === "/v1" && level === "info") {
-            level = "warn";
+        if (req.path === '/v1' && level === 'info') {
+            level = 'warn'
         }
-        return level;
+        return level
     }
-}));
-require('./routes/routes')(app);
+}))
+require('./routes/routes')(app)
 app.use(expressWinston.errorLogger({
     expressFormat: true,
     exitOnError: false,
@@ -108,56 +114,58 @@ app.use(expressWinston.errorLogger({
         })
     ],
     meta: true
-}));
+}))
 db.sequelize.sync(
     {Force: true}
 )
     .then(startApp)
     .catch(function (error) {
-        throw new Error(error);
-    });
+        throw new Error(error)
+    })
 
-function startApp() {
-    let protocol = config.app.ssl ? 'https' : 'http';
-    let port = process.env.PORT || config.app.port;
-    let app_url = protocol + '://' + config.app.host + ':' + port;
-    let env = process.env.NODE_ENV ? ('[' + process.env.NODE_ENV + ']') : '[development]';
-    logger.info('Initiated...', env);
+function startApp () {
+    let protocol = config.app.ssl ? 'https' : 'http'
+    let port = process.env.PORT || config.app.port
+    let appUrl = protocol + '://' + config.app.host + ':' + port
+    let env = process.env.NODE_ENV ? ('[' + process.env.NODE_ENV + ']') : '[development]'
+    logger.info('Initiated...', env)
     server.listen(port, function () {
-        logger.info(config.app.title + ' listening at ' + app_url + ' ' + env);
-    });
+        logger.info(config.app.title + ' listening at ' + appUrl + ' ' + env)
+    })
 }
 
 app.use(function (req, res, next) {
-    let err = new Error('The Route ' + req.url + ' is Not Found');
-    err.status = 404;
-    next(err);
-});
+    let err = new Error('The Route ' + req.url + ' is Not Found')
+    err.status = 404
+    next(err)
+})
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
+        const errorMessage = err.status !== 404 ? CommonConfig.ERRORS.UNABLE_TO_PROCESS : err.message
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
                 data: null,
-                error: err.message,
-                error_stack: {
+                error: errorMessage,
+                errorStack: {
                     error: err
                 },
                 status: err.status
             }
-        );
-        next();
-    });
+        )
+        next()
+    })
 } else {
     app.use(function (err, req, res, next) {
+        const errorMessage = err.status !== 404 ? CommonConfig.ERRORS.UNABLE_TO_PROCESS : err.message
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
                 data: null,
-                error: err.message,
+                error: errorMessage,
                 status: err.status
             }
-        );
-        next();
-    });
+        )
+        next()
+    })
 }
