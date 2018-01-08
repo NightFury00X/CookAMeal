@@ -682,7 +682,8 @@ CommonService.prototype.PaymentMethod = {
 }
 
 CommonService.prototype.Order = {
-    PlaceOrder: async (orderDetails, recipesToJson) => {
+    PlaceOrder: async (orderDetails, recipesData) => {
+        let recipesToJson = JSON.parse(recipesData)
         const trans = await db.sequelize.transaction()
         try {
             const order = await db.Order.create(orderDetails, {transaction: trans})
