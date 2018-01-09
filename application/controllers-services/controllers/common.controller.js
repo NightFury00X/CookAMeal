@@ -435,9 +435,27 @@ let Order = {
     },
     FinalizeOrder: async (req, res, next) => {
         try {
-            console.log(req.body)
             let nonceFromTheClient = req.body.payment_method_nonce
-            console.log(nonceFromTheClient)
+            let gateway = braintree.connect({
+                environment: braintree.Environment.Sandbox,
+                merchantId: 'useYourMerchantId',
+                publicKey: 'useYourPublicKey',
+                privateKey: 'useYourPrivateKey'
+            })
+            gateway.transaction.sale({
+                amount: '10.00',
+                paymentMethodNonce: nonceFromTheClient,
+                options: {
+                    submitForSettlement: true
+                }
+            }, function (err, result) {
+                if (err) {
+                    console.log('Error: ', err)
+                } else {
+                    console.log('Result: ', result)
+                }
+            })
+
             // const paidBy = req.user.id
             // const paidTo = 'Super Admin'
             // const orderId = req.value.params.orderId
