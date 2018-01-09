@@ -4,6 +4,7 @@ const Op = Sequelize.Op
 const db = require('../../modals')
 const {AuthenticationHelpers} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
+const isJSON = require('is-json')
 
 CommonService = function () {
 }
@@ -683,7 +684,7 @@ CommonService.prototype.PaymentMethod = {
 
 CommonService.prototype.Order = {
     PlaceOrder: async (orderDetails, recipesData) => {
-        let recipesToJson = JSON.parse(JSON.stringify(recipesData))
+        let recipesToJson = !isJSON(recipesData) ? JSON.parse(JSON.stringify(recipesData)) : JSON.parse(recipesData)
         orderDetails.orderState = 0
         orderDetails.paymentState = 'pending'
         const trans = await db.sequelize.transaction()

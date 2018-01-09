@@ -23,6 +23,7 @@
     "express-validator": "^4.3.0",
     "express-winston": "^2.4.0",
     "helmet": "^3.9.0",
+    "is-json": "^2.0.1",
     "joi": "^13.0.2",
     "jsonwebtoken": "^8.1.0",
     "mkdirp": "^0.5.1",
