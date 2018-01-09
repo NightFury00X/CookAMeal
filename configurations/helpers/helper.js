@@ -59,6 +59,9 @@ module.exports = {
             this.SetResponse(403, response, res)
         },
         SetResponse: function (status, response, res) {
+            console.info('======================================================================')
+            console.info(response)
+            console.info('======================================================================')
             res.status(status).json(response)
             res.end()
         }
