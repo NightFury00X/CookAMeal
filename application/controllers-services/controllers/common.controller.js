@@ -438,9 +438,9 @@ let Order = {
             let nonceFromTheClient = req.body.payment_method_nonce
             let gateway = braintree.connect({
                 environment: braintree.Environment.Sandbox,
-                merchantId: 'useYourMerchantId',
-                publicKey: 'useYourPublicKey',
-                privateKey: 'useYourPrivateKey'
+                merchantId: config.braintree.merchantId,
+                publicKey: config.braintree.publicKey,
+                privateKey: config.braintree.privateKey
             })
             gateway.transaction.sale({
                 amount: '10.00',
