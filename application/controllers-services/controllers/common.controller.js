@@ -3,7 +3,8 @@ const CommonService = require('../services/common.service')
 const CookService = require('../services/cook.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const GeoLOcation = require('../../../configurations/helpers/geo-location-helper')
-
+const braintree = require('braintree')
+let config = require('../../../configurations/main')
 let User = {
     GetCookprofile: async (req, res, next) => {
         try {
@@ -387,11 +388,19 @@ const Feedback = {
 let Order = {
     PrepareData: async (req, res, next) => {
         try {
+            let gateway = braintree.connect({
+                environment: braintree.Environment.Sandbox,
+                merchantId: config.braintree.merchantId,
+                publicKey: config.braintree.publicKey,
+                privateKey: config.braintree.privateKey
+            })
+            const clientToken = await gateway.clientToken.generate()
             const recipeId = req.value.params.id
             const paymentMethods = await CommonService.PaymentMethod.GettAll()
             const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
             const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profile_id)
             const prepareData = {
+                ClientToken: clientToken,
                 PaymentMethods: paymentMethods,
                 RecipeDetails: {
                     costPerServing: parseFloat(recipeData.cost_per_serving),
@@ -418,6 +427,18 @@ let Order = {
             }
             return ResponseHelpers.SetSuccessResponse({
                 OrderId: result.id,
+                Message: CommonConfig.ERRORS.ORDER.SUCCESS
+            }, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    },
+    FinalizeOrder: async (req, res, next) => {
+        try {
+            // const paidBy = req.user.id
+            // const paidTo = 'Super Admin'
+            // const orderId = req.value.params.orderId
+            return ResponseHelpers.SetSuccessResponse({
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {

@@ -12,11 +12,10 @@ router.post('/logout',
     RequestMethodsMiddlewares.ApplicationJsonData,
     AuthController.Auth.LogOutUser)
 
-// 5: Change Password
+// 2: Change Password
 router.put('/changepassword',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.ChangePassword),
-
     AuthController.Auth.ChangePassword)
 
 module.exports = router
