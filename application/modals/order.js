@@ -62,6 +62,25 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.FLOAT,
             allowNull: false
         },
+        orderState: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        paymentState: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            set (value) {
+                switch (value) {
+                    case 'pending':
+                        this.setDataValue('paymentState', 0)
+                        break
+                    case 'approved':
+                        this.setDataValue('paymentState', 1)
+                        break
+                }
+            }
+        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     }
@@ -74,6 +93,12 @@ module.exports = function (sequelize, DataTypes) {
     let Order = sequelize.define('Order', modelDefinition, modelOptions)
     Order.associate = function (models) {
         Order.hasMany(models.OrderItem, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+        Order.hasMany(models.TransactionDetail, {
             foreignKey: {
                 allowNull: false,
                 onDelete: 'CASCADE'

@@ -416,7 +416,10 @@ let Order = {
             if (!result) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
-            return ResponseHelpers.SetSuccessResponse({Message: CommonConfig.ERRORS.ORDER.SUCCESS}, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse({
+                OrderId: result.id,
+                Message: CommonConfig.ERRORS.ORDER.SUCCESS
+            }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }

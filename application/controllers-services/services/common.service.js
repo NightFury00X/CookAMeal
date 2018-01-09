@@ -683,7 +683,9 @@ CommonService.prototype.PaymentMethod = {
 
 CommonService.prototype.Order = {
     PlaceOrder: async (orderDetails, recipesData) => {
-        let recipesToJson = JSON.parse(recipesData)
+        let recipesToJson = JSON.parse(JSON.stringify(recipesData))
+        orderDetails.orderState = 0
+        orderDetails.paymentState = 'pending'
         const trans = await db.sequelize.transaction()
         try {
             const order = await db.Order.create(orderDetails, {transaction: trans})
@@ -704,7 +706,7 @@ CommonService.prototype.Order = {
                 }
             }
             trans.commit()
-            return true
+            return order
         } catch (error) {
             trans.rollback()
             throw (error)

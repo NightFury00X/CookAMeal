@@ -137,6 +137,20 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
+        UserTypeModel.hasMany(models.TransactionDetail, {
+            foreignKey: {
+                name: 'paidTo',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+        UserTypeModel.hasMany(models.TransactionDetail, {
+            foreignKey: {
+                name: 'paidBy',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
     }
     return UserTypeModel
 }
