@@ -452,7 +452,7 @@ let Order = {
                 if (err) {
                     console.log('Error: ', err)
                 } else {
-                    console.log('Result: ', result)
+                    console.log('Result: ', JSON.stringify(result))
                 }
             })
 
