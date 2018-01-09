@@ -435,6 +435,7 @@ let Order = {
     },
     FinalizeOrder: async (req, res, next) => {
         try {
+            console.log(req.body)
             let nonceFromTheClient = req.body.payment_method_nonce
             console.log(nonceFromTheClient)
             // const paidBy = req.user.id
