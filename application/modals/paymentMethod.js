@@ -23,5 +23,15 @@ module.exports = function (sequelize, DataTypes) {
         underscored: true
     }
 
-    return sequelize.define('PaymentMethod', modelDefinition, modelOptions)
+    let PaymentMethod = sequelize.define('PaymentMethod', modelDefinition, modelOptions)
+    PaymentMethod.associate = function (models) {
+        PaymentMethod.hasMany(models.Order, {
+            foreignKey: {
+                name: 'paymentMethod',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+    }
+    return PaymentMethod
 }
