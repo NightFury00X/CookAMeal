@@ -157,6 +157,7 @@ if (app.get('env') === 'development') {
     })
 } else {
     app.use(function (err, req, res, next) {
+        console.log('Error: ', err)
         const errorMessage = err.status === 500 ? CommonConfig.ERRORS.UNABLE_TO_PROCESS : err.message
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
