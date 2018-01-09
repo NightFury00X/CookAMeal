@@ -46,7 +46,6 @@ router.post('/resetpass',
 
 // 3: Finalize order
 router.post('/order/finalize',
-    RequestMethodsMiddlewares.ApplicationJsonData,
     CommonController.Order.FinalizeOrder)
 
 module.exports = router
