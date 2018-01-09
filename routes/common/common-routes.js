@@ -92,10 +92,6 @@ router.post('/order',
     ValidateBody(BodySchemas.Order),
     CommonController.Order.MakeOrder)
 
-// 3: Finalize order
-router.post('/order/finalize',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    CommonController.Order.FinalizeOrder)
 
 router.get('/geo',
     CommonController.User.geo)
