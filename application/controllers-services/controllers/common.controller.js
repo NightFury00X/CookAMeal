@@ -399,7 +399,7 @@ let Order = {
             const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
             const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profile_id)
             const prepareData = {
-                ClientToken: clientToken,
+                ClientToken: clientToken.clientToken,
                 PaymentMethods: paymentMethods,
                 RecipeDetails: {
                     costPerServing: parseFloat(recipeData.cost_per_serving),
