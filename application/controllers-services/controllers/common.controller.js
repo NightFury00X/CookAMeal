@@ -3,8 +3,7 @@ const CommonService = require('../services/common.service')
 const CookService = require('../services/cook.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const GeoLOcation = require('../../../configurations/helpers/geo-location-helper')
-const braintree = require('braintree')
-let config = require('../../../configurations/main')
+
 let User = {
     GetCookprofile: async (req, res, next) => {
         try {
@@ -415,10 +414,33 @@ let Order = {
             next(error)
         }
     },
+    // MakeOrder1: async (req, res, next) => {
+    //     try {
+    //         const userId = req.user.id
+    //         let orderDetails = req.body
+    //         let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
+    //         orderDetails.user_type_id = userId
+    //         const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
+    //         if (!result) {
+    //             return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+    //         }
+    //         return ResponseHelpers.SetSuccessResponse({
+    //             OrderId: result.id,
+    //             Message: CommonConfig.ERRORS.ORDER.SUCCESS
+    //         }, res, CommonConfig.STATUS_CODE.CREATED)
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // },
     MakeOrder: async (req, res, next) => {
         try {
+            const orderDetails = req.body
+            const paymentMethodNonce = orderDetails.paymentMethodNonce
+            let data = await CommonService.Order.CheckOut(paymentMethodNonce)
+            if (!data) {
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
             const userId = req.user.id
-            let orderDetails = req.body
             let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
             orderDetails.user_type_id = userId
             const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
@@ -426,49 +448,10 @@ let Order = {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
             return ResponseHelpers.SetSuccessResponse({
-                OrderId: result.id,
+                Transaction: data,
+                result: result,
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
-        } catch (error) {
-            next(error)
-        }
-    },
-    CheckOut: async (req, res, next) => {
-        try {
-            const {paymentMethodNonce} = req.body
-            let gateway = await braintree.connect({
-                environment: braintree.Environment.Sandbox,
-                merchantId: config.braintree.merchantId,
-                publicKey: config.braintree.publicKey,
-                privateKey: config.braintree.privateKey
-            })
-            gateway.transaction.sale({
-                amount: '10.00',
-                paymentMethodNonce: paymentMethodNonce,
-                options: {
-                    submitForSettlement: true
-                }
-            }, function (err, result) {
-                if (err) {
-                    console.log('Error: ', err)
-                } else {
-                    if (result.success) {
-                        return ResponseHelpers.SetSuccessResponse({
-                            Result: result,
-                            Message: CommonConfig.ERRORS.ORDER.SUCCESS
-                        }, res, CommonConfig.STATUS_CODE.CREATED)
-                    } else {
-                        return next(result.message)
-                    }
-                }
-            })
-
-            // const paidBy = req.user.id
-            // const paidTo = 'Super Admin'
-            // const orderId = req.value.params.orderId
-            // return ResponseHelpers.SetSuccessResponse({
-            //     Message: CommonConfig.ERRORS.ORDER.SUCCESS
-            // }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }

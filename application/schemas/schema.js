@@ -85,9 +85,7 @@ module.exports = {
             taxes: Joi.string().required(),
             totalAmount: Joi.string().required(),
             paymentMethod: Joi.string().required(),
-            recipes: Joi.any().required()
-        }),
-        CheckOut: Joi.object().keys({
+            recipes: Joi.any().required(),
             paymentMethodNonce: Joi.string().required()
         })
     }

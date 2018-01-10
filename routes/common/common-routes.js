@@ -87,16 +87,16 @@ router.get('/order/prepare-data/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.Order.PrepareData)
 
-router.post('/order',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.Order),
-    CommonController.Order.MakeOrder)
+// router.post('/order',
+//     RequestMethodsMiddlewares.ApplicationJsonData,
+//     ValidateBody(BodySchemas.Order),
+//     CommonController.Order.MakeOrder)
 
 // 3: checkout order
 router.post('/order/check-out',
-    ValidateBody(BodySchemas.CheckOut),
     RequestMethodsMiddlewares.ApplicationJsonData,
-    CommonController.Order.CheckOut)
+    ValidateBody(BodySchemas.Order),
+    CommonController.Order.MakeOrder)
 
 router.get('/geo',
     CommonController.User.geo)
