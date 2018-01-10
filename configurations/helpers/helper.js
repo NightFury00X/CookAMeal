@@ -30,7 +30,7 @@ module.exports = {
             const response = {
                 success: false,
                 data: [],
-                error: errors
+                errors
             }
             this.SetResponse(500, response, res)
         },

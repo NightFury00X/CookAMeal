@@ -433,18 +433,18 @@ let Order = {
             next(error)
         }
     },
-    FinalizeOrder: async (req, res, next) => {
+    CheckOut: async (req, res, next) => {
         try {
-            let nonceFromTheClient = req.body.payment_method_nonce
-            let gateway = braintree.connect({
+            const {paymentMethodNonce} = req.body
+            let gateway = await braintree.connect({
                 environment: braintree.Environment.Sandbox,
-                merchantId: '2b38cp3xpz7w87ss',
-                publicKey: 'b2s42p47ty4nv4yz',
-                privateKey: '62e56995f67d15ee1f2591311d7a726a'
+                merchantId: config.braintree.merchantId,
+                publicKey: config.braintree.publicKey,
+                privateKey: config.braintree.privateKey
             })
             gateway.transaction.sale({
                 amount: '10.00',
-                paymentMethodNonce: nonceFromTheClient,
+                paymentMethodNonce: paymentMethodNonce,
                 options: {
                     submitForSettlement: true
                 }
@@ -452,16 +452,23 @@ let Order = {
                 if (err) {
                     console.log('Error: ', err)
                 } else {
-                    console.log('Result: ', JSON.stringify(result))
+                    if (result.success) {
+                        return ResponseHelpers.SetSuccessResponse({
+                            Result: result,
+                            Message: CommonConfig.ERRORS.ORDER.SUCCESS
+                        }, res, CommonConfig.STATUS_CODE.CREATED)
+                    } else {
+                        return next(result.message)
+                    }
                 }
             })
 
             // const paidBy = req.user.id
             // const paidTo = 'Super Admin'
             // const orderId = req.value.params.orderId
-            return ResponseHelpers.SetSuccessResponse({
-                Message: CommonConfig.ERRORS.ORDER.SUCCESS
-            }, res, CommonConfig.STATUS_CODE.CREATED)
+            // return ResponseHelpers.SetSuccessResponse({
+            //     Message: CommonConfig.ERRORS.ORDER.SUCCESS
+            // }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }

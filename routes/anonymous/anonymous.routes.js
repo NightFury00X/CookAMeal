@@ -45,7 +45,8 @@ router.post('/resetpass',
     AnonymousController.Anonymous.ResetPassword)
 
 // 3: Finalize order
-router.post('/order/finalize',
-    CommonController.Order.FinalizeOrder)
+router.post('/order/check-out',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    CommonController.Order.CheckOut)
 
 module.exports = router

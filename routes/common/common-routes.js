@@ -92,6 +92,11 @@ router.post('/order',
     ValidateBody(BodySchemas.Order),
     CommonController.Order.MakeOrder)
 
+// 3: checkout order
+router.post('/order/check-out',
+    ValidateBody(BodySchemas.CheckOut),
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    CommonController.Order.CheckOut)
 
 router.get('/geo',
     CommonController.User.geo)
