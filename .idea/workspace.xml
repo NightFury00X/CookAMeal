@@ -22,8 +22,8 @@
       <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="442" column="54" lean-forward="true" selection-start-line="442" selection-start-column="54" selection-end-line="442" selection-end-column="54" />
+            <state relative-caret-position="107">
+              <caret line="374" column="40" lean-forward="false" selection-start-line="374" selection-start-column="40" selection-end-line="374" selection-end-column="40" />
               <folding>
                 <element signature="e#4030#6156#0" expanded="false" />
               </folding>
@@ -44,8 +44,8 @@
       <file leaf-file-name="common.service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="698" column="26" lean-forward="false" selection-start-line="698" selection-start-column="26" selection-end-line="698" selection-end-column="26" />
+            <state relative-caret-position="261">
+              <caret line="716" column="41" lean-forward="true" selection-start-line="716" selection-start-column="41" selection-end-line="716" selection-end-column="41" />
               <folding>
                 <element signature="e#502#724#0" expanded="false" />
                 <element signature="e#757#1045#0" expanded="false" />
@@ -62,6 +62,16 @@
                 <element signature="e#19278#19494#0" expanded="false" />
                 <element signature="e#19528#19759#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="order.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/order.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="49" column="33" lean-forward="false" selection-start-line="49" selection-start-column="28" selection-end-line="49" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -130,7 +140,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>CommonConfig.STATUS_CODE</find>
       <find>log</find>
       <find>ChangePassword</find>
       <find>where</find>
@@ -160,6 +169,7 @@
       <find>sa</find>
       <find>temp_time</find>
       <find>br</find>
+      <find>console</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -333,6 +343,12 @@
               <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="controllers-services" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="modals" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
@@ -511,28 +527,7 @@
       <workItem from="1515391612447" duration="117000" />
       <workItem from="1515391814322" duration="18496000" />
       <workItem from="1515477928831" duration="13593000" />
-      <workItem from="1515556134871" duration="9925000" />
-    </task>
-    <task id="LOCAL-00316" summary="New API:&#10;1. Add Payment Methods.&#10;2. Get All Payment Methods.&#10;3. Prepare recipe order data.">
-      <created>1515133770659</created>
-      <option name="number" value="00316" />
-      <option name="presentableId" value="LOCAL-00316" />
-      <option name="project" value="LOCAL" />
-      <updated>1515133770659</updated>
-    </task>
-    <task id="LOCAL-00317" summary="New API:&#10;1. Add Payment Methods.&#10;2. Get All Payment Methods.&#10;3. Prepare recipe order data.">
-      <created>1515134425358</created>
-      <option name="number" value="00317" />
-      <option name="presentableId" value="LOCAL-00317" />
-      <option name="project" value="LOCAL" />
-      <updated>1515134425358</updated>
-    </task>
-    <task id="LOCAL-00318" summary="fix available servings value in prepare for order details.">
-      <created>1515394385886</created>
-      <option name="number" value="00318" />
-      <option name="presentableId" value="LOCAL-00318" />
-      <option name="project" value="LOCAL" />
-      <updated>1515394385886</updated>
+      <workItem from="1515556134871" duration="10803000" />
     </task>
     <task id="LOCAL-00319" summary="eslint added. (new)&#10;Order food API. (new)&#10;Fixed some issues.">
       <created>1515406831937</created>
@@ -856,11 +851,32 @@
       <option name="project" value="LOCAL" />
       <updated>1515578520277</updated>
     </task>
-    <option name="localTasksCounter" value="365" />
+    <task id="LOCAL-00365" summary="Updated order API.">
+      <created>1515578710685</created>
+      <option name="number" value="00365" />
+      <option name="presentableId" value="LOCAL-00365" />
+      <option name="project" value="LOCAL" />
+      <updated>1515578710685</updated>
+    </task>
+    <task id="LOCAL-00366" summary="Updated order API.">
+      <created>1515578911128</created>
+      <option name="number" value="00366" />
+      <option name="presentableId" value="LOCAL-00366" />
+      <option name="project" value="LOCAL" />
+      <updated>1515578911128</updated>
+    </task>
+    <task id="LOCAL-00367" summary="Updated order API.">
+      <created>1515579327618</created>
+      <option name="number" value="00367" />
+      <option name="presentableId" value="LOCAL-00367" />
+      <option name="project" value="LOCAL" />
+      <updated>1515579327618</updated>
+    </task>
+    <option name="localTasksCounter" value="368" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="793110000" />
+    <option name="totallyTimeSpent" value="793988000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1209,13 +1225,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/order.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="69" column="32" lean-forward="true" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/transaction-details.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -1366,10 +1375,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/order.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="49" column="33" lean-forward="false" selection-start-line="49" selection-start-column="28" selection-end-line="49" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="442" column="54" lean-forward="true" selection-start-line="442" selection-start-column="54" selection-end-line="442" selection-end-column="54" />
+        <state relative-caret-position="107">
+          <caret line="374" column="40" lean-forward="false" selection-start-line="374" selection-start-column="40" selection-end-line="374" selection-end-column="40" />
           <folding>
             <element signature="e#4030#6156#0" expanded="false" />
           </folding>
@@ -1378,8 +1395,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="698" column="26" lean-forward="false" selection-start-line="698" selection-start-column="26" selection-end-line="698" selection-end-column="26" />
+        <state relative-caret-position="261">
+          <caret line="716" column="41" lean-forward="true" selection-start-line="716" selection-start-column="41" selection-end-line="716" selection-end-column="41" />
           <folding>
             <element signature="e#502#724#0" expanded="false" />
             <element signature="e#757#1045#0" expanded="false" />

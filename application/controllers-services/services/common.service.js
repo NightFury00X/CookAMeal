@@ -686,7 +686,6 @@ CommonService.prototype.PaymentMethod = {
 
 CommonService.prototype.Order = {
     CheckOut: async (paymentMethodNonce) => {
-        console.log('Check Ouot start.....')
         try {
             let gateway = await braintree.connect({
                 environment: braintree.Environment.Sandbox,
@@ -694,8 +693,6 @@ CommonService.prototype.Order = {
                 publicKey: config.braintree.publicKey,
                 privateKey: config.braintree.privateKey
             })
-
-            console.log('Gateway: ', gateway)
             return await new Promise((resolve, reject) => {
                 gateway.transaction.sale({
                     amount: '10.00',
@@ -705,7 +702,6 @@ CommonService.prototype.Order = {
                     }
                 }, function (err, result) {
                     if (err || !result.success) {
-                        console.log('Error: ', err || result.message)
                         return reject(err || result.message)
                     } else {
                         return resolve(result)
@@ -713,7 +709,6 @@ CommonService.prototype.Order = {
                 })
             })
         } catch (error) {
-            console.log(error)
             throw (error)
         }
     },

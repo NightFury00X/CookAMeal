@@ -272,7 +272,6 @@ const Recipe = {
             }
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
-            console.log('Error: ', error)
             next(error)
         }
     },
@@ -375,7 +374,6 @@ const Feedback = {
             let feedback = req.body
             feedback.user_type_id = userId
             let result = await CommonService.Feedback.Add(feedback)
-            console.log(result)
             if (!result) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.FEEDBACK.FAILURE, res)
             }
@@ -436,21 +434,18 @@ let Order = {
     // },
     MakeOrder: async (req, res, next) => {
         try {
-            console.log('Body: ', req.body)
             const orderDetails = req.body
             const paymentMethodNonce = orderDetails.paymentMethodNonce
-            console.log('paymentMethodNonce: ', paymentMethodNonce)
             let data = await CommonService.Order.CheckOut(paymentMethodNonce)
             if (!data) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
-            console.log('Order Data: ', data)
             const userId = req.user.id
             let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
             orderDetails.user_type_id = userId
             const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
             if (!result) {
-                return ResponseHelpers.SetErrorResponse(req.body, res)
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
             return ResponseHelpers.SetSuccessResponse({
                 Transaction: data,
@@ -458,7 +453,7 @@ let Order = {
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
-            next(req.body)
+            next(error)
         }
     }
 }
