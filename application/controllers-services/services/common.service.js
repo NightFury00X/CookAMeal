@@ -736,7 +736,7 @@ CommonService.prototype.Order = {
                 }
             }
             trans.commit()
-            return null
+            return order
         } catch (error) {
             trans.rollback()
             throw (error)
