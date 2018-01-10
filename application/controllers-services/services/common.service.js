@@ -702,6 +702,7 @@ CommonService.prototype.Order = {
                     }
                 }, function (err, result) {
                     if (err || !result.success) {
+                        console.log('Error: ', err || result.message)
                         return reject(err || result.message)
                     } else {
                         return resolve(result)
@@ -709,6 +710,7 @@ CommonService.prototype.Order = {
                 })
             })
         } catch (error) {
+            console.log(error)
             throw (error)
         }
     },
