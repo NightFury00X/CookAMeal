@@ -436,6 +436,7 @@ let Order = {
     // },
     MakeOrder: async (req, res, next) => {
         try {
+            console.log('Body: ', req.body)
             const orderDetails = req.body
             const paymentMethodNonce = orderDetails.paymentMethodNonce
             let data = await CommonService.Order.CheckOut(paymentMethodNonce)
