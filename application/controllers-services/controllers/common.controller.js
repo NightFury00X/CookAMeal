@@ -450,7 +450,7 @@ let Order = {
             orderDetails.user_type_id = userId
             const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
             if (!result) {
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetErrorResponse(req.body, res)
             }
             return ResponseHelpers.SetSuccessResponse({
                 Transaction: data,
@@ -458,7 +458,7 @@ let Order = {
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
-            next(error)
+            next(req.body)
         }
     }
 }
