@@ -41,6 +41,12 @@ exports.user = {
     password: 'Ngy97%h1'
 }
 
+exports.braintree = {
+    merchantId: '2b38cp3xpz7w87ss',
+    publicKey: 'b2s42p47ty4nv4yz',
+    privateKey: '62e56995f67d15ee1f2591311d7a726a'
+}
+
 exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE=' // Not anymore...
 }
