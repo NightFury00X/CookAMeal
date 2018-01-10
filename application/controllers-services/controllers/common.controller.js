@@ -393,7 +393,12 @@ let Order = {
                 publicKey: config.braintree.publicKey,
                 privateKey: config.braintree.privateKey
             })
-            const clientToken = await gateway.clientToken.generate()
+            const clientToken = await gateway.clientToken.generate({}, function (err, response) {
+                if (err) {
+                    console.log('error: ', err)
+                }
+                console.log('response: ', response)
+            })
             const recipeId = req.value.params.id
             const paymentMethods = await CommonService.PaymentMethod.GettAll()
             const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
