@@ -442,6 +442,7 @@ let Order = {
             if (!data) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
+            console.log('Order Data: ', data)
             const userId = req.user.id
             let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
             orderDetails.user_type_id = userId
