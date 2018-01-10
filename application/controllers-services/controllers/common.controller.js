@@ -3,6 +3,8 @@ const CommonService = require('../services/common.service')
 const CookService = require('../services/cook.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const GeoLOcation = require('../../../configurations/helpers/geo-location-helper')
+const braintree = require('braintree')
+const config = require('../../../configurations/main')
 
 let User = {
     GetCookprofile: async (req, res, next) => {

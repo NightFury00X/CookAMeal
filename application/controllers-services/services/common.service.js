@@ -6,7 +6,7 @@ const {AuthenticationHelpers} = require('../../../configurations/helpers/helper'
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const isJSON = require('is-json')
 const braintree = require('braintree')
-let config = require('../../../configurations/main')
+const config = require('../../../configurations/main')
 
 CommonService = function () {
 }
