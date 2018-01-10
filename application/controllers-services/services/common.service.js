@@ -712,59 +712,33 @@ CommonService.prototype.Order = {
             throw (error)
         }
     },
-    PlaceOrder: async (orderDetails) => {
+    PlaceOrder: async (orderDetails, recipesData) => {
+        let recipesToJson = !isJSON(recipesData) ? JSON.parse(JSON.stringify(recipesData)) : JSON.parse(recipesData)
+        orderDetails.orderState = 0
+        orderDetails.paymentState = 'pending'
+        const trans = await db.sequelize.transaction()
         try {
-            let gateway = await braintree.connect({
-                environment: braintree.Environment.Sandbox,
-                merchantId: config.braintree.merchantId,
-                publicKey: config.braintree.publicKey,
-                privateKey: config.braintree.privateKey
-            })
-            let data = await new Promise((resolve, reject) => {
-                gateway.transaction.sale({
-                    amount: '10.00',
-                    paymentMethodNonce: orderDetails.paymentMethodNonce,
-                    options: {
-                        submitForSettlement: true
-                    }
-                }, function (err, result) {
-                    if (err || !result.success) {
-                        console.log('Error: ', result)
-                        reject(err)
-                    } else {
-                        console.log('done')
-                        resolve(result)
-                    }
-                })
-            })
-
-            // let recipesToJson = !isJSON(recipesData) ? JSON.parse(JSON.stringify(recipesData)) : JSON.parse(recipesData)
-            // orderDetails.orderState = 0
-            // orderDetails.paymentState = 'pending'
-            // const trans = await db.sequelize.transaction()
-            // try {
-            //     const order = await db.Order.create(orderDetails, {transaction: trans})
-            //     if (!order) {
-            //         trans.rollback()
-            //         return null
-            //     }
-            //     for (const index in recipesToJson) {
-            //         if (recipesToJson.hasOwnProperty(index)) {
-            //             recipesToJson[index].order_id = order.id
-            //         }
-            //     }
-            //     for (const recipe of recipesToJson) {
-            //         const orderItem = await db.OrderItem.create(recipe, {transaction: trans})
-            //         if (!orderItem) {
-            //             trans.rollback()
-            //             return null
-            //         }
-            //     }
-            //     trans.commit()
+            const order = await db.Order.create(orderDetails, {transaction: trans})
+            if (!order) {
+                trans.rollback()
+                return null
+            }
+            for (const index in recipesToJson) {
+                if (recipesToJson.hasOwnProperty(index)) {
+                    recipesToJson[index].order_id = order.id
+                }
+            }
+            for (const recipe of recipesToJson) {
+                const orderItem = await db.OrderItem.create(recipe, {transaction: trans})
+                if (!orderItem) {
+                    trans.rollback()
+                    return null
+                }
+            }
+            trans.commit()
             return null
         } catch (error) {
-            // trans.rollback()
-
+            trans.rollback()
             throw (error)
         }
     }
