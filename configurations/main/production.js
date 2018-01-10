@@ -42,9 +42,9 @@ exports.user = {
 }
 
 exports.braintree = {
-    merchantId: '2b38cp3xpz7w87ss',
-    publicKey: 'b2s42p47ty4nv4yz',
-    privateKey: '62e56995f67d15ee1f2591311d7a726a'
+    merchantId: '8kdyn2qdd3tp7fp2',
+    publicKey: 'pf3t3gf5t8qq8tqp',
+    privateKey: 'e693df667c9716d284419efa0c55efa3'
 }
 
 exports.keys = {
