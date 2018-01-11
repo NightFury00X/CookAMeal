@@ -5,6 +5,7 @@ const CommonConfig = require('../../../configurations/helpers/common-config')
 const GeoLOcation = require('../../../configurations/helpers/geo-location-helper')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
+const db = require('../../modals')
 
 let User = {
     GetCookprofile: async (req, res, next) => {
@@ -431,26 +432,49 @@ let Order = {
     //     }
     // },
     MakeOrder: async (req, res, next) => {
+        const trans = await db.sequelize.transaction()
         try {
-            const orderDetails = req.body
-            const paymentMethodNonce = orderDetails.paymentMethodNonce
-            let data = await CommonService.Order.CheckOut(paymentMethodNonce)
-            if (!data) {
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
-            }
+            const orderData = req.body
             const userId = req.user.id
-            let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
-            orderDetails.user_type_id = userId
-            const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
-            if (!result) {
+            let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
+            orderData.user_type_id = userId
+            const orderDetails = await CommonService.Order.PlaceOrder(orderData, recipesToJson, trans)
+            if (!orderDetails) {
+                trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
+            const orderId = orderDetails.id
+            const paymentMethodNonce = orderDetails.paymentMethodNonce
+            let checkOutDetails = await CommonService.Order.CheckOut(paymentMethodNonce, orderId)
+            if (!checkOutDetails) {
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+            const transactionData = {
+                transactionId: checkOutDetails.transaction.id,
+                amount: checkOutDetails.transaction.amount,
+                discountAmount: checkOutDetails.transaction.discountAmount,
+                type: checkOutDetails.transaction.type,
+                paymentInstrumentType: checkOutDetails.transaction.paymentInstrumentType,
+                merchantAccountId: checkOutDetails.transaction.merchantAccountId,
+                taxAmount: checkOutDetails.transaction.taxAmount,
+                recurring: checkOutDetails.transaction.recurring,
+                orderId: orderId,
+                paidTo: checkOutDetails.transaction.merchantAccountId,
+                paidBy: userId
+            }
+            const transactionDetails = CommonService.Order.Transaction(transactionData, trans)
+            if (!transactionDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+            trans.commit()
             return ResponseHelpers.SetSuccessResponse({
                 Transaction: data,
-                result: result,
+                result: order,
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
+            trans.rollback()
             next(error)
         }
     }

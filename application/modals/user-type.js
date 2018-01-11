@@ -133,13 +133,6 @@ module.exports = function (sequelize, DataTypes) {
         })
         UserTypeModel.hasMany(models.TransactionDetail, {
             foreignKey: {
-                name: 'paidTo',
-                allowNull: false,
-                onDelete: 'CASCADE'
-            }
-        })
-        UserTypeModel.hasMany(models.TransactionDetail, {
-            foreignKey: {
                 name: 'paidBy',
                 allowNull: false,
                 onDelete: 'CASCADE'

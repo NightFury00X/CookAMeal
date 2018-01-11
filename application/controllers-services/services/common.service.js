@@ -673,7 +673,7 @@ CommonService.prototype.Units = {
 }
 
 CommonService.prototype.Order = {
-    CheckOut: async (paymentMethodNonce) => {
+    CheckOut: async (paymentMethodNonce, orderId) => {
         try {
             let gateway = await braintree.connect({
                 environment: braintree.Environment.Sandbox,
@@ -684,6 +684,7 @@ CommonService.prototype.Order = {
             return await new Promise((resolve, reject) => {
                 gateway.transaction.sale({
                     amount: '10.00',
+                    orderId: orderId,
                     paymentMethodNonce: paymentMethodNonce,
                     options: {
                         submitForSettlement: true
@@ -700,16 +701,14 @@ CommonService.prototype.Order = {
             throw (error)
         }
     },
-    PlaceOrder: async (orderDetails, recipesData) => {
+    PlaceOrder: async (orderDetails, recipesData, trans) => {
         let recipesToJson = !isJSON(recipesData) ? JSON.parse(JSON.stringify(recipesData)) : JSON.parse(recipesData)
-        orderDetails.orderState = 0
-        orderDetails.paymentState = 'pending'
-        const trans = await db.sequelize.transaction()
+        // orderDetails.orderState = 'pending'
+        // orderDetails.paymentState = 'pending'
         try {
             const order = await db.Order.create(orderDetails, {transaction: trans})
             if (!order) {
-                trans.rollback()
-                return null
+                return false
             }
             for (const index in recipesToJson) {
                 if (recipesToJson.hasOwnProperty(index)) {
@@ -719,17 +718,22 @@ CommonService.prototype.Order = {
             for (const recipe of recipesToJson) {
                 const orderItem = await db.OrderItem.create(recipe, {transaction: trans})
                 if (!orderItem) {
-                    trans.rollback()
-                    return null
+                    return false
                 }
             }
-            trans.commit()
             return order
         } catch (error) {
-            trans.rollback()
-            throw (error)
+            return false
+        }
+    },
+    Transaction: async (transactionData, trans) => {
+        try {
+            return db.TransactionDetail.create(transactionData, {transaction: trans})
+        } catch (error) {
+            return false
         }
     }
+
 }
 
 module.exports = new CommonService()

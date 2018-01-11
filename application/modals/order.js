@@ -63,23 +63,14 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         orderState: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 0
+            defaultValue: 'pending'
         },
         paymentState: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0,
-            set (value) {
-                switch (value) {
-                    case 'pending':
-                        this.setDataValue('paymentState', 0)
-                        break
-                    case 'approved':
-                        this.setDataValue('paymentState', 1)
-                        break
-                }
-            }
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'pending'
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
