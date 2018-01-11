@@ -91,6 +91,7 @@ module.exports = function (sequelize, DataTypes) {
         })
         Order.hasMany(models.TransactionDetail, {
             foreignKey: {
+                name: 'orderId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
