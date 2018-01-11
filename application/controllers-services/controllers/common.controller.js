@@ -467,6 +467,7 @@ let Order = {
                 paidBy: userId
             }
             const transactionDetails = CommonService.Order.Transaction(transactionData, trans)
+            console.log('Transaction: ', transactionDetails)
             if (!transactionDetails) {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
