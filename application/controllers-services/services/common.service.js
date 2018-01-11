@@ -684,7 +684,6 @@ CommonService.prototype.Order = {
             return await new Promise((resolve, reject) => {
                 gateway.transaction.sale({
                     amount: '10.00',
-                    orderId: orderId,
                     paymentMethodNonce: paymentMethodNonce,
                     options: {
                         submitForSettlement: true
