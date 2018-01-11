@@ -469,8 +469,8 @@ let Order = {
             }
             trans.commit()
             return ResponseHelpers.SetSuccessResponse({
-                Transaction: data,
-                result: order,
+                Transaction: checkOutDetails,
+                result: orderDetails,
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
