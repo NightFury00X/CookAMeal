@@ -731,6 +731,7 @@ CommonService.prototype.Order = {
         try {
             return await db.TransactionDetail.create(transactionData, {transaction: trans})
         } catch (error) {
+            console.log('Error: ', error)
             return false
         }
     }
