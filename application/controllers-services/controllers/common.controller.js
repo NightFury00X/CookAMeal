@@ -446,7 +446,7 @@ let Order = {
             }
             const orderId = orderDetails.id
             console.log(orderId)
-            const paymentMethodNonce = orderDetails.paymentMethodNonce
+            const paymentMethodNonce = orderData.paymentMethodNonce
             console.log('1')
             let checkOutDetails = await CommonService.Order.CheckOut(paymentMethodNonce, orderId)
             console.log('2')
