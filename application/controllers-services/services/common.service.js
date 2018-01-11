@@ -729,7 +729,7 @@ CommonService.prototype.Order = {
     },
     Transaction: async (transactionData, trans) => {
         try {
-            return db.TransactionDetail.create(transactionData, {transaction: trans})
+            return await db.TransactionDetail.create(transactionData, {transaction: trans})
         } catch (error) {
             return false
         }

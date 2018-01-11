@@ -466,7 +466,7 @@ let Order = {
                 paidTo: checkOutDetails.transaction.merchantAccountId,
                 paidBy: userId
             }
-            const transactionDetails = CommonService.Order.Transaction(transactionData, trans)
+            const transactionDetails = await CommonService.Order.Transaction(transactionData, trans)
             console.log('Transaction: ', transactionDetails)
             if (!transactionDetails) {
                 trans.rollback()

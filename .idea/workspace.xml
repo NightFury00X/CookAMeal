@@ -4,6 +4,7 @@
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,8 +32,8 @@
       <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="446" column="46" lean-forward="true" selection-start-line="446" selection-start-column="46" selection-end-line="446" selection-end-column="46" />
+            <state relative-caret-position="270">
+              <caret line="468" column="66" lean-forward="true" selection-start-line="468" selection-start-column="66" selection-end-line="468" selection-end-column="66" />
               <folding>
                 <element signature="e#4065#6191#0" expanded="false" />
               </folding>
@@ -64,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="185">
-              <caret line="680" column="81" lean-forward="true" selection-start-line="680" selection-start-column="81" selection-end-line="680" selection-end-column="81" />
+              <caret line="731" column="25" lean-forward="false" selection-start-line="731" selection-start-column="25" selection-end-line="731" selection-end-column="25" />
               <folding>
                 <element signature="e#502#724#0" expanded="false" />
                 <element signature="e#757#1045#0" expanded="false" />
@@ -458,21 +459,7 @@
       <workItem from="1515477928831" duration="13593000" />
       <workItem from="1515556134871" duration="14248000" />
       <workItem from="1515587418382" duration="2058000" />
-      <workItem from="1515661444221" duration="6112000" />
-    </task>
-    <task id="LOCAL-00335" summary="Remove Sequelize logging.">
-      <created>1515418577163</created>
-      <option name="number" value="00335" />
-      <option name="presentableId" value="LOCAL-00335" />
-      <option name="project" value="LOCAL" />
-      <updated>1515418577163</updated>
-    </task>
-    <task id="LOCAL-00336" summary="Remove Sequelize logging.">
-      <created>1515418953125</created>
-      <option name="number" value="00336" />
-      <option name="presentableId" value="LOCAL-00336" />
-      <option name="project" value="LOCAL" />
-      <updated>1515418953125</updated>
+      <workItem from="1515661444221" duration="6410000" />
     </task>
     <task id="LOCAL-00337" summary="Remove Sequelize logging.">
       <created>1515419340987</created>
@@ -803,11 +790,25 @@
       <option name="project" value="LOCAL" />
       <updated>1515667450396</updated>
     </task>
-    <option name="localTasksCounter" value="384" />
+    <task id="LOCAL-00384" summary="Updated order API.">
+      <created>1515667739633</created>
+      <option name="number" value="00384" />
+      <option name="presentableId" value="LOCAL-00384" />
+      <option name="project" value="LOCAL" />
+      <updated>1515667739633</updated>
+    </task>
+    <task id="LOCAL-00385" summary="Updated order API.">
+      <created>1515667910872</created>
+      <option name="number" value="00385" />
+      <option name="presentableId" value="LOCAL-00385" />
+      <option name="project" value="LOCAL" />
+      <updated>1515667910872</updated>
+    </task>
+    <option name="localTasksCounter" value="386" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="805603000" />
+    <option name="totallyTimeSpent" value="805901000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1300,16 +1301,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="446" column="46" lean-forward="true" selection-start-line="446" selection-start-column="46" selection-end-line="446" selection-end-column="46" />
-          <folding>
-            <element signature="e#4065#6191#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/transaction-details.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -1318,10 +1309,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="468" column="66" lean-forward="true" selection-start-line="468" selection-start-column="66" selection-end-line="468" selection-end-column="66" />
+          <folding>
+            <element signature="e#4065#6191#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
-          <caret line="680" column="81" lean-forward="true" selection-start-line="680" selection-start-column="81" selection-end-line="680" selection-end-column="81" />
+          <caret line="731" column="25" lean-forward="false" selection-start-line="731" selection-start-column="25" selection-end-line="731" selection-end-column="25" />
           <folding>
             <element signature="e#502#724#0" expanded="false" />
             <element signature="e#757#1045#0" expanded="false" />
