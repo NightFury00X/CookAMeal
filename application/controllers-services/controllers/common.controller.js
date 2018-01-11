@@ -395,12 +395,10 @@ let Order = {
             })
             const clientToken = await gateway.clientToken.generate()
             const recipeId = req.value.params.id
-            const paymentMethods = await CommonService.PaymentMethod.GettAll()
             const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
             const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profile_id)
             const prepareData = {
                 ClientToken: clientToken.clientToken,
-                PaymentMethods: paymentMethods,
                 RecipeDetails: {
                     costPerServing: parseFloat(recipeData.cost_per_serving),
                     availableServings: parseFloat(recipeData.available_servings),

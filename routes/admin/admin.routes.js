@@ -29,10 +29,4 @@ router.post('/unit',
     ValidateBody(BodySchemas.Unit),
     AdminController.Units.Add)
 
-// 3: Add Payment Method
-router.post('/payment-method',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.PaymentMethod),
-    AdminController.PaymentMethod.Add)
-
 module.exports = router

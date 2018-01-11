@@ -672,18 +672,6 @@ CommonService.prototype.Units = {
     }
 }
 
-CommonService.prototype.PaymentMethod = {
-    GettAll: async () => {
-        try {
-            return await db.PaymentMethod.findAll({
-                attributes: ['id', 'name']
-            })
-        } catch (error) {
-            throw (error)
-        }
-    }
-}
-
 CommonService.prototype.Order = {
     CheckOut: async (paymentMethodNonce) => {
         try {
