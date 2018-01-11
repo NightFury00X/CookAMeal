@@ -447,7 +447,9 @@ let Order = {
             const orderId = orderDetails.id
             console.log(orderId)
             const paymentMethodNonce = orderDetails.paymentMethodNonce
+            console.log('1')
             let checkOutDetails = await CommonService.Order.CheckOut(paymentMethodNonce, orderId)
+            console.log('2')
             if (!checkOutDetails) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
