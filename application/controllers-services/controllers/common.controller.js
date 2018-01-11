@@ -435,6 +435,7 @@ let Order = {
         const trans = await db.sequelize.transaction()
         try {
             const orderData = req.body
+            console.log(orderData)
             const userId = req.user.id
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
             orderData.user_type_id = userId
@@ -444,6 +445,7 @@ let Order = {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
             const orderId = orderDetails.id
+            console.log(orderId)
             const paymentMethodNonce = orderDetails.paymentMethodNonce
             let checkOutDetails = await CommonService.Order.CheckOut(paymentMethodNonce, orderId)
             if (!checkOutDetails) {
