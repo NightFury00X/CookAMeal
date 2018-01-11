@@ -72,6 +72,11 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             defaultValue: 'pending'
         },
+        isAccepted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     }

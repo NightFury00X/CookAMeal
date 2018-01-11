@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
+      <change beforePath="$PROJECT_DIR$/application/modals/order.js" afterPath="$PROJECT_DIR$/application/modals/order.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -32,8 +31,8 @@
       <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="468" column="66" lean-forward="true" selection-start-line="468" selection-start-column="66" selection-end-line="468" selection-end-column="66" />
+            <state relative-caret-position="138">
+              <caret line="477" column="36" lean-forward="false" selection-start-line="477" selection-start-column="24" selection-end-line="477" selection-end-column="36" />
               <folding>
                 <element signature="e#4065#6191#0" expanded="false" />
               </folding>
@@ -61,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="731" column="25" lean-forward="false" selection-start-line="731" selection-start-column="25" selection-end-line="731" selection-end-column="25" />
+            <state relative-caret-position="125">
+              <caret line="723" column="41" lean-forward="true" selection-start-line="723" selection-start-column="41" selection-end-line="723" selection-end-column="41" />
               <folding>
                 <element signature="e#502#724#0" expanded="false" />
                 <element signature="e#757#1045#0" expanded="false" />
@@ -85,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="order.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/modals/order.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="71" column="29" lean-forward="false" selection-start-line="71" selection-start-column="29" selection-end-line="71" selection-end-column="29" />
+            <state relative-caret-position="115">
+              <caret line="68" column="53" lean-forward="true" selection-start-line="68" selection-start-column="53" selection-end-line="68" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -197,9 +196,9 @@
         <option value="$PROJECT_DIR$/routes/admin/admin.routes.js" />
         <option value="$PROJECT_DIR$/application/modals/transaction-details.js" />
         <option value="$PROJECT_DIR$/application/modals/user-type.js" />
-        <option value="$PROJECT_DIR$/application/modals/order.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
+        <option value="$PROJECT_DIR$/application/modals/order.js" />
       </list>
     </option>
   </component>
@@ -459,28 +458,7 @@
       <workItem from="1515477928831" duration="13593000" />
       <workItem from="1515556134871" duration="14248000" />
       <workItem from="1515587418382" duration="2058000" />
-      <workItem from="1515661444221" duration="6410000" />
-    </task>
-    <task id="LOCAL-00337" summary="Remove Sequelize logging.">
-      <created>1515419340987</created>
-      <option name="number" value="00337" />
-      <option name="presentableId" value="LOCAL-00337" />
-      <option name="project" value="LOCAL" />
-      <updated>1515419340987</updated>
-    </task>
-    <task id="LOCAL-00338" summary="Remove Sequelize logging.">
-      <created>1515419584957</created>
-      <option name="number" value="00338" />
-      <option name="presentableId" value="LOCAL-00338" />
-      <option name="project" value="LOCAL" />
-      <updated>1515419584957</updated>
-    </task>
-    <task id="LOCAL-00339" summary="Updated order API.">
-      <created>1515488957095</created>
-      <option name="number" value="00339" />
-      <option name="presentableId" value="LOCAL-00339" />
-      <option name="project" value="LOCAL" />
-      <updated>1515488957096</updated>
+      <workItem from="1515661444221" duration="8081000" />
     </task>
     <task id="LOCAL-00340" summary="Updated order API.">
       <created>1515490092823</created>
@@ -804,11 +782,32 @@
       <option name="project" value="LOCAL" />
       <updated>1515667910872</updated>
     </task>
-    <option name="localTasksCounter" value="386" />
+    <task id="LOCAL-00386" summary="Updated order API.">
+      <created>1515668038436</created>
+      <option name="number" value="00386" />
+      <option name="presentableId" value="LOCAL-00386" />
+      <option name="project" value="LOCAL" />
+      <updated>1515668038436</updated>
+    </task>
+    <task id="LOCAL-00387" summary="Updated order API.">
+      <created>1515668180337</created>
+      <option name="number" value="00387" />
+      <option name="presentableId" value="LOCAL-00387" />
+      <option name="project" value="LOCAL" />
+      <updated>1515668180337</updated>
+    </task>
+    <task id="LOCAL-00388" summary="Updated order API.">
+      <created>1515668293794</created>
+      <option name="number" value="00388" />
+      <option name="presentableId" value="LOCAL-00388" />
+      <option name="project" value="LOCAL" />
+      <updated>1515668293794</updated>
+    </task>
+    <option name="localTasksCounter" value="389" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="805901000" />
+    <option name="totallyTimeSpent" value="807572000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1293,14 +1292,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/order.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="71" column="29" lean-forward="false" selection-start-line="71" selection-start-column="29" selection-end-line="71" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/transaction-details.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -1309,20 +1300,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="468" column="66" lean-forward="true" selection-start-line="468" selection-start-column="66" selection-end-line="468" selection-end-column="66" />
-          <folding>
-            <element signature="e#4065#6191#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="731" column="25" lean-forward="false" selection-start-line="731" selection-start-column="25" selection-end-line="731" selection-end-column="25" />
+        <state relative-caret-position="125">
+          <caret line="723" column="41" lean-forward="true" selection-start-line="723" selection-start-column="41" selection-end-line="723" selection-end-column="41" />
           <folding>
             <element signature="e#502#724#0" expanded="false" />
             <element signature="e#757#1045#0" expanded="false" />
@@ -1338,6 +1319,24 @@
             <element signature="e#19278#19494#0" expanded="false" />
             <element signature="e#19528#19759#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="477" column="36" lean-forward="false" selection-start-line="477" selection-start-column="24" selection-end-line="477" selection-end-column="36" />
+          <folding>
+            <element signature="e#4065#6191#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/order.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="68" column="53" lean-forward="true" selection-start-line="68" selection-start-column="53" selection-end-line="68" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>
