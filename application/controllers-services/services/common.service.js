@@ -681,9 +681,11 @@ CommonService.prototype.Order = {
                 publicKey: config.braintree.publicKey,
                 privateKey: config.braintree.privateKey
             })
+            console.log('paymentMethodNonce: ', paymentMethodNonce)
             return await new Promise((resolve, reject) => {
                 gateway.transaction.sale({
                     amount: '10.00',
+                    orderId: orderId,
                     paymentMethodNonce: paymentMethodNonce,
                     options: {
                         submitForSettlement: true
