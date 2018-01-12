@@ -675,6 +675,7 @@ CommonService.prototype.Units = {
 CommonService.prototype.Order = {
     ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes) => {
         console.log('Rohit send total amount: ', totalAmount)
+        console.log('Recipes: ', recipes)
         for (const recipe of recipes) {
             console.log('Recipe: ', recipe)
         }
