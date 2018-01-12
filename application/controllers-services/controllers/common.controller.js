@@ -417,6 +417,9 @@ let Order = {
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
             const {totalAmount, taxes, deliveryFee, recipes} = orderData
             const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, recipes)
+            if (!valid) {
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
             orderData.user_type_id = userId
             const orderDetails = await CommonService.Order.PlaceOrder(orderData, recipesToJson, trans)
             if (!orderDetails) {

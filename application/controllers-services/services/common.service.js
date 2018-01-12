@@ -691,6 +691,7 @@ CommonService.prototype.Order = {
         if (totalAmount !== totalAmountIncludingTax) {
             return false
         }
+        return true
     },
     CheckOut: async (paymentMethodNonce, orderId) => {
         try {
