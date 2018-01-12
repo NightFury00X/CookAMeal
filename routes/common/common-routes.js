@@ -97,7 +97,7 @@ router.post('/order/check-out',
     ValidateBody(BodySchemas.Order),
     CommonController.Order.MakeOrder)
 
-router.get('/get-token',
+router.post('/get-token',
     CommonController.Order.GetToken)
 
 module.exports = router
