@@ -689,7 +689,7 @@ CommonService.prototype.Order = {
                 }
             }
         })
-        const total = ((recipeDetails.cost_per_serving * noOfServes) + recipeDetails.delivery_fee)
+        const total = ((parseFloat(recipeDetails.cost_per_serving) * parseInt(noOfServes)) + parseFloat(recipeDetails.delivery_fee))
         console.info('Total: ', total)
         const taxAmount = total * 5 / 100
         console.info('Tax Amount: ', taxAmount)
