@@ -415,9 +415,8 @@ let Order = {
             const orderData = req.body
             const userId = req.user.id
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
-            const {totalAmount, taxes, deliveryFee, recipes} = orderData
-            console.log(recipes)
-            const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, recipes)
+            const {totalAmount, taxes, deliveryFee} = orderData
+            const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, recipesToJson)
             if (!valid) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }

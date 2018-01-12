@@ -674,13 +674,12 @@ CommonService.prototype.Units = {
 
 CommonService.prototype.Order = {
     ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes) => {
-        recipes = JSON.parse(JSON.stringify(recipes))
+        const recipesToJson = !isJSON(recipes) ? JSON.parse(JSON.stringify(recipes)) : JSON.parse(recipes)
         console.log('Rohit send total amount: ', totalAmount)
-        console.log('Recipes: ', recipes)
-        for (const recipe of recipes) {
+        for (const recipe of recipesToJson) {
             console.log('Recipe: ', recipe)
         }
-        const recipeId = recipes[0].recipe_id
+        const recipeId = recipesToJson[0].recipe_id
         const recipeDetails = await db.Recipe.findOne({
             attributes: ['cost_per_serving', 'available_servings', 'delivery_fee'],
             where: {
@@ -693,10 +692,7 @@ CommonService.prototype.Order = {
         const taxAmount = (((recipeDetails.cost_per_serving * noOfServes) + recipeDetails.delivery_fee) * 5) / 100
         const totalAmountIncludingTax = (total || 0) + (taxAmount || 0)
         console.log('Calculated total amount: ', totalAmountIncludingTax)
-        if (totalAmount !== totalAmountIncludingTax) {
-            return false
-        }
-        return true
+        return totalAmount === totalAmountIncludingTax
     },
     CheckOut: async (paymentMethodNonce, orderId) => {
         try {
