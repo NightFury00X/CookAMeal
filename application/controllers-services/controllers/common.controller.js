@@ -409,32 +409,14 @@ let Order = {
             next(error)
         }
     },
-    // MakeOrder1: async (req, res, next) => {
-    //     try {
-    //         const userId = req.user.id
-    //         let orderDetails = req.body
-    //         let recipesToJson = JSON.parse(JSON.stringify(orderDetails.recipes))
-    //         orderDetails.user_type_id = userId
-    //         const result = await CommonService.Order.PlaceOrder(orderDetails, recipesToJson)
-    //         if (!result) {
-    //             return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
-    //         }
-    //         return ResponseHelpers.SetSuccessResponse({
-    //             OrderId: result.id,
-    //             Message: CommonConfig.ERRORS.ORDER.SUCCESS
-    //         }, res, CommonConfig.STATUS_CODE.CREATED)
-    //     } catch (error) {
-    //         next(error)
-    //     }
-    // },
     MakeOrder: async (req, res, next) => {
         const trans = await db.sequelize.transaction()
         try {
             const orderData = req.body
             const userId = req.user.id
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
-            const {totalAmount, taxes, deliveryFee} = orderData
-            console.log(totalAmount, ' - ', taxes, ' - ', deliveryFee)
+            const {totalAmount, taxes, deliveryFee, recipes} = orderData
+            const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, recipes)
             orderData.user_type_id = userId
             const orderDetails = await CommonService.Order.PlaceOrder(orderData, recipesToJson, trans)
             if (!orderDetails) {
@@ -442,7 +424,6 @@ let Order = {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
             const orderId = orderDetails.id
-            console.log(orderId)
             const paymentMethodNonce = orderData.paymentMethodNonce
             let checkOutDetails = await CommonService.Order.CheckOut(paymentMethodNonce, orderId)
             if (!checkOutDetails) {

@@ -673,7 +673,24 @@ CommonService.prototype.Units = {
 }
 
 CommonService.prototype.Order = {
-    ValidateOrder: async () => {
+    ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes) => {
+        console.log('Rohit send total amount: ', totalAmount)
+        const recipeId = recipes[0].recipe_id
+        const recipeDetails = await db.Recipe.findOne({
+            attributes: ['cost_per_serving', 'available_servings', 'delivery_fee'],
+            where: {
+                recipe_id: {
+                    [Op.eq]: recipeId
+                }
+            }
+        })
+        const total = ((recipeDetails.cost_per_serving * noOfServes) + recipeDetails.delivery_fee)
+        const taxAmount = (((recipeDetails.cost_per_serving * noOfServes) + recipeDetails.delivery_fee) * 5) / 100
+        const totalAmountIncludingTax = (total || 0) + (taxAmount || 0)
+        console.log('Calculated total amount: ', totalAmountIncludingTax)
+        if (totalAmount !== totalAmountIncludingTax) {
+            return false
+        }
     },
     CheckOut: async (paymentMethodNonce, orderId) => {
         try {
