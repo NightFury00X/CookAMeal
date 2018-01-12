@@ -57,11 +57,6 @@ router.post('/favorite/recipe',
 router.get('/favorite/recipe',
     CommonController.Recipe.GetRecipeMarkedFavoriteList)
 
-// router.post('/favorite/profile',
-//     RequestMethodsMiddlewares.ApplicationJsonData,
-//     ValidateBody(BodySchemas.Favorite),
-//     CommonController.Recipe.MarkProfileAsFavorite);
-
 router.post('/review/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.RecipeReview),
@@ -83,11 +78,6 @@ router.post('/feedback',
 router.get('/order/prepare-data/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.Order.PrepareData)
-
-// router.post('/order',
-//     RequestMethodsMiddlewares.ApplicationJsonData,
-//     ValidateBody(BodySchemas.Order),
-//     CommonController.Order.MakeOrder)
 
 router.post('/order/check-out',
     RequestMethodsMiddlewares.ApplicationJsonData,

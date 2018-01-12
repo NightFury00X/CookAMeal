@@ -46,7 +46,7 @@ module.exports = {
             const response = {
                 success: false,
                 data: [],
-                errors
+                error: errors
             }
             this.SetResponse(401, response, res)
         },
@@ -54,7 +54,7 @@ module.exports = {
             const response = {
                 success: false,
                 data: [],
-                errors
+                error: errors
             }
             this.SetResponse(403, response, res)
         },

@@ -410,13 +410,18 @@ let Order = {
         }
     },
     MakeOrder: async (req, res, next) => {
+        let flag = false
+        let payment = false
+        let OId
+        let TId
         const trans = await db.sequelize.transaction()
         try {
             const orderData = req.body
             const userId = req.user.id
+            const profileId = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profileId.id)
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
             const {totalAmount, taxes, orderServings, deliveryFee} = orderData
-            console.log('========================', recipesToJson)
             const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson)
             if (!valid) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
@@ -427,12 +432,14 @@ let Order = {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
+            OId = orderDetails.id
             const orderId = orderDetails.id
             const paymentMethodNonce = orderData.paymentMethodNonce
-            let checkOutDetails = await CommonService.Order.CheckOut(paymentMethodNonce, orderId)
+            const checkOutDetails = await CommonService.Order.CheckOut(paymentMethodNonce, orderId, totalAmount)
             if (!checkOutDetails) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
+            payment = true
             const transactionData = {
                 transactionId: checkOutDetails.transaction.id,
                 amount: checkOutDetails.transaction.amount,
@@ -451,15 +458,45 @@ let Order = {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
+            TId = transactionData.transactionId
             trans.commit()
+            flag = true
+            const result = await CommonService.Order.UpdatePaymentStateAfterSuccess(orderId)
+            if (!result) {
+                return ResponseHelpers.SetSuccessResponse({
+                    orderState: false,
+                    message: CommonConfig.ERRORS.ORDER.FAILURE,
+                    orderId: orderId,
+                    transactionId: transactionData.transactionId
+                }, res, CommonConfig.STATUS_CODE.CREATED)
+            }
             return ResponseHelpers.SetSuccessResponse({
-                Transaction: checkOutDetails,
-                result: orderDetails,
+                orderState: true,
+                paymentDetails: {
+                    transactionId: transactionDetails.id,
+                    amount: currencySymbol.currency_symbol + ' ' + parseFloat(transactionDetails.amount),
+                    paymentMethod: transactionDetails.paymentInstrumentType,
+                    merchantAccountId: transactionDetails.merchantAccountId
+                },
+                orderDetails: {
+                    id: orderDetails.id,
+                    orderDate: orderDetails.created_at,
+                    amount: currencySymbol.currency_symbol + ' ' + parseFloat(orderDetails.totalAmount)
+                },
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
-            trans.rollback()
-            next(error)
+            if (!flag && !payment) {
+                trans.rollback()
+                next(error)
+            } else {
+                return ResponseHelpers.SetSuccessResponse({
+                    orderState: false,
+                    message: CommonConfig.ERRORS.ORDER.FAILURE,
+                    orderId: OId,
+                    transactionId: TId
+                }, res, CommonConfig.STATUS_CODE.CREATED)
+            }
         }
     }
 }

@@ -695,9 +695,9 @@ CommonService.prototype.Order = {
         console.info('Tax Amount: ', taxAmount)
         const totalAmountIncludingTax = (total || 0) + (taxAmount || 0)
         console.log('Calculated total amount: ', totalAmountIncludingTax)
-        return totalAmount === totalAmountIncludingTax
+        return parseFloat(totalAmount) === parseFloat(totalAmountIncludingTax)
     },
-    CheckOut: async (paymentMethodNonce, orderId) => {
+    CheckOut: async (paymentMethodNonce, orderId, totalAmount) => {
         try {
             let gateway = await braintree.connect({
                 environment: braintree.Environment.Sandbox,
@@ -708,7 +708,7 @@ CommonService.prototype.Order = {
             console.log('paymentMethodNonce: ', paymentMethodNonce)
             return await new Promise((resolve, reject) => {
                 gateway.transaction.sale({
-                    amount: '10.00',
+                    amount: totalAmount,
                     orderId: orderId,
                     paymentMethodNonce: paymentMethodNonce,
                     options: {
@@ -728,8 +728,6 @@ CommonService.prototype.Order = {
     },
     PlaceOrder: async (orderDetails, recipesData, trans) => {
         let recipesToJson = !isJSON(recipesData) ? JSON.parse(JSON.stringify(recipesData)) : JSON.parse(recipesData)
-        // orderDetails.orderState = 'pending'
-        // orderDetails.paymentState = 'pending'
         try {
             const order = await db.Order.create(orderDetails, {transaction: trans})
             if (!order) {
@@ -758,8 +756,22 @@ CommonService.prototype.Order = {
             console.log('Error: ', error)
             return false
         }
+    },
+    UpdatePaymentStateAfterSuccess: async (orderId) => {
+        try {
+            return await db.Order.update({
+                paymentState: 'completed'
+            }, {
+                where: {
+                    id: {
+                        [Op.eq]: orderId
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
     }
-
 }
 
 module.exports = new CommonService()
