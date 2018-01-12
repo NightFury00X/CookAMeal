@@ -675,6 +675,9 @@ CommonService.prototype.Units = {
 CommonService.prototype.Order = {
     ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes) => {
         console.log('Rohit send total amount: ', totalAmount)
+        for (const recipe of recipes) {
+            console.log('Recipe: ', recipe)
+        }
         const recipeId = recipes[0].recipe_id
         const recipeDetails = await db.Recipe.findOne({
             attributes: ['cost_per_serving', 'available_servings', 'delivery_fee'],
