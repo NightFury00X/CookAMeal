@@ -193,17 +193,6 @@ let Units = {
     }
 }
 
-let PaymentMethod = {
-    GetAll: async (req, res, next) => {
-        try {
-            let result = await CommonService.PaymentMethod.GettAll()
-            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
-        } catch (error) {
-            next(error)
-        }
-    }
-}
-
 const Recipe = {
     GetRecipeListByCategoryAndSubCategoryIds: async (req, res, next) => {
         try {
@@ -442,9 +431,10 @@ let Order = {
         const trans = await db.sequelize.transaction()
         try {
             const orderData = req.body
-            console.log(orderData)
             const userId = req.user.id
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
+            const {totalAmount, taxes, deliveryFee} = orderData
+            console.log(totalAmount, ' - ', taxes, ' - ', deliveryFee)
             orderData.user_type_id = userId
             const orderDetails = await CommonService.Order.PlaceOrder(orderData, recipesToJson, trans)
             if (!orderDetails) {
@@ -454,9 +444,7 @@ let Order = {
             const orderId = orderDetails.id
             console.log(orderId)
             const paymentMethodNonce = orderData.paymentMethodNonce
-            console.log('1')
             let checkOutDetails = await CommonService.Order.CheckOut(paymentMethodNonce, orderId)
-            console.log('2')
             if (!checkOutDetails) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
@@ -474,7 +462,6 @@ let Order = {
                 paidBy: userId
             }
             const transactionDetails = await CommonService.Order.Transaction(transactionData, trans)
-            console.log('Transaction: ', transactionDetails)
             if (!transactionDetails) {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
@@ -500,7 +487,6 @@ let CommonController = {
     Recipe: Recipe,
     ReviewDetails: ReviewDetails,
     Units: Units,
-    PaymentMethod: PaymentMethod,
     Feedback: Feedback,
     Order: Order
 }

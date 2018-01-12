@@ -673,6 +673,8 @@ CommonService.prototype.Units = {
 }
 
 CommonService.prototype.Order = {
+    ValidateOrder: async () => {
+    },
     CheckOut: async (paymentMethodNonce, orderId) => {
         try {
             let gateway = await braintree.connect({
