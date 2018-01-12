@@ -386,6 +386,13 @@ const Feedback = {
 }
 
 let Order = {
+    GetToken: async (req, res, next) => {
+        try {
+            return await gateway.clientToken.generate()
+        } catch (error) {
+            next(error)
+        }
+    },
     PrepareData: async (req, res, next) => {
         try {
             let gateway = braintree.connect({

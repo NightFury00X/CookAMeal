@@ -92,13 +92,12 @@ router.get('/order/prepare-data/:id',
 //     ValidateBody(BodySchemas.Order),
 //     CommonController.Order.MakeOrder)
 
-// 3: checkout order
 router.post('/order/check-out',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.Order),
     CommonController.Order.MakeOrder)
 
-router.get('/geo',
-    CommonController.User.geo)
+router.get('/get-token',
+    CommonController.Order.GetToken)
 
 module.exports = router
