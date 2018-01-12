@@ -684,7 +684,7 @@ CommonService.prototype.Order = {
         const recipeDetails = await db.Recipe.findOne({
             attributes: ['cost_per_serving', 'available_servings', 'delivery_fee'],
             where: {
-                recipe_id: {
+                id: {
                     [Op.eq]: recipeId
                 }
             }
