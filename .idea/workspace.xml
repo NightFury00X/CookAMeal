@@ -29,11 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-814">
-              <caret line="8" column="54" lean-forward="true" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
+            <state relative-caret-position="286">
+              <caret line="410" column="64" lean-forward="false" selection-start-line="410" selection-start-column="64" selection-end-line="410" selection-end-column="64" />
               <folding>
                 <element signature="e#3443#5569#0" expanded="false" />
               </folding>
@@ -64,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="747" column="9" lean-forward="false" selection-start-line="747" selection-start-column="9" selection-end-line="747" selection-end-column="9" />
+            <state relative-caret-position="363">
+              <caret line="688" column="57" lean-forward="true" selection-start-line="688" selection-start-column="57" selection-end-line="688" selection-end-column="57" />
               <folding>
                 <element signature="e#502#724#0" expanded="false" />
                 <element signature="e#757#1045#0" expanded="false" />
@@ -194,8 +194,8 @@
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
         <option value="$PROJECT_DIR$/configurations/helpers/helper.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
       </list>
     </option>
   </component>
@@ -461,14 +461,7 @@
       <workItem from="1515556134871" duration="14248000" />
       <workItem from="1515587418382" duration="2058000" />
       <workItem from="1515661444221" duration="11063000" />
-      <workItem from="1515735867498" duration="15485000" />
-    </task>
-    <task id="LOCAL-00360" summary="Updated order API.">
-      <created>1515577519461</created>
-      <option name="number" value="00360" />
-      <option name="presentableId" value="LOCAL-00360" />
-      <option name="project" value="LOCAL" />
-      <updated>1515577519482</updated>
+      <workItem from="1515735867498" duration="17451000" />
     </task>
     <task id="LOCAL-00361" summary="Updated order API.">
       <created>1515578219494</created>
@@ -806,11 +799,18 @@
       <option name="project" value="LOCAL" />
       <updated>1515759754639</updated>
     </task>
-    <option name="localTasksCounter" value="409" />
+    <task id="LOCAL-00409" summary="Updated order API.">
+      <created>1515760912568</created>
+      <option name="number" value="00409" />
+      <option name="presentableId" value="LOCAL-00409" />
+      <option name="project" value="LOCAL" />
+      <updated>1515760912568</updated>
+    </task>
+    <option name="localTasksCounter" value="410" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="826039000" />
+    <option name="totallyTimeSpent" value="828005000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1306,10 +1306,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="410" column="64" lean-forward="false" selection-start-line="410" selection-start-column="64" selection-end-line="410" selection-end-column="64" />
+          <folding>
+            <element signature="e#3443#5569#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="747" column="9" lean-forward="false" selection-start-line="747" selection-start-column="9" selection-end-line="747" selection-end-column="9" />
+        <state relative-caret-position="363">
+          <caret line="688" column="57" lean-forward="true" selection-start-line="688" selection-start-column="57" selection-end-line="688" selection-end-column="57" />
           <folding>
             <element signature="e#502#724#0" expanded="false" />
             <element signature="e#757#1045#0" expanded="false" />
@@ -1327,16 +1337,6 @@
             <element signature="e#18774#19242#0" expanded="false" />
             <element signature="e#19278#19494#0" expanded="false" />
             <element signature="e#19528#19759#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-814">
-          <caret line="8" column="54" lean-forward="true" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
-          <folding>
-            <element signature="e#3443#5569#0" expanded="false" />
           </folding>
         </state>
       </provider>

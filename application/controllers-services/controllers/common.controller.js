@@ -406,8 +406,9 @@ let Order = {
             const profileId = await CommonService.User.GetProfileIdByUserTypeId(userId)
             const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profileId.id)
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
-            const {totalAmount, taxes, orderServings, deliveryFee} = orderData
-            const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson)
+            const {totalAmount, taxes, orderServings, deliveryFee, deliveryType} = orderData
+            console.log(deliveryType)
+            const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson, deliveryType)
             if (!valid) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }

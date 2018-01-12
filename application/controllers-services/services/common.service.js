@@ -673,7 +673,7 @@ CommonService.prototype.Units = {
 }
 
 CommonService.prototype.Order = {
-    ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes) => {
+    ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes, deliveryType) => {
         const recipesToJson = !isJSON(recipes) ? JSON.parse(JSON.stringify(recipes)) : JSON.parse(recipes)
         const recipeId = recipesToJson[0].recipe_id
         const recipeDetails = await db.Recipe.findOne({
@@ -684,7 +684,8 @@ CommonService.prototype.Order = {
                 }
             }
         })
-        const total = ((parseFloat(recipeDetails.cost_per_serving) * parseInt(noOfServes)) + parseFloat(recipeDetails.delivery_fee))
+        const tempDeliveryFees = parseFloat(deliveryType) === 0 ? 0 : parseFloat(recipeDetails.delivery_fee)
+        const total = ((parseFloat(recipeDetails.cost_per_serving) * parseInt(noOfServes)) + tempDeliveryFees)
         const taxAmount = total * 5 / 100
         const totalAmountIncludingTax = (total || 0) + (taxAmount || 0)
         return parseFloat(totalAmount) === parseFloat(totalAmountIncludingTax)
