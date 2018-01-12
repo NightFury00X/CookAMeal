@@ -19,10 +19,10 @@ module.exports = {
     ResponseHelpers: {
         SetSuccessResponse: function (data, res, statusCode) {
             let response = {
-                'success': true,
+                success: true,
                 data: data,
-                'error': null,
-                'status': statusCode
+                error: null,
+                status: statusCode
             }
             this.SetResponse(statusCode, response, res)
         },
@@ -30,7 +30,7 @@ module.exports = {
             const response = {
                 success: false,
                 data: [],
-                errors
+                error: errors
             }
             this.SetResponse(500, response, res)
         },
@@ -38,7 +38,7 @@ module.exports = {
             const response = {
                 success: false,
                 data: [],
-                errors
+                error: errors
             }
             this.SetResponse(404, response, res)
         },
