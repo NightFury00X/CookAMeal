@@ -690,7 +690,9 @@ CommonService.prototype.Order = {
             }
         })
         const total = ((recipeDetails.cost_per_serving * noOfServes) + recipeDetails.delivery_fee)
+        console.info('Total: ', total)
         const taxAmount = total * 5 / 100
+        console.info('Tax Amount: ', taxAmount)
         const totalAmountIncludingTax = (total || 0) + (taxAmount || 0)
         console.log('Calculated total amount: ', totalAmountIncludingTax)
         return totalAmount === totalAmountIncludingTax
