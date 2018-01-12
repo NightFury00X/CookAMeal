@@ -2,7 +2,6 @@ const {ResponseHelpers} = require('../../../configurations/helpers/helper')
 const CommonService = require('../services/common.service')
 const CookService = require('../services/cook.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
-const GeoLOcation = require('../../../configurations/helpers/geo-location-helper')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
 const db = require('../../modals')
@@ -55,20 +54,6 @@ let User = {
             const userId = req.user.id
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
             const result = await CommonService.User.FindAllReviewsByProfileId(profile.id)
-            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
-        } catch (error) {
-            next(error)
-        }
-    },
-    geo: async (req, res, next) => {
-        try {
-            const data = {
-                address: 'cynoteck dehradun',
-                state: 'uttarakhand',
-                city: 'dehradun',
-                zipCode: '248001'
-            }
-            const result = await await GeoLOcation.geocoder.geocode(`${data.address}, ${data.state}, ${data.city} ${data.zipCode}`)
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)

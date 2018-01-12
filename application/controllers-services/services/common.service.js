@@ -674,12 +674,7 @@ CommonService.prototype.Units = {
 
 CommonService.prototype.Order = {
     ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes) => {
-        console.log('Recipes: ', recipes)
         const recipesToJson = !isJSON(recipes) ? JSON.parse(JSON.stringify(recipes)) : JSON.parse(recipes)
-        console.log('Rohit send total amount: ', totalAmount)
-        for (const recipe of recipesToJson) {
-            console.log('Recipe: ', recipe)
-        }
         const recipeId = recipesToJson[0].recipe_id
         const recipeDetails = await db.Recipe.findOne({
             attributes: ['cost_per_serving', 'available_servings', 'delivery_fee'],
@@ -690,11 +685,8 @@ CommonService.prototype.Order = {
             }
         })
         const total = ((parseFloat(recipeDetails.cost_per_serving) * parseInt(noOfServes)) + parseFloat(recipeDetails.delivery_fee))
-        console.info('Total: ', total)
         const taxAmount = total * 5 / 100
-        console.info('Tax Amount: ', taxAmount)
         const totalAmountIncludingTax = (total || 0) + (taxAmount || 0)
-        console.log('Calculated total amount: ', totalAmountIncludingTax)
         return parseFloat(totalAmount) === parseFloat(totalAmountIncludingTax)
     },
     CheckOut: async (paymentMethodNonce, orderId, totalAmount) => {
@@ -705,7 +697,6 @@ CommonService.prototype.Order = {
                 publicKey: config.braintree.publicKey,
                 privateKey: config.braintree.privateKey
             })
-            console.log('paymentMethodNonce: ', paymentMethodNonce)
             return await new Promise((resolve, reject) => {
                 gateway.transaction.sale({
                     amount: totalAmount,
@@ -753,7 +744,6 @@ CommonService.prototype.Order = {
         try {
             return await db.TransactionDetail.create(transactionData, {transaction: trans})
         } catch (error) {
-            console.log('Error: ', error)
             return false
         }
     },
