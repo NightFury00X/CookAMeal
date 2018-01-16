@@ -6,6 +6,13 @@ const braintree = require('braintree')
 const config = require('../../../configurations/main')
 const db = require('../../modals')
 
+const gateway = braintree.connect({
+    environment: braintree.Environment.Sandbox,
+    merchantId: config.braintree.merchantId,
+    publicKey: config.braintree.publicKey,
+    privateKey: config.braintree.privateKey
+})
+
 let User = {
     GetCookprofile: async (req, res, next) => {
         try {
@@ -375,12 +382,6 @@ let Order = {
     },
     PrepareData: async (req, res, next) => {
         try {
-            let gateway = braintree.connect({
-                environment: braintree.Environment.Sandbox,
-                merchantId: config.braintree.merchantId,
-                publicKey: config.braintree.publicKey,
-                privateKey: config.braintree.privateKey
-            })
             const clientToken = await gateway.clientToken.generate()
             const recipeId = req.value.params.id
             const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
