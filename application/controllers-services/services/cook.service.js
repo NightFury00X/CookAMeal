@@ -54,7 +54,7 @@ CookService.prototype.Recipe = {
             }
             if (servingDays) {
                 serving_days.recipe_id = recipeData.id
-                const daysData = await db.Day.create(serving_days, {transaction: trans})
+                const daysData = await db.Day.create(servingDays, {transaction: trans})
                 if (!daysData) {
                     await trans.rollback()
                     return null
