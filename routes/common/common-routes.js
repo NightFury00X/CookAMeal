@@ -84,7 +84,7 @@ router.post('/order/check-out',
     ValidateBody(BodySchemas.Order),
     CommonController.Order.MakeOrder)
 
-router.post('/get-token',
+router.get('/braintree/get-client-token',
     CommonController.Order.GetToken)
 
 module.exports = router

@@ -362,7 +362,13 @@ const Feedback = {
 let Order = {
     GetToken: async (req, res, next) => {
         try {
-            return await gateway.clientToken.generate()
+            const brainTreeClientToken = await gateway.clientToken.generate()
+            if (!brainTreeClientToken) {
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.FEEDBACK.FAILURE, res)
+            }
+            return ResponseHelpers.SetSuccessResponse({
+                token: brainTreeClientToken.clientToken
+            }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
