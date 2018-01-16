@@ -44,4 +44,6 @@ router.post('/resetpass',
     ResetPasswordMiddlewares.CheckPasswordIsGenerated,
     AnonymousController.Anonymous.ResetPassword)
 
+router.get('/braintree/get-client-token',
+    CommonController.Order.GetToken)
 module.exports = router
