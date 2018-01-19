@@ -63,14 +63,26 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         orderState: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 'pending'
+            defaultValue: 0,
+            validate: {
+                isIn: {
+                    args: [[0, 1, 2]],
+                    msg: 'Invalid State.'
+                }
+            }
         },
         paymentState: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 'pending'
+            defaultValue: 0,
+            validate: {
+                isIn: {
+                    args: [[0, 1]],
+                    msg: 'Invalid Payment State.'
+                }
+            }
         },
         isAccepted: {
             type: DataTypes.BOOLEAN,

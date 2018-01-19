@@ -29,4 +29,9 @@ router.post('/unit',
     ValidateBody(BodySchemas.Unit),
     AdminController.Units.Add)
 
+router.post('/tax',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.Tax),
+    AdminController.Tax.Add)
+
 module.exports = router

@@ -47,6 +47,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false
         },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
     }

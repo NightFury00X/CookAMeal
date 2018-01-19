@@ -8,6 +8,7 @@ const isJSON = require('is-json')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
 
+
 CommonService = function () {
 }
 
@@ -369,7 +370,7 @@ CommonService.prototype.Recipe = {
     FindRecipeByCatIdAndSubIds: async (categoryId, subCategoryId) => {
         try {
             return await db.Recipe.findAll({
-                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time'],
+                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'profile_id'],
                 where: {
                     [Op.and]: [{
                         category_id: categoryId,
@@ -396,7 +397,7 @@ CommonService.prototype.Recipe = {
                     model: db.MediaObject,
                     attributes: ['id', 'imageurl']
                 }, {
-                    attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'serve', 'category_id', 'sub_category_id'],
+                    attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'serve', 'category_id', 'sub_category_id', 'profile_id'],
                     model: db.Recipe,
                     where: {
                         id: {
@@ -460,12 +461,10 @@ CommonService.prototype.Recipe = {
         try {
             return db.SubCategory.findAll({
                 attributes: ['id', 'name'],
-
                 include: [{
                     model: db.Recipe,
-                    attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time'],
+                    attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time', 'profile_id'],
                     where: {
-                        // sub_category_id: {$col: 'SubCategory.id'},
                         category_id: {
                             [Op.eq]: [categoryId]
                         }
@@ -500,7 +499,7 @@ CommonService.prototype.Recipe = {
                         }
                     }]
                 },
-                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'serve', 'category_id', 'sub_category_id'],
+                attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'serve', 'category_id', 'sub_category_id', 'profile_id'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageurl']
@@ -751,7 +750,7 @@ CommonService.prototype.Order = {
     UpdatePaymentStateAfterSuccess: async (orderId) => {
         try {
             return await db.Order.update({
-                paymentState: 'completed'
+                paymentState: CommonConfig.ORDER.PAYMENT_STATE.COMPLETE
             }, {
                 where: {
                     id: {
@@ -762,7 +761,65 @@ CommonService.prototype.Order = {
         } catch (error) {
             throw (error)
         }
+    },
+    GetOrdersListForCancellation: async () => {
+        return await db.Order.findAll({
+            attributes: ['id'],
+            where: {
+                [Op.and]: [{
+                    orderState: CommonConfig.ORDER.ORDER_STATE.PENDING,
+                    paymentState: CommonConfig.ORDER.PAYMENT_STATE.COMPLETE
+                }]
+            }
+        })
     }
 }
+
+// CommonService.prototype.Map = {
+//     FindGeoCordinationsByProfileId: async (profileId) => {
+//         return db.Address.findOne({
+//             attributes: ['latitude', 'longitude'],
+//             where: {
+//                 profile_id: {
+//                     [Op.eq]: profileId
+//                 }
+//             }
+//         })
+//     },
+//     FindAllCooksDealsWithCategoryForMap: async () => {
+//         try {
+//             return await db.Category.findAll({
+//                 attributes: ['id', 'name'],
+//                 include: [{
+//                     attributes: ['id', 'category_id', 'profile_id', 'latitude', 'longitude'],
+//                     model: db.CooksDealWithCategory
+//                 }]
+//             })
+//         } catch (error) {
+//             throw (error)
+//         }
+//     },
+//     FindGeoDistance: async (cordinateList) => {
+//         return await new Promise((resolve, reject) => {
+//             distance.get(
+//                 {
+//                     origins: ['30.324633, 78.041865'],
+//                     destinations: geoLocationList
+//                 },
+//                 function (err, data) {
+//                     if (err) return console.log(err)
+//                     const list = data.filter((loc) => {
+//                         return loc.distanceValue === 5312
+//                     })
+//                     geocoder.batchGeocode(list, function (err, results) {
+//                         // Return an array of type {error: false, value: []}
+//                         console.log(results)
+//                         return ResponseHelpers.SetSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK)
+//                     })
+//
+//                 })
+//         })
+//     }
+// }
 
 module.exports = new CommonService()

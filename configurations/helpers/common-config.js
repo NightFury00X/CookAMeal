@@ -25,6 +25,19 @@ CommonConfig.USER_TYPE = {
     FACEBOOK_USER: 2
 }
 
+CommonConfig.ORDER = {
+    ORDER_STATE: {
+        PENDING: 0,
+        COMPLETE: 1,
+        CANCEL: 2
+    },
+    PAYMENT_STATE: {
+        PENDING: 0,
+        COMPLETE: 1
+    },
+    ACCEPTED: true,
+    NOT_ACCEPTED: false
+}
 CommonConfig.STATUS_CODE = {
     OK: 200,
     CREATED: 201,

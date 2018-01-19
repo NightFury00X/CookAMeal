@@ -8,43 +8,34 @@ const {
     RequestMethodsMiddlewares
 } = require('../../configurations/middlewares/middlewares')
 
-// 1: Get All Category list
 router.get('/category',
     CommonController.Category.GetAll)
 
-// 2: Get All Category by Id
 router.get('/category/:id',
     CommonController.Category.FindById)
 
-// 3: Get All Sub-Category list
 router.get('/subcategory',
     CommonController.SubCategory.GetAll)
 
-// 1: Get All Allergies list
 router.get('/allergy',
     CommonController.Allergy.GetAll)
 
-// 1: Get All Allergies list
 router.get('/unit',
     CommonController.Units.GetAll)
 
-// 1: Get All Recipe details by Id
 router.get('/category/:id/sub-category/recipe-list',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.Category.GetAllRecipeByCategoryId)
 
-// 1: Get All Recipe details by Id
 router.get('/category/:catid/sub-category/:subid/recipe-list',
     ValidateParams(ParamSchemas.idSchema, 'catid'),
     ValidateParams(ParamSchemas.idSchema, 'subid'),
     CommonController.Recipe.GetRecipeListByCategoryAndSubCategoryIds)
 
-// 1: Get All Recipe details by Id
 router.get('/recipe/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.Recipe.GetRecipeById)
 
-// Get cook profile
 router.get('/cook-profile/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.User.GetCookprofile)
@@ -81,10 +72,10 @@ router.get('/order/prepare-data/:id',
 
 router.post('/order/check-out',
     RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.Order),
+    ValidateBody(BodySchemas.OrderFood),
     CommonController.Order.MakeOrder)
 
-router.get('/braintree/get-client-token',
-    CommonController.Order.GetToken)
+router.get('/map',
+    CommonController.Map.GetAllCook)
 
 module.exports = router

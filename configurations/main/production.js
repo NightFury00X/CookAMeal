@@ -41,6 +41,12 @@ exports.user = {
     password: 'Ngy97%h1'
 }
 
+exports.Google = {
+    Map: {
+        key: 'AIzaSyCytNKQu9qjaEnVOftb483j7uIr3b_rWuQ'
+    }
+}
+
 exports.braintree = {
     merchantId: '7wz2tcmtpr3t64sj',
     publicKey: '3hffpmpsshj4jxd6',

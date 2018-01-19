@@ -13,7 +13,6 @@ const requireLogin = passport.authenticate('local', {session: false})
 // passport Strategy
 require('../../configurations/passport/passport-strategy')
 const FileUploader = require('../../configurations/helpers/file-upload-multer')
-const CommonController = require('../../application/controllers-services/controllers/common.controller')
 const {ValidateBody} = require('../../configurations/middlewares/validation')
 const {BodySchemas} = require('../../application/schemas/schema')
 
@@ -44,6 +43,4 @@ router.post('/resetpass',
     ResetPasswordMiddlewares.CheckPasswordIsGenerated,
     AnonymousController.Anonymous.ResetPassword)
 
-router.get('/braintree/get-client-token',
-    CommonController.Order.GetToken)
 module.exports = router

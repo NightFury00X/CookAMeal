@@ -138,6 +138,13 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
+        UserTypeModel.hasMany(models.Tax, {
+            foreignKey: {
+                name: 'createdBy',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
     }
     return UserTypeModel
 }

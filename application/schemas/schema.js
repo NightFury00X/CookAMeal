@@ -74,18 +74,29 @@ module.exports = {
             feedbackAs: Joi.string().required().allow('cook', 'customer', 'Cook', 'Customer', 'COOK', 'CUSTOMER'),
             comments: Joi.string().required()
         }),
-        Order: Joi.object().keys({
+        Tax: Joi.object().keys({
+            countryId: Joi.string().required(),
+            stateId: Joi.string().required(),
+            Tax: Joi.string().required()
+        }),
+        OrderFood: Joi.object().keys({
             orderType: Joi.string().required().allow('0', '1'),
             spiceLevel: Joi.string().required().allow('Mild', 'Medium', 'Hot'),
             orderServings: Joi.number().required(),
             specialInstruction: Joi.string().required(),
+            paymentMethodNonce: Joi.string().required(),
             deliveryType: Joi.number().required(),
             deliveryFee: Joi.string().required(),
             pickUpTime: Joi.string().required(),
             taxes: Joi.string().required(),
             totalAmount: Joi.string().required(),
-            recipes: Joi.any().required(),
-            paymentMethodNonce: Joi.string().required()
+            recipes: Joi.any().required()
+        }),
+        HireACook: Joi.object().keys({
+            orderType: Joi.string().required().allow('0', '1'),
+            spiceLevel: Joi.string().required().allow('Mild', 'Medium', 'Hot'),
+            orderServings: Joi.number().required(),
+            specialInstruction: Joi.string().required()
         })
     }
 }

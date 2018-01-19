@@ -33,13 +33,18 @@ module.exports = function (sequelize, DataTypes) {
         Category.hasMany(models.MediaObject, {
             onDelete: 'CASCADE'
         })
-        Category.hasMany(models.Recipe,
-            {
-                foreignKey: {
-                    allowNull: false,
-                    onDelete: 'CASCADE'
-                }
-            })
+        Category.hasMany(models.Recipe, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+        Category.hasMany(models.CooksDealWithCategory, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
     }
 
     return Category

@@ -15,6 +15,16 @@ let config = require('./configurations/main')
 let CommonConfig = require('./configurations/helpers/common-config')
 let path = require('path')
 require('winston-daily-rotate-file')
+const cron = require('node-cron')
+const SchedulerController = require('./application/controllers-services/controllers/scheduler.controller')
+
+const task = cron.schedule('1-59 * * * *', function () {
+    console.log('starting....')
+    SchedulerController.Order.CancelOrder()
+    console.log('Completed')
+}, false)
+
+task.start()
 
 let logger = new (winston.Logger)({
     expressFormat: true,
@@ -141,6 +151,7 @@ app.use(function (req, res, next) {
 })
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
+        console.log('Error: ', err)
         const errorMessage = err.status !== 404 ? CommonConfig.ERRORS.UNABLE_TO_PROCESS : err.message
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
@@ -157,6 +168,7 @@ if (app.get('env') === 'development') {
     })
 } else {
     app.use(function (err, req, res, next) {
+        console.log('Error: ', err)
         const errorMessage = err.status === 500 ? CommonConfig.ERRORS.UNABLE_TO_PROCESS : err.message
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {

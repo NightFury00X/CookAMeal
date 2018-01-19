@@ -5,6 +5,7 @@ const CommonConfig = require('../../../configurations/helpers/common-config')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
 const db = require('../../modals')
+const MapService = require('../services/map-service')
 
 const gateway = braintree.connect({
     environment: braintree.Environment.Sandbox,
@@ -93,18 +94,23 @@ let Category = {
         try {
             const categoryId = req.value.params.id
             const userId = req.user.id
-            const result = await CommonService.Recipe.FindAllByCategoryId(categoryId)
-
-            let convertedJSON = JSON.parse(JSON.stringify(result))
+            const recipesList = await CommonService.Recipe.FindAllByCategoryId(categoryId)
+            let convertedJSON = JSON.parse(JSON.stringify(recipesList))
+            convertedJSON = convertedJSON.filter(function (item) {
+                return item.Recipes.length > 0
+            })
             for (const outer in convertedJSON) {
                 if (convertedJSON.hasOwnProperty(outer)) {
                     for (const inner in convertedJSON[outer].Recipes) {
                         if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const recipeId = convertedJSON[outer].Recipes[inner].id
+                            const profileId = convertedJSON[outer].Recipes[inner].profile_id
                             const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
+                            const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
                             const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
                             convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating
                             convertedJSON[outer].Recipes[inner].Favorite = !!favorite
+                            convertedJSON[outer].Recipes[inner].CurrencySymbol = currencyDetails.currency_symbol
                         }
                     }
                 }
@@ -192,8 +198,8 @@ const Recipe = {
             const categoryId = req.value.params.catid
             const subCategoryId = req.value.params.subid
             const subCategoryDetails = await CommonService.SubCategory.FindById(subCategoryId)
-            const result = await CommonService.Recipe.FindRecipeByCatIdAndSubIds(categoryId, subCategoryId)
-            let convertedJSON = JSON.parse(JSON.stringify(result))
+            const recipesList = await CommonService.Recipe.FindRecipeByCatIdAndSubIds(categoryId, subCategoryId)
+            let convertedJSON = JSON.parse(JSON.stringify(recipesList))
             for (const inner in convertedJSON) {
                 if (convertedJSON.hasOwnProperty(inner)) {
                     const recipeId = convertedJSON[inner].id
@@ -201,6 +207,9 @@ const Recipe = {
                     const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
                     convertedJSON[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating
                     convertedJSON[inner].Favorite = !!favorite
+                    const profileId = convertedJSON[inner].profile_id
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
+                    convertedJSON[inner].CurrencySymbol = currencyDetails.currency_symbol
                 }
             }
             let results = {
@@ -221,7 +230,14 @@ const Recipe = {
             if (!recipeDetails) {
                 return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.RECIPE.NOT_FOUND, res)
             }
+            let recipeDetailsToJSON = JSON.parse(JSON.stringify(recipeDetails))
             const rating = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
+            recipeDetailsToJSON.rating = !rating[0].rating ? 0 : rating[0].rating
+            const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
+            recipeDetailsToJSON.favorite = !!favorite
+            const profileId = recipeDetailsToJSON.Recipes[0].profile_id
+            const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
+            recipeDetailsToJSON.Recipes[0].CurrencySymbol = currencyDetails.currency_symbol
             const cookRecipes = await CommonService.Recipe.FindAllRecipeByCookIdExcludeSelectedRecipe(profile.id, recipeId)
             let cookRecipesToJSON = JSON.parse(JSON.stringify(cookRecipes))
             for (const index in cookRecipesToJSON) {
@@ -231,6 +247,9 @@ const Recipe = {
                     const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
                     cookRecipesToJSON[index].favorite = !!tempFav
                     cookRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
+                    const profileId = cookRecipesToJSON[index].profile_id
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
+                    cookRecipesToJSON[index].currencySymbol = currencyDetails.currency_symbol
                 }
             }
             const similarRecipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryIdExcludeSelectedCookRecipe(recipeDetails.Recipes[0].sub_category_id, profile.id)
@@ -242,11 +261,14 @@ const Recipe = {
                     const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
                     similarRecipesToJSON[index].favorite = !!tempFav
                     similarRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
+                    const profileId = similarRecipesToJSON[index].profile_id
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
+                    similarRecipesToJSON[index].currencySymbol = currencyDetails.currency_symbol
                 }
             }
-            const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
             const result = {
-                recipe_details: recipeDetails,
+                recipe_details: recipeDetailsToJSON,
+                profile: recipeDetailsToJSON,
                 rating: !rating[0].rating ? 0 : rating[0].rating,
                 favorite: !!favorite,
                 cook_recipes: cookRecipesToJSON,
@@ -367,19 +389,6 @@ const Feedback = {
 }
 
 let Order = {
-    GetToken: async (req, res, next) => {
-        try {
-            const brainTreeClientToken = await gateway.clientToken.generate()
-            if (!brainTreeClientToken) {
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.FEEDBACK.FAILURE, res)
-            }
-            return ResponseHelpers.SetSuccessResponse({
-                token: brainTreeClientToken.clientToken
-            }, res, CommonConfig.STATUS_CODE.CREATED)
-        } catch (error) {
-            next(error)
-        }
-    },
     PrepareData: async (req, res, next) => {
         try {
             const clientToken = await gateway.clientToken.generate()
@@ -414,7 +423,6 @@ let Order = {
             const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profileId.id)
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
             const {totalAmount, taxes, orderServings, deliveryFee, deliveryType} = orderData
-            console.log(deliveryType)
             const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson, deliveryType)
             if (!valid) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
@@ -432,6 +440,7 @@ let Order = {
             if (!checkOutDetails) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
+            console.log('Transaction Details: ', checkOutDetails)
             payment = true
             const transactionData = {
                 transactionId: checkOutDetails.transaction.id,
@@ -444,14 +453,20 @@ let Order = {
                 recurring: checkOutDetails.transaction.recurring,
                 orderId: orderId,
                 paidTo: checkOutDetails.transaction.merchantAccountId,
-                paidBy: userId
+                paidBy: userId,
+                status: checkOutDetails.transaction.status
             }
+            TId = transactionData.transactionId
             const transactionDetails = await CommonService.Order.Transaction(transactionData, trans)
             if (!transactionDetails) {
                 trans.rollback()
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetSuccessResponse({
+                    orderState: false,
+                    message: CommonConfig.ERRORS.ORDER.FAILURE,
+                    orderId: OId,
+                    transactionId: TId
+                }, res, CommonConfig.STATUS_CODE.OK)
             }
-            TId = transactionData.transactionId
             trans.commit()
             flag = true
             const result = await CommonService.Order.UpdatePaymentStateAfterSuccess(orderId)
@@ -461,7 +476,7 @@ let Order = {
                     message: CommonConfig.ERRORS.ORDER.FAILURE,
                     orderId: orderId,
                     transactionId: transactionData.transactionId
-                }, res, CommonConfig.STATUS_CODE.CREATED)
+                }, res, CommonConfig.STATUS_CODE.OK)
             }
             return ResponseHelpers.SetSuccessResponse({
                 orderState: true,
@@ -494,7 +509,44 @@ let Order = {
     }
 }
 
-let CommonController = {
+const Map = {
+    GetAllCook: async (req, res, next) => {
+        try {
+            const cookProfileList = await MapService.Map.FindAllCooksDealsWithCategoryForMap()
+            let cookProfileListToJSON = JSON.parse(JSON.stringify(cookProfileList))
+            cookProfileListToJSON = cookProfileListToJSON.filter(function (item) {
+                return item.CooksDealWithCategories.length > 0
+            })
+            let geoLocationList = []
+            for (const category of cookProfileListToJSON) {
+                for (const cook of category.CooksDealWithCategories) {
+                    geoLocationList.push(cook.latitude.toString() + ',' + cook.longitude.toString())
+                }
+            }
+            console.log('List: ', geoLocationList)
+            const geoLocationDistance = await MapService.Map.FindGeoDistance(geoLocationList)
+            let cookProfileIds = []
+            for (const location of geoLocationDistance) {
+                console.log('Destination: ', location.destination)
+                const result = await MapService.Map.FindCordinatesByLocation(location.destination)
+                const {latitude, longitude} = result[0]
+                console.log('Geo Location: ', latitude, longitude)
+                const cooks = await MapService.Map.FindCookProfileByCordinates(latitude, longitude)
+                for (const profile of cooks) {
+                    cookProfileIds.push(profile.profile_id)
+                }
+            }
+            console.log(cookProfileIds)
+            // const list = await MapService.Map.FindAllNearestCooksByPosition(destinationList)
+
+            return ResponseHelpers.SetSuccessResponse(list, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
+const CommonController = {
     User: User,
     Category: Category,
     SubCategory: SubCategory,
@@ -503,7 +555,8 @@ let CommonController = {
     ReviewDetails: ReviewDetails,
     Units: Units,
     Feedback: Feedback,
-    Order: Order
+    Order: Order,
+    Map: Map
 }
 
 module.exports = CommonController

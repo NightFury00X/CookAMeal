@@ -62,6 +62,16 @@ AdminService.prototype.Units = {
     }
 }
 
+AdminService.prototype.Tax = {
+    Add: async (data) => {
+        try {
+            return db.Tax.create(data)
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
+
 AdminService.prototype.PaymentMethod = {
     Add: async (data) => {
         try {

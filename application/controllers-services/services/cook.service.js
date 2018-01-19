@@ -30,6 +30,28 @@ CookService.prototype.Recipe = {
                 await trans.rollback()
                 return null
             }
+
+            const geoCordinations = await CommonService.Map.FindGeoCordinationsByProfileId(profile.id)
+            console.log('Category Id: ', profile.id)
+            console.log('AddeProfile Id: ', recipe.category_id)
+            console.log('Geo Location: ', geoCordinations)
+            const cooksDealWith = await db.CooksDealWithCategory.findOne({
+                where: {
+                    [Op.and]: [{
+                        profile_id: profile.id,
+                        category_id: recipe.category_id
+                    }]
+                }
+            })
+            if (!cooksDealWith) {
+                await db.CooksDealWithCategory.create({
+                    latitude: geoCordinations.latitude,
+                    longitude: geoCordinations.longitude,
+                    profile_id: profile.id,
+                    category_id: recipe.category_id
+                }, {transaction: trans})
+            }
+            console.log('Added: ', cooksDealWith)
             for (const index in allergies) {
                 if (allergies.hasOwnProperty(index)) {
                     allergies[index].recipe_id = recipeData.id

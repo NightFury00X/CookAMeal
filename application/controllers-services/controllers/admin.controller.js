@@ -81,11 +81,27 @@ let Units = {
     }
 }
 
+let Tax = {
+    Add: async (req, res, next) => {
+        try {
+            tax.createdBy = req.user.id
+            let result = await AdminService.Tax.Add(tax)
+            if (!result) {
+                return ResponseHelpers.SetErrorResponse('Unable to add tax.', res)
+            }
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            return next(error)
+        }
+    }
+}
+
 let AdminController = {
     Category: Category,
     SubCategory: SubCategory,
     Allergy: Allergy,
-    Units: Units
+    Units: Units,
+    Tax: Tax
 }
 
 module.exports = AdminController
