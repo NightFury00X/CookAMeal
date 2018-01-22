@@ -138,6 +138,11 @@ CommonConfig.ERRORS = {
         MARKED: 'Recipe marked favorite successfully.',
         UNMARKED: 'Recipe un-marked favorite successfully.'
     },
+    PROFILE: {
+        NOT_FOUND: 'Invalid profile id/profile not found.',
+        MARKED: 'Profile marked favorite successfully.',
+        UNMARKED: 'Profile un-marked favorite successfully.'
+    },
     REVIEW: {
         SUCCESS: 'Review submitted successfully.',
         FAILURE: 'Unable to submit review.'

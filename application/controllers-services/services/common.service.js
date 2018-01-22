@@ -248,6 +248,20 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
 }
 
 CommonService.prototype.User = {
+    FindProfileIsExist: async (profileId) => {
+        try {
+            return await db.Profile.findOne({
+                attributes: ['id'],
+                where: {
+                    id: {
+                        [Op.eq]: profileId
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetCurrencySymbolByProfileId: async (profileId) => {
         try {
             return await db.Address.findOne({
@@ -535,51 +549,104 @@ CommonService.prototype.Recipe = {
         } catch (error) {
             throw (error)
         }
-    },
-    MarkFavorite: async (favoriteData, isFav) => {
-        try {
-            if (!isFav) {
-                return await db.Favorite.create(favoriteData)
-            } else {
-                return await db.Favorite.destroy({
+    }
+}
+
+CommonService.prototype.Favorite = {
+    Recipe: {
+        CheckRecipeIsFavoriteByRecipeIdAndUserId: async (userId, recipeId) => {
+            try {
+                return await db.Favorite.findOne({
                     where: {
                         [Op.and]: [{
-                            recipe_id: favoriteData.recipe_id,
-                            user_type_id: favoriteData.user_type_id
+                            user_type_id: userId,
+                            recipe_id: recipeId
                         }]
                     }
                 })
+            } catch (error) {
+                throw (error)
             }
-        } catch (error) {
-            throw (error)
+        },
+        MarkFavorite: async (favoriteData, isFav) => {
+            try {
+                if (!isFav) {
+                    return await db.Favorite.create(favoriteData)
+                } else {
+                    return await db.Favorite.destroy({
+                        where: {
+                            [Op.and]: [{
+                                recipe_id: favoriteData.recipe_id,
+                                user_type_id: favoriteData.user_type_id
+                            }]
+                        }
+                    })
+                }
+            } catch (error) {
+                throw (error)
+            }
+        },
+        GetFavoriteRecipeListByUserId: async (userId) => {
+            try {
+                return await db.Favorite.findAll({
+                    where: {
+                        [Op.and]: [{
+                            user_type_id: userId,
+                            is_favorite: true
+                        }]
+                    }
+                })
+            } catch (error) {
+                throw (error)
+            }
         }
     },
-    GetFavoriteRecipeListByUserId: async (userId) => {
-        try {
-            return await db.Favorite.findAll({
-                where: {
-                    [Op.and]: [{
-                        user_type_id: userId,
-                        is_favorite: true
-                    }]
+    Profile: {
+        CheckProfileIsFavoriteByProfileIdAndUserId: async (userId, profileId) => {
+            try {
+                return await db.Favorite.findOne({
+                    where: {
+                        [Op.and]: [{
+                            user_type_id: userId,
+                            profile_id: profileId
+                        }]
+                    }
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
+        MarkFavorite: async (favoriteData, isFav) => {
+            try {
+                if (!isFav) {
+                    return await db.Favorite.create(favoriteData)
+                } else {
+                    return await db.Favorite.destroy({
+                        where: {
+                            [Op.and]: [{
+                                profile_id: favoriteData.profile_id,
+                                user_type_id: favoriteData.user_type_id
+                            }]
+                        }
+                    })
                 }
-            })
-        } catch (error) {
-            throw (error)
-        }
-    },
-    CheckRecipeIsFavoriteByRecipeIdAndUserId: async (userId, recipeId) => {
-        try {
-            return await db.Favorite.findOne({
-                where: {
-                    [Op.and]: [{
-                        user_type_id: userId,
-                        recipe_id: recipeId
-                    }]
-                }
-            })
-        } catch (error) {
-            throw (error)
+            } catch (error) {
+                throw (error)
+            }
+        },
+        GetFavoriteProfileListByUserId: async (userId) => {
+            try {
+                return await db.Favorite.findAll({
+                    where: {
+                        [Op.and]: [{
+                            user_type_id: userId,
+                            is_favorite: true
+                        }]
+                    }
+                })
+            } catch (error) {
+                throw (error)
+            }
         }
     }
 }
@@ -773,52 +840,5 @@ CommonService.prototype.Order = {
         })
     }
 }
-
-// CommonService.prototype.Map = {
-//     FindGeoCordinationsByProfileId: async (profileId) => {
-//         return db.Address.findOne({
-//             attributes: ['latitude', 'longitude'],
-//             where: {
-//                 profile_id: {
-//                     [Op.eq]: profileId
-//                 }
-//             }
-//         })
-//     },
-//     FindAllCooksDealsWithCategoryForMap: async () => {
-//         try {
-//             return await db.Category.findAll({
-//                 attributes: ['id', 'name'],
-//                 include: [{
-//                     attributes: ['id', 'category_id', 'profile_id', 'latitude', 'longitude'],
-//                     model: db.CooksDealWithCategory
-//                 }]
-//             })
-//         } catch (error) {
-//             throw (error)
-//         }
-//     },
-//     FindGeoDistance: async (cordinateList) => {
-//         return await new Promise((resolve, reject) => {
-//             distance.get(
-//                 {
-//                     origins: ['30.324633, 78.041865'],
-//                     destinations: geoLocationList
-//                 },
-//                 function (err, data) {
-//                     if (err) return console.log(err)
-//                     const list = data.filter((loc) => {
-//                         return loc.distanceValue === 5312
-//                     })
-//                     geocoder.batchGeocode(list, function (err, results) {
-//                         // Return an array of type {error: false, value: []}
-//                         console.log(results)
-//                         return ResponseHelpers.SetSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK)
-//                     })
-//
-//                 })
-//         })
-//     }
-// }
 
 module.exports = new CommonService()

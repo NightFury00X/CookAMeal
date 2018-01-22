@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
+    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="Added Map Service">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
+      <change beforePath="$PROJECT_DIR$/application/schemas/schema.js" afterPath="$PROJECT_DIR$/application/schemas/schema.js" />
+      <change beforePath="$PROJECT_DIR$/configurations/helpers/common-config.js" afterPath="$PROJECT_DIR$/configurations/helpers/common-config.js" />
       <change beforePath="$PROJECT_DIR$/routes/common/common-routes.js" afterPath="$PROJECT_DIR$/routes/common/common-routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -18,12 +22,80 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="72" column="59" lean-forward="true" selection-start-line="72" selection-start-column="59" selection-end-line="72" selection-end-column="59" />
+            <state relative-caret-position="360">
+              <caret line="55" column="27" lean-forward="false" selection-start-line="55" selection-start-column="27" selection-end-line="55" selection-end-column="27" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="453">
+              <caret line="345" column="45" lean-forward="true" selection-start-line="345" selection-start-column="45" selection-end-line="345" selection-end-column="45" />
+              <folding>
+                <element signature="e#685#3700#0" expanded="false" />
+                <element signature="e#3717#6304#0" expanded="false" />
+                <element signature="e#6324#7097#0" expanded="false" />
+                <element signature="e#7113#7877#0" expanded="false" />
+                <element signature="e#7891#8650#0" expanded="false" />
+                <element signature="e#8741#10341#0" expanded="false" />
+                <element signature="e#10388#14263#0" expanded="false" />
+                <element signature="e#14321#14633#0" expanded="false" />
+                <element signature="e#14668#16271#0" expanded="false" />
+                <element signature="e#15905#16265#0" expanded="false" />
+                <element signature="e#17928#19839#0" expanded="false" />
+                <element signature="e#19858#20446#0" expanded="false" />
+                <element signature="e#20460#26360#0" expanded="false" />
+                <element signature="e#26374#29287#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="837" column="31" lean-forward="true" selection-start-line="837" selection-start-column="31" selection-end-line="837" selection-end-column="31" />
+              <folding>
+                <element signature="e#502#724#0" expanded="false" />
+                <element signature="e#757#1045#0" expanded="false" />
+                <element signature="e#1111#1348#0" expanded="false" />
+                <element signature="e#1414#1679#0" expanded="false" />
+                <element signature="e#1756#2154#0" expanded="false" />
+                <element signature="e#2227#2431#0" expanded="false" />
+                <element signature="e#2485#2955#0" expanded="false" />
+                <element signature="e#3016#3358#0" expanded="false" />
+                <element signature="e#3416#3477#0" expanded="false" />
+                <element signature="e#3542#3610#0" expanded="false" />
+                <element signature="e#3676#5270#0" expanded="false" />
+                <element signature="e#5345#5642#0" expanded="false" />
+                <element signature="e#5714#6544#0" expanded="false" />
+                <element signature="e#6577#10188#0" expanded="false" />
+                <element signature="e#6995#7330#0" expanded="false" />
+                <element signature="e#7384#8156#0" expanded="false" />
+                <element signature="e#8213#8586#0" expanded="false" />
+                <element signature="e#8647#9172#0" expanded="false" />
+                <element signature="e#9226#9599#0" expanded="false" />
+                <element signature="e#9653#9999#0" expanded="false" />
+                <element signature="e#10037#10186#0" expanded="false" />
+                <element signature="e#10268#10457#0" expanded="false" />
+                <element signature="e#10528#11296#0" expanded="false" />
+                <element signature="e#11338#12610#0" expanded="false" />
+                <element signature="e#12658#13023#0" expanded="false" />
+                <element signature="e#13076#13768#0" expanded="false" />
+                <element signature="e#13817#14647#0" expanded="false" />
+                <element signature="e#14728#15666#0" expanded="false" />
+                <element signature="e#15768#16747#0" expanded="false" />
+                <element signature="e#16880#17266#0" expanded="false" />
+                <element signature="e#17321#17911#0" expanded="false" />
+                <element signature="e#17970#18354#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -32,9 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>no</find>
-      <find>4</find>
-      <find>2</find>
       <find>no-un</find>
       <find>cam</find>
       <find>no-return-a</find>
@@ -62,6 +131,9 @@
       <find>spli</find>
       <find>spl</find>
       <find>CommonService.User.GetProfileIdByUserTypeId</find>
+      <find>favo</find>
+      <find>GetFavoriteRecipeListByUserId</find>
+      <find>MarkFavorite</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -110,9 +182,7 @@
         <option value="$PROJECT_DIR$/application/modals/tax.js" />
         <option value="$PROJECT_DIR$/application/modals/user-type.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/admin.controller.js" />
-        <option value="$PROJECT_DIR$/configurations/helpers/common-config.js" />
         <option value="$PROJECT_DIR$/application/modals/order.js" />
-        <option value="$PROJECT_DIR$/application/schemas/schema.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/scheduler.js" />
         <option value="$PROJECT_DIR$/application/modals/transaction-details.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/scheduler.service.js" />
@@ -129,10 +199,12 @@
         <option value="$PROJECT_DIR$/configurations/main/development.js" />
         <option value="$PROJECT_DIR$/application/modals/profile.js" />
         <option value="$PROJECT_DIR$/application/modals/cook-deal-with-category.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/map-service.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
+        <option value="$PROJECT_DIR$/application/schemas/schema.js" />
         <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
+        <option value="$PROJECT_DIR$/configurations/helpers/common-config.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
       </list>
     </option>
   </component>
@@ -219,6 +291,11 @@
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
               <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
@@ -378,14 +455,7 @@
       <workItem from="1516251674613" duration="14469000" />
       <workItem from="1516338399529" duration="16161000" />
       <workItem from="1516373958567" duration="397000" />
-      <workItem from="1516597212790" duration="12790000" />
-    </task>
-    <task id="LOCAL-00371" summary="Updated order API.">
-      <created>1515580757779</created>
-      <option name="number" value="00371" />
-      <option name="presentableId" value="LOCAL-00371" />
-      <option name="project" value="LOCAL" />
-      <updated>1515580757779</updated>
+      <workItem from="1516597212790" duration="14333000" />
     </task>
     <task id="LOCAL-00372" summary="Updated order API.">
       <created>1515581402508</created>
@@ -723,11 +793,18 @@
       <option name="project" value="LOCAL" />
       <updated>1516614480586</updated>
     </task>
-    <option name="localTasksCounter" value="420" />
+    <task id="LOCAL-00420" summary="Added Map Service">
+      <created>1516616449033</created>
+      <option name="number" value="00420" />
+      <option name="presentableId" value="LOCAL-00420" />
+      <option name="project" value="LOCAL" />
+      <updated>1516616449033</updated>
+    </task>
+    <option name="localTasksCounter" value="421" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="902192000" />
+    <option name="totallyTimeSpent" value="903735000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -743,6 +820,7 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3536184" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24958949" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7389163" sideWeight="0.51664144" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.4969743" order="13" side_tool="false" content_ui="tabs" />
@@ -766,7 +844,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -852,7 +929,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="62" />
+      <option name="time" value="65" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="NodeJSConfigurationType">
@@ -1070,14 +1147,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/schemas/schema.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="16" column="8" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -1203,18 +1272,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="80" column="38" lean-forward="true" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/schemas/schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="63" column="21" lean-forward="true" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/configurations/helpers/common-config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="114" column="25" lean-forward="false" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="25" />
+        <state relative-caret-position="348">
+          <caret line="140" column="21" lean-forward="true" selection-start-line="140" selection-start-column="21" selection-end-line="140" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="55" column="27" lean-forward="false" selection-start-line="55" selection-start-column="27" selection-end-line="55" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="345" column="45" lean-forward="true" selection-start-line="345" selection-start-column="45" selection-end-line="345" selection-end-column="45" />
+          <folding>
+            <element signature="e#685#3700#0" expanded="false" />
+            <element signature="e#3717#6304#0" expanded="false" />
+            <element signature="e#6324#7097#0" expanded="false" />
+            <element signature="e#7113#7877#0" expanded="false" />
+            <element signature="e#7891#8650#0" expanded="false" />
+            <element signature="e#8741#10341#0" expanded="false" />
+            <element signature="e#10388#14263#0" expanded="false" />
+            <element signature="e#14321#14633#0" expanded="false" />
+            <element signature="e#14668#16271#0" expanded="false" />
+            <element signature="e#15905#16265#0" expanded="false" />
+            <element signature="e#17928#19839#0" expanded="false" />
+            <element signature="e#19858#20446#0" expanded="false" />
+            <element signature="e#20460#26360#0" expanded="false" />
+            <element signature="e#26374#29287#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="335" column="4" lean-forward="false" selection-start-line="335" selection-start-column="4" selection-end-line="335" selection-end-column="4" />
+        <state relative-caret-position="290">
+          <caret line="837" column="31" lean-forward="true" selection-start-line="837" selection-start-column="31" selection-end-line="837" selection-end-column="31" />
           <folding>
             <element signature="e#502#724#0" expanded="false" />
             <element signature="e#757#1045#0" expanded="false" />
@@ -1229,34 +1345,26 @@
             <element signature="e#3676#5270#0" expanded="false" />
             <element signature="e#5345#5642#0" expanded="false" />
             <element signature="e#5714#6544#0" expanded="false" />
-            <element signature="e#6634#6969#0" expanded="false" />
-            <element signature="e#7023#7795#0" expanded="false" />
-            <element signature="e#19778#23694#0" expanded="false" />
+            <element signature="e#6577#10188#0" expanded="false" />
+            <element signature="e#6995#7330#0" expanded="false" />
+            <element signature="e#7384#8156#0" expanded="false" />
+            <element signature="e#8213#8586#0" expanded="false" />
+            <element signature="e#8647#9172#0" expanded="false" />
+            <element signature="e#9226#9599#0" expanded="false" />
+            <element signature="e#9653#9999#0" expanded="false" />
+            <element signature="e#10037#10186#0" expanded="false" />
+            <element signature="e#10268#10457#0" expanded="false" />
+            <element signature="e#10528#11296#0" expanded="false" />
+            <element signature="e#11338#12610#0" expanded="false" />
+            <element signature="e#12658#13023#0" expanded="false" />
+            <element signature="e#13076#13768#0" expanded="false" />
+            <element signature="e#13817#14647#0" expanded="false" />
+            <element signature="e#14728#15666#0" expanded="false" />
+            <element signature="e#15768#16747#0" expanded="false" />
+            <element signature="e#16880#17266#0" expanded="false" />
+            <element signature="e#17321#17911#0" expanded="false" />
+            <element signature="e#17970#18354#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="80" column="38" lean-forward="true" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-99">
-          <caret line="547" column="48" lean-forward="true" selection-start-line="547" selection-start-column="48" selection-end-line="547" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="72" column="59" lean-forward="true" selection-start-line="72" selection-start-column="59" selection-end-line="72" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>

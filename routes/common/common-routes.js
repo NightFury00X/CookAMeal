@@ -42,11 +42,23 @@ router.get('/cook-profile/:id',
 
 router.post('/favorite/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.Favorite),
-    CommonController.Recipe.MarkRecipeAsFavorite)
+    ValidateBody(BodySchemas.RecipeAsFavorite),
+    CommonController.Favorite.Recipe.MarkRecipeAsFavorite)
 
 router.get('/favorite/recipe',
-    CommonController.Recipe.GetRecipeMarkedFavoriteList)
+    CommonController.Favorite.Recipe.GetRecipeMarkedFavoriteList)
+
+// ======================================================
+
+router.post('/favorite/profile',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.ProfileAsFavorite),
+    CommonController.Favorite.Profile.MarkProfileAsFavorite)
+
+router.get('/favorite/profile',
+    CommonController.Favorite.Profile.GetRecipeMarkedFavoriteList)
+
+// =================================================================
 
 router.post('/review/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,

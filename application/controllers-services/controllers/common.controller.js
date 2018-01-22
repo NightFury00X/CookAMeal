@@ -287,37 +287,76 @@ const Recipe = {
         } catch (error) {
             next(error)
         }
-    },
-    MarkRecipeAsFavorite: async (req, res, next) => {
-        try {
-            const userId = req.user.id
-            const favorite = {
-                user_type_id: userId,
-                recipe_id: req.body.recipe_id
+    }
+}
+
+const Favorite = {
+    Recipe: {
+        MarkRecipeAsFavorite: async (req, res, next) => {
+            try {
+                const userId = req.user.id
+                const favorite = {
+                    user_type_id: userId,
+                    recipe_id: req.body.recipe_id
+                }
+                const recipe = await CommonService.Recipe.FindRecipeIsExist(favorite.recipe_id)
+                if (!recipe) {
+                    return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.RECIPE.NOT_FOUND, res)
+                }
+                const isFavorite = await CommonService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(favorite.user_type_id, favorite.recipe_id)
+                const flag = !!isFavorite
+                await CommonService.Favorite.Recipe.MarkFavorite(favorite, flag)
+                const msg = !flag ? CommonConfig.ERRORS.RECIPE.MARKED : CommonConfig.ERRORS.RECIPE.UNMARKED
+                return ResponseHelpers.SetSuccessResponse({
+                    Message: msg,
+                    favorite: !flag
+                }, res, CommonConfig.STATUS_CODE.CREATED)
+            } catch (error) {
+                next(error)
             }
-            const recipe = await CommonService.Recipe.FindRecipeIsExist(favorite.recipe_id)
-            if (!recipe) {
-                return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.RECIPE.NOT_FOUND, res)
+        },
+        GetRecipeMarkedFavoriteList: async (req, res, next) => {
+            try {
+                const userId = req.user.id
+                const result = await CommonService.Favorite.Recipe.GetFavoriteRecipeListByUserId(userId)
+                return ResponseHelpers.SetSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.OK)
+            } catch (error) {
+                next(error)
             }
-            const isFavorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(favorite.user_type_id, favorite.recipe_id)
-            const flag = !!isFavorite
-            await CommonService.Recipe.MarkFavorite(favorite, flag)
-            const msg = !flag ? CommonConfig.ERRORS.RECIPE.MARKED : CommonConfig.ERRORS.RECIPE.UNMARKED
-            return ResponseHelpers.SetSuccessResponse({
-                Message: msg,
-                favorite: !flag
-            }, res, CommonConfig.STATUS_CODE.CREATED)
-        } catch (error) {
-            next(error)
         }
     },
-    GetRecipeMarkedFavoriteList: async (req, res, next) => {
-        try {
-            const userId = req.user.id
-            const result = await CommonService.Recipe.GetFavoriteRecipeListByUserId(userId)
-            return ResponseHelpers.SetSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.OK)
-        } catch (error) {
-            next(error)
+    Profile: {
+        MarkProfileAsFavorite: async (req, res, next) => {
+            try {
+                const userId = req.user.id
+                const favorite = {
+                    user_type_id: userId,
+                    profile_id: req.body.profile_id
+                }
+                const profile = await CommonService.User.FindProfileIsExist(favorite.profile_id)
+                if (!profile) {
+                    return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.PROFILE.NOT_FOUND, res)
+                }
+                const isFavorite = await CommonService.Favorite.Profile.CheckProfileIsFavoriteByProfileIdAndUserId(favorite.user_type_id, favorite.profile_id)
+                const flag = !!isFavorite
+                await CommonService.Favorite.Profile.MarkFavorite(favorite, flag)
+                const msg = !flag ? CommonConfig.ERRORS.PROFILE.MARKED : CommonConfig.ERRORS.PROFILE.UNMARKED
+                return ResponseHelpers.SetSuccessResponse({
+                    Message: msg,
+                    favorite: !flag
+                }, res, CommonConfig.STATUS_CODE.CREATED)
+            } catch (error) {
+                next(error)
+            }
+        },
+        GetRecipeMarkedFavoriteList: async (req, res, next) => {
+            try {
+                const userId = req.user.id
+                const result = await CommonService.Favorite.Recipe.GetFavoriteRecipeListByUserId(userId)
+                return ResponseHelpers.SetSuccessResponse({Message: result}, res, CommonConfig.STATUS_CODE.OK)
+            } catch (error) {
+                next(error)
+            }
         }
     }
 }
@@ -571,6 +610,7 @@ const CommonController = {
     SubCategory: SubCategory,
     Allergy: Allergy,
     Recipe: Recipe,
+    Favorite: Favorite,
     ReviewDetails: ReviewDetails,
     Units: Units,
     Feedback: Feedback,

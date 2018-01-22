@@ -56,8 +56,11 @@ module.exports = {
         PaymentMethod: Joi.object().keys({
             name: Joi.string().required()
         }),
-        Favorite: Joi.object().keys({
+        RecipeAsFavorite: Joi.object().keys({
             recipe_id: Joi.string().required()
+        }),
+        ProfileAsFavorite: Joi.object().keys({
+            profile_id: Joi.string().required()
         }),
         RecipeReview: Joi.object().keys({
             recipe_id: Joi.string().required(),
