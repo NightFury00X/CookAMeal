@@ -243,7 +243,7 @@ const Recipe = {
             for (const index in cookRecipesToJSON) {
                 if (cookRecipesToJSON.hasOwnProperty(index)) {
                     const tempRecipeId = cookRecipesToJSON[index].id
-                    const tempFav = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
+                    const tempFav = await CommonService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
                     const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
                     cookRecipesToJSON[index].favorite = !!tempFav
                     cookRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
@@ -257,7 +257,7 @@ const Recipe = {
             for (const index in similarRecipesToJSON) {
                 if (similarRecipesToJSON.hasOwnProperty(index)) {
                     const tempRecipeId = similarRecipesToJSON[index].id
-                    const tempFav = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
+                    const tempFav = await CommonService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
                     const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
                     similarRecipesToJSON[index].favorite = !!tempFav
                     similarRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
