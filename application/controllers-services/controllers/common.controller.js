@@ -349,7 +349,7 @@ const Favorite = {
                 next(error)
             }
         },
-        GetRecipeMarkedFavoriteList: async (req, res, next) => {
+        GetProfileMarkedFavoriteList: async (req, res, next) => {
             try {
                 const userId = req.user.id
                 const result = await CommonService.Favorite.Recipe.GetFavoriteRecipeListByUserId(userId)
@@ -579,8 +579,7 @@ const Map = {
             if (!cookProfileList) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.INTERNAL_SERVER_ERROR, res)
             }
-            // const userId = req.user.id
-            // const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            const userId = req.user.id
             let cookProfileListToJSON = JSON.parse(JSON.stringify(cookProfileList))
             cookProfileListToJSON = cookProfileListToJSON.filter(function (item) {
                 return item.CooksDealWithCategories.length > 0
@@ -592,7 +591,9 @@ const Map = {
                             const profileId = cookProfileListToJSON[outer].CooksDealWithCategories[inner].profile_id
                             const cookData = await CommonService.User.FindProfileRatingByProfileId(profileId)
                             cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.rating = cookData.rating | 0
-                            cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.favorite = false
+                            const favorite = await CommonService.Favorite.Profile.CheckProfileIsFavoriteByProfileIdAndUserId(userId, profileId)
+                            console.log('favorite: ', favorite)
+                            cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.favorite = !!favorite
                         }
                     }
                 }

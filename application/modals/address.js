@@ -74,10 +74,10 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         latitude: {
-            type: DataTypes.DECIMAL
+            type: DataTypes.DECIMAL(12, 9)
         },
         longitude: {
-            type: DataTypes.DECIMAL
+            type: DataTypes.DECIMAL(12, 9)
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE

@@ -54,7 +54,7 @@ router.post('/favorite/profile',
     CommonController.Favorite.Profile.MarkProfileAsFavorite)
 
 router.get('/favorite/profile',
-    CommonController.Favorite.Profile.GetRecipeMarkedFavoriteList)
+    CommonController.Favorite.Profile.GetProfileMarkedFavoriteList)
 
 router.post('/review/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,
