@@ -48,8 +48,6 @@ router.post('/favorite/recipe',
 router.get('/favorite/recipe',
     CommonController.Favorite.Recipe.GetRecipeMarkedFavoriteList)
 
-// ======================================================
-
 router.post('/favorite/profile',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.ProfileAsFavorite),
@@ -57,8 +55,6 @@ router.post('/favorite/profile',
 
 router.get('/favorite/profile',
     CommonController.Favorite.Profile.GetRecipeMarkedFavoriteList)
-
-// =================================================================
 
 router.post('/review/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,

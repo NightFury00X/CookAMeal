@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="Added Map Service">
+    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/schemas/schema.js" afterPath="$PROJECT_DIR$/application/schemas/schema.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/helpers/common-config.js" afterPath="$PROJECT_DIR$/configurations/helpers/common-config.js" />
       <change beforePath="$PROJECT_DIR$/routes/common/common-routes.js" afterPath="$PROJECT_DIR$/routes/common/common-routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="55" column="27" lean-forward="false" selection-start-line="55" selection-start-column="27" selection-end-line="55" selection-end-column="27" />
+            <state relative-caret-position="316">
+              <caret line="53" column="16" lean-forward="true" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -57,7 +53,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="290">
@@ -201,10 +197,10 @@
         <option value="$PROJECT_DIR$/application/modals/cook-deal-with-category.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/map-service.js" />
         <option value="$PROJECT_DIR$/application/schemas/schema.js" />
-        <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
         <option value="$PROJECT_DIR$/configurations/helpers/common-config.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
+        <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
       </list>
     </option>
   </component>
@@ -455,14 +451,7 @@
       <workItem from="1516251674613" duration="14469000" />
       <workItem from="1516338399529" duration="16161000" />
       <workItem from="1516373958567" duration="397000" />
-      <workItem from="1516597212790" duration="14333000" />
-    </task>
-    <task id="LOCAL-00372" summary="Updated order API.">
-      <created>1515581402508</created>
-      <option name="number" value="00372" />
-      <option name="presentableId" value="LOCAL-00372" />
-      <option name="project" value="LOCAL" />
-      <updated>1515581402508</updated>
+      <workItem from="1516597212790" duration="14470000" />
     </task>
     <task id="LOCAL-00373" summary="Updated order API.">
       <created>1515582561479</created>
@@ -800,11 +789,18 @@
       <option name="project" value="LOCAL" />
       <updated>1516616449033</updated>
     </task>
-    <option name="localTasksCounter" value="421" />
+    <task id="LOCAL-00421" summary="mark Cook Profile as Favorite">
+      <created>1516618013358</created>
+      <option name="number" value="00421" />
+      <option name="presentableId" value="LOCAL-00421" />
+      <option name="project" value="LOCAL" />
+      <updated>1516618013358</updated>
+    </task>
+    <option name="localTasksCounter" value="422" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="903735000" />
+    <option name="totallyTimeSpent" value="903872000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -894,7 +890,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Fixed API Routing 404 Error." />
     <MESSAGE value="Fixed API Routing 404 Error.&#10;Added New API to Reset Password.&#10;Implemented email configuration to sent mail." />
     <MESSAGE value="Updated production config file." />
     <MESSAGE value="Fixed forget password email send." />
@@ -919,7 +914,8 @@
     <MESSAGE value="Remove Sequelize logging." />
     <MESSAGE value="Updated order API." />
     <MESSAGE value="Added Map Service" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Map Service" />
+    <MESSAGE value="mark Cook Profile as Favorite" />
+    <option name="LAST_COMMIT_MESSAGE" value="mark Cook Profile as Favorite" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1296,14 +1292,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="55" column="27" lean-forward="false" selection-start-line="55" selection-start-column="27" selection-end-line="55" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="453">
@@ -1365,6 +1353,14 @@
             <element signature="e#17321#17911#0" expanded="false" />
             <element signature="e#17970#18354#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="53" column="16" lean-forward="true" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
