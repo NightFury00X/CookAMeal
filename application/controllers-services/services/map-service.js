@@ -68,6 +68,7 @@ MapService.prototype.Map = {
         }
     },
     FindGeoDistance: async (origin, destination) => {
+        console.log('Destination: ', destination)
         const distanceData = await new Promise((resolve, reject) => {
             distance.get(
                 {
