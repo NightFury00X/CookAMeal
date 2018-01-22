@@ -559,6 +559,7 @@ const Map = {
             }
             const cookProfileDataForMap = []
             for (const profile of allCookList) {
+                console.log('Address: ', !!profile.Address)
                 const destinationData = await MapService.Map.FindGeoDistance(userOrigin, profile.Address)
                 if (destinationData) {
                     cookProfileDataForMap.push({
