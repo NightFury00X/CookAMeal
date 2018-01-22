@@ -80,7 +80,7 @@ router.get('/map/lat/:latitude/long/:longitude',
     ValidateParams(ParamSchemas.idSchema, 'longitude'),
     CommonController.Map.GetAllCookLocationForMap)
 
-router.get('/map/categorywise-cook',
+router.get('/map/category-wise-cook-details',
     CommonController.Map.GetAllCookListForMap)
 
 module.exports = router
