@@ -25,5 +25,16 @@ module.exports = function (sequelize, DataTypes) {
         underscored: true
     }
 
-    return sequelize.define('CooksDealWithCategory', modelDefinition, modelOptions)
+    const CookDealWithCategory = sequelize.define('CooksDealWithCategory', modelDefinition, modelOptions)
+
+    CookDealWithCategory.associate = function (models) {
+        CookDealWithCategory.belongsTo(models.Profile, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+    }
+
+    return CookDealWithCategory
 }

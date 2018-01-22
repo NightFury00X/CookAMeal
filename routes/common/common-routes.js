@@ -75,7 +75,12 @@ router.post('/order/check-out',
     ValidateBody(BodySchemas.OrderFood),
     CommonController.Order.MakeOrder)
 
-router.get('/map',
-    CommonController.Map.GetAllCook)
+router.get('/map/lat/:latitude/long/:longitude',
+    ValidateParams(ParamSchemas.idSchema, 'latitude'),
+    ValidateParams(ParamSchemas.idSchema, 'longitude'),
+    CommonController.Map.GetAllCookLocationForMap)
+
+router.get('/map/categorywise-cook',
+    CommonController.Map.GetAllCookListForMap)
 
 module.exports = router

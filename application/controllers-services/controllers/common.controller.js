@@ -419,8 +419,8 @@ let Order = {
         try {
             const orderData = req.body
             const userId = req.user.id
-            const profileId = await CommonService.User.GetProfileIdByUserTypeId(userId)
-            const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profileId.id)
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
             const {totalAmount, taxes, orderServings, deliveryFee, deliveryType} = orderData
             const valid = await CommonService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson, deliveryType)
@@ -510,36 +510,55 @@ let Order = {
 }
 
 const Map = {
-    GetAllCook: async (req, res, next) => {
+    GetAllCookLocationForMap: async (req, res, next) => {
+        try {
+            const userOrigin = `${req.value.params.latitude}` + ',' + `${req.value.params.longitude}`
+            const allCookList = await MapService.Map.FindAllCooksLocationsForMap()
+            if (!allCookList) {
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.INTERNAL_SERVER_ERROR, res)
+            }
+            const cookProfileDataForMap = []
+            for (const profile of allCookList) {
+                const destinationData = await MapService.Map.FindGeoDistance(userOrigin, profile.Address)
+                if (destinationData) {
+                    cookProfileDataForMap.push({
+                        profile: profile,
+                        distanceValue: destinationData.distanceValue,
+                        distance: destinationData.distance,
+                        durationValue: destinationData.durationValue
+                    })
+                }
+            }
+            return ResponseHelpers.SetSuccessResponse(cookProfileDataForMap, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+    GetAllCookListForMap: async (req, res, next) => {
         try {
             const cookProfileList = await MapService.Map.FindAllCooksDealsWithCategoryForMap()
+            if (!cookProfileList) {
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.INTERNAL_SERVER_ERROR, res)
+            }
+            // const userId = req.user.id
+            // const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
             let cookProfileListToJSON = JSON.parse(JSON.stringify(cookProfileList))
             cookProfileListToJSON = cookProfileListToJSON.filter(function (item) {
                 return item.CooksDealWithCategories.length > 0
             })
-            let geoLocationList = []
-            for (const category of cookProfileListToJSON) {
-                for (const cook of category.CooksDealWithCategories) {
-                    geoLocationList.push(cook.latitude.toString() + ',' + cook.longitude.toString())
+            for (const outer in cookProfileListToJSON) {
+                if (cookProfileListToJSON.hasOwnProperty(outer)) {
+                    for (const inner in cookProfileListToJSON[outer].CooksDealWithCategories) {
+                        if (cookProfileListToJSON[outer].CooksDealWithCategories.hasOwnProperty(inner)) {
+                            const profileId = cookProfileListToJSON[outer].CooksDealWithCategories[inner].profile_id
+                            const cookData = await CommonService.User.FindProfileRatingByProfileId(profileId)
+                            cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.rating = cookData.rating | 0
+                            cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.favorite = false
+                        }
+                    }
                 }
             }
-            console.log('List: ', geoLocationList)
-            const geoLocationDistance = await MapService.Map.FindGeoDistance(geoLocationList)
-            let cookProfileIds = []
-            for (const location of geoLocationDistance) {
-                console.log('Destination: ', location.destination)
-                const result = await MapService.Map.FindCordinatesByLocation(location.destination)
-                const {latitude, longitude} = result[0]
-                console.log('Geo Location: ', latitude, longitude)
-                const cooks = await MapService.Map.FindCookProfileByCordinates(latitude, longitude)
-                for (const profile of cooks) {
-                    cookProfileIds.push(profile.profile_id)
-                }
-            }
-            console.log(cookProfileIds)
-            // const list = await MapService.Map.FindAllNearestCooksByPosition(destinationList)
-
-            return ResponseHelpers.SetSuccessResponse(list, res, CommonConfig.STATUS_CODE.OK)
+            return ResponseHelpers.SetSuccessResponse(cookProfileListToJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }

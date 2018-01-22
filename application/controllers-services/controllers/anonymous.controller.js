@@ -28,6 +28,7 @@ let Anonymous = {
             // Generate Token
             let userData = {
                 id: userDetails.userid,
+                email: userDetails.Profile.email,
                 fullname: userDetails.Profile.fullName,
                 user_type: userDetails.user_type,
                 user_role: userDetails.user_role,

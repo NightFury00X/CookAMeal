@@ -8,7 +8,6 @@ const isJSON = require('is-json')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
 
-
 CommonService = function () {
 }
 
