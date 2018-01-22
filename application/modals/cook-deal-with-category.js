@@ -11,10 +11,10 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true
         },
         latitude: {
-            type: DataTypes.DECIMAL(12, 9)
+            type: DataTypes.FLOAT
         },
         longitude: {
-            type: DataTypes.DECIMAL(12, 9)
+            type: DataTypes.FLOAT
         },
         updated_at: DataTypes.DATE,
         deleted_at: DataTypes.DATE
