@@ -560,14 +560,16 @@ const Map = {
             const cookProfileDataForMap = []
             for (const profile of allCookList) {
                 console.log('Address: ', !!profile.Address)
-                const destinationData = await MapService.Map.FindGeoDistance(userOrigin, profile.Address)
-                if (destinationData) {
-                    cookProfileDataForMap.push({
-                        profile: profile,
-                        distanceValue: destinationData.distanceValue,
-                        distance: destinationData.distance,
-                        durationValue: destinationData.durationValue
-                    })
+                if (profile.Address) {
+                    const destinationData = await MapService.Map.FindGeoDistance(userOrigin, profile.Address)
+                    if (destinationData) {
+                        cookProfileDataForMap.push({
+                            profile: profile,
+                            distanceValue: destinationData.distanceValue,
+                            distance: destinationData.distance,
+                            durationValue: destinationData.durationValue
+                        })
+                    }
                 }
             }
             return ResponseHelpers.SetSuccessResponse(cookProfileDataForMap, res, CommonConfig.STATUS_CODE.OK)
