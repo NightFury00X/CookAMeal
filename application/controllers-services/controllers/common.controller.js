@@ -552,6 +552,7 @@ const Map = {
     GetAllCookLocationForMap: async (req, res, next) => {
         try {
             const userOrigin = `${req.value.params.latitude}` + ',' + `${req.value.params.longitude}`
+            console.log('Log: ', userOrigin)
             const allCookList = await MapService.Map.FindAllCooksLocationsForMap()
             if (!allCookList) {
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.INTERNAL_SERVER_ERROR, res)
