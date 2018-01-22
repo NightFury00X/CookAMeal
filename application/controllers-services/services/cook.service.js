@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const db = require('../../modals')
 const CommonService = require('./common.service')
+const MapService = require('./common.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 
 CookService = function () {
@@ -30,11 +31,7 @@ CookService.prototype.Recipe = {
                 await trans.rollback()
                 return null
             }
-
-            const geoCordinations = await CommonService.Map.FindGeoCordinationsByProfileId(profile.id)
-            console.log('Category Id: ', profile.id)
-            console.log('AddeProfile Id: ', recipe.category_id)
-            console.log('Geo Location: ', geoCordinations)
+            const geoCordinations = await MapService.Map.FindGeoCordinationsByProfileId(profile.id)
             const cooksDealWith = await db.CooksDealWithCategory.findOne({
                 where: {
                     [Op.and]: [{
@@ -51,7 +48,6 @@ CookService.prototype.Recipe = {
                     category_id: recipe.category_id
                 }, {transaction: trans})
             }
-            console.log('Added: ', cooksDealWith)
             for (const index in allergies) {
                 if (allergies.hasOwnProperty(index)) {
                     allergies[index].recipe_id = recipeData.id
