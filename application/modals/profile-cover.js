@@ -21,11 +21,11 @@ module.exports = function (sequelize, DataTypes) {
 
     let ProfileCover = sequelize.define('ProfileCover', modelDefinition, modelOptions)
 
-    ProfileCover.associate = function (models) {
-        ProfileCover.hasOne(models.MediaObject, {
-            onDelete: 'CASCADE'
-        })
-    }
+    // ProfileCover.associate = function (models) {
+    //     ProfileCover.hasOne(models.MediaObject, {
+    //         onDelete: 'CASCADE'
+    //     })
+    // }
 
     return ProfileCover
 }
