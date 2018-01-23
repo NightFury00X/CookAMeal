@@ -1,3 +1,4 @@
+const path = require('path')
 const timezone = 'UTC'
 process.env.TZ = timezone
 
@@ -7,6 +8,9 @@ exports.app = app = {
     port: 8081,
     ssl: false
 }
+
+const BaseProject = path.join(__dirname, '../../')
+const Uploads = `${BaseProject}` + `${'uploads/'}`
 
 exports.mssql = {
     dialect: 'mssql',
@@ -59,20 +63,28 @@ exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE='
 }
 
-exports.FOLDER_LOCATION = 'E:/cook-A-Meal/uploads/'
+const FileLocations = {
+    Profile: `${Uploads}` + `${'profiles'}`,
+    IdentificationCards: `${Uploads}` + `${'identification_cards'}`,
+    Certificates: `${Uploads}` + `${'certificates'}`,
+    Categories: `${Uploads}` + `${'categories'}`,
+    Recipe: `${Uploads}` + `${'recipe'}`
+}
 
-exports.FILE_LOCATION = 'E:/cook-A-Meal/uploads/'
+exports.FOLDER_LOCATION = FileLocations
+
+exports.FILE_LOCATION = FileLocations
 
 exports.UPLOAD_LOCATION = [
-    {PATH: 'E:/cook-A-Meal/uploads/profiles'},
-    {PATH: 'E:/cook-A-Meal/uploads/identification_cards'},
-    {PATH: 'E:/cook-A-Meal/uploads/certificates'},
-    {PATH: 'E:/cook-A-Meal/uploads/categories'},
-    {PATH: 'E:/cook-A-Meal/uploads/recipe'}
+    {PATH: FileLocations.Profile},
+    {PATH: FileLocations.IdentificationCards},
+    {PATH: FileLocations.Certificates},
+    {PATH: FileLocations.Categories},
+    {PATH: FileLocations.Recipe}
 ]
 
 exports.DOMAIN = {
-    NAME: 'E:/cook-A-Meal/'
+    NAME: BaseProject
 }
 
 exports.CONFIG = {

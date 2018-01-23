@@ -18,10 +18,9 @@ require('winston-daily-rotate-file')
 const cron = require('node-cron')
 const SchedulerController = require('./application/controllers-services/controllers/scheduler.controller')
 
-const task = cron.schedule('1-59 * * * *', function () {
-    console.log('starting....')
+const task = cron.schedule('* * * * */3', function () {
+    console.log('Scheduler started')
     SchedulerController.Order.CancelOrder()
-    console.log('Completed')
 }, false)
 
 task.start()

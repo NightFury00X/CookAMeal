@@ -39,7 +39,7 @@ let User = {
                     for (const inner in cookRecipesToJSON[outer].Recipes) {
                         if (cookRecipesToJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const tempRecipeId = cookRecipesToJSON[outer].Recipes[inner].id
-                            const tempFav = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
+                            const tempFav = await CommonService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
                             const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
                             cookRecipesToJSON[outer].Recipes[inner].favorite = !!tempFav
                             cookRecipesToJSON[outer].Recipes[inner].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
@@ -204,7 +204,7 @@ const Recipe = {
                 if (convertedJSON.hasOwnProperty(inner)) {
                     const recipeId = convertedJSON[inner].id
                     const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
-                    const favorite = await CommonService.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
+                    const favorite = await CommonService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
                     convertedJSON[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating
                     convertedJSON[inner].Favorite = !!favorite
                     const profileId = convertedJSON[inner].profile_id
