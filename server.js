@@ -1,20 +1,20 @@
 'use strict'
-let express = require('express')
-let bodyParser = require('body-parser')
-let heltmet = require('helmet')
-let expressValidator = require('express-validator')
-let passport = require('passport')
-let errorHandler = require('errorhandler')
-let winston = require('winston')
-let expressWinston = require('express-winston')
-let compression = require('compression')
-let mkdirp = require('mkdirp')
-let fs = require('fs')
+const express = require('express')
+const bodyParser = require('body-parser')
+const heltmet = require('helmet')
+const expressValidator = require('express-validator')
+const passport = require('passport')
+const errorHandler = require('errorhandler')
+const winston = require('winston')
+const expressWinston = require('express-winston')
+const compression = require('compression')
+const mkdirp = require('mkdirp')
+const fs = require('fs')
 const cors = require('cors')
-let db = require('./application/modals')
-let config = require('./configurations/main')
-let CommonConfig = require('./configurations/helpers/common-config')
-let path = require('path')
+const db = require('./application/modals')
+const config = require('./configurations/main')
+const CommonConfig = require('./configurations/helpers/common-config')
+const path = require('path')
 require('winston-daily-rotate-file')
 const cron = require('node-cron')
 const SchedulerController = require('./application/controllers-services/controllers/scheduler.controller')
@@ -26,7 +26,7 @@ const task = cron.schedule('* * * * */3', function () {
 
 task.start()
 
-let logger = new (winston.Logger)({
+const logger = new (winston.Logger)({
     expressFormat: true,
     transports: [
         new winston.transports.Console({
@@ -35,8 +35,8 @@ let logger = new (winston.Logger)({
         })
     ]
 })
-let uploadFileLocation = path.resolve('/uploads')
-let logLocation = path.resolve('/logs/errors')
+const uploadFileLocation = path.resolve('/uploads')
+const logLocation = path.resolve('/logs/errors')
 mkdirp.sync(uploadFileLocation)
 mkdirp.sync(logLocation)
 config.UPLOAD_LOCATION.forEach(function (location) {
@@ -44,8 +44,8 @@ config.UPLOAD_LOCATION.forEach(function (location) {
         fs.mkdirSync(location.PATH)
     }
 })
-let app = express()
-let server = require('http').createServer(app)
+const app = express()
+const server = require('http').createServer(app)
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(expressValidator())
@@ -61,7 +61,7 @@ app.use(compression())
 app.use(errorHandler())
 app.use(passport.initialize())
 
-const whitelist = ['http://cookamealpwa.cynotecksandbox.com', 'http://example2.com']
+const whitelist = ['http://cookamealpwa.cynotecksandbox.com']
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -69,20 +69,28 @@ const corsOptions = {
         } else {
             callback(new Error('Not allowed by CORS'))
         }
-    }
+    },
+    'methods': 'GET, HEAD ,PUT ,PATCH ,POST ,DELETE',
+    'preflightContinue': false,
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials',
+    'Access-Control-Allow-Credentials': true
 }
-app.use(cors(corsOptions))
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*')
-//     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
-//     res.header('Access-Control-Allow-Credentials', 'true')
-//     if (req.method === 'OPTIONS') {
-//         res.send(200)
-//     } else {
-//         next()
-//     }
-// })
+
+if (app.get('env') === 'development') {
+    app.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*')
+        res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
+        res.header('Access-Control-Allow-Credentials', 'true')
+        if (req.method === 'OPTIONS') {
+            res.send(200)
+        } else {
+            next()
+        }
+    })
+} else {
+    app.use(cors(corsOptions))
+}
 app.use(heltmet())
 app.use(expressWinston.logger({
     expressFormat: true,
