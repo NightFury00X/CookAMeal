@@ -61,7 +61,7 @@ app.use(compression())
 app.use(errorHandler())
 app.use(passport.initialize())
 
-const whitelist = ['http://example1.com', 'http://example2.com']
+const whitelist = ['http://cookamealpwa.cynotecksandbox.com/', 'http://example2.com']
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
