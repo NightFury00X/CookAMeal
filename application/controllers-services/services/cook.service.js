@@ -32,21 +32,23 @@ CookService.prototype.Recipe = {
                 return null
             }
             const geoCordinations = await MapService.Map.FindGeoCordinationsByProfileId(profile.id)
-            const cooksDealWith = await db.CooksDealWithCategory.findOne({
-                where: {
-                    [Op.and]: [{
+            if (geoCordinations) {
+                const cooksDealWith = await db.CooksDealWithCategory.findOne({
+                    where: {
+                        [Op.and]: [{
+                            profile_id: profile.id,
+                            category_id: recipe.category_id
+                        }]
+                    }
+                })
+                if (!cooksDealWith) {
+                    await db.CooksDealWithCategory.create({
+                        latitude: geoCordinations.latitude,
+                        longitude: geoCordinations.longitude,
                         profile_id: profile.id,
                         category_id: recipe.category_id
-                    }]
+                    }, {transaction: trans})
                 }
-            })
-            if (!cooksDealWith) {
-                await db.CooksDealWithCategory.create({
-                    latitude: geoCordinations.latitude,
-                    longitude: geoCordinations.longitude,
-                    profile_id: profile.id,
-                    category_id: recipe.category_id
-                }, {transaction: trans})
             }
             for (const index in allergies) {
                 if (allergies.hasOwnProperty(index)) {
