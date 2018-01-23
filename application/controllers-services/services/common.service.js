@@ -248,6 +248,14 @@ CommonService.prototype.GenerateTokenByUserTypeId = async (userId) => {
 }
 
 CommonService.prototype.User = {
+    ProfileCover: async (profileId) => {
+        try {
+            console.log(profileId)
+            return await db.ProfileCover.create(profileId)
+        } catch (error) {
+            throw (error)
+        }
+    },
     FindProfileIsExist: async (profileId) => {
         try {
             return await db.Profile.findOne({

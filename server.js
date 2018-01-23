@@ -165,19 +165,19 @@ function startApp () {
 }
 
 app.use(function (req, res, next) {
-    let err = new Error('The Route ' + req.url + ' is Not Found')
+    console.log('Error: ')
+    const err = new Error('The Route ' + req.url + ' is Not Found')
     err.status = 404
     next(err)
 })
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
         console.log('Error: ', err)
-        const errorMessage = err.status !== 404 ? CommonConfig.ERRORS.UNABLE_TO_PROCESS : err.message
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,
                 data: null,
-                error: errorMessage,
+                error: err.message,
                 errorStack: {
                     error: err
                 },
@@ -189,7 +189,6 @@ if (app.get('env') === 'development') {
 } else {
     app.use(function (err, req, res, next) {
         console.log('Error: ', err)
-        const errorMessage = err.status === 500 ? CommonConfig.ERRORS.UNABLE_TO_PROCESS : err.message
         res.status(err.status || CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR).send(
             {
                 success: false,

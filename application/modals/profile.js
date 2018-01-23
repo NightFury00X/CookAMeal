@@ -161,12 +161,12 @@ module.exports = function (sequelize, DataTypes) {
         ProfileModel.hasMany(models.Favorite, {
             onDelete: 'CASCADE'
         })
-        // ProfileModel.hasMany(models.CooksDealWithCategory, {
-        //     foreignKey: {
-        //         allowNull: false,
-        //         onDelete: 'CASCADE'
-        //     }
-        // })
+        ProfileModel.hasMany(models.ProfileCover, {
+            foreignKey: {
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
     }
 
     return ProfileModel

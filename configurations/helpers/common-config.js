@@ -59,6 +59,7 @@ CommonConfig.OBJECT_TYPE = {
 
 CommonConfig.FILES = {
     PROFILE: 'profile',
+    PROFILECOVER: 'profile_cover',
     IDENTIFICATIONCARD: 'identification_card',
     CERTIFICATE: 'certificate',
     CATEGORY: 'category',
@@ -67,6 +68,7 @@ CommonConfig.FILES = {
 
 CommonConfig.FOLDER_LOCATIONS = {
     PROFILE: config.FOLDER_LOCATION + 'profiles/',
+    PROFILECOVER: config.FOLDER_LOCATION + 'profile_cover/',
     IDENTIFICATIONCARD: config.FOLDER_LOCATION + 'identification_cards/',
     CERTIFICATE: config.FOLDER_LOCATION + 'certificates/',
     CATEGORY: config.FOLDER_LOCATION + 'categories/',
@@ -76,6 +78,7 @@ CommonConfig.FOLDER_LOCATIONS = {
 
 CommonConfig.FILE_LOCATIONS = {
     PROFILE: config.FILE_LOCATION + 'profiles/',
+    PROFILECOVER: config.FILE_LOCATION + 'profile_cover/',
     IDENTIFICATIONCARD: config.FILE_LOCATION + 'identification_cards/',
     CERTIFICATE: config.FILE_LOCATION + 'certificates/',
     CATEGORY: config.FILE_LOCATION + 'categories/',

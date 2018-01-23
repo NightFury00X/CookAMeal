@@ -10,6 +10,9 @@ let storage = multer.diskStorage({
             case CommonConfig.FILES.PROFILE:
                 dest = CommonConfig.FOLDER_LOCATIONS.PROFILE
                 break
+            case CommonConfig.FILES.PROFILECOVER:
+                dest = CommonConfig.FOLDER_LOCATIONS.PROFILECOVER
+                break
             case CommonConfig.FILES.IDENTIFICATIONCARD:
                 dest = CommonConfig.FOLDER_LOCATIONS.IDENTIFICATIONCARD
                 break
@@ -46,6 +49,7 @@ let upload = multer({
     // }
 }).fields([
     {name: CommonConfig.FILES.PROFILE, maxCount: 1},
+    {name: CommonConfig.FILES.PROFILECOVER, maxCount: 1},
     {name: CommonConfig.FILES.CERTIFICATE, maxCount: 1},
     {name: CommonConfig.FILES.IDENTIFICATIONCARD, maxCount: 1},
     {name: CommonConfig.FILES.CATEGORY, maxCount: 1},
@@ -110,6 +114,23 @@ let uploadDataFiles = function (req, res, next) {
     })
 }
 
+const UploadProfileCover = function (req, res, next) {
+    upload(req, res, function (error) {
+        if (error) return next(error)
+        if (req.files) {
+            if (req.files.profile_cover) {
+                if (!CheckFile(req.files.profile_cover)) {
+                    next({
+                        message: 'You are uploading an invalid profile cover image.',
+                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                    }, false)
+                }
+            }
+        }
+        return next()
+    })
+}
+
 /**
  * @return {boolean}
  */
@@ -141,7 +162,8 @@ function CheckMagicNumbers (magic) {
 
 let FileUploader = {
     uploadFile: uploadFile,
-    uploadDataFiles: uploadDataFiles
+    uploadDataFiles: uploadDataFiles,
+    UploadProfileCover: UploadProfileCover
 }
 
 module.exports = FileUploader

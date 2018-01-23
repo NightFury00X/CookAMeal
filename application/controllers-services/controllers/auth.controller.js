@@ -51,11 +51,22 @@ let Auth = {
                     status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
                 }, false)
             }
-            let TokenData = await CommonService.GenerateTokenByUserTypeId(req.user.user_type_id)
+            const TokenData = await CommonService.GenerateTokenByUserTypeId(req.user.user_type_id)
             return ResponseHelpers.SetSuccessResponse({
                 new_token: TokenData,
                 message: CommonConfig.SUCCESS.PASSWORD_CHANGED
             }, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+    ProfileCover: async (req, res, next) => {
+        try {
+            const userId = req.user.id
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            const profileId = profile.id
+            const result = await CommonService.User.ProfileCover({profile_id: profileId})
+            return ResponseHelpers.SetSuccessResponse({message: 'Profile cover updated.'}, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }

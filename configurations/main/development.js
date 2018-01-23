@@ -64,19 +64,21 @@ exports.keys = {
 }
 
 const FileLocations = {
-    Profile: `${Uploads}` + `${'profiles'}`,
-    IdentificationCards: `${Uploads}` + `${'identification_cards'}`,
-    Certificates: `${Uploads}` + `${'certificates'}`,
-    Categories: `${Uploads}` + `${'categories'}`,
-    Recipe: `${Uploads}` + `${'recipe'}`
+    Profile: Uploads + '/profiles',
+    ProfileCover: Uploads + '/profile_cover',
+    IdentificationCards: `${Uploads}` + `${'/identification_cards'}`,
+    Certificates: `${Uploads}` + `${'/certificates'}`,
+    Categories: `${Uploads}` + `${'/categories'}`,
+    Recipe: `${Uploads}` + `${'/recipe'}`
 }
 
-exports.FOLDER_LOCATION = FileLocations
+exports.FOLDER_LOCATION = Uploads
 
 exports.FILE_LOCATION = FileLocations
 
 exports.UPLOAD_LOCATION = [
     {PATH: FileLocations.Profile},
+    {PATH: FileLocations.ProfileCover},
     {PATH: FileLocations.IdentificationCards},
     {PATH: FileLocations.Certificates},
     {PATH: FileLocations.Categories},
