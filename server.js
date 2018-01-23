@@ -71,7 +71,7 @@ const corsOptions = {
         }
     },
     'methods': 'GET, HEAD ,PUT ,PATCH ,POST ,DELETE',
-    'preflightContinue': true,
+    'preflightContinue': false,
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials',
     'Access-Control-Allow-Credentials': true
 }
