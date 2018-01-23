@@ -203,7 +203,7 @@ if (app.get('env') === 'development') {
             {
                 success: false,
                 data: null,
-                error: errorMessage,
+                error: err.message,
                 status: err.status
             }
         )
