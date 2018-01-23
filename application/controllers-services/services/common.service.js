@@ -465,7 +465,7 @@ CommonService.prototype.Recipe = {
                     attributes: ['id', 'dish_name', 'cost_per_serving', 'order_by_date_time'],
                     where: {
                         profile_id: {
-                            [Op.eq]: profileId
+                            [Op.eq]: `${profileId}`
                         }
                     },
                     include: [{
@@ -488,6 +488,31 @@ CommonService.prototype.Recipe = {
                     where: {
                         category_id: {
                             [Op.eq]: [categoryId]
+                        }
+                    },
+                    required: true,
+                    limit: 10,
+                    include: [{
+                        required: true,
+                        model: db.MediaObject,
+                        attributes: ['id', 'imageurl']
+                    }]
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    FindAllByCategoryByProfileId: async (profileId) => {
+        try {
+            return db.SubCategory.findAll({
+                attributes: ['id', 'name'],
+                include: [{
+                    model: db.Recipe,
+                    attributes: ['id', 'dish_name', 'cost_per_serving', 'sub_category_id', 'order_by_date_time', 'profile_id'],
+                    where: {
+                        profile_id: {
+                            [Op.eq]: `${profileId}`
                         }
                     },
                     required: true,

@@ -287,6 +287,36 @@ const Recipe = {
         } catch (error) {
             next(error)
         }
+    },
+    GetAllRecipesByCookId: async (req, res, next) => {
+        try {
+            const profileId = req.value.params.profileId
+            const userId = req.user.id
+            const recipesList = await CommonService.Recipe.FindAllByCategoryByProfileId(profileId)
+            let convertedJSON = JSON.parse(JSON.stringify(recipesList))
+            convertedJSON = convertedJSON.filter(function (item) {
+                return item.Recipes.length > 0
+            })
+            for (const outer in convertedJSON) {
+                if (convertedJSON.hasOwnProperty(outer)) {
+                    for (const inner in convertedJSON[outer].Recipes) {
+                        if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
+                            const recipeId = convertedJSON[outer].Recipes[inner].id
+                            const profileId = convertedJSON[outer].Recipes[inner].profile_id
+                            const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
+                            const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
+                            const favorite = await CommonService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
+                            convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating
+                            convertedJSON[outer].Recipes[inner].Favorite = !!favorite
+                            convertedJSON[outer].Recipes[inner].CurrencySymbol = currencyDetails.currency_symbol
+                        }
+                    }
+                }
+            }
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
     }
 }
 

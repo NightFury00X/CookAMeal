@@ -91,4 +91,8 @@ router.get('/map/lat/:latitude/long/:longitude',
 router.get('/map/category-wise-cook-details',
     CommonController.Map.GetAllCookListForMap)
 
+router.get('/profile/:profileId/sub-categories/recipes',
+    ValidateParams(ParamSchemas.idSchema, 'profileId'),
+    CommonController.Recipe.GetAllRecipesByCookId)
+
 module.exports = router
