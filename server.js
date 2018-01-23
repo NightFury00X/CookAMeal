@@ -10,6 +10,7 @@ let expressWinston = require('express-winston')
 let compression = require('compression')
 let mkdirp = require('mkdirp')
 let fs = require('fs')
+const cors = require('cors')
 let db = require('./application/modals')
 let config = require('./configurations/main')
 let CommonConfig = require('./configurations/helpers/common-config')
@@ -59,17 +60,29 @@ app.use(expressValidator())
 app.use(compression())
 app.use(errorHandler())
 app.use(passport.initialize())
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
-    res.header('Access-Control-Allow-Credentials', 'true')
-    if (req.method === 'OPTIONS') {
-        res.send(200)
-    } else {
-        next()
+
+const whitelist = ['http://example1.com', 'http://example2.com']
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
     }
-})
+}
+app.use(cors(corsOptions))
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*')
+//     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
+//     res.header('Access-Control-Allow-Credentials', 'true')
+//     if (req.method === 'OPTIONS') {
+//         res.send(200)
+//     } else {
+//         next()
+//     }
+// })
 app.use(heltmet())
 app.use(expressWinston.logger({
     expressFormat: true,
