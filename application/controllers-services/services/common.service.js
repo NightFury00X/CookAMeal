@@ -530,6 +530,8 @@ CommonService.prototype.Recipe = {
     },
     FindAllRecipeByCookIdExcludeSelectedRecipe: async (profileId, recipeId) => {
         try {
+            console.log('Profile Id: ', profileId)
+            console.log('Recipe Id: ', recipeId)
             return await db.Recipe.findAll({
                 order: [
                     [Sequelize.fn('NEWID')]
