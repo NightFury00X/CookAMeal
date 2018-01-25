@@ -565,12 +565,8 @@ CommonService.prototype.Recipe = {
                 required: true,
                 where: {
                     [Op.and]: [{
-                        sub_category_id: {
-                            [Op.eq]: subCategoryId
-                        },
-                        profile_id: {
-                            [Op.ne]: profileId
-                        }
+                        sub_category_id: `${subCategoryId}`,
+                        profile_id: `${profileId}`
                     }]
                 },
                 attributes: ['id', 'dish_name', 'available_servings', 'order_by_date_time', 'cost_per_serving', 'preparation_method', 'preparation_time', 'cook_time', 'category_id', 'sub_category_id', 'profile_id'],
