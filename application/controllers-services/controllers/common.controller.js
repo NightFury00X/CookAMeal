@@ -225,8 +225,6 @@ const Recipe = {
         try {
             const userId = req.user.id
             const recipeId = req.value.params.id
-            // const loggedInProfile = await CommonService.User.GetProfileIdByUserTypeId(userId)
-
             const recipeDetails = await CommonService.Recipe.FindRecipeById(recipeId)
             if (!recipeDetails) {
                 return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.RECIPE.NOT_FOUND, res)
@@ -239,7 +237,6 @@ const Recipe = {
             const profileId = recipeDetailsToJSON.Recipes[0].profile_id
             const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
             recipeDetailsToJSON.Recipes[0].CurrencySymbol = currencyDetails.currency_symbol
-            console.log('==============================cookRecipes=======================================')
             const cookRecipes = await CommonService.Recipe.FindAllRecipeByCookIdExcludeSelectedRecipe(profileId, recipeId)
             let cookRecipesToJSON = JSON.parse(JSON.stringify(cookRecipes))
             for (const index in cookRecipesToJSON) {
@@ -254,10 +251,7 @@ const Recipe = {
                     cookRecipesToJSON[index].currencySymbol = currencyDetails.currency_symbol
                 }
             }
-            console.log('=====================================================================')
-            console.log('================================similarRecipes=====================================')
             const similarRecipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryIdExcludeSelectedCookRecipe(recipeDetails.Recipes[0].sub_category_id, profileId)
-            console.log('=====================================================================')
             let similarRecipesToJSON = JSON.parse(JSON.stringify(similarRecipes))
             for (const index in similarRecipesToJSON) {
                 if (similarRecipesToJSON.hasOwnProperty(index)) {
