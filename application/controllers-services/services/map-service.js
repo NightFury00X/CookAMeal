@@ -15,7 +15,7 @@ MapService.prototype.Map = {
         return await db.Profile.findAll({
             attributes: ['id', 'firstname', 'lastname'],
             where: {
-                user_role: {
+                userRole: {
                     [Op.eq]: CommonConfig.ROLES.COOK
                 }
             },
@@ -49,7 +49,7 @@ MapService.prototype.Map = {
                         model: db.Profile,
                         attributes: ['id', 'firstname', 'lastname'],
                         where: {
-                            user_role: {
+                            userRole: {
                                 [Op.eq]: CommonConfig.ROLES.COOK
                             }
                         },
