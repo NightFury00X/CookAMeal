@@ -328,7 +328,7 @@ const Map = {
                             const cookData = await CommonService.User.FindProfileRatingByProfileId(profileId)
                             cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.rating = cookData.rating | 0
                             if (userId) {
-                                const favorite = await CommonService.Favorite.Profile.CheckProfileIsFavoriteByProfileIdAndUserId(userId, profileId)
+                                const favorite = await AuthService.Favorite.Profile.CheckProfileIsFavoriteByProfileIdAndUserId(userId, profileId)
                                 cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.favorite = !!favorite
                             } else {
                                 cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.favorite = false
