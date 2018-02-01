@@ -165,7 +165,7 @@ let SubCategory = {
 let Allergy = {
     GetAll: async (req, res, next) => {
         try {
-            const result = await CommonService.Allergy.GettAll()
+            const result = await AuthService.Allergy.GettAll()
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -188,7 +188,7 @@ let Allergy = {
 let Units = {
     GetAll: async (req, res, next) => {
         try {
-            const result = await CommonService.Units.GettAll()
+            const result = await AuthService.Units.GettAll()
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
