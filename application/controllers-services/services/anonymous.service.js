@@ -279,6 +279,7 @@ AnonymousService.prototype.AddFacebookUser = async (facebookDetails) => {
             return null
         }
         facebookDetails.createdBy = `${user.id}`
+        facebookDetails.userRole = 2
         facebookDetails.profileUrl = facebookDetails.imageUrl
         const facebook = await db.Profile.create(facebookDetails, {transaction: trans})
         trans.commit()
