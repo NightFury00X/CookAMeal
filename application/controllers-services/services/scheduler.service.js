@@ -102,4 +102,39 @@ Scheduler.prototype.Order = {
         }
 }
 
+Scheduler.prototype.User = {
+    GetAllValidResetPasswordRequests: async () => {
+        try {
+            return await db.ResetPassword.findAll({
+                where: {
+                    [Op.and]: {
+                        isValid: true,
+                        status: true
+                    }
+                }
+            })
+        } catch (error) {
+            return false
+        }
+    },
+    InvalidateForgetPasswordToken: async (id) => {
+        try {
+            return await db.ResetPassword.update({
+                isValid: false,
+                status: false
+            }, {
+                where: {
+                    [Op.and]: {
+                        id: `${id}`,
+                        isValid: true,
+                        status: true
+                    }
+                }
+            })
+        } catch (error) {
+            return false
+        }
+    }
+}
+
 module.exports = new Scheduler()

@@ -10,60 +10,106 @@ const CommonConfig = require('../helpers/common-config')
 const localOptions = {
     usernameField: 'username'
 }
-const localLogin = new LocalStrategy(localOptions, async (username, password, done) => {
+const localLogin = new LocalStrategy(localOptions, async (userEmail, password, done) => {
     try {
-        // Find user specified in email
-        const normalUserLogin = await db.User.findOne({
+        const userType = await db.UserType.findOne({
             where: {
-                email: {
-                    [Op.eq]: username
+                [Op.or]: {
+                    emailId: `${userEmail}`,
+                    facebookEmailId: `${userEmail}`
                 }
             }
         })
-        if (normalUserLogin) {
-            // Compare password
-            let isMatch = await normalUserLogin.comparePasswords(password)
-            if (isMatch) return done(null, normalUserLogin)
+        if (!userType) {
+            done({
+                message: 'Email not found.',
+                status: CommonConfig.STATUS_CODE.NOT_FOUND
+            }, false)
         }
-        // Check user is exist for reset password
-        const resetPasswordUserLogin = await db.ResetPassword.findOne({
+        const user = await db.User.findOne({
+            where: {
+                createdBy: {
+                    [Op.eq]: `${userType.id}`
+                }
+            }
+        })
+        if (!user) {
+            done({
+                message: 'Invalid user id or password.',
+                status: CommonConfig.STATUS_CODE.OK
+            }, false)
+        }
+        const isMatch = await user.comparePasswords(password)
+        if (isMatch) {
+            return done(null, user)
+        }
+        const userForResetPassword = await db.ResetPassword.findOne({
             where: {
                 [Op.and]: [{
-                    email: username,
-                    is_valid: true,
+                    email: userEmail,
+                    isValid: true,
                     status: true
                 }]
             }
         })
-
-        if (resetPasswordUserLogin) {
-            // Compare password
-            const isMatch = await resetPasswordUserLogin.comparePasswords(password)
-
-            if (isMatch) {
-                return done(null, resetPasswordUserLogin)
-            }
-        } else {
-            // Check token is expired
-            const temp = await db.ResetPassword.findOne({
-                where: {
-                    [Op.and]: [{
-                        email: username,
-                        random_key: password
-                    }]
-                }
-            })
-            if (temp) {
-                return done({
-                    message: CommonConfig.ERRORS.TOKEN_EXPIRED,
-                    status: CommonConfig.STATUS_CODE.OK
-                }, false)
-            }
+        if (!userForResetPassword) {
+            done({
+                message: 'Invalid user id or password.',
+                status: CommonConfig.STATUS_CODE.OK
+            }, false)
         }
-        done({
-            message: CommonConfig.ERRORS.LOGIN_FAILED,
-            status: CommonConfig.STATUS_CODE.OK
-        }, false)
+        const isTempPasswordMatch = await userForResetPassword.comparePasswords(password)
+        if (isTempPasswordMatch) {
+            return done(null, userForResetPassword)
+        }
+
+        // const normalUserLogin = await db.User.findOne({
+        //     where: {
+        //         email: {
+        //             [Op.eq]: `${username}`
+        //         }
+        //     }
+        // })
+        // if (normalUserLogin) {
+        //     let isMatch = await normalUserLogin.comparePasswords(password)
+        //     if (isMatch) return done(null, normalUserLogin)
+        // }
+        // const resetPasswordUserLogin = await db.ResetPassword.findOne({
+        //     where: {
+        //         [Op.and]: [{
+        //             email: username,
+        //             isValid: true,
+        //             status: true
+        //         }]
+        //     }
+        // })
+        //
+        // if (resetPasswordUserLogin) {
+        //     const isMatch = await resetPasswordUserLogin.comparePasswords(password)
+        //
+        //     if (isMatch) {
+        //         return done(null, resetPasswordUserLogin)
+        //     }
+        // } else {
+        //     const temp = await db.ResetPassword.findOne({
+        //         where: {
+        //             [Op.and]: [{
+        //                 email: username,
+        //                 randomKey: password
+        //             }]
+        //         }
+        //     })
+        //     if (temp) {
+        //         return done({
+        //             message: CommonConfig.ERRORS.TOKEN_EXPIRED,
+        //             status: CommonConfig.STATUS_CODE.OK
+        //         }, false)
+        //     }
+        // }
+        // done({
+        //     message: CommonConfig.ERRORS.LOGIN_FAILED,
+        //     status: CommonConfig.STATUS_CODE.OK
+        // }, false)
     } catch (error) {
         done({
             message: error,
@@ -77,41 +123,41 @@ let jwtOptions = {
     secretOrKey: config.keys.secret
 }
 
+// login
 let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     try {
-        // Find user specified in token
-        let user = await db.UserType.findById(payload.id)
-        if (payload.is_normal && !payload.unique_key) {
-            // If user doesn't exists, handle it
-            if (!user) {
-                return done({
-                    message: CommonConfig.ERRORS.ACCESS_DENIED,
-                    status: CommonConfig.STATUS_CODE.FORBIDDEN
-                }, false)
-            }
-            // Otherwise, return the user);
+        const {isGuest} = payload
+        if (isGuest) {
+            const {userRole} = payload
+            return done(null, {isGuest, userRole})
+        }
+        const {id, userRole, uniqueKey} = payload
+        let user = await db.UserType.findById(id)
+        if (!user) {
+            return done({
+                message: CommonConfig.ERRORS.ACCESS_DENIED,
+                status: CommonConfig.STATUS_CODE.FORBIDDEN
+            }, false)
+        }
+        if (!uniqueKey) {
             done(null, user)
         } else {
-            // Find user specified in token
             const userForResetPassword = await db.ResetPassword.findOne({
                 where: {
                     [Op.and]: [{
-                        unique_key: payload.unique_key,
-                        is_valid: true,
+                        uniqueKey: `${uniqueKey}`,
+                        isValid: true,
                         status: true
                     }]
                 }
             })
-            // If user doesn't exists, handle it
             if (!userForResetPassword) {
                 return done({
                     message: CommonConfig.ERRORS.ACCESS_DENIED,
                     status: CommonConfig.STATUS_CODE.FORBIDDEN
                 }, false)
             }
-
-            // Otherwise, return the user);
-            user.user_role = payload.user_role
+            user.userRole = userRole
             done(null, user)
         }
     } catch (error) {

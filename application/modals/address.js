@@ -1,10 +1,8 @@
-// The Address Model.
 'use strict'
 const Country = require('../../configurations/helpers/helper').Country
 
 const CommonConfig = require('../../configurations/helpers/common-config')
 module.exports = function (sequelize, DataTypes) {
-    // 1: The model schema.
     let modelDefinition = {
         id: {
             type: DataTypes.BIGINT,
@@ -42,7 +40,7 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('state', CommonConfig.toTitleCase(value))
             }
         },
-        zip_code: {
+        zipCode: {
             type: DataTypes.STRING(8),
             allowNull: false,
             validate: {
@@ -65,11 +63,11 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('country', CommonConfig.toTitleCase(value))
             }
         },
-        currency_code: {
+        currencyCode: {
             type: DataTypes.STRING(5),
             allowNull: false
         },
-        currency_symbol: {
+        currencySymbol: {
             type: DataTypes.STRING(10),
             allowNull: false
         },
@@ -79,24 +77,20 @@ module.exports = function (sequelize, DataTypes) {
         longitude: {
             type: DataTypes.FLOAT
         },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE
     }
-
-    // 2: The model options.
     let modelOptions = {
         hooks: {
             beforeValidate: FindConutryDetails
-        },
-        underscored: true
+        }
     }
 
     return sequelize.define('Address', modelDefinition, modelOptions)
 }
 
-// Hashes the password for a user object.
 async function FindConutryDetails (address) {
     const currencyDetails = await Country.GetCourrencyDetailsByCountryName(address.country)
-    address.currency_code = currencyDetails.code
-    address.currency_symbol = currencyDetails.symbol
+    address.currencyCode = currencyDetails.code
+    address.currencySymbol = currencyDetails.symbol
 }

@@ -22,6 +22,11 @@ router.post('/fbsign',
     ValidateBody(BodySchemas.FbLogin),
     AnonymousController.Anonymous.FbSignIn)
 
+router.post('/check-facebook',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.FbCheck),
+    AnonymousController.Anonymous.FbCheck)
+
 // 2: SignUp
 router.post('/signup',
     RequestMethodsMiddlewares.ApplicationFormData,
@@ -36,11 +41,19 @@ router.post('/authenticate',
     TokenMiddlewares.VerifyResetPasswordToken,
     AnonymousController.Anonymous.AuthenticateUser)
 
+router.post('/validate-user',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.Login),
+    AnonymousController.Anonymous.CheckUserEmailAndPassword)
+
 // 4: Reset Password
-router.post('/resetpass',
+router.post('/forgot-password',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.ResetPassword),
     ResetPasswordMiddlewares.CheckPasswordIsGenerated,
     AnonymousController.Anonymous.ResetPassword)
+
+router.get('/guest-login',
+    AnonymousController.Anonymous.GuestLogin)
 
 module.exports = router

@@ -26,12 +26,11 @@ let Category = {
 let SubCategory = {
     Add: async (req, res, next) => {
         try {
-            console.log('error')
             if (!req.body.name) {
                 return ResponseHelpers.SetBadRequestResponse('Invalid sub-category name.', res)
             }
             let subCategory = req.body
-            subCategory.user_type_id = req.user.id
+            subCategory.createdBy = req.user.id
             let result = await AdminService.SubCategory.Add(subCategory)
             if (!result) {
                 return ResponseHelpers.SetErrorResponse('Unable to add sub-category.', res)
@@ -50,7 +49,7 @@ let Allergy = {
                 return ResponseHelpers.SetBadRequestResponse('Invalid allergy name.', res)
             }
             let allergy = req.body
-            allergy.user_type_id = req.user.id
+            allergy.createdBy = req.user.id
             let result = await AdminService.Allergy.Add(allergy)
             if (!result) {
                 return ResponseHelpers.SetErrorResponse('Unable to add allergy.', res)
@@ -65,11 +64,11 @@ let Allergy = {
 let Units = {
     Add: async (req, res, next) => {
         try {
-            if (!req.body.unit_name || !req.body.sort_name) {
+            if (!req.body.unitName || !req.body.sortName) {
                 return ResponseHelpers.SetBadRequestResponse('Invalid unit/sort name.', res)
             }
             let unit = req.body
-            unit.user_type_id = req.user.id
+            unit.createdBy = req.user.id
             let result = await AdminService.Units.Add(unit)
             if (!result) {
                 return ResponseHelpers.SetErrorResponse('Unable to add unit.', res)

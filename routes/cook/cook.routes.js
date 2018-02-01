@@ -9,16 +9,13 @@ const {
     RequestMethodsMiddlewares
 } = require('../../configurations/middlewares/middlewares')
 
-// 2: Get All Recipe list By Sub Category
 router.get('/GetAllRecipeBySubCategory',
     CookController.Recipe.GetAllRecipeBySubCategory)
 
-// 3: Get All Recipe list By Sub Category
 router.get('/GetAllRecipeBySubCategory/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CookController.Recipe.GetAllRecipeBySubCategoryById)
 
-// 4: Add Recipe
 router.post('/recipe',
     RequestMethodsMiddlewares.ApplicationFormData,
     FileUploader.uploadDataFiles,

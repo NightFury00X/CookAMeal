@@ -24,7 +24,14 @@ const task = cron.schedule('* * * * */3', function () {
     SchedulerController.Order.CancelOrder()
 }, false)
 
-task.start()
+const task2 = cron.schedule('*/1 * * * *', function () {
+    console.log('Invalidate Reset Password Token Scheduler started')
+    SchedulerController.User.InvalidateForgetPasswordToken()
+}, false)
+
+// task2.start()
+
+// task.start()
 
 const logger = new (winston.Logger)({
     expressFormat: true,

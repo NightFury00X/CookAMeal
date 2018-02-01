@@ -1,9 +1,7 @@
-// The ResetPassword Model.
 'use strict'
 
 const bcrypt = require('bcrypt')
 module.exports = function (sequelize, DataTypes) {
-    // 1: The model schema.
     let modelDefinition = {
         id: {
             type: DataTypes.BIGINT,
@@ -15,11 +13,11 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        temp_password: {
+        tempPassword: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        random_key: {
+        randomKey: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -27,16 +25,16 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(500),
             allowNull: false
         },
-        unique_key: {
+        uniqueKey: {
             type: DataTypes.STRING(16),
             allowNull: false
         },
-        is_valid: {
+        isValid: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
         },
-        valid_upto: {
+        validUpto: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1 // in hour
@@ -45,22 +43,21 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: 1
-        }
+        },
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE
     }
-
-    // 2: The model options.
     let modelOptions = {
         hooks: {
             beforeValidate: hashPassword
-        },
-        underscored: true
+        }
     }
 
     let ResetPassword = sequelize.define('ResetPassword', modelDefinition, modelOptions)
 
     // Adding an instance level method
     ResetPassword.prototype.comparePasswords = function (password) {
-        return comparePasswords(password, this.temp_password)
+        return comparePasswords(password, this.tempPassword)
     }
 
     return ResetPassword
@@ -72,10 +69,10 @@ async function comparePasswords (password, pwd) {
 }
 
 // Hashes the password for a reset-password object.
-function hashPassword (resetpassword) {
-    if (resetpassword.changed('temp_password')) {
-        return bcrypt.hash(resetpassword.temp_password, 10).then(function (password) {
-            resetpassword.temp_password = password
+function hashPassword (resetPassword) {
+    if (resetPassword.changed('tempPassword')) {
+        return bcrypt.hash(resetPassword.tempPassword, 10).then(function (password) {
+            resetPassword.tempPassword = password
         })
     }
 }

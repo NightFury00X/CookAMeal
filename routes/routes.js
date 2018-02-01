@@ -16,6 +16,12 @@ const CommonRoutes = require('express').Router()
 const AdminRoutes = require('express').Router()
 const CookRoutes = require('express').Router()
 const CommonConfig = require('../configurations/helpers/common-config')
+const CommonController = require('../application/controllers-services/controllers/common.controller')
+const {ValidateBody} = require('../configurations/middlewares/validation')
+const {BodySchemas} = require('../application/schemas/schema')
+const {
+    RequestMethodsMiddlewares
+} = require('../configurations/middlewares/middlewares')
 
 module.exports = function (app) {
     // 1: anonymous routes
@@ -24,11 +30,21 @@ module.exports = function (app) {
 
     // 2: auth routes
     BaseApi.use('/api', AuthRoutes)
-    AuthRoutes.use('/auth',
+    BaseApi.use('/api/change-profile',
         [CommonMiddlewares.CheckAuthorizationHeader,
             requireAuth,
             TokenValidatorsMiddlewares.CheckUserTokenIsValid,
-            AuthorizationMiddlewares.AccessLevel(CommonConfig.ACCESS_LEVELS.ALL)],
+            AuthorizationMiddlewares.AccessLevel(CommonConfig.ACCESS_LEVELS.ALL),
+            RequestMethodsMiddlewares.ApplicationJsonData,
+            ValidateBody(BodySchemas.ChangeProfile)],
+        CommonController.User.ChangeProfile)
+
+    AuthRoutes.use('/auth',
+        [CommonMiddlewares.CheckAuthorizationHeader,
+            requireAuth,
+            CommonMiddlewares.CheckProfileIsSelected,
+            TokenValidatorsMiddlewares.CheckUserTokenIsValid,
+            AuthorizationMiddlewares.AccessLevel(CommonConfig.ACCESS_LEVELS.AUTH)],
         require('./auth/auth-routes'))
 
     // 3: common routes
@@ -36,6 +52,7 @@ module.exports = function (app) {
     CommonRoutes.use('/common',
         [CommonMiddlewares.CheckAuthorizationHeader,
             requireAuth,
+            CommonMiddlewares.CheckProfileIsSelected,
             TokenValidatorsMiddlewares.CheckUserTokenIsValid,
             AuthorizationMiddlewares.AccessLevel(CommonConfig.ACCESS_LEVELS.ALL)],
         require('./common/common-routes'))
@@ -45,6 +62,7 @@ module.exports = function (app) {
     AdminRoutes.use('/admin',
         [CommonMiddlewares.CheckAuthorizationHeader,
             requireAuth,
+            CommonMiddlewares.CheckProfileIsSelected,
             TokenValidatorsMiddlewares.CheckUserTokenIsValid,
             AuthorizationMiddlewares.AccessLevel(CommonConfig.ACCESS_LEVELS.ADMIN)],
         require('./admin/admin.routes'))
@@ -54,6 +72,7 @@ module.exports = function (app) {
     CookRoutes.use('/cook',
         [CommonMiddlewares.CheckAuthorizationHeader,
             requireAuth,
+            CommonMiddlewares.CheckProfileIsSelected,
             TokenValidatorsMiddlewares.CheckUserTokenIsValid,
             AuthorizationMiddlewares.AccessLevel(CommonConfig.ACCESS_LEVELS.COOK)],
         require('./cook/cook.routes'))

@@ -15,17 +15,17 @@ CookService.prototype.Recipe = {
             let allergies
             let servingDays
             let ingredients
-            if (recipe.base_allergies) {
-                allergies = JSON.parse(recipe.base_allergies)
+            if (recipe.baseAllergies) {
+                allergies = JSON.parse(recipe.baseAllergies)
             }
-            if (recipe.serving_days) {
-                servingDays = JSON.parse(recipe.serving_days)
+            if (recipe.servingDays) {
+                servingDays = JSON.parse(recipe.servingDays)
             }
             if (recipe.ingredients) {
                 ingredients = JSON.parse(recipe.ingredients)
             }
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userTypeId)
-            recipe.profile_id = profile.id
+            recipe.profileId = profile.id
             const recipeData = await db.Recipe.create(recipe, {transaction: trans})
             if (!recipeData) {
                 await trans.rollback()
@@ -39,8 +39,8 @@ CookService.prototype.Recipe = {
             const cooksDealWith = await db.CooksDealWithCategory.findOne({
                 where: {
                     [Op.and]: [{
-                        profile_id: profile.id,
-                        category_id: recipe.category_id
+                        CooksDealWithCategoryId: profile.id,
+                        categoryId: recipe.categoryId
                     }]
                 }
             })
@@ -48,13 +48,13 @@ CookService.prototype.Recipe = {
                 await db.CooksDealWithCategory.create({
                     latitude: geoCordinations.latitude,
                     longitude: geoCordinations.longitude,
-                    profile_id: profile.id,
-                    category_id: recipe.category_id
+                    cooksDealWithCategoryId: profile.id,
+                    categoryId: recipe.categoryId
                 }, {transaction: trans})
             }
             for (const index in allergies) {
                 if (allergies.hasOwnProperty(index)) {
-                    allergies[index].recipe_id = recipeData.id
+                    allergies[index].recipeId = recipeData.id
                     let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans})
                     if (!allergydata) {
                         await trans.rollback()
@@ -64,9 +64,15 @@ CookService.prototype.Recipe = {
             }
             for (let index in files.recipe) {
                 if (files.recipe.hasOwnProperty(index)) {
-                    files.recipe[index].recipe_id = recipeData.id
-                    files.recipe[index].object_type = CommonConfig.OBJECT_TYPE.RECIPE
-                    files.recipe[index].imageurl = CommonConfig.FILE_LOCATIONS.RECIPE + files.recipe[index].filename
+                    files.recipe[index].recipeId = recipeData.id
+                    files.recipe[index].objectType = CommonConfig.OBJECT_TYPE.RECIPE
+                    files.recipe[index].imageUrl = CommonConfig.FILE_LOCATIONS.RECIPE + files.recipe[index].filename
+                    files.recipe[index].fileName = files.recipe[index].filename
+                    files.recipe[index].originalName = files.recipe[index].originalname
+                    files.recipe[index].mimeType = files.recipe[index].mimetype
+                    delete files.recipe[index].filename
+                    delete files.recipe[index].originalname
+                    delete files.recipe[index].mimetype
                     const recipeImage = await db.MediaObject.create(files.recipe[index], {transaction: trans})
                     if (!recipeImage) {
                         await trans.rollback()
@@ -75,7 +81,7 @@ CookService.prototype.Recipe = {
                 }
             }
             if (servingDays) {
-                servingDays.recipe_id = recipeData.id
+                servingDays.recipeId = recipeData.id
                 const daysData = await db.Day.create(servingDays, {transaction: trans})
                 if (!daysData) {
                     await trans.rollback()
@@ -84,7 +90,7 @@ CookService.prototype.Recipe = {
             }
             for (const index in ingredients) {
                 if (ingredients.hasOwnProperty(index)) {
-                    ingredients[index].recipe_id = recipeData.id
+                    ingredients[index].recipeId = recipeData.id
                     let ingredientData = await db.Ingredient.create(ingredients[index], {transaction: trans})
                     if (!ingredientData) {
                         await trans.rollback()
@@ -104,10 +110,10 @@ CookService.prototype.Recipe = {
             return await db.SubCategory.findAll({
                 attributes: ['id', 'name'],
                 include: [{
-                    attributes: ['id', 'dish_name', 'cost_per_serving', 'order_by_date_time'],
+                    attributes: ['id', 'dishName', 'costPerServing', 'orderByDateTime'],
                     model: db.Recipe,
                     where: {
-                        profile_id: {
+                        profileId: {
                             [Op.eq]: profileId
                         }
                     },
@@ -120,7 +126,7 @@ CookService.prototype.Recipe = {
                         }]
                     }, {
                         model: db.MediaObject,
-                        attributes: ['imageurl']
+                        attributes: ['imageUrl']
                     }]
                 }]
             })
@@ -138,10 +144,10 @@ CookService.prototype.Recipe = {
                 },
                 attributes: ['id', 'name'],
                 include: [{
-                    attributes: ['id', 'dish_name', 'cost_per_serving', 'order_by_date_time'],
+                    attributes: ['id', 'dishName', 'costPerServing', 'orderByDateTime'],
                     model: db.Recipe,
                     where: {
-                        profile_id: {
+                        profileId: {
                             [Op.eq]: profileId
                         }
                     },
@@ -157,7 +163,7 @@ CookService.prototype.Recipe = {
     GetDeliveryFeesByRecipeId: async (recipeId) => {
         try {
             return db.Recipe.findOne({
-                attributes: ['cost_per_serving', 'available_servings', 'delivery_fee', 'profile_id'],
+                attributes: ['costPerServing', 'availableServings', 'deliveryFee', 'profileId'],
                 where: {
                     id: {
                         [Op.eq]: recipeId

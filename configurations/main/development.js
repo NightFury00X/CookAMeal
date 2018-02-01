@@ -15,11 +15,12 @@ const Uploads = `${BaseProject}` + `${'uploads/'}`
 exports.mssql = {
     dialect: 'mssql',
     host: 'localhost',
-    port: 1433, // Default port
+    port: 1433,
     define: {
         schema: 'dbo',
         timestamps: true,
-        freezeTableName: false
+        freezeTableName: false,
+        underscored: false
     },
     raw: false,
     syncOnAssociation: true,
@@ -74,7 +75,7 @@ const FileLocations = {
 
 exports.FOLDER_LOCATION = Uploads
 
-exports.FILE_LOCATION = FileLocations
+exports.FILE_LOCATION = Uploads
 
 exports.UPLOAD_LOCATION = [
     {PATH: FileLocations.Profile},

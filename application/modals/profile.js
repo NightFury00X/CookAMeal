@@ -1,4 +1,3 @@
-// The Profile Model.
 'use strict'
 let CommonConfig = require('../../configurations/helpers/common-config')
 
@@ -12,12 +11,6 @@ module.exports = function (sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING(100),
-            allowNull: false,
-            unique: {
-                args: true,
-                msg: 'Oops. Looks like you already have an account with this email address. Please try to login.',
-                fields: [sequelize.fn('lower', sequelize.col('email'))]
-            },
             validate: {
                 isEmail: {
                     args: true,
@@ -25,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        firstname: {
+        firstName: {
             type: DataTypes.STRING(100),
             allowNull: false,
             validate: {
@@ -35,10 +28,10 @@ module.exports = function (sequelize, DataTypes) {
                 }
             },
             set (value) {
-                this.setDataValue('firstname', CommonConfig.toTitleCase(value))
+                this.setDataValue('firstName', CommonConfig.toTitleCase(value))
             }
         },
-        lastname: {
+        lastName: {
             type: DataTypes.STRING(100),
             allowNull: false,
             validate: {
@@ -48,12 +41,11 @@ module.exports = function (sequelize, DataTypes) {
                 }
             },
             set (value) {
-                this.setDataValue('lastname', CommonConfig.toTitleCase(value))
+                this.setDataValue('lastName', CommonConfig.toTitleCase(value))
             }
         },
         phone: {
             type: DataTypes.STRING(12),
-            allowNull: false,
             validate: {
                 isNumeric: {
                     args: true,
@@ -74,26 +66,13 @@ module.exports = function (sequelize, DataTypes) {
         description: {
             type: DataTypes.TEXT
         },
-        diet_preference: {
+        dietPreference: {
             type: DataTypes.STRING
         },
         allergies: {
             type: DataTypes.STRING
         },
-        user_role: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-                isIn: {
-                    args: [['1', '2']],
-                    msg: 'Invalid user type.'
-                }
-            }
-        },
-        card_type_bank_details: {
-            type: DataTypes.STRING
-        },
-        driving_distance: {
+        drivingDistance: {
             type: DataTypes.FLOAT,
             validate: {
                 isFloat: {
@@ -102,19 +81,29 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        allow_notification: {
+        allowNotification: {
             type: DataTypes.BOOLEAN
         },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+        facebookId: {
+            type: DataTypes.STRING
+        },
+        profileUrl: {
+            type: DataTypes.STRING
+        },
+        coverPhotoUrl: {
+            type: DataTypes.STRING
+        },
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE,
+        deleted: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     }
-
-    // 2: The model options.
     let modelOptions = {
-        underscored: true,
         getterMethods: {
             fullName () {
-                return this.firstname + ' ' + this.lastname
+                return this.firstName + ' ' + this.lastName
             }
         }
     }
@@ -124,49 +113,57 @@ module.exports = function (sequelize, DataTypes) {
     ProfileModel.associate = function (models) {
         ProfileModel.hasOne(models.Address, {
             foreignKey: {
+                name: 'profileId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         ProfileModel.hasOne(models.Social, {
             foreignKey: {
+                name: 'profileId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         ProfileModel.hasOne(models.Certificate, {
             foreignKey: {
+                name: 'profileId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         ProfileModel.hasOne(models.IdentificationCard, {
             foreignKey: {
+                name: 'profileId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         ProfileModel.hasMany(models.Recipe, {
             foreignKey: {
+                name: 'profileId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         ProfileModel.hasMany(models.MediaObject, {
-            onDelete: 'CASCADE'
+            foreignKey: {
+                name: 'profileId',
+                onDelete: 'CASCADE'
+            }
         })
         ProfileModel.hasMany(models.Review, {
-            onDelete: 'CASCADE'
+            foreignKey: {
+                name: 'profileId',
+                onDelete: 'CASCADE'
+            }
         })
         ProfileModel.hasMany(models.Favorite, {
-            onDelete: 'CASCADE'
+            foreignKey: {
+                name: 'profileId',
+                onDelete: 'CASCADE'
+            }
         })
-        // ProfileModel.hasMany(models.ProfileCover, {
-        //     foreignKey: {
-        //         allowNull: false,
-        //         onDelete: 'CASCADE'
-        //     }
-        // })
     }
 
     return ProfileModel

@@ -32,7 +32,7 @@ MapService.prototype.Map = {
         return db.Address.findOne({
             attributes: ['latitude', 'longitude'],
             where: {
-                profile_id: {
+                profileId: {
                     [Op.eq]: profileId
                 }
             }
@@ -43,7 +43,7 @@ MapService.prototype.Map = {
             return await db.Category.findAll({
                 attributes: ['id', 'name'],
                 include: [{
-                    attributes: ['id', 'category_id', 'profile_id'],
+                    attributes: ['id', 'categoryId', 'profileId'],
                     model: db.CooksDealWithCategory,
                     include: [{
                         model: db.Profile,

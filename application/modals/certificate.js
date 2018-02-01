@@ -1,8 +1,6 @@
-// The Certificate Model.
 'use strict'
 
 module.exports = function (sequelize, DataTypes) {
-    // 1: The model schema.
     let modelDefinition = {
         id: {
             type: DataTypes.BIGINT,
@@ -10,20 +8,17 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             autoIncrement: true
         },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE
     }
-
-    // 2: The model options.
-    let modelOptions = {
-        underscored: true
-    }
-
-    let Certificate = sequelize.define('Certificate', modelDefinition, modelOptions)
+    let Certificate = sequelize.define('Certificate', modelDefinition)
 
     Certificate.associate = function (models) {
         Certificate.hasMany(models.MediaObject, {
-            onDelete: 'CASCADE'
+            foreignKey: {
+                name: 'certificateId',
+                onDelete: 'CASCADE'
+            }
         })
     }
 

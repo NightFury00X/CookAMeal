@@ -67,18 +67,27 @@ module.exports = {
         }
     },
     AuthenticationHelpers: {
-        GenerateToken: (user, uniqueKey, type) => {
-            user.is_normal = type
-            user.unique_key = uniqueKey
+        GenerateToken: (user, uniqueKey, hasProfile) => {
+            user.isGuest = false
+            user.hasProfile = hasProfile
+            user.uniqueKey = uniqueKey
             return 'JWT ' + jwt.sign(
                 user,
                 config.keys.secret,
                 {expiresIn: '50y'}
             )
         },
-        GenerateTokenForResetPassword: (user, uniqueKey, type) => {
-            user.is_normal = type
-            user.unique_key = uniqueKey
+        GenerateTokenForResetPassword: (user, uniqueKey, hasProfile) => {
+            user.isGuest = false
+            user.hasProfile = hasProfile
+            user.uniqueKey = uniqueKey
+            return 'JWT ' + jwt.sign(
+                user,
+                config.keys.secret,
+                {expiresIn: '1h'}
+            )
+        },
+        GenerateTokenForGuest: (user) => {
             return 'JWT ' + jwt.sign(
                 user,
                 config.keys.secret,

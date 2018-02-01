@@ -1,8 +1,6 @@
-// The TokenBlackList Model.
 'use strict'
 
 module.exports = function (sequelize, DataTypes) {
-    // 1: The model schema.
     let modelDefinition = {
         id: {
             type: DataTypes.BIGINT,
@@ -18,14 +16,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE
     }
 
-    // 2: The model options.
-    let modelOptions = {
-        underscored: true
-    }
-
-    return sequelize.define('BlackListedToken', modelDefinition, modelOptions)
+    return sequelize.define('BlackListedToken', modelDefinition)
 }

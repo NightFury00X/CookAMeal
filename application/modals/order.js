@@ -1,7 +1,5 @@
-// The Order Model.
 'use strict'
 module.exports = function (sequelize, DataTypes) {
-    // 1: The model schema.
     let modelDefinition = {
         id: {
             type: DataTypes.BIGINT,
@@ -89,19 +87,15 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             defaultValue: false
         },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE
     }
 
-    // 2: The model options.
-    let modelOptions = {
-        underscored: true
-    }
-
-    let Order = sequelize.define('Order', modelDefinition, modelOptions)
+    let Order = sequelize.define('Order', modelDefinition)
     Order.associate = function (models) {
         Order.hasMany(models.OrderItem, {
             foreignKey: {
+                name: 'orderId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }

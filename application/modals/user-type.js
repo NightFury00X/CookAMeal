@@ -1,8 +1,6 @@
-// The User Type Model.
 'use strict'
 
 module.exports = function (sequelize, DataTypes) {
-    // 1: The model schema.
     let modelDefinition = {
         id: {
             type: DataTypes.BIGINT,
@@ -10,26 +8,16 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             autoIncrement: true
         },
-        user_id: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: {
-                args: true,
-                msg: 'Oops. Looks like you already have an account. Please try to login.',
-                fields: [sequelize.fn('lower', sequelize.col('email'))]
-            }
+        emailId: {
+            type: DataTypes.STRING
         },
-        user_type: { // 1 - Normal User, 2 - Facebook User
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-                isIn: {
-                    args: [['1', '2']],
-                    msg: 'Invalid user type.'
-                }
-            }
+        facebookId: {
+            type: DataTypes.STRING
         },
-        user_role: { // 1 - cook, 2 - customer, 3 - admin
+        facebookEmailId: {
+            type: DataTypes.STRING
+        },
+        userRole: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
@@ -39,19 +27,34 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+        hasProfile: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        profileSelected: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        hasLogin: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE,
+        deleted: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     }
-    // 2: The model options.
     let modelOptions = {
-        underscored: true,
         getterMethods: {
             userInfo () {
                 return {
                     id: this.id,
-                    username: this.user_id,
-                    user_role: this.user_role,
-                    user_type: this.user_type
+                    facebookId: this.facebookId,
+                    email: this.emailId,
+                    userRole: this.userRole
                 }
             }
         }
@@ -60,73 +63,78 @@ module.exports = function (sequelize, DataTypes) {
     UserTypeModel.associate = function (models) {
         UserTypeModel.hasOne(models.User, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
+
         UserTypeModel.hasOne(models.Profile, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         UserTypeModel.hasMany(models.BlackListedToken, {
             foreignKey: {
+                name: 'userId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         UserTypeModel.hasMany(models.ResetPassword, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         UserTypeModel.hasMany(models.Allergy, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
-        // UserTypeModel.hasMany(models.Category, {
-        //     foreignKey: {
-        //         name: 'created_by',
-        //         allowNull: false,
-        //         onDelete: 'CASCADE'
-        //     }
-        // });
         UserTypeModel.hasMany(models.SubCategory, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         UserTypeModel.hasMany(models.Unit, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         UserTypeModel.hasMany(models.Review, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         UserTypeModel.hasMany(models.Favorite, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         UserTypeModel.hasMany(models.Feedback, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         UserTypeModel.hasMany(models.Order, {
             foreignKey: {
+                name: 'createdBy',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }

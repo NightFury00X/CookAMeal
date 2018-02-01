@@ -1,8 +1,6 @@
-// The MediaObject Model.
 'use strict'
 
 module.exports = function (sequelize, DataTypes) {
-    // 1: The model schema.
     let modelDefinition = {
         id: {
             type: DataTypes.BIGINT,
@@ -10,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             autoIncrement: true
         },
-        originalname: {
+        originalName: {
             type: DataTypes.STRING(100),
             allowNull: false
         },
@@ -18,7 +16,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(100),
             allowNull: false
         },
-        mimetype: {
+        mimeType: {
             type: DataTypes.STRING(100),
             allowNull: false
         },
@@ -26,11 +24,11 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(200),
             allowNull: false
         },
-        filename: {
+        fileName: {
             type: DataTypes.STRING(100),
             allowNull: false
         },
-        imageurl: {
+        imageUrl: {
             type: DataTypes.STRING(200),
             allowNull: false
         },
@@ -38,18 +36,13 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        object_type: {
+        objectType: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE
     }
 
-    // 2: The model options.
-    let modelOptions = {
-        underscored: true
-    }
-
-    return sequelize.define('MediaObject', modelDefinition, modelOptions)
+    return sequelize.define('MediaObject', modelDefinition)
 }

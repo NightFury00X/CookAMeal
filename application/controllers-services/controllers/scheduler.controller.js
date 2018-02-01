@@ -1,5 +1,6 @@
 const SchedulerService = require('../services/scheduler.service')
 const braintree = require('braintree')
+const moment = require('moment')
 const config = require('../../../configurations/main')
 
 const gateway = braintree.connect({
@@ -9,7 +10,7 @@ const gateway = braintree.connect({
     privateKey: config.braintree.privateKey
 })
 
-let Order = {
+const Order = {
     CancelOrder: async () => {
         try {
             const transactionList = await SchedulerService.Order.GetAllTransactionDetails()
@@ -35,8 +36,30 @@ let Order = {
     }
 }
 
-let SchedulerController = {
-    Order: Order
+const User = {
+    InvalidateForgetPasswordToken: async () => {
+        try {
+            const resetPasswordRequests = await SchedulerService.User.GetAllValidResetPasswordRequests()
+            for (const request of resetPasswordRequests) {
+                console.log('==========================================================')
+                console.log(request.createdAt)
+                const startDate = new Date(request.createdAt)
+                const currentDate = new Date()
+                const totalHours = moment(currentDate).diff(startDate, 'hours')
+                if (totalHours >= 1) {
+                    await SchedulerService.User.InvalidateForgetPasswordToken(request.id)
+                }
+                console.log('==========================================================')
+            }
+        } catch (error) {
+            console.log('Error: ', error)
+        }
+    }
+}
+
+const SchedulerController = {
+    Order: Order,
+    User: User
 }
 
 module.exports = SchedulerController

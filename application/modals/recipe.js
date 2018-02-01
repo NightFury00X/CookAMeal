@@ -1,10 +1,8 @@
-// The Recipe Model.
 'use strict'
 
 const CommonConfig = require('../../configurations/helpers/common-config')
 
 module.exports = function (sequelize, DataTypes) {
-    // 1: The model schema.
     let modelDefinition = {
         id: {
             type: DataTypes.BIGINT,
@@ -12,22 +10,22 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             autoIncrement: true
         },
-        dish_name: {
+        dishName: {
             type: DataTypes.STRING(150),
             allowNull: false,
             set (value) {
-                this.setDataValue('dish_name', CommonConfig.toTitleCase(value))
+                this.setDataValue('dishName', CommonConfig.toTitleCase(value))
             }
         },
-        preparation_method: {
+        preparationMethod: {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        preparation_time: {
+        preparationTime: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        cook_time: {
+        cookTime: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -35,19 +33,19 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        cost_per_serving: {
+        costPerServing: {
             type: DataTypes.STRING,
             allowNull: true
         },
-        available_servings: {
+        availableServings: {
             type: DataTypes.STRING,
             allowNull: true
         },
-        order_by_date_time: {
+        orderByDateTime: {
             type: DataTypes.STRING,
             allowNull: true
         },
-        pick_up_by_date_time: {
+        pickUpByDateTime: {
             type: DataTypes.STRING,
             allowNull: true
         },
@@ -56,29 +54,27 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             defaultValue: 0
         },
-        delivery_fee: {
+        deliveryFee: {
             type: DataTypes.STRING,
             allowNull: true
         },
-        total_cost_of_ingredients: {
+        totalCostOfIngredients: {
             type: DataTypes.DECIMAL,
             allowNull: false
         },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE
     }
 
-    // 2: The model options.
     let modelOptions = {
         getterMethods: {
-            preparation_time_in_minute () {
-                return ConvertToMinute(this.preparation_time)
+            preparationTimeInMinute () {
+                return ConvertToMinute(this.preparationTime)
             },
-            cook_time_in_minute () {
-                return ConvertToMinute(this.cook_time)
+            cookTimeInMinute () {
+                return ConvertToMinute(this.cookTime)
             }
-        },
-        underscored: true
+        }
     }
 
     let Recipe = sequelize.define('Recipe', modelDefinition, modelOptions)
@@ -86,33 +82,46 @@ module.exports = function (sequelize, DataTypes) {
     Recipe.associate = function (models) {
         Recipe.hasOne(models.Day, {
             foreignKey: {
+                name: 'recipeId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         Recipe.hasMany(models.Ingredient, {
             foreignKey: {
+                name: 'recipeId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         Recipe.hasMany(models.MediaObject, {
-            onDelete: 'CASCADE'
+            foreignKey: {
+                name: 'recipeId',
+                onDelete: 'CASCADE'
+            }
         })
         Recipe.hasMany(models.RecipeAllergy, {
             foreignKey: {
+                name: 'recipeId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }
         })
         Recipe.hasMany(models.Review, {
-            onDelete: 'CASCADE'
+            foreignKey: {
+                name: 'recipeId',
+                onDelete: 'CASCADE'
+            }
         })
         Recipe.hasMany(models.Favorite, {
-            onDelete: 'CASCADE'
+            foreignKey: {
+                name: 'recipeId',
+                onDelete: 'CASCADE'
+            }
         })
         Recipe.hasMany(models.OrderItem, {
             foreignKey: {
+                name: 'recipeId',
                 allowNull: false,
                 onDelete: 'CASCADE'
             }

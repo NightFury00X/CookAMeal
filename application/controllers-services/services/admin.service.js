@@ -5,7 +5,7 @@ AdminService = function () {
 }
 
 AdminService.prototype.Category = {
-    Add: async (userid, category, files) => {
+    Add: async (userId, category, files) => {
         const trans = await db.sequelize.transaction()
         try {
             let categoryData = await db.Category.create(category, {transaction: trans})
@@ -15,9 +15,15 @@ AdminService.prototype.Category = {
             let CategoryDataMedia
             if (files && files.category) {
                 let CategoryImage = files.category[0]
-                CategoryImage.category_id = categoryData.id
-                CategoryImage.imageurl = CommonConfig.FILE_LOCATIONS.CATEGORY + CategoryImage.filename
-                CategoryImage.object_type = CommonConfig.OBJECT_TYPE.CATEGORY
+                CategoryImage.categoryId = categoryData.id
+                CategoryImage.imageUrl = CommonConfig.FILE_LOCATIONS.CATEGORY + CategoryImage.filename
+                CategoryImage.objectType = CommonConfig.OBJECT_TYPE.CATEGORY
+                CategoryImage.fileName = CategoryImage.filename
+                CategoryImage.originalName = CategoryImage.originalname
+                CategoryImage.mimeType = CategoryImage.mimetype
+                delete CategoryImage.filename
+                delete CategoryImage.originalname
+                delete CategoryImage.mimetype
                 CategoryDataMedia = await db.MediaObject.create(CategoryImage, {transaction: trans})
                 if (!CategoryDataMedia) {
                     return null

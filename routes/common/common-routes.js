@@ -8,80 +8,35 @@ const {
     RequestMethodsMiddlewares
 } = require('../../configurations/middlewares/middlewares')
 
+router.post('/profile/change-profile',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.ChangeProfile),
+    CommonController.User.ChangeProfile)
+
+// 1. Get all category for dashboard
 router.get('/category',
     CommonController.Category.GetAll)
 
-router.get('/category/:id',
-    CommonController.Category.FindById)
-
-router.get('/subcategory',
-    CommonController.SubCategory.GetAll)
-
-router.get('/allergy',
-    CommonController.Allergy.GetAll)
-
-router.get('/unit',
-    CommonController.Units.GetAll)
-
+// 6. Get all recipies list categorised by sub-category by category id
 router.get('/category/:id/sub-category/recipe-list',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.Category.GetAllRecipeByCategoryId)
 
+// 7. Get all recipies list by category id and sub-category id
 router.get('/category/:catid/sub-category/:subid/recipe-list',
     ValidateParams(ParamSchemas.idSchema, 'catid'),
     ValidateParams(ParamSchemas.idSchema, 'subid'),
     CommonController.Recipe.GetRecipeListByCategoryAndSubCategoryIds)
 
+// 8. Get recipe details by recipe id
 router.get('/recipe/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.Recipe.GetRecipeById)
 
+// 9. Get cook-profile by profile id
 router.get('/cook-profile/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.User.GetCookprofile)
-
-router.post('/favorite/recipe',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.RecipeAsFavorite),
-    CommonController.Favorite.Recipe.MarkRecipeAsFavorite)
-
-router.get('/favorite/recipe',
-    CommonController.Favorite.Recipe.GetRecipeMarkedFavoriteList)
-
-router.post('/favorite/profile',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.ProfileAsFavorite),
-    CommonController.Favorite.Profile.MarkProfileAsFavorite)
-
-router.get('/favorite/profile',
-    CommonController.Favorite.Profile.GetProfileMarkedFavoriteList)
-
-router.post('/review/recipe',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.RecipeReview),
-    CommonController.ReviewDetails.RecipeReview)
-
-router.post('/review/profile',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.ProfileReview),
-    CommonController.ReviewDetails.ProfileReview)
-
-router.get('/review/profile',
-    CommonController.User.GetAllReviewsByProfileId)
-
-router.post('/feedback',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.Feedback),
-    CommonController.Feedback.Add)
-
-router.get('/order/prepare-data/:id',
-    ValidateParams(ParamSchemas.idSchema, 'id'),
-    CommonController.Order.PrepareData)
-
-router.post('/order/check-out',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.OrderFood),
-    CommonController.Order.MakeOrder)
 
 router.get('/map/lat/:latitude/long/:longitude',
     ValidateParams(ParamSchemas.idSchema, 'latitude'),

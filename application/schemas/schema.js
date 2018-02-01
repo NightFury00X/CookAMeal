@@ -7,8 +7,18 @@ module.exports = {
         })
     },
     BodySchemas: {
+        FbCheck: Joi.object().options({abortEarly: false}).keys({
+            facebookId: Joi.string().required(),
+            facebookEmailId: Joi.any()
+        }),
         FbLogin: Joi.object().options({abortEarly: false}).keys({
-            fbid: Joi.string().regex(/[0-9]/).required()
+            facebookId: Joi.string().required(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            email: Joi.string(),
+            gender: Joi.string().required(),
+            imageUrl: Joi.string().required(),
+            verified: Joi.number().allow(0, 1)
         }),
         Login: Joi.object().options({abortEarly: false}).keys({
             username: Joi.string().email().required(),
@@ -18,27 +28,27 @@ module.exports = {
             email: Joi.string().email().required()
         }),
         ChangePassword: Joi.object().keys({
-            old_password: Joi.string().min(8).max(30).required(),
-            new_password: Joi.string().min(8).max(30)
+            oldPassword: Joi.string().min(8).max(30).required(),
+            newPassword: Joi.string().min(8).max(30)
                 .regex(/(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9]).{8,24}/).required()
         }),
         Recipe: Joi.object().options({abortEarly: false}).keys({
-            dish_name: Joi.string().required().label('dish name'),
-            preparation_method: Joi.string().required(),
-            preparation_time: Joi.string().required(),
-            cook_time: Joi.string().required(),
-            category_id: Joi.string().required(),
-            sub_category_id: Joi.string().required(),
+            dishName: Joi.string().required().label('dish name'),
+            preparationMethod: Joi.string().required(),
+            preparationTime: Joi.string().required(),
+            cookTime: Joi.string().required(),
+            categoryId: Joi.string().required(),
+            subCategoryId: Joi.string().required(),
             tags: Joi.string().required(),
-            cost_per_serving: Joi.string().allow('', null),
-            available_servings: Joi.string().allow('', null),
-            order_by_date_time: Joi.string().allow('', null),
-            pick_up_by_date_time: Joi.string().allow('', null),
-            delivery_fee: Joi.string().allow('', null),
-            total_cost_of_ingredients: Joi.string().required(),
-            serving_days: Joi.any().required(),
+            costPerServing: Joi.string().allow('', null),
+            availableServings: Joi.string().allow('', null),
+            orderByDateTime: Joi.string().allow('', null),
+            pickUpByDateTime: Joi.string().allow('', null),
+            deliveryFee: Joi.string().allow('', null),
+            totalCostOfIngredients: Joi.string().required(),
+            servingDays: Joi.any().required(),
             ingredients: Joi.any().required(),
-            base_allergies: Joi.any(),
+            baseAllergies: Joi.any(),
             serve: Joi.string(),
             mon: Joi.number().allow(0, 1),
             tue: Joi.number().allow(0, 1),
@@ -50,25 +60,28 @@ module.exports = {
             recipe: Joi.any()
         }),
         Unit: Joi.object().keys({
-            unit_name: Joi.string().required(),
-            sort_name: Joi.string().required()
+            unitName: Joi.string().required(),
+            sortName: Joi.string().required()
         }),
         PaymentMethod: Joi.object().keys({
             name: Joi.string().required()
         }),
+        ChangeProfile: Joi.object().keys({
+            userRole: Joi.number().allow(1, 2)
+        }),
         RecipeAsFavorite: Joi.object().keys({
-            recipe_id: Joi.string().required()
+            recipeId: Joi.string().required()
         }),
         ProfileAsFavorite: Joi.object().keys({
-            profile_id: Joi.string().required()
+            profileId: Joi.string().required()
         }),
         RecipeReview: Joi.object().keys({
-            recipe_id: Joi.string().required(),
+            recipeId: Joi.string().required(),
             rating: Joi.string().required(),
             comments: Joi.string().required()
         }),
         ProfileReview: Joi.object().keys({
-            profile_id: Joi.string().required(),
+            profileId: Joi.string().required(),
             rating: Joi.string().required(),
             comments: Joi.string().required()
         }),
