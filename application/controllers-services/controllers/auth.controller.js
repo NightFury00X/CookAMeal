@@ -142,7 +142,7 @@ let Category = {
 let SubCategory = {
     GetAll: async (req, res, next) => {
         try {
-            const result = await CommonService.SubCategory.GettAll()
+            const result = await AuthService.SubCategory.GettAll()
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
