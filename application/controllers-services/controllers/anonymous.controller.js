@@ -55,7 +55,7 @@ let Anonymous = {
             let userDetails = await CommonService.GetUserDetailsByUserTypeId(userProfile.id)
             let userData = {
                 id: userDetails.id,
-                email: userDetails.emailId | userDetails.facebookEmailId,
+                email: userDetails.emailId || userDetails.facebookEmailId,
                 fullName: `${firstName}` + `${' '}` + `${lastName}`,
                 userRole: userDetails.userRole,
                 profileUrl: userDetails.Profile.profileUrl,
