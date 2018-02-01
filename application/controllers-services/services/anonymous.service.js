@@ -271,7 +271,8 @@ AnonymousService.prototype.AddFacebookUser = async (facebookDetails) => {
     try {
         const user = await db.UserType.create({
             facebookEmailId: facebookDetails.email,
-            facebookId: facebookDetails.facebookId
+            facebookId: facebookDetails.facebookId,
+            userRole: 2
         }, {transaction: trans})
         if (!user) {
             trans.rollback()
