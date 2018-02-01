@@ -228,7 +228,7 @@ CommonService.prototype.User = {
                 }
             })
             if (checkProfileExist) {
-                const profileChanged = await db.UserType.update({
+                const userRoleChanged = await db.UserType.update({
                     userRole: userRole,
                     profileSelected: true
                 }, {
@@ -236,6 +236,19 @@ CommonService.prototype.User = {
                         [Op.and]: {
                             id: `${userId}`,
                             facebookId: `${facebookId}`
+                        }
+                    }
+                }, {transaction: trans})
+                if (!userRoleChanged) {
+                    trans.rollback()
+                    return null
+                }
+                const profileChanged = await db.Profile.update({
+                    userRole: userRole
+                }, {
+                    where: {
+                        [Op.and]: {
+                            createdBy: `${userId}`
                         }
                     }
                 }, {transaction: trans})

@@ -93,6 +93,10 @@ module.exports = function (sequelize, DataTypes) {
         coverPhotoUrl: {
             type: DataTypes.STRING
         },
+        userRole: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         updatedAt: DataTypes.DATE,
         deletedAt: DataTypes.DATE,
         deleted: {

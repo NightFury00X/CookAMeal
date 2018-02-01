@@ -34,6 +34,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         let tempData = userData
         delete tempData.password
         tempData.createdBy = userType.id
+        tempData.userRole = userData.userRole
         let userProfileData = await db.Profile.create(tempData, {transaction: trans})
         registrationData.address.profileId = userProfileData.id
         await db.Address.create(registrationData.address, {transaction: trans})
