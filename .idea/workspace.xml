@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,15 +19,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="202" column="51" lean-forward="true" selection-start-line="202" selection-start-column="51" selection-end-line="202" selection-end-column="51" />
+            <state relative-caret-position="363">
+              <caret line="99" column="60" lean-forward="true" selection-start-line="99" selection-start-column="60" selection-end-line="99" selection-end-column="60" />
               <folding>
+                <element signature="e#361#1392#0" expanded="false" />
+                <element signature="e#1440#2693#0" expanded="false" />
+                <element signature="e#2739#3196#0" expanded="false" />
                 <element signature="e#3258#3797#0" expanded="false" />
+                <element signature="e#4583#4971#0" expanded="false" />
                 <element signature="e#5030#5268#0" expanded="false" />
                 <element signature="e#5310#5749#0" expanded="false" />
+                <element signature="e#5771#6542#0" expanded="false" />
+                <element signature="e#6558#7320#0" expanded="false" />
+                <element signature="e#7334#8091#0" expanded="false" />
                 <element signature="e#8110#8693#0" expanded="false" />
                 <element signature="e#8712#11929#0" expanded="false" />
                 <element signature="e#11953#13844#0" expanded="false" />
@@ -36,22 +44,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="383" column="4" lean-forward="false" selection-start-line="383" selection-start-column="4" selection-end-line="383" selection-end-column="4" />
+            <state relative-caret-position="243">
+              <caret line="45" column="4" lean-forward="false" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
               <folding>
-                <element signature="e#846#1657#0" expanded="false" />
-                <element signature="e#1926#3334#0" expanded="false" />
-                <element signature="e#4368#5378#0" expanded="false" />
-                <element signature="e#5440#6256#0" expanded="false" />
-                <element signature="e#6309#6483#0" expanded="false" />
-                <element signature="e#6540#6902#0" expanded="false" />
-                <element signature="e#7470#8052#0" expanded="false" />
-                <element signature="e#8111#8491#0" expanded="false" />
-                <element signature="e#10099#10818#0" expanded="false" />
+                <element signature="e#334#615#0" expanded="false" />
+                <element signature="e#2458#2607#0" expanded="false" />
+                <element signature="e#2980#3791#0" expanded="false" />
+                <element signature="e#4060#5468#0" expanded="false" />
+                <element signature="e#6502#7512#0" expanded="false" />
+                <element signature="e#7574#8390#0" expanded="false" />
+                <element signature="e#8443#8617#0" expanded="false" />
+                <element signature="e#8674#9036#0" expanded="false" />
+                <element signature="e#9604#10186#0" expanded="false" />
+                <element signature="e#10245#10625#0" expanded="false" />
+                <element signature="e#12233#12952#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="auth-routes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -59,8 +79,8 @@
       <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+            <state relative-caret-position="162">
+              <caret line="251" column="6" lean-forward="false" selection-start-line="251" selection-start-column="6" selection-end-line="251" selection-end-column="6" />
               <folding>
                 <element signature="e#3519#3815#0" expanded="false" />
                 <element signature="e#3896#4177#0" expanded="false" />
@@ -69,26 +89,25 @@
                 <element signature="e#5130#5414#0" expanded="false" />
                 <element signature="e#5473#5834#0" expanded="false" />
                 <element signature="e#5899#6914#0" expanded="false" />
-                <element signature="e#7845#8719#0" expanded="false" />
-                <element signature="e#8797#9153#0" expanded="false" />
-                <element signature="e#9194#9336#0" expanded="false" />
-                <element signature="e#9383#9697#0" expanded="false" />
-                <element signature="e#9754#10087#0" expanded="false" />
-                <element signature="e#10141#10926#0" expanded="false" />
-                <element signature="e#10983#11355#0" expanded="false" />
-                <element signature="e#11416#11939#0" expanded="false" />
-                <element signature="e#11993#12380#0" expanded="false" />
-                <element signature="e#12434#12791#0" expanded="false" />
-                <element signature="e#12829#12978#0" expanded="false" />
-                <element signature="e#13060#13249#0" expanded="false" />
-                <element signature="e#13320#14074#0" expanded="false" />
-                <element signature="e#14116#15386#0" expanded="false" />
-                <element signature="e#15434#15798#0" expanded="false" />
-                <element signature="e#15851#16541#0" expanded="false" />
-                <element signature="e#16590#17410#0" expanded="false" />
-                <element signature="e#17467#18288#0" expanded="false" />
-                <element signature="e#18369#19222#0" expanded="false" />
-                <element signature="e#19324#20166#0" expanded="false" />
+                <element signature="e#6992#7348#0" expanded="false" />
+                <element signature="e#7389#7531#0" expanded="false" />
+                <element signature="e#7578#7892#0" expanded="false" />
+                <element signature="e#7949#8282#0" expanded="false" />
+                <element signature="e#8336#9121#0" expanded="false" />
+                <element signature="e#9178#9550#0" expanded="false" />
+                <element signature="e#9611#10134#0" expanded="false" />
+                <element signature="e#10188#10575#0" expanded="false" />
+                <element signature="e#10629#10986#0" expanded="false" />
+                <element signature="e#11024#11173#0" expanded="false" />
+                <element signature="e#11255#11444#0" expanded="false" />
+                <element signature="e#11515#12269#0" expanded="false" />
+                <element signature="e#12311#13581#0" expanded="false" />
+                <element signature="e#13629#13993#0" expanded="false" />
+                <element signature="e#14046#14736#0" expanded="false" />
+                <element signature="e#14785#15605#0" expanded="false" />
+                <element signature="e#15662#16483#0" expanded="false" />
+                <element signature="e#16564#17417#0" expanded="false" />
+                <element signature="e#17519#18361#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -98,7 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>recipe_id</find>
       <find>is_favorite</find>
       <find>delivery_fee</find>
       <find>order_id</find>
@@ -128,6 +146,7 @@
       <find>ChangePassword</find>
       <find>CheckRecipeIsFavoriteByRecipeIdAndUserId</find>
       <find>isJSON</find>
+      <find>Logout</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -212,10 +231,10 @@
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
       </list>
     </option>
   </component>
@@ -331,6 +350,12 @@
               <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
               <item name="anonymous" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="auth" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -487,14 +512,7 @@
       <workItem from="1517283981384" duration="24132000" />
       <workItem from="1517368061625" duration="30040000" />
       <workItem from="1517411497053" duration="1101000" />
-      <workItem from="1517460203866" duration="26149000" />
-    </task>
-    <task id="LOCAL-00395" summary="Updated order API.">
-      <created>1515739374086</created>
-      <option name="number" value="00395" />
-      <option name="presentableId" value="LOCAL-00395" />
-      <option name="project" value="LOCAL" />
-      <updated>1515739374086</updated>
+      <workItem from="1517460203866" duration="26451000" />
     </task>
     <task id="LOCAL-00396" summary="Updated order API.">
       <created>1515739441714</created>
@@ -832,11 +850,18 @@
       <option name="project" value="LOCAL" />
       <updated>1517496884860</updated>
     </task>
-    <option name="localTasksCounter" value="444" />
+    <task id="LOCAL-00444" summary="Major fixes">
+      <created>1517497032327</created>
+      <option name="number" value="00444" />
+      <option name="presentableId" value="LOCAL-00444" />
+      <option name="project" value="LOCAL" />
+      <updated>1517497032327</updated>
+    </task>
+    <option name="localTasksCounter" value="445" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="999585000" />
+    <option name="totallyTimeSpent" value="999887000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1299,14 +1324,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1430">
-          <caret line="65" column="25" lean-forward="false" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -1376,28 +1393,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="383" column="4" lean-forward="false" selection-start-line="383" selection-start-column="4" selection-end-line="383" selection-end-column="4" />
-          <folding>
-            <element signature="e#846#1657#0" expanded="false" />
-            <element signature="e#1926#3334#0" expanded="false" />
-            <element signature="e#4368#5378#0" expanded="false" />
-            <element signature="e#5440#6256#0" expanded="false" />
-            <element signature="e#6309#6483#0" expanded="false" />
-            <element signature="e#6540#6902#0" expanded="false" />
-            <element signature="e#7470#8052#0" expanded="false" />
-            <element signature="e#8111#8491#0" expanded="false" />
-            <element signature="e#10099#10818#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+        <state relative-caret-position="162">
+          <caret line="251" column="6" lean-forward="false" selection-start-line="251" selection-start-column="6" selection-end-line="251" selection-end-column="6" />
           <folding>
             <element signature="e#3519#3815#0" expanded="false" />
             <element signature="e#3896#4177#0" expanded="false" />
@@ -1406,42 +1405,76 @@
             <element signature="e#5130#5414#0" expanded="false" />
             <element signature="e#5473#5834#0" expanded="false" />
             <element signature="e#5899#6914#0" expanded="false" />
-            <element signature="e#7845#8719#0" expanded="false" />
-            <element signature="e#8797#9153#0" expanded="false" />
-            <element signature="e#9194#9336#0" expanded="false" />
-            <element signature="e#9383#9697#0" expanded="false" />
-            <element signature="e#9754#10087#0" expanded="false" />
-            <element signature="e#10141#10926#0" expanded="false" />
-            <element signature="e#10983#11355#0" expanded="false" />
-            <element signature="e#11416#11939#0" expanded="false" />
-            <element signature="e#11993#12380#0" expanded="false" />
-            <element signature="e#12434#12791#0" expanded="false" />
-            <element signature="e#12829#12978#0" expanded="false" />
-            <element signature="e#13060#13249#0" expanded="false" />
-            <element signature="e#13320#14074#0" expanded="false" />
-            <element signature="e#14116#15386#0" expanded="false" />
-            <element signature="e#15434#15798#0" expanded="false" />
-            <element signature="e#15851#16541#0" expanded="false" />
-            <element signature="e#16590#17410#0" expanded="false" />
-            <element signature="e#17467#18288#0" expanded="false" />
-            <element signature="e#18369#19222#0" expanded="false" />
-            <element signature="e#19324#20166#0" expanded="false" />
+            <element signature="e#6992#7348#0" expanded="false" />
+            <element signature="e#7389#7531#0" expanded="false" />
+            <element signature="e#7578#7892#0" expanded="false" />
+            <element signature="e#7949#8282#0" expanded="false" />
+            <element signature="e#8336#9121#0" expanded="false" />
+            <element signature="e#9178#9550#0" expanded="false" />
+            <element signature="e#9611#10134#0" expanded="false" />
+            <element signature="e#10188#10575#0" expanded="false" />
+            <element signature="e#10629#10986#0" expanded="false" />
+            <element signature="e#11024#11173#0" expanded="false" />
+            <element signature="e#11255#11444#0" expanded="false" />
+            <element signature="e#11515#12269#0" expanded="false" />
+            <element signature="e#12311#13581#0" expanded="false" />
+            <element signature="e#13629#13993#0" expanded="false" />
+            <element signature="e#14046#14736#0" expanded="false" />
+            <element signature="e#14785#15605#0" expanded="false" />
+            <element signature="e#15662#16483#0" expanded="false" />
+            <element signature="e#16564#17417#0" expanded="false" />
+            <element signature="e#17519#18361#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="202" column="51" lean-forward="true" selection-start-line="202" selection-start-column="51" selection-end-line="202" selection-end-column="51" />
+        <state relative-caret-position="363">
+          <caret line="99" column="60" lean-forward="true" selection-start-line="99" selection-start-column="60" selection-end-line="99" selection-end-column="60" />
           <folding>
+            <element signature="e#361#1392#0" expanded="false" />
+            <element signature="e#1440#2693#0" expanded="false" />
+            <element signature="e#2739#3196#0" expanded="false" />
             <element signature="e#3258#3797#0" expanded="false" />
+            <element signature="e#4583#4971#0" expanded="false" />
             <element signature="e#5030#5268#0" expanded="false" />
             <element signature="e#5310#5749#0" expanded="false" />
+            <element signature="e#5771#6542#0" expanded="false" />
+            <element signature="e#6558#7320#0" expanded="false" />
+            <element signature="e#7334#8091#0" expanded="false" />
             <element signature="e#8110#8693#0" expanded="false" />
             <element signature="e#8712#11929#0" expanded="false" />
             <element signature="e#11953#13844#0" expanded="false" />
             <element signature="e#13858#19731#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="45" column="4" lean-forward="false" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
+          <folding>
+            <element signature="e#334#615#0" expanded="false" />
+            <element signature="e#2458#2607#0" expanded="false" />
+            <element signature="e#2980#3791#0" expanded="false" />
+            <element signature="e#4060#5468#0" expanded="false" />
+            <element signature="e#6502#7512#0" expanded="false" />
+            <element signature="e#7574#8390#0" expanded="false" />
+            <element signature="e#8443#8617#0" expanded="false" />
+            <element signature="e#8674#9036#0" expanded="false" />
+            <element signature="e#9604#10186#0" expanded="false" />
+            <element signature="e#10245#10625#0" expanded="false" />
+            <element signature="e#12233#12952#0" expanded="false" />
           </folding>
         </state>
       </provider>

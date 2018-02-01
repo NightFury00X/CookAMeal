@@ -250,51 +250,6 @@ CommonService.prototype.User = {
             throw (error)
         }
     },
-    GetProfileDataIfProfileUpdated: async (userId) => {
-        try {
-            return await db.UserType.findOne({
-                attributes: ['id', 'facebookId', 'emailId', 'userRole'],
-                where: {
-                    [Op.and]: {
-                        id: `${userId}`
-                    }
-                },
-                include: [{
-                    model: db.Profile,
-                    attributes: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'description', 'dietPreference', 'allergies', 'drivingDistance', 'profileUrl'],
-                    include: [{
-                        model: db.Address,
-                        attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country']
-                    }]
-                }]
-            })
-        } catch (error) {
-            throw (error)
-        }
-    },
-    GetProfileDataIfProfileNotUpdated: async (userId, facebookId) => {
-        try {
-            return await db.UserType.findOne({
-                attributes: ['id', 'facebookId', 'emailId', 'userRole'],
-                where: {
-                    [Op.and]: {
-                        id: `${userId}`,
-                        facebookId: `${facebookId}`
-                    }
-                },
-                include: [{
-                    model: db.Profile,
-                    attributes: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'description', 'dietPreference', 'allergies', 'drivingDistance', 'profileUrl', 'coverPhotoUrl'],
-                    include: [{
-                        model: db.Address,
-                        attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country']
-                    }]
-                }]
-            })
-        } catch (error) {
-            throw (error)
-        }
-    },
     CheckUserHasProfileByFacebookId: async (facebookId, facebookEmailId) => {
         try {
             return await db.UserType.findOne({
