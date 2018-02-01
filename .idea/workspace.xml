@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/profile.js" afterPath="$PROJECT_DIR$/application/modals/profile.js" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/map-service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/map-service.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,7 +23,7 @@
         <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="286">
-              <caret line="13" column="35" lean-forward="true" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+              <caret line="46" column="29" lean-forward="true" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -89,16 +87,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="288" column="60" lean-forward="true" selection-start-line="288" selection-start-column="60" selection-end-line="288" selection-end-column="60" />
+            <state relative-caret-position="231">
+              <caret line="327" column="79" lean-forward="false" selection-start-line="327" selection-start-column="79" selection-end-line="327" selection-end-column="79" />
               <folding>
                 <element signature="e#4488#4927#0" expanded="false" />
                 <element signature="e#7053#8813#0" expanded="false" />
                 <element signature="e#13161#13473#0" expanded="false" />
-                <element signature="e#16935#18679#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -107,8 +104,8 @@
       <file leaf-file-name="map-service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+            <state relative-caret-position="254">
+              <caret line="46" column="58" lean-forward="true" selection-start-line="46" selection-start-column="58" selection-end-line="46" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -134,11 +131,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="249" column="35" lean-forward="true" selection-start-line="249" selection-start-column="35" selection-end-line="249" selection-end-column="35" />
+            <state relative-caret-position="187">
+              <caret line="339" column="4" lean-forward="false" selection-start-line="339" selection-start-column="4" selection-end-line="339" selection-end-column="4" />
               <folding>
                 <element signature="e#3519#3815#0" expanded="false" />
                 <element signature="e#3896#4177#0" expanded="false" />
@@ -151,7 +148,6 @@
                 <element signature="e#8036#8350#0" expanded="false" />
                 <element signature="e#8407#8740#0" expanded="false" />
                 <element signature="e#8794#9579#0" expanded="false" />
-                <element signature="e#9636#10008#0" expanded="false" />
                 <element signature="e#10069#10592#0" expanded="false" />
                 <element signature="e#10646#11033#0" expanded="false" />
                 <element signature="e#11087#11444#0" expanded="false" />
@@ -286,13 +282,13 @@
         <option value="$PROJECT_DIR$/routes/auth/auth-routes.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/map-service.js" />
         <option value="$PROJECT_DIR$/application/modals/profile.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/map-service.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
       </list>
     </option>
   </component>
@@ -582,14 +578,7 @@
       <workItem from="1517283981384" duration="24132000" />
       <workItem from="1517368061625" duration="30040000" />
       <workItem from="1517411497053" duration="1101000" />
-      <workItem from="1517460203866" duration="27350000" />
-    </task>
-    <task id="LOCAL-00400" summary="Updated order API.">
-      <created>1515740127994</created>
-      <option name="number" value="00400" />
-      <option name="presentableId" value="LOCAL-00400" />
-      <option name="project" value="LOCAL" />
-      <updated>1515740127994</updated>
+      <workItem from="1517460203866" duration="28006000" />
     </task>
     <task id="LOCAL-00401" summary="Updated order API.">
       <created>1515740163988</created>
@@ -927,11 +916,18 @@
       <option name="project" value="LOCAL" />
       <updated>1517498028496</updated>
     </task>
-    <option name="localTasksCounter" value="449" />
+    <task id="LOCAL-00449" summary="Major fixes">
+      <created>1517498477508</created>
+      <option name="number" value="00449" />
+      <option name="presentableId" value="LOCAL-00449" />
+      <option name="project" value="LOCAL" />
+      <updated>1517498477508</updated>
+    </task>
+    <option name="localTasksCounter" value="450" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1000786000" />
+    <option name="totallyTimeSpent" value="1001442000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1418,27 +1414,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="288" column="60" lean-forward="true" selection-start-line="288" selection-start-column="60" selection-end-line="288" selection-end-column="60" />
-          <folding>
-            <element signature="e#4488#4927#0" expanded="false" />
-            <element signature="e#7053#8813#0" expanded="false" />
-            <element signature="e#13161#13473#0" expanded="false" />
-            <element signature="e#16935#18679#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/user-type.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -1483,14 +1458,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="35" lean-forward="true" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
@@ -1513,10 +1480,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="46" column="29" lean-forward="true" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="46" column="58" lean-forward="true" selection-start-line="46" selection-start-column="58" selection-end-line="46" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="249" column="35" lean-forward="true" selection-start-line="249" selection-start-column="35" selection-end-line="249" selection-end-column="35" />
+        <state relative-caret-position="187">
+          <caret line="339" column="4" lean-forward="false" selection-start-line="339" selection-start-column="4" selection-end-line="339" selection-end-column="4" />
           <folding>
             <element signature="e#3519#3815#0" expanded="false" />
             <element signature="e#3896#4177#0" expanded="false" />
@@ -1529,7 +1512,6 @@
             <element signature="e#8036#8350#0" expanded="false" />
             <element signature="e#8407#8740#0" expanded="false" />
             <element signature="e#8794#9579#0" expanded="false" />
-            <element signature="e#9636#10008#0" expanded="false" />
             <element signature="e#10069#10592#0" expanded="false" />
             <element signature="e#10646#11033#0" expanded="false" />
             <element signature="e#11087#11444#0" expanded="false" />
@@ -1542,6 +1524,18 @@
             <element signature="e#15243#16063#0" expanded="false" />
             <element signature="e#16120#16941#0" expanded="false" />
             <element signature="e#17022#17875#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="327" column="79" lean-forward="false" selection-start-line="327" selection-start-column="79" selection-end-line="327" selection-end-column="79" />
+          <folding>
+            <element signature="e#4488#4927#0" expanded="false" />
+            <element signature="e#7053#8813#0" expanded="false" />
+            <element signature="e#13161#13473#0" expanded="false" />
           </folding>
         </state>
       </provider>

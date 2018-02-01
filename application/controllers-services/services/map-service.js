@@ -43,7 +43,7 @@ MapService.prototype.Map = {
             return await db.Category.findAll({
                 attributes: ['id', 'name'],
                 include: [{
-                    attributes: ['id', 'categoryId', 'profileId'],
+                    attributes: ['id', 'categoryId', 'cooksDealWithCategoryId'],
                     model: db.CooksDealWithCategory,
                     include: [{
                         model: db.Profile,

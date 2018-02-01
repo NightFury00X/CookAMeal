@@ -324,11 +324,15 @@ const Map = {
                 if (cookProfileListToJSON.hasOwnProperty(outer)) {
                     for (const inner in cookProfileListToJSON[outer].CooksDealWithCategories) {
                         if (cookProfileListToJSON[outer].CooksDealWithCategories.hasOwnProperty(inner)) {
-                            const profileId = cookProfileListToJSON[outer].CooksDealWithCategories[inner].profileId
+                            const profileId = cookProfileListToJSON[outer].CooksDealWithCategories[inner].cooksDealWithCategoryId
                             const cookData = await CommonService.User.FindProfileRatingByProfileId(profileId)
                             cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.rating = cookData.rating | 0
-                            const favorite = await CommonService.Favorite.Profile.CheckProfileIsFavoriteByProfileIdAndUserId(userId, profileId)
-                            cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.favorite = !!favorite
+                            if (userId) {
+                                const favorite = await CommonService.Favorite.Profile.CheckProfileIsFavoriteByProfileIdAndUserId(userId, profileId)
+                                cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.favorite = !!favorite
+                            } else {
+                                cookProfileListToJSON[outer].CooksDealWithCategories[inner].Profile.favorite = false
+                            }
                         }
                     }
                 }
