@@ -104,7 +104,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 email: userProfileData.email,
                 fullName: userProfileData.fullName,
                 userRole: userType.userRole,
-                profileUrl: ProfileMediaObject ? ProfileMediaObject.imageurl : '',
+                profileUrl: userProfileData.profileUrl,
                 hasProfile: true,
                 profileSelected: true
             }
