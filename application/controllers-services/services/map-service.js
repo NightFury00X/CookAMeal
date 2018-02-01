@@ -20,7 +20,7 @@ MapService.prototype.Map = {
                 }
             },
             include: [{
-                attributes: ['imageurl'],
+                attributes: ['imageUrl'],
                 model: db.MediaObject
             }, {
                 attributes: ['latitude', 'longitude'],
@@ -54,7 +54,7 @@ MapService.prototype.Map = {
                             }
                         },
                         include: [{
-                            attributes: ['imageurl'],
+                            attributes: ['imageUrl'],
                             model: db.MediaObject
                         }, {
                             attributes: ['latitude', 'longitude'],

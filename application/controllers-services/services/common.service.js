@@ -561,7 +561,7 @@ CommonService.prototype.Recipe = {
                 attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
                 include: [{
                     model: db.MediaObject,
-                    attributes: ['id', 'imageurl']
+                    attributes: ['id', 'imageUrl']
                 }]
             })
         } catch (error) {
@@ -585,7 +585,7 @@ CommonService.prototype.Recipe = {
                 attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'categoryId', 'subCategoryId', 'profileId'],
                 include: [{
                     model: db.MediaObject,
-                    attributes: ['id', 'imageurl']
+                    attributes: ['id', 'imageUrl']
                 }]
             })
         } catch (error) {
