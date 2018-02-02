@@ -5,7 +5,9 @@ const {ResponseHelpers, AuthenticationHelpers} = require('../../../configuration
 
 let Anonymous = {
     Check: async (req, res, next) => {
-        console.log(req)
+        return ResponseHelpers.SetSuccessResponse({
+            message: req
+        }, res, CommonConfig.STATUS_CODE.OK)
     },
     FbCheck: async (req, res, next) => {
         try {
