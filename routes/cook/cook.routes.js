@@ -22,4 +22,7 @@ router.post('/recipe',
     ValidateBody(BodySchemas.Recipe),
     CookController.Recipe.Add)
 
+router.get('/recipe/my-recipes',
+    CookController.Recipe.GetAllRecipesList)
+
 module.exports = router

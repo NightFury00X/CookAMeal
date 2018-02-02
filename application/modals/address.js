@@ -72,10 +72,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         latitude: {
-            type: DataTypes.FLOAT
+            type: DataTypes.FLOAT,
+            allowNull: false
         },
         longitude: {
-            type: DataTypes.FLOAT
+            type: DataTypes.FLOAT,
+            allowNull: false
         },
         updatedAt: DataTypes.DATE,
         deletedAt: DataTypes.DATE

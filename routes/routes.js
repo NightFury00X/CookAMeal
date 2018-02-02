@@ -22,8 +22,34 @@ const {BodySchemas} = require('../application/schemas/schema')
 const {
     RequestMethodsMiddlewares
 } = require('../configurations/middlewares/middlewares')
+const FacebookStrategy = require('passport-facebook').Strategy
 
 module.exports = function (app) {
+    const fbOpt = {
+        clientID: '299744253859215',
+        clientSecret: '273ecbcf51e1ded55a808f90835b196b',
+        callbackURL: 'http://localhost:8081/facebook/callback'
+    }
+    const fbCallback = function (accessToken, refreshToken, profile, cb) {
+        console.log('accessToken: ', accessToken)
+        console.log('refreshToken: ', refreshToken)
+        console.log('profile: ', profile)
+    }
+
+    passport.use(new FacebookStrategy(fbOpt, fbCallback))
+
+    /* FACEBOOK ROUTER */
+    BaseApi.get('/facebook',
+        passport.authenticate('facebook', {scope: ['email']}))
+
+    BaseApi.get('/facebook/callback',
+        passport.authenticate('facebook', function (err, user, info) {
+            if (err) {
+                console.log('error: ', err)
+            }
+            console.log('User: ', user)
+        }))
+
     // 1: anonymous routes
     BaseApi.use('/api',
         require('./anonymous/anonymous.routes'))

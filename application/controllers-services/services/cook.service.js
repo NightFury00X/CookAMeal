@@ -9,6 +9,24 @@ CookService = function () {
 }
 
 CookService.prototype.Recipe = {
+    GetMyAllRecipesList: async (profileId) => {
+        try {
+            return await db.Recipe.findAll({
+                attributes: ['id', 'dishName', 'createdAt', 'subCategoryId', 'categoryId'],
+                include: [{
+                    model: db.MediaObject,
+                    attributes: ['imageUrl']
+                }],
+                where: {
+                    profileId: {
+                        [Op.eq]: `${profileId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     Add: async (recipe, files, userTypeId) => {
         const trans = await db.sequelize.transaction()
         try {
