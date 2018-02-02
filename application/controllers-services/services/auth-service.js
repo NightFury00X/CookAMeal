@@ -182,6 +182,23 @@ AuthService.prototype.ChangePassword = async (userDetails) => {
     }
 }
 
+AuthService.prototype.Recipe = {
+    GetDeliveryFeesByRecipeId: async (recipeId) => {
+        try {
+            return db.Recipe.findOne({
+                attributes: ['costPerServing', 'availableServings', 'deliveryFee', 'profileId'],
+                where: {
+                    id: {
+                        [Op.eq]: recipeId
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
+
 AuthService.prototype.Order = {
     ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes, deliveryType) => {
         const recipesToJson = !isJSON(recipes) ? JSON.parse(JSON.stringify(recipes)) : JSON.parse(recipes)

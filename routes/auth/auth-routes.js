@@ -84,3 +84,6 @@ router.post('/order/check-out',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.OrderFood),
     AuthController.Order.MakeOrder)
+
+router.get('/my-order',
+    AuthController.Order.GetMyOrders)

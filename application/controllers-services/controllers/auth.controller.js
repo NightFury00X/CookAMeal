@@ -3,6 +3,7 @@ const {ResponseHelpers} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const AuthService = require('../services/auth-service')
 const CommonService = require('../services/common.service')
+const CookService = require('../services/cook.service')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
 const gateway = braintree.connect({
@@ -365,8 +366,8 @@ let Order = {
         try {
             const clientToken = await gateway.clientToken.generate()
             const recipeId = req.value.params.id
-            const recipeData = await AuthService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
-            const currencySymbol = await AuthService.User.GetCurrencySymbolByProfileId(recipeData.profileId)
+            const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
+            const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profileId)
             const prepareData = {
                 ClientToken: clientToken.clientToken,
                 RecipeDetails: {

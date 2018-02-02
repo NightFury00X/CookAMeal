@@ -227,7 +227,6 @@ const Recipe = {
                 recipeDetails: recipeDetailsToJSON,
                 profile: recipeDetailsToJSON,
                 rating: !rating[0].rating ? 0 : rating[0].rating,
-                // favorite: !!favorite,
                 cookRecipes: cookRecipesToJSON,
                 similarRecipes: similarRecipesToJSON
             }
