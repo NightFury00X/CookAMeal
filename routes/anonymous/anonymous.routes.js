@@ -16,6 +16,9 @@ const FileUploader = require('../../configurations/helpers/file-upload-multer')
 const {ValidateBody} = require('../../configurations/middlewares/validation')
 const {BodySchemas} = require('../../application/schemas/schema')
 
+router.get('/facebook/callback',
+    AnonymousController.Anonymous.Check)
+
 // 1: Facebook User SignIn
 router.post('/fbsign',
     RequestMethodsMiddlewares.ApplicationJsonData,

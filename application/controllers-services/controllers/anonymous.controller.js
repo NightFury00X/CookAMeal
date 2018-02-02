@@ -4,6 +4,9 @@ const CommonConfig = require('../../../configurations/helpers/common-config')
 const {ResponseHelpers, AuthenticationHelpers} = require('../../../configurations/helpers/helper')
 
 let Anonymous = {
+    Check: async (req, res, next) => {
+        console.log(req)
+    },
     FbCheck: async (req, res, next) => {
         try {
             const {facebookId, facebookEmailId} = req.body
