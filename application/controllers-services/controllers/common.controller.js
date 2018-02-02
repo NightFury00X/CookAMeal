@@ -224,7 +224,7 @@ const Recipe = {
                 }
             }
             const result = {
-                recipeDetails: recipeDetailsToJSON.Recipes[0],
+                recipeDetails: recipeDetailsToJSON,
                 profile: recipeDetailsToJSON,
                 rating: !rating[0].rating ? 0 : rating[0].rating,
                 cookRecipes: cookRecipesToJSON,
