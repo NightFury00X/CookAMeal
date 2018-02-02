@@ -3,6 +3,14 @@ const {ResponseHelpers} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const AuthService = require('../services/auth-service')
 const CommonService = require('../services/common.service')
+const braintree = require('braintree')
+const config = require('../../../configurations/main')
+const gateway = braintree.connect({
+    environment: braintree.Environment.Sandbox,
+    merchantId: config.braintree.merchantId,
+    publicKey: config.braintree.publicKey,
+    privateKey: config.braintree.privateKey
+})
 
 let Auth = {
     LogOutUser: async (req, res, next) => {
@@ -346,6 +354,13 @@ const ReviewDetails = {
 }
 
 let Order = {
+    GetMyOrders: async (req, res, next) => {
+        try {
+            console.log('Done')
+        } catch (error) {
+            next(error)
+        }
+    },
     PrepareData: async (req, res, next) => {
         try {
             const clientToken = await gateway.clientToken.generate()
