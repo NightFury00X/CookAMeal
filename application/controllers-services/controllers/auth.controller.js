@@ -392,8 +392,8 @@ let Order = {
         try {
             const orderData = req.body
             const userId = req.user.id
-            const profile = await AuthService.User.GetProfileIdByUserTypeId(userId)
-            const currencySymbol = await AuthService.User.GetCurrencySymbolByProfileId(profile.id)
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
             let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
             const {totalAmount, taxes, orderServings, deliveryFee, deliveryType} = orderData
             const valid = await AuthService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson, deliveryType)
