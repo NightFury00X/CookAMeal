@@ -325,8 +325,8 @@ CommonService.prototype.User = {
                         }
                     }
                 }, {
-                    attributes: ['id', 'firstName', 'lastName', 'profileUrl'],
                     model: db.Profile,
+                    attributes: ['id', 'firstName', 'lastName', 'profileUrl', 'createdBy'],
                     include: [{
                         model: db.MediaObject,
                         attributes: ['id', 'imageUrl']
@@ -373,7 +373,7 @@ CommonService.prototype.User = {
     GetCookProfileDetailsById: async (profileId) => {
         try {
             return await db.Profile.findById(profileId, {
-                attributes: ['id', 'firstName', 'lastName', 'description', 'profileUrl'],
+                attributes: ['id', 'firstName', 'lastName', 'description', 'profileUrl', 'createdBy'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']
@@ -391,7 +391,7 @@ CommonService.prototype.User = {
                         [Op.eq]: [userTypeId]
                     }
                 },
-                attributes: ['id', 'firstName', 'lastName', 'profileUrl']
+                attributes: ['id', 'firstName', 'lastName', 'profileUrl', 'createdBy']
             })
         } catch (error) {
             throw (error)
@@ -441,13 +441,13 @@ CommonService.prototype.Recipe = {
     FindRecipeById: async (recipeId) => {
         try {
             return await db.Profile.findOne({
-                attributes: ['id', 'email', 'firstName', 'lastName', 'profileUrl'],
+                attributes: ['id', 'email', 'firstName', 'lastName', 'profileUrl', 'createdBy'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']
                 }, {
-                    attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
                     model: db.Recipe,
+                    attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
                     where: {
                         id: {
                             [Op.eq]: recipeId
