@@ -76,7 +76,7 @@ CommonService.prototype.Token = {
         try {
             return {
                 token: AuthenticationHelpers.GenerateToken(tokenData, false, hasProfile),
-                userDetails: userData
+                user: userData
             }
         } catch (error) {
             throw (error)
