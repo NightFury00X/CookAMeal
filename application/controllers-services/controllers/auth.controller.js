@@ -442,7 +442,9 @@ let Order = {
             }
             trans.commit()
             flag = true
-            const result = await AuthService.Order.UpdatePaymentStateAfterSuccess(orderId)
+            console.log('Updating payment status')
+            const result = await AuthService.Order.UpdatePaymentStateAfterSuccess(orderId, trans)
+            console.log('Result: ', !resultl)
             if (!result) {
                 return ResponseHelpers.SetSuccessResponse({
                     orderState: false,

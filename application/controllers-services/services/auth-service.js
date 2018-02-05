@@ -4,6 +4,7 @@ const db = require('../../modals')
 const isJSON = require('is-json')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
+const CommonConfig = require('../../../configurations/helpers/common-config')
 AuthService = function () {
 }
 
@@ -275,7 +276,7 @@ AuthService.prototype.Order = {
             return false
         }
     },
-    UpdatePaymentStateAfterSuccess: async (orderId) => {
+    UpdatePaymentStateAfterSuccess: async (orderId, trans) => {
         try {
             return await db.Order.update({
                 paymentState: CommonConfig.ORDER.PAYMENT_STATE.COMPLETE
@@ -284,7 +285,8 @@ AuthService.prototype.Order = {
                     id: {
                         [Op.eq]: orderId
                     }
-                }
+                },
+                transaction: trans
             })
         } catch (error) {
             throw (error)
