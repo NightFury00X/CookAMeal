@@ -17,9 +17,9 @@ module.exports = function (sequelize, DataTypes) {
             },
             set (value) {
                 if (parseInt(value) === 0) {
-                    this.setDataValue('orderType', 'Hire-a-Cook')
-                } else {
                     this.setDataValue('orderType', 'Order-Food')
+                } else {
+                    this.setDataValue('orderType', 'Hire-a-Cook')
                 }
             }
         },

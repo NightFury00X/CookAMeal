@@ -277,10 +277,42 @@ CommonService.prototype.User = {
             throw (error)
         }
     },
-    ProfileCover: async (profileId) => {
+    ProfileCover: async (profileCoverData, files) => {
+        const trans = await db.sequelize.transaction()
         try {
-            return await db.ProfileCover.create(profileId)
+            const profileCover = await db.ProfileCover.create(profileCoverData, {transaction: trans})
+            if (!profileCover) {
+                trans.rollback()
+                return false
+            }
+            let profileCoverImage = files.profileCover[0]
+            profileCoverImage.profileId = profileCover.profileId
+            profileCoverImage.objectType = CommonConfig.OBJECT_TYPE.PROFILECOVER
+            profileCoverImage.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILECOVER + profileCoverImage.filename
+            profileCoverImage.fileName = profileCoverImage.filename
+            profileCoverImage.originalName = profileCoverImage.originalname
+            profileCoverImage.mimeType = profileCoverImage.mimetype
+            delete profileCoverImage.filename
+            delete profileCoverImage.originalname
+            delete profileCoverImage.mimetype
+            const ProfileCoverMediaObject = await db.MediaObject.create(profileCoverImage, {transaction: trans})
+            const profile = await db.Profile.update({
+                coverPhotoUrl: ProfileCoverMediaObject.imageUrl
+            }, {
+                where: {
+                    [Op.and]: {
+                        id: `${ProfileCoverMediaObject.profileId}`
+                    }
+                },
+                transaction: trans
+            })
+            if (!profile) {
+                trans.rollback()
+                return false
+            }
+            return profile
         } catch (error) {
+            trans.rollback()
             throw (error)
         }
     },
@@ -298,112 +330,119 @@ CommonService.prototype.User = {
             throw (error)
         }
     },
-    GetCurrencySymbolByProfileId: async (profileId) => {
-        try {
-            return await db.Address.findOne({
-                attributes: ['currencySymbol'],
-                where: {
-                    profileId: {
-                        [Op.eq]: profileId
-                    }
-                }
-            })
-        } catch (error) {
-            throw (error)
-        }
-    },
-    FindAllReviewsByProfileId: async (profileId) => {
-        try {
-            return await db.UserType.findAll({
-                attributes: ['id'],
-                include: [{
-                    attributes: ['id', 'comments', 'rating'],
-                    model: db.Review,
+    GetCurrencySymbolByProfileId:
+        async (profileId) => {
+            try {
+                return await db.Address.findOne({
+                    attributes: ['currencySymbol'],
                     where: {
                         profileId: {
                             [Op.eq]: profileId
                         }
                     }
-                }, {
-                    model: db.Profile,
-                    attributes: ['id', 'firstName', 'lastName', 'profileUrl', 'createdBy'],
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
+    FindAllReviewsByProfileId:
+        async (profileId) => {
+            try {
+                return await db.UserType.findAll({
+                    attributes: ['id'],
+                    include: [{
+                        attributes: ['id', 'comments', 'rating'],
+                        model: db.Review,
+                        where: {
+                            profileId: {
+                                [Op.eq]: profileId
+                            }
+                        }
+                    }, {
+                        model: db.Profile,
+                        attributes: ['id', 'firstName', 'lastName', 'profileUrl', 'createdBy'],
+                        include: [{
+                            model: db.MediaObject,
+                            attributes: ['id', 'imageUrl']
+                        }]
+                    }]
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
+    FindProfileRatingByProfileId:
+        async (profileId) => {
+            try {
+                return await db.Review.findAll({
+                    where: {
+                        profileId: {
+                            [Op.eq]: profileId
+                        }
+                    },
+                    attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'rating']]
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
+    FindCookAllCategoriesByProfileId:
+        async (profileId) => {
+            try {
+                return await db.Category.findAll({
+                    attributes: ['id', 'name'],
+                    include: [{
+                        required: true,
+                        attributes: ['id', 'dishName'],
+                        model: db.Recipe,
+                        where: {
+                            profileId: {
+                                [Op.eq]: profileId
+                            }
+                        }
+                    }]
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
+    GetCookProfileDetailsById:
+        async (profileId) => {
+            try {
+                return await db.Profile.findById(profileId, {
+                    attributes: ['id', 'firstName', 'lastName', 'description', 'profileUrl', 'createdBy'],
                     include: [{
                         model: db.MediaObject,
                         attributes: ['id', 'imageUrl']
                     }]
-                }]
-            })
-        } catch (error) {
-            throw (error)
-        }
-    },
-    FindProfileRatingByProfileId: async (profileId) => {
-        try {
-            return await db.Review.findAll({
-                where: {
-                    profileId: {
-                        [Op.eq]: profileId
-                    }
-                },
-                attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'rating']]
-            })
-        } catch (error) {
-            throw (error)
-        }
-    },
-    FindCookAllCategoriesByProfileId: async (profileId) => {
-        try {
-            return await db.Category.findAll({
-                attributes: ['id', 'name'],
-                include: [{
-                    required: true,
-                    attributes: ['id', 'dishName'],
-                    model: db.Recipe,
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
+    GetProfileIdByUserTypeId:
+        async (userTypeId) => {
+            try {
+                return db.Profile.findOne({
                     where: {
-                        profileId: {
-                            [Op.eq]: profileId
+                        createdBy: {
+                            [Op.eq]: [userTypeId]
                         }
-                    }
-                }]
-            })
-        } catch (error) {
-            throw (error)
+                    },
+                    attributes: ['id', 'firstName', 'lastName', 'profileUrl', 'createdBy']
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
+    Logout:
+        async (tokenDetails) => {
+            try {
+                return await db.BlackListedToken.create(tokenDetails)
+            } catch (error) {
+                throw (error)
+            }
         }
-    },
-    GetCookProfileDetailsById: async (profileId) => {
-        try {
-            return await db.Profile.findById(profileId, {
-                attributes: ['id', 'firstName', 'lastName', 'description', 'profileUrl', 'createdBy'],
-                include: [{
-                    model: db.MediaObject,
-                    attributes: ['id', 'imageUrl']
-                }]
-            })
-        } catch (error) {
-            throw (error)
-        }
-    },
-    GetProfileIdByUserTypeId: async (userTypeId) => {
-        try {
-            return db.Profile.findOne({
-                where: {
-                    createdBy: {
-                        [Op.eq]: [userTypeId]
-                    }
-                },
-                attributes: ['id', 'firstName', 'lastName', 'profileUrl', 'createdBy']
-            })
-        } catch (error) {
-            throw (error)
-        }
-    },
-    Logout: async (tokenDetails) => {
-        try {
-            return await db.BlackListedToken.create(tokenDetails)
-        } catch (error) {
-            throw (error)
-        }
-    }
 }
 
 CommonService.prototype.Recipe = {

@@ -194,4 +194,20 @@ CookService.prototype.Recipe = {
     }
 }
 
+CookService.prototype.Order = {
+    CurrentOrders: async (createdBy) => {
+        try {
+            return await db.Order.findAll({
+                where: {
+                    createdBy: {
+                        [Op.eq]: createdBy
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
+
 module.exports = new CookService()

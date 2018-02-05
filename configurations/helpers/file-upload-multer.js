@@ -118,8 +118,8 @@ const UploadProfileCover = function (req, res, next) {
     upload(req, res, function (error) {
         if (error) return next(error)
         if (req.files) {
-            if (req.files.profile_cover) {
-                if (!CheckFile(req.files.profile_cover)) {
+            if (req.files.profileCover) {
+                if (!CheckFile(req.files.profileCover)) {
                     next({
                         message: 'You are uploading an invalid profile cover image.',
                         status: CommonConfig.STATUS_CODE.BAD_REQUEST

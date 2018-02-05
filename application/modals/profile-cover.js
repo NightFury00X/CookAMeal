@@ -12,5 +12,16 @@ module.exports = function (sequelize, DataTypes) {
         deletedAt: DataTypes.DATE
     }
 
-    return sequelize.define('ProfileCover', modelDefinition)
+    let ProfileCover = sequelize.define('ProfileCover', modelDefinition)
+
+    ProfileCover.associate = function (models) {
+        ProfileCover.hasMany(models.MediaObject, {
+            foreignKey: {
+                name: 'profileCoverId',
+                onDelete: 'CASCADE'
+            }
+        })
+    }
+
+    return ProfileCover
 }

@@ -4,7 +4,7 @@ const AuthService = require('../services/auth-service')
 const CommonService = require('../services/common.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 
-let Recipe = {
+const Recipe = {
     GetAllRecipeBySubCategory: async (req, res, next) => {
         try {
             const profile = await CommonService.User.GetProfileIdByUserTypeId(req.user.id)
@@ -61,8 +61,22 @@ let Recipe = {
     }
 }
 
-let CookController = {
-    Recipe: Recipe
+const Order = {
+    CurrentOrders: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            const ordersList = await CookService.Order.CurrentOrders(id)
+            return ResponseHelpers.SetSuccessResponse(ordersList, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
+const CookController = {
+    Recipe: Recipe,
+    Order: Order
 }
 
 module.exports = CookController

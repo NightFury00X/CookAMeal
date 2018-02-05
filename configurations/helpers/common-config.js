@@ -55,7 +55,8 @@ CommonConfig.OBJECT_TYPE = {
     IDENTIFICATIONCARD: 2,
     CERTIFICATE: 3,
     CATEGORY: 3,
-    RECIPE: 4
+    RECIPE: 4,
+    PROFILECOVER: 5
 }
 
 CommonConfig.FILES = {

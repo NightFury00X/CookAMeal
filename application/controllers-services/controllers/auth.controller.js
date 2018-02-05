@@ -74,9 +74,12 @@ let Auth = {
     ProfileCover: async (req, res, next) => {
         try {
             const userId = req.user.id
-            const profile = await AuthService.User.GetProfileIdByUserTypeId(userId)
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
             const profileId = profile.id
-            const result = await AuthService.User.ProfileCover({profileId: profileId})
+            const result = await CommonService.User.ProfileCover({profileId: profileId}, req.files)
+            if (!result) {
+                return ResponseHelpers.SetSuccessResponse({message: 'Profile cover not updated.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
             return ResponseHelpers.SetSuccessResponse({message: 'Profile cover updated.'}, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)

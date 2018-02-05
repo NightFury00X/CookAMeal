@@ -25,4 +25,7 @@ router.post('/recipe',
 router.get('/recipe/my-recipes',
     CookController.Recipe.GetAllRecipesList)
 
+router.get('/order/current-orders',
+    CookController.Order.CurrentOrders)
+
 module.exports = router
