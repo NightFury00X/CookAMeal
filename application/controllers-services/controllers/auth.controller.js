@@ -469,6 +469,7 @@ let Order = {
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
+            console.log('Error: ', error)
             if (!flag && !payment) {
                 trans.rollback()
                 next(error)
