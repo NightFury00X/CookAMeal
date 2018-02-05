@@ -441,9 +441,7 @@ let Order = {
                 }, res, CommonConfig.STATUS_CODE.OK)
             }
             flag = true
-            console.log('Updating payment status')
             const result = await AuthService.Order.UpdatePaymentStateAfterSuccess(orderId, trans)
-            console.log('Result: ', !result)
             trans.commit()
             if (!result) {
                 return ResponseHelpers.SetSuccessResponse({
@@ -463,13 +461,12 @@ let Order = {
                 },
                 orderDetails: {
                     id: orderDetails.id,
-                    orderDate: orderDetails.created_at,
+                    orderDate: orderDetails.createdAt,
                     amount: currencySymbol.currencySymbol + ' ' + parseFloat(orderDetails.totalAmount)
                 },
                 Message: CommonConfig.ERRORS.ORDER.SUCCESS
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
-            console.log('Error: ', error)
             if (!flag && !payment) {
                 trans.rollback()
                 next(error)
