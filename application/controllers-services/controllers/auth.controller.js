@@ -443,7 +443,7 @@ let Order = {
             flag = true
             console.log('Updating payment status')
             const result = await AuthService.Order.UpdatePaymentStateAfterSuccess(orderId, trans)
-            console.log('Result: ', !resultl)
+            console.log('Result: ', !result)
             trans.commit()
             if (!result) {
                 return ResponseHelpers.SetSuccessResponse({
