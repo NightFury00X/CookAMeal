@@ -289,6 +289,7 @@ AuthService.prototype.Order = {
                 transaction: trans
             })
         } catch (error) {
+            console.log('Error: ', error)
             throw (error)
         }
     }
