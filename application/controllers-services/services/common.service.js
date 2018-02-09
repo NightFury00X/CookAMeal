@@ -14,7 +14,7 @@ CommonService.prototype.UserModel = {
             where: {
                 [Op.or]: {
                     emailId: `${email}`,
-                    facebookId: `${email}`
+                    facebookEmailId: `${email}`
                 }
             }
         })
