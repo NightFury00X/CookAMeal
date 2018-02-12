@@ -172,11 +172,11 @@ const Recipe = {
             const userId = req.user.id
             const recipeId = req.value.params.id
             const recipeDetails = await CommonService.Recipe.FindRecipeById(recipeId)
-            if (!recipeDetails) {
+            if (!recipeDetails && recipeDetails.Recipes.length === 0) {
                 return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.RECIPE.NOT_FOUND, res)
             }
-            let recipeDetailsToJSON = JSON.parse(JSON.stringify(recipeDetails))
-            const rating = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
+            let recipeDetailsToJSON = JSON.parse(JSON.stringify(recipeDetails.Recipes[0]))
+            const rating = await CommonService.Recipe.FindRatingByRecipeId(recipeDetailsToJSON.id)
             recipeDetailsToJSON.rating = !rating[0].rating ? 0 : rating[0].rating
             if (userId) {
                 const favorite = await AuthService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
@@ -184,9 +184,10 @@ const Recipe = {
             } else {
                 recipeDetailsToJSON.favorite = false
             }
-            const profileId = recipeDetailsToJSON.Recipes[0].profileId
+            const profileId = recipeDetailsToJSON.profileId
+            const profileDetails = await CommonService.User.GetCookProfileDetailsById(profileId)
             const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
-            recipeDetailsToJSON.Recipes[0].CurrencySymbol = currencyDetails.currencySymbol
+            recipeDetailsToJSON.CurrencySymbol = currencyDetails.currencySymbol
             const cookRecipes = await CommonService.Recipe.FindAllRecipeByCookIdExcludeSelectedRecipe(profileId, recipeId)
             let cookRecipesToJSON = JSON.parse(JSON.stringify(cookRecipes))
             for (const index in cookRecipesToJSON) {
@@ -205,7 +206,7 @@ const Recipe = {
                     cookRecipesToJSON[index].currencySymbol = currencyDetails.currencySymbol
                 }
             }
-            const similarRecipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryIdExcludeSelectedCookRecipe(recipeDetails.Recipes[0].subCategoryId, profileId)
+            const similarRecipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryIdExcludeSelectedCookRecipe(recipeDetailsToJSON.subCategoryId, profileId)
             let similarRecipesToJSON = JSON.parse(JSON.stringify(similarRecipes))
             for (const index in similarRecipesToJSON) {
                 if (similarRecipesToJSON.hasOwnProperty(index)) {
@@ -225,8 +226,7 @@ const Recipe = {
             }
             const result = {
                 recipeDetails: recipeDetailsToJSON,
-                profile: recipeDetailsToJSON,
-                rating: !rating[0].rating ? 0 : rating[0].rating,
+                profile: profileDetails,
                 cookRecipes: cookRecipesToJSON,
                 similarRecipes: similarRecipesToJSON
             }

@@ -629,10 +629,12 @@ CommonService.prototype.Recipe = {
                 limit: 10,
                 required: true,
                 where: {
-                    [Op.and]: [{
-                        subCategoryId: `${subCategoryId}`,
-                        profileId: `${profileId}`
-                    }]
+                    profileId: {
+                        [Op.ne]: `${profileId}`
+                    },
+                    subCategoryId: {
+                        [Op.eq]: `${subCategoryId}`
+                    }
                 },
                 attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'categoryId', 'subCategoryId', 'profileId'],
                 include: [{
