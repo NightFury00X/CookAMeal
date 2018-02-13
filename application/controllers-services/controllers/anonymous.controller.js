@@ -172,12 +172,12 @@ let Anonymous = {
             let flag = true
             const {email} = req.body
             if (!email) {
-                return ResponseHelpers.SetSuccessResponse('Missing email.', res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessResponse({message: 'Missing email address.'}, res, CommonConfig.STATUS_CODE.OK)
             }
             if (!req.resetPasswordGenerated && !req.tokenStatus && !req.tokenData) {
                 const userModel = await CommonService.UserModel.GetDetailsByEmail(email)
                 if (!userModel) {
-                    return ResponseHelpers.SetSuccessResponse('user not exists.', res, CommonConfig.STATUS_CODE.OK)
+                    return ResponseHelpers.SetSuccessResponse({message: 'user not exists.'}, res, CommonConfig.STATUS_CODE.OK)
                 }
                 const tempPassword = await CommonService.Keys.RandomKeys.GenerateRandomKey()
                 const uniqueKey = await CommonService.Keys.RandomKeys.GenerateUnique16DigitKey()
