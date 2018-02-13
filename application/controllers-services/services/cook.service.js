@@ -70,16 +70,17 @@ CookService.prototype.Recipe = {
                     categoryId: recipe.categoryId
                 }, {transaction: trans})
             }
-            for (const index in allergies) {
-                if (allergies.hasOwnProperty(index)) {
-                    allergies[index].recipeId = recipeData.id
-                    let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans})
-                    if (!allergydata) {
-                        await trans.rollback()
-                        return null
-                    }
-                }
-            }
+            // for (const index in allergies) {
+            //     if (allergies.hasOwnProperty(index)) {
+            //         allergies[index].recipeId = recipeData.id
+            //         console.log('allergies: ', allergies)
+            //         let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans})
+            //         if (!allergydata) {
+            //             await trans.rollback()
+            //             return null
+            //         }
+            //     }
+            // }
             for (let index in files.recipe) {
                 if (files.recipe.hasOwnProperty(index)) {
                     files.recipe[index].recipeId = recipeData.id

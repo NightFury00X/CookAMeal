@@ -142,6 +142,7 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                     }
                 }]
             })
+            console.log('Completed 1')
         } else {
             userTypeDetails = await db.UserType.findOne({
                 where: {
@@ -156,6 +157,7 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                     }]
                 }]
             })
+            console.log('Completed 2')
         }
         if (!userTypeDetails) {
             return null
