@@ -197,7 +197,7 @@ let Anonymous = {
                 const userModel = await CommonService.UserModel.GetDetailsByEmail(email)
                 const tempPassword = await CommonService.Keys.RandomKeys.GenerateRandomKey()
                 const uniqueKey = await CommonService.Keys.RandomKeys.GenerateUnique16DigitKey()
-                const token = await AuthenticationHelpers.GenerateTokenForResetPassword(userModel.userInfo, unique_key, false)
+                const token = await AuthenticationHelpers.GenerateTokenForResetPassword(userModel.userInfo, uniqueKey, false)
                 const result = await AnonymousService.AddResetPasswordDetails({
                     email: userModel.emailId || userModel.facebookEmailId,
                     tempPassword: tempPassword,

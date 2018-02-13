@@ -232,7 +232,7 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
     try {
         let tokenData = await db.UserType.findOne({
             where: {
-                user_id: {
+                emailId: {
                     [Op.eq]: email
                 }
             },
