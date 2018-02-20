@@ -33,7 +33,7 @@ AuthService.prototype.User = {
                 },
                 include: [{
                     model: db.Profile,
-                    attributes: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'description', 'dietPreference', 'allergies', 'drivingDistance', 'profileUrl'],
+                    attributes: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'description', 'dietPreference', 'allergies', 'drivingDistance', 'profileUrl', 'coverPhotoUrl'],
                     include: [{
                         model: db.Address,
                         attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country']
