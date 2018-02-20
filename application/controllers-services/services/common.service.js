@@ -310,6 +310,7 @@ CommonService.prototype.User = {
                 trans.rollback()
                 return false
             }
+            trans.commit()
             return profile
         } catch (error) {
             trans.rollback()

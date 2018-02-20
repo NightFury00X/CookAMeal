@@ -105,7 +105,6 @@ let User = {
         try {
             const {id} = req.user
             const userData = await AuthService.User.GetUserTypeDetailsById(id)
-            console.log('Has Profile: ', userData.hasProfile)
             if (userData.hasProfile) {
                 const data = await AuthService.User.GetProfileDataIfProfileUpdated(userData.id)
                 return ResponseHelpers.SetSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK)
