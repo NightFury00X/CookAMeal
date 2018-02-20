@@ -36,6 +36,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         tempData.createdBy = userType.id
         tempData.userRole = userData.userRole
         let userProfileData = await db.Profile.create(tempData, {transaction: trans})
+        let profileImagePic = null
         registrationData.address.profileId = userProfileData.id
         await db.Address.create(registrationData.address, {transaction: trans})
         let ProfileMediaObject
@@ -53,6 +54,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 delete profileImage.originalname
                 delete profileImage.mimetype
                 ProfileMediaObject = await db.MediaObject.create(profileImage, {transaction: trans})
+                profileImagePic = profileImage.imageUrl
                 await db.Profile.update({
                     profileUrl: profileImage.imageUrl
                 }, {
@@ -105,7 +107,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 email: userProfileData.email,
                 fullName: userProfileData.fullName,
                 userRole: userType.userRole,
-                profileUrl: userProfileData.profileUrl,
+                profileUrl: profileImagePic,
                 hasProfile: true,
                 profileSelected: true
             }
