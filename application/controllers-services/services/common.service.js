@@ -411,7 +411,7 @@ CommonService.prototype.User = {
         async (profileId) => {
             try {
                 return await db.Profile.findById(profileId, {
-                    attributes: ['id', 'firstName', 'lastName', 'description', 'profileUrl', 'createdBy'],
+                    attributes: ['id', 'firstName', 'lastName', 'description', 'profileUrl', 'createdBy', 'coverPhotoUrl'],
                     include: [{
                         model: db.MediaObject,
                         attributes: ['id', 'imageUrl']
