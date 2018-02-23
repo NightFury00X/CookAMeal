@@ -26,6 +26,15 @@ module.exports = {
             }
             this.SetResponse(statusCode, response, res)
         },
+        SetSuccessErrorResponse: function (data, res, statusCode) {
+            let response = {
+                success: false,
+                data: data,
+                error: null,
+                status: statusCode
+            }
+            this.SetResponse(statusCode, response, res)
+        },
         SetErrorResponse (errors, res) {
             const response = {
                 success: false,
