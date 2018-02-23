@@ -77,21 +77,21 @@ let Anonymous = {
         try {
             const registrationData = JSON.parse(req.body.details)
             if (!registrationData || !registrationData.user || !registrationData.address) {
-                return ResponseHelpers.SetErrorResponse('Invalid request.', res)
+                return ResponseHelpers.SetSuccessResponse('Invalid request.', res, CommonConfig.STATUS_CODE.CREATED)
             }
             const checkUserEmailExist = await CommonService.User.CheckUserEmailIdExist(registrationData.user.email)
             if (checkUserEmailExist) {
-                return ResponseHelpers.SetErrorResponse({message: 'Email Id already registered.'}, res)
+                return ResponseHelpers.SetSuccessResponse({message: 'Email Id already registered.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
             if (registrationData.facebook && registrationData.facebook.facebookId) {
                 const checkFacebook = await CommonService.User.CheckUserHasProfileByFacebookId(registrationData.facebook.facebookId, registrationData.facebook.facebookId)
                 if (checkFacebook) {
-                    return ResponseHelpers.SetErrorResponse({message: 'Facebook already linked to another account.'}, res)
+                    return ResponseHelpers.SetSuccessResponse({message: 'Facebook already linked to another account.'}, res, CommonConfig.STATUS_CODE.CREATED)
                 }
             }
             let result = await AnonymousService.SignUp(registrationData, req.files)
             if (!result) {
-                return ResponseHelpers.SetErrorResponse('Unable to register user.', res)
+                return ResponseHelpers.SetSuccessResponse('Unable to register user.', res, CommonConfig.STATUS_CODE.CREATED)
             }
             result.type = true
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED)
