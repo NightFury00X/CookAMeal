@@ -77,16 +77,16 @@ let Anonymous = {
         try {
             const registrationData = JSON.parse(req.body.details)
             if (!registrationData || !registrationData.user || !registrationData.address) {
-                return ResponseHelpers.SetBadRequestResponse('Invalid request.', res)
+                return ResponseHelpers.SetErrorResponse('Invalid request.', res)
             }
             const checkUserEmailExist = await CommonService.User.CheckUserEmailIdExist(registrationData.user.email)
             if (checkUserEmailExist) {
-                return ResponseHelpers.SetBadRequestResponse({message: 'Email Id already registered.'}, res)
+                return ResponseHelpers.SetErrorResponse({message: 'Email Id already registered.'}, res)
             }
             if (registrationData.facebook && registrationData.facebook.facebookId) {
                 const checkFacebook = await CommonService.User.CheckUserHasProfileByFacebookId(registrationData.facebook.facebookId, registrationData.facebook.facebookId)
                 if (checkFacebook) {
-                    return ResponseHelpers.SetBadRequestResponse({message: 'Facebook already linked to another account.'}, res)
+                    return ResponseHelpers.SetErrorResponse({message: 'Facebook already linked to another account.'}, res)
                 }
             }
             let result = await AnonymousService.SignUp(registrationData, req.files)

@@ -44,6 +44,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         if (files) {
             if (files.profile) {
                 let profileImage = files.profile[0]
+                console.log('Profile: ', profileImage)
                 profileImage.profileId = userProfileData.id
                 profileImage.objectType = CommonConfig.OBJECT_TYPE.PROFILE
                 profileImage.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILE + profileImage.filename
