@@ -61,15 +61,6 @@ module.exports = function (sequelize, DataTypes) {
                     args: [['m', 'M', 'f', 'F']],
                     msg: 'Must be valid gender Male or Female.'
                 }
-            },
-            set (value) {
-                let genderValue = ''
-                if (value === 'm' || value === 'M') {
-                    genderValue = 'Male'
-                } else {
-                    genderValue = 'Female'
-                }
-                this.setDataValue('gender', CommonConfig.toTitleCase(genderValue))
             }
         },
         description: {
@@ -117,6 +108,13 @@ module.exports = function (sequelize, DataTypes) {
         getterMethods: {
             fullName () {
                 return this.firstName + ' ' + this.lastName
+            },
+            genderFull () {
+                if (this.gender === 'm' || this.gender === 'M') {
+                    return 'Male'
+                } else {
+                    return 'Female'
+                }
             }
         }
     }
