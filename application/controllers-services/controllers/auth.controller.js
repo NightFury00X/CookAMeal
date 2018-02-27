@@ -99,7 +99,7 @@ let Auth = {
             }
             return ResponseHelpers.SetSuccessResponse({
                 message: 'Profile image updated.',
-                profileCover: result
+                profileUrl: result
             }, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
