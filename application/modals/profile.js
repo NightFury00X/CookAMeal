@@ -63,12 +63,13 @@ module.exports = function (sequelize, DataTypes) {
                 }
             },
             set (value) {
+                let genderValue = ''
                 if (value === 'm' || value === 'M') {
-                    value = 'Male'
+                    genderValue = 'Male'
                 } else {
-                    value = 'Female'
+                    genderValue = 'Female'
                 }
-                this.setDataValue('gender', CommonConfig.toTitleCase(value))
+                this.setDataValue('gender', CommonConfig.toTitleCase(genderValue))
             }
         },
         description: {
