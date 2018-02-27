@@ -80,7 +80,10 @@ let Auth = {
             if (!result) {
                 return ResponseHelpers.SetSuccessResponse({message: 'Profile cover not updated.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            return ResponseHelpers.SetSuccessResponse({message: 'Profile cover updated.'}, res, CommonConfig.STATUS_CODE.OK)
+            return ResponseHelpers.SetSuccessResponse({
+                message: 'Profile cover updated.',
+                profileCover: result.coverPhotoUrl
+            }, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }
