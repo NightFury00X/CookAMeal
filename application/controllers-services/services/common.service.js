@@ -322,8 +322,8 @@ CommonService.prototype.User = {
         try {
             let profileImage = files.profile[0]
             profileImage.profileId = profileImageData.profileId
-            profileImage.objectType = CommonConfig.OBJECT_TYPE.PROFILECOVER
-            profileImage.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILECOVER + profileImage.filename
+            profileImage.objectType = CommonConfig.OBJECT_TYPE.PROFILE
+            profileImage.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILE + profileImage.filename
             profileImage.fileName = profileImage.filename
             profileImage.originalName = profileImage.originalname
             profileImage.mimeType = profileImage.mimetype
