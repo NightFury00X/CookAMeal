@@ -87,6 +87,23 @@ let Auth = {
         } catch (error) {
             next(error)
         }
+    },
+    ProfileImage: async (req, res, next) => {
+        try {
+            const userId = req.user.id
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            const profileId = profile.id
+            const result = await CommonService.User.ProfileImage({profileId: profileId}, req.files)
+            if (!result) {
+                return ResponseHelpers.SetSuccessResponse({message: 'Profile image not updated.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            return ResponseHelpers.SetSuccessResponse({
+                message: 'Profile image updated.',
+                profileCover: result
+            }, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
     }
 }
 

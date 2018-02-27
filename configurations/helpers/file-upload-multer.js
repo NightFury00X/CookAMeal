@@ -131,6 +131,23 @@ const UploadProfileCover = function (req, res, next) {
     })
 }
 
+const UploadProfileImage = function (req, res, next) {
+    upload(req, res, function (error) {
+        if (error) return next(error)
+        if (req.files) {
+            if (req.files.profile) {
+                if (!CheckFile(req.files.profile)) {
+                    next({
+                        message: 'You are uploading an invalid profile image.',
+                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                    }, false)
+                }
+            }
+        }
+        return next()
+    })
+}
+
 /**
  * @return {boolean}
  */
@@ -163,7 +180,8 @@ function CheckMagicNumbers (magic) {
 let FileUploader = {
     uploadFile: uploadFile,
     uploadDataFiles: uploadDataFiles,
-    UploadProfileCover: UploadProfileCover
+    UploadProfileCover: UploadProfileCover,
+    UploadProfileImage: UploadProfileImage
 }
 
 module.exports = FileUploader

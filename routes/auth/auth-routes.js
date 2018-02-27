@@ -41,6 +41,11 @@ router.post('/profile-cover',
     FileUploader.UploadProfileCover,
     AuthController.Auth.ProfileCover)
 
+router.post('/profile-image',
+    RequestMethodsMiddlewares.ApplicationFormData,
+    FileUploader.UploadProfileImage,
+    AuthController.Auth.ProfileImage)
+
 router.post('/favorite/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.RecipeAsFavorite),

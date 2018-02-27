@@ -317,6 +317,46 @@ CommonService.prototype.User = {
             throw (error)
         }
     },
+    ProfileImage: async (profileImageData, files) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const profileImageDetails = await db.ProfileCover.create(profileImageData, {transaction: trans})
+            if (!profileImageDetails) {
+                trans.rollback()
+                return false
+            }
+            let profileImage = files.profile[0]
+            profileImage.profileId = profileImageDetails.profileId
+            profileImage.objectType = CommonConfig.OBJECT_TYPE.PROFILECOVER
+            profileImage.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILECOVER + profileImage.filename
+            profileImage.fileName = profileImage.filename
+            profileImage.originalName = profileCoverImage.originalname
+            profileImage.mimeType = profileCoverImage.mimetype
+            delete profileImage.filename
+            delete profileImage.originalname
+            delete profileImage.mimetype
+            const ProfileImageMediaObject = await db.MediaObject.create(profileImage, {transaction: trans})
+            const profile = await db.Profile.update({
+                profileUrl: ProfileImageMediaObject.imageUrl
+            }, {
+                where: {
+                    [Op.and]: {
+                        id: `${ProfileImageMediaObject.profileId}`
+                    }
+                },
+                transaction: trans
+            })
+            if (!profile) {
+                trans.rollback()
+                return false
+            }
+            trans.commit()
+            return ProfileImageMediaObject.imageUrl
+        } catch (error) {
+            trans.rollback()
+            throw (error)
+        }
+    },
     FindProfileIsExist: async (profileId) => {
         try {
             return await db.Profile.findOne({
