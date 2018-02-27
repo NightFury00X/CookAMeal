@@ -325,8 +325,8 @@ CommonService.prototype.User = {
             profileImage.objectType = CommonConfig.OBJECT_TYPE.PROFILECOVER
             profileImage.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILECOVER + profileImage.filename
             profileImage.fileName = profileImage.filename
-            profileImage.originalName = profileCoverImage.originalname
-            profileImage.mimeType = profileCoverImage.mimetype
+            profileImage.originalName = profileImage.originalname
+            profileImage.mimeType = profileImage.mimetype
             delete profileImage.filename
             delete profileImage.originalname
             delete profileImage.mimetype
