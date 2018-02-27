@@ -311,7 +311,7 @@ CommonService.prototype.User = {
                 return false
             }
             trans.commit()
-            return profile
+            return ProfileCoverMediaObject.imageUrl
         } catch (error) {
             trans.rollback()
             throw (error)
