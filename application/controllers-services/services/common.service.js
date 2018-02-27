@@ -320,13 +320,8 @@ CommonService.prototype.User = {
     ProfileImage: async (profileImageData, files) => {
         const trans = await db.sequelize.transaction()
         try {
-            const profileImageDetails = await db.ProfileCover.create(profileImageData, {transaction: trans})
-            if (!profileImageDetails) {
-                trans.rollback()
-                return false
-            }
             let profileImage = files.profile[0]
-            profileImage.profileId = profileImageDetails.profileId
+            profileImage.profileId = profileImageData.profileId
             profileImage.objectType = CommonConfig.OBJECT_TYPE.PROFILECOVER
             profileImage.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILECOVER + profileImage.filename
             profileImage.fileName = profileImage.filename
