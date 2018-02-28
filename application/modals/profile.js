@@ -97,6 +97,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        isFacebookConnected: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         userRole: {
             type: DataTypes.INTEGER,
             allowNull: false

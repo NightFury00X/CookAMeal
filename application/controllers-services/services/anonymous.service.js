@@ -35,6 +35,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         delete tempData.password
         tempData.createdBy = userType.id
         tempData.userRole = userData.userRole
+        tempData.isFacebookConnected = !!facebookId
         let userProfileData = await db.Profile.create(tempData, {transaction: trans})
         let profileImagePic = null
         registrationData.address.profileId = userProfileData.id
@@ -100,6 +101,17 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 await db.MediaObject.create(certificateMedia, {transaction: trans})
             }
         }
+        if (facebookId || (files.identificationCard && registrationData.identificationCard)) {
+            await db.Profile.update({
+                isEligibleForHire: true
+            }, {
+                where: {
+                    id: {
+                        [Op.eq]: userProfileData.id
+                    }
+                }
+            }, {transaction: trans})
+        }
         await trans.commit()
         return {
             token: AuthenticationHelpers.GenerateToken(userType.userInfo, null, true),
@@ -145,7 +157,6 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                     }
                 }]
             })
-            console.log('Completed 1')
         } else {
             userTypeDetails = await db.UserType.findOne({
                 where: {
@@ -160,7 +171,6 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                     }]
                 }]
             })
-            console.log('Completed 2')
         }
         if (!userTypeDetails) {
             return null
