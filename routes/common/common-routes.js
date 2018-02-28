@@ -14,8 +14,7 @@ router.post('/profile/change-profile',
     CommonController.User.ChangeProfile)
 
 // 1. Get all category for dashboard
-router.get('/category/:type',
-    ValidateParams(ParamSchemas.idSchema, 'type'),
+router.get('/category',
     CommonController.Category.GetAll)
 
 // 6. Get all recipies list categorised by sub-category by category id
