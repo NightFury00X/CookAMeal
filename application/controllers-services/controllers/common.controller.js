@@ -110,19 +110,15 @@ let Category = {
             for (const outer in convertedJSON) {
                 if (convertedJSON.hasOwnProperty(outer)) {
                     for (const inner in convertedJSON[outer].Recipes) {
-                        console.log('================================88888888888888888888888888888888888')
                         if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const recipeId = convertedJSON[outer].Recipes[inner].id
                             const profileId = convertedJSON[outer].Recipes[inner].profileId
-                            console.log('type: ', type)
                             if (type === '1') {
-                                console.log('Profile Id: ', profileId)
                                 const cookProfile = await CommonService.Recipe.FindProfileIsEligible(profileId, true)
-                                console.log('cookProfile: ', cookProfile)
                                 if (!cookProfile) {
-                                    delete convertedJSON[outer]
-                                    console.log('convertedJSON: ', convertedJSON)
-                                    continue
+                                    convertedJSON[outer].isEligibleForHire = false
+                                } else {
+                                    onvertedJSON[outer].isEligibleForHire = true
                                 }
                             }
                             const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
@@ -141,7 +137,7 @@ let Category = {
             }
             if (type === '1') {
                 convertedJSON = convertedJSON.filter(function (item) {
-                    return item.Recipes.length > 0
+                    return item.isEligibleForHire === true
                 })
             }
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
