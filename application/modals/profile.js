@@ -93,6 +93,10 @@ module.exports = function (sequelize, DataTypes) {
         coverPhotoUrl: {
             type: DataTypes.STRING
         },
+        isEligibleForHire: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         userRole: {
             type: DataTypes.INTEGER,
             allowNull: false

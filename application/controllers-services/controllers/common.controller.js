@@ -100,8 +100,9 @@ let Category = {
     GetAllRecipeByCategoryId: async (req, res, next) => {
         try {
             const categoryId = req.value.params.id
+            const type = req.value.params.type
             const userId = req.user.id
-            const recipesList = await CommonService.Recipe.FindAllByCategoryId(categoryId)
+            const recipesList = await CommonService.Recipe.FindAllByCategoryId(categoryId, type)
             let convertedJSON = JSON.parse(JSON.stringify(recipesList))
             convertedJSON = convertedJSON.filter(function (item) {
                 return item.Recipes.length > 0
@@ -112,6 +113,16 @@ let Category = {
                         if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const recipeId = convertedJSON[outer].Recipes[inner].id
                             const profileId = convertedJSON[outer].Recipes[inner].profileId
+                            console.log('type: ', type)
+                            if (type === '1') {
+                                console.log('Profile Id: ', profileId)
+                                const cookProfile = await CommonService.Recipe.FindProfileIsEligible(profileId, true)
+                                console.log('cookProfile: ', cookProfile)
+                                if (!cookProfile) {
+                                    delete convertedJSON[outer]
+                                    continue
+                                }
+                            }
                             const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
                             const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
                             if (userId) {
@@ -125,6 +136,11 @@ let Category = {
                         }
                     }
                 }
+            }
+            if (type === '1') {
+                convertedJSON = convertedJSON.filter(function (item) {
+                    return item.Recipes.length > 0
+                })
             }
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {

@@ -482,6 +482,18 @@ CommonService.prototype.User = {
 }
 
 CommonService.prototype.Recipe = {
+    FindProfileIsEligible: async (profileId, eligibility) => {
+        try {
+            return await db.Profile.findOne({
+                where: {
+                    id: profileId,
+                    isEligibleForHire: eligibility
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     FindRecipeIsExist: async (recipeId) => {
         try {
             return await db.Recipe.findById(recipeId, {
@@ -581,7 +593,7 @@ CommonService.prototype.Recipe = {
             throw (error)
         }
     },
-    FindAllByCategoryId: async (categoryId) => {
+    FindAllByCategoryId: async (categoryId, type) => {
         try {
             return db.SubCategory.findAll({
                 attributes: ['id', 'name'],
