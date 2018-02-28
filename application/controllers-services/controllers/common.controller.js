@@ -110,6 +110,7 @@ let Category = {
             for (const outer in convertedJSON) {
                 if (convertedJSON.hasOwnProperty(outer)) {
                     for (const inner in convertedJSON[outer].Recipes) {
+                        console.log('================================88888888888888888888888888888888888')
                         if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const recipeId = convertedJSON[outer].Recipes[inner].id
                             const profileId = convertedJSON[outer].Recipes[inner].profileId
@@ -120,6 +121,7 @@ let Category = {
                                 console.log('cookProfile: ', cookProfile)
                                 if (!cookProfile) {
                                     delete convertedJSON[outer]
+                                    console.log('convertedJSON: ', convertedJSON)
                                     continue
                                 }
                             }
