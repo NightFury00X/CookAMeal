@@ -150,8 +150,7 @@ let User = {
             }
             const data = await AuthService.User.GetProfileDataIfProfileUpdated(id)
             return ResponseHelpers.SetSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK)
-        }
-        catch (error) {
+        } catch (error) {
             next(error)
         }
     },

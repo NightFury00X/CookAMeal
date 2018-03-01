@@ -22,6 +22,7 @@ AuthService.prototype.User = {
                 transaction: trans
             })
             if (!profile) {
+                trans.rollback()
                 return false
             }
             const address = await db.Address.update(addressData, {
@@ -33,11 +34,13 @@ AuthService.prototype.User = {
                 transaction: trans
             })
             if (!address) {
+                trans.rollback()
                 return false
             }
             trans.commit()
             return true
         } catch (error) {
+            trans.rollback()
             throw (error)
         }
     },
