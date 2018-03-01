@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
-      <change beforePath="$PROJECT_DIR$/routes/auth/auth-routes.js" afterPath="$PROJECT_DIR$/routes/auth/auth-routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,28 +20,38 @@
       <file leaf-file-name="auth-routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" column="29" lean-forward="false" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+            <state relative-caret-position="242">
+              <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="141" column="54" lean-forward="true" selection-start-line="141" selection-start-column="54" selection-end-line="141" selection-end-column="54" />
+            <state relative-caret-position="2816">
+              <caret line="128" column="66" lean-forward="false" selection-start-line="128" selection-start-column="66" selection-end-line="128" selection-end-column="66" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="72" column="104" lean-forward="false" selection-start-line="72" selection-start-column="93" selection-end-line="72" selection-end-column="104" />
+            <state relative-caret-position="396">
+              <caret line="75" column="27" lean-forward="false" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="10076">
+              <caret line="458" column="4" lean-forward="false" selection-start-line="458" selection-start-column="4" selection-end-line="458" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -53,8 +60,8 @@
       <file leaf-file-name="profile.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="101" column="28" lean-forward="false" selection-start-line="101" selection-start-column="28" selection-end-line="101" selection-end-column="28" />
+            <state relative-caret-position="3366">
+              <caret line="153" column="27" lean-forward="false" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -64,7 +71,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>FindRatingByRecipeId</find>
       <find>FindAllByCategoryId</find>
       <find>FindAllByCategoryByProfileId</find>
       <find>FindAllRecipeByCookIdExcludeSelectedRecipe</find>
@@ -94,6 +100,7 @@
       <find>user_id</find>
       <find>update</find>
       <find>profile</find>
+      <find>trans</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -181,9 +188,9 @@
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
         <option value="$PROJECT_DIR$/application/modals/profile.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
         <option value="$PROJECT_DIR$/routes/auth/auth-routes.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
       </list>
     </option>
   </component>
@@ -262,6 +269,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -362,8 +371,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -541,91 +548,9 @@
       <workItem from="1519363758741" duration="1779000" />
       <workItem from="1519716246725" duration="6885000" />
       <workItem from="1519791185246" duration="10824000" />
-      <workItem from="1519878575870" duration="2068000" />
-    </task>
-    <task id="LOCAL-00458" summary="Major fixes">
-      <created>1517550511711</created>
-      <option name="number" value="00458" />
-      <option name="presentableId" value="LOCAL-00458" />
-      <option name="project" value="LOCAL" />
-      <updated>1517550511712</updated>
-    </task>
-    <task id="LOCAL-00459" summary="Major fixes">
-      <created>1517551110721</created>
-      <option name="number" value="00459" />
-      <option name="presentableId" value="LOCAL-00459" />
-      <option name="project" value="LOCAL" />
-      <updated>1517551110722</updated>
-    </task>
-    <task id="LOCAL-00460" summary="Major fixes">
-      <created>1517556861661</created>
-      <option name="number" value="00460" />
-      <option name="presentableId" value="LOCAL-00460" />
-      <option name="project" value="LOCAL" />
-      <updated>1517556861661</updated>
-    </task>
-    <task id="LOCAL-00461" summary="Major fixes">
-      <created>1517564671292</created>
-      <option name="number" value="00461" />
-      <option name="presentableId" value="LOCAL-00461" />
-      <option name="project" value="LOCAL" />
-      <updated>1517564671292</updated>
-    </task>
-    <task id="LOCAL-00462" summary="Major fixes">
-      <created>1517565134789</created>
-      <option name="number" value="00462" />
-      <option name="presentableId" value="LOCAL-00462" />
-      <option name="project" value="LOCAL" />
-      <updated>1517565134789</updated>
-    </task>
-    <task id="LOCAL-00463" summary="Major fixes">
-      <created>1517565307978</created>
-      <option name="number" value="00463" />
-      <option name="presentableId" value="LOCAL-00463" />
-      <option name="project" value="LOCAL" />
-      <updated>1517565307978</updated>
-    </task>
-    <task id="LOCAL-00464" summary="Major fixes">
-      <created>1517565385255</created>
-      <option name="number" value="00464" />
-      <option name="presentableId" value="LOCAL-00464" />
-      <option name="project" value="LOCAL" />
-      <updated>1517565385255</updated>
-    </task>
-    <task id="LOCAL-00465" summary="Major fixes">
-      <created>1517567600284</created>
-      <option name="number" value="00465" />
-      <option name="presentableId" value="LOCAL-00465" />
-      <option name="project" value="LOCAL" />
-      <updated>1517567600285</updated>
-    </task>
-    <task id="LOCAL-00466" summary="Major fixes">
-      <created>1517568476963</created>
-      <option name="number" value="00466" />
-      <option name="presentableId" value="LOCAL-00466" />
-      <option name="project" value="LOCAL" />
-      <updated>1517568476964</updated>
-    </task>
-    <task id="LOCAL-00467" summary="Major fixes">
-      <created>1517578332643</created>
-      <option name="number" value="00467" />
-      <option name="presentableId" value="LOCAL-00467" />
-      <option name="project" value="LOCAL" />
-      <updated>1517578332644</updated>
-    </task>
-    <task id="LOCAL-00468" summary="Major fixes">
-      <created>1517810764019</created>
-      <option name="number" value="00468" />
-      <option name="presentableId" value="LOCAL-00468" />
-      <option name="project" value="LOCAL" />
-      <updated>1517810764019</updated>
-    </task>
-    <task id="LOCAL-00469" summary="Major fixes">
-      <created>1517813896768</created>
-      <option name="number" value="00469" />
-      <option name="presentableId" value="LOCAL-00469" />
-      <option name="project" value="LOCAL" />
-      <updated>1517813896769</updated>
+      <workItem from="1519878575870" duration="7609000" />
+      <workItem from="1519899041795" duration="585000" />
+      <workItem from="1519899672827" duration="1781000" />
     </task>
     <task id="LOCAL-00470" summary="Major fixes">
       <created>1517814051301</created>
@@ -886,11 +811,95 @@
       <option name="project" value="LOCAL" />
       <updated>1519815548078</updated>
     </task>
-    <option name="localTasksCounter" value="507" />
+    <task id="LOCAL-00507" summary="Add new API Update Profile.">
+      <created>1519883971260</created>
+      <option name="number" value="00507" />
+      <option name="presentableId" value="LOCAL-00507" />
+      <option name="project" value="LOCAL" />
+      <updated>1519883971261</updated>
+    </task>
+    <task id="LOCAL-00508" summary="Add new API Update Profile.">
+      <created>1519884794634</created>
+      <option name="number" value="00508" />
+      <option name="presentableId" value="LOCAL-00508" />
+      <option name="project" value="LOCAL" />
+      <updated>1519884794634</updated>
+    </task>
+    <task id="LOCAL-00509" summary="Add new API Update Profile.">
+      <created>1519885244788</created>
+      <option name="number" value="00509" />
+      <option name="presentableId" value="LOCAL-00509" />
+      <option name="project" value="LOCAL" />
+      <updated>1519885244788</updated>
+    </task>
+    <task id="LOCAL-00510" summary="Add new API Update Profile.">
+      <created>1519885521674</created>
+      <option name="number" value="00510" />
+      <option name="presentableId" value="LOCAL-00510" />
+      <option name="project" value="LOCAL" />
+      <updated>1519885521674</updated>
+    </task>
+    <task id="LOCAL-00511" summary="Add new API Update Profile.">
+      <created>1519885661836</created>
+      <option name="number" value="00511" />
+      <option name="presentableId" value="LOCAL-00511" />
+      <option name="project" value="LOCAL" />
+      <updated>1519885661836</updated>
+    </task>
+    <task id="LOCAL-00512" summary="Add new API Update Profile.">
+      <created>1519885753880</created>
+      <option name="number" value="00512" />
+      <option name="presentableId" value="LOCAL-00512" />
+      <option name="project" value="LOCAL" />
+      <updated>1519885753880</updated>
+    </task>
+    <task id="LOCAL-00513" summary="Add new API Update Profile.">
+      <created>1519885850636</created>
+      <option name="number" value="00513" />
+      <option name="presentableId" value="LOCAL-00513" />
+      <option name="project" value="LOCAL" />
+      <updated>1519885850636</updated>
+    </task>
+    <task id="LOCAL-00514" summary="Add new API Update Profile.">
+      <created>1519885958319</created>
+      <option name="number" value="00514" />
+      <option name="presentableId" value="LOCAL-00514" />
+      <option name="project" value="LOCAL" />
+      <updated>1519885958319</updated>
+    </task>
+    <task id="LOCAL-00515" summary="Add new API Update Profile.">
+      <created>1519888052762</created>
+      <option name="number" value="00515" />
+      <option name="presentableId" value="LOCAL-00515" />
+      <option name="project" value="LOCAL" />
+      <updated>1519888052762</updated>
+    </task>
+    <task id="LOCAL-00516" summary="Add new API Update Profile.">
+      <created>1519888148148</created>
+      <option name="number" value="00516" />
+      <option name="presentableId" value="LOCAL-00516" />
+      <option name="project" value="LOCAL" />
+      <updated>1519888148148</updated>
+    </task>
+    <task id="LOCAL-00517" summary="Add new API Update Profile.">
+      <created>1519888383106</created>
+      <option name="number" value="00517" />
+      <option name="presentableId" value="LOCAL-00517" />
+      <option name="project" value="LOCAL" />
+      <updated>1519888383106</updated>
+    </task>
+    <task id="LOCAL-00518" summary="Add new API Update Profile.">
+      <created>1519889434255</created>
+      <option name="number" value="00518" />
+      <option name="presentableId" value="LOCAL-00518" />
+      <option name="project" value="LOCAL" />
+      <updated>1519889434255</updated>
+    </task>
+    <option name="localTasksCounter" value="519" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1106560000" />
+    <option name="totallyTimeSpent" value="1114467000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -912,7 +921,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55500823" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1606949" sideWeight="0.48335856" order="20" side_tool="true" content_ui="tabs" x="-83" y="-14" width="1366" height="705" />
       <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20415778" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20842217" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Job Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
@@ -980,7 +989,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Updated production config file." />
     <MESSAGE value="Fixed forget password email send." />
     <MESSAGE value="Fixed production and development variables." />
     <MESSAGE value="Changed password functionality added." />
@@ -1005,7 +1013,8 @@
     <MESSAGE value="Fixed some issues." />
     <MESSAGE value="Major fixes" />
     <MESSAGE value="Fixed recipes details API." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed recipes details API." />
+    <MESSAGE value="Add new API Update Profile." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add new API Update Profile." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1313,7 +1322,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="193" column="0" lean-forward="false" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1331,19 +1339,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-148">
-          <caret line="484" column="4" lean-forward="false" selection-start-line="484" selection-start-column="4" selection-end-line="484" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1359,7 +1358,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
           <caret line="91" column="52" lean-forward="false" selection-start-line="91" selection-start-column="52" selection-end-line="91" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1367,38 +1365,45 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
           <caret line="37" column="36" lean-forward="false" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="72" column="104" lean-forward="false" selection-start-line="72" selection-start-column="93" selection-end-line="72" selection-end-column="104" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="101" column="28" lean-forward="false" selection-start-line="101" selection-start-column="28" selection-end-line="101" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="29" lean-forward="false" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+        <state relative-caret-position="242">
+          <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="141" column="54" lean-forward="true" selection-start-line="141" selection-start-column="54" selection-end-line="141" selection-end-column="54" />
+        <state relative-caret-position="2816">
+          <caret line="128" column="66" lean-forward="false" selection-start-line="128" selection-start-column="66" selection-end-line="128" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10076">
+          <caret line="458" column="4" lean-forward="false" selection-start-line="458" selection-start-column="4" selection-end-line="458" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3366">
+          <caret line="153" column="27" lean-forward="false" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="75" column="27" lean-forward="false" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
           <folding />
         </state>
       </provider>
