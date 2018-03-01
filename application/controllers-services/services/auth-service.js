@@ -68,7 +68,7 @@ AuthService.prototype.User = {
                     attributes: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'description', 'dietPreference', 'allergies', 'drivingDistance', 'profileUrl', 'coverPhotoUrl', 'isEligibleForHire', 'isFacebookConnected'],
                     include: [{
                         model: db.Address,
-                        attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country']
+                        attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country', 'latitude', 'longitude']
                     }, {
                         model: db.IdentificationCard,
                         attributes: ['id', 'type', 'typeId', 'country'],
