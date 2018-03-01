@@ -9,6 +9,38 @@ AuthService = function () {
 }
 
 AuthService.prototype.User = {
+    updateUserProfile: async (userId, profileData, addressData) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            delete profileData.addressForm
+            const profile = await db.Profile.update(profileData, {
+                where: {
+                    id: {
+                        [Op.eq]: orderId
+                    }
+                },
+                transaction: trans
+            })
+            if (!profile) {
+                return false
+            }
+            const address = await db.Address.update(addressData, {
+                where: {
+                    id: {
+                        [Op.eq]: orderId
+                    }
+                },
+                transaction: trans
+            })
+            if (!address) {
+                return false
+            }
+            trans.commit()
+            return true
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetUserTypeDetailsById: async (userId) => {
         try {
             return await db.UserType.findOne({
