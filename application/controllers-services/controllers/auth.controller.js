@@ -139,8 +139,12 @@ let User = {
     updateProfile: async (req, res, next) => {
         try {
             const {id} = req.user
+            const currentProfie = await CommonService.User.GetProfileIdByUserTypeId(id)
+            if (currentProfie) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update profile.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
             const {profile, address} = req.body
-            const userData = await AuthService.User.updateUserProfile(id, profile, address)
+            const userData = await AuthService.User.updateUserProfile(id, currentProfie.id, profile, address)
             if (!userData) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update profile.'}, res, CommonConfig.STATUS_CODE.OK)
             }

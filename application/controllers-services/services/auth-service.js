@@ -9,13 +9,13 @@ AuthService = function () {
 }
 
 AuthService.prototype.User = {
-    updateUserProfile: async (userId, profileData, addressData) => {
+    updateUserProfile: async (userId, profileId, profileData, addressData) => {
         const trans = await db.sequelize.transaction()
         try {
             delete profileData.addressForm
             const profile = await db.Profile.update(profileData, {
                 where: {
-                    id: {
+                    createdBy: {
                         [Op.eq]: orderId
                     }
                 },
@@ -26,8 +26,8 @@ AuthService.prototype.User = {
             }
             const address = await db.Address.update(addressData, {
                 where: {
-                    id: {
-                        [Op.eq]: orderId
+                    profileId: {
+                        [Op.eq]: profileId
                     }
                 },
                 transaction: trans
