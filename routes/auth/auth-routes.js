@@ -15,7 +15,7 @@ router.post('/logout',
     RequestMethodsMiddlewares.ApplicationJsonData,
     AuthController.Auth.LogOutUser)
 
-router.post('profile',
+router.post('/profile',
     AuthController.User.updateProfile)
 
 router.put('/changepassword',
