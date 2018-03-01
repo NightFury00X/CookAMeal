@@ -16,7 +16,7 @@ AuthService.prototype.User = {
             const profile = await db.Profile.update(profileData, {
                 where: {
                     createdBy: {
-                        [Op.eq]: orderId
+                        [Op.eq]: userId
                     }
                 },
                 transaction: trans
