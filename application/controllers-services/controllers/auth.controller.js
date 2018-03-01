@@ -141,7 +141,7 @@ let User = {
             const {id} = req.user
             const currentProfie = await CommonService.User.GetProfileIdByUserTypeId(id)
             console.log('currentProfie', {currentProfie})
-            if (currentProfie) {
+            if (!currentProfie) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update profile.'}, res, CommonConfig.STATUS_CODE.OK)
             }
             const {profile, address} = req.body
