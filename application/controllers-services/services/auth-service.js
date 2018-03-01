@@ -33,10 +33,24 @@ AuthService.prototype.User = {
                 },
                 include: [{
                     model: db.Profile,
-                    attributes: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'description', 'dietPreference', 'allergies', 'drivingDistance', 'profileUrl', 'coverPhotoUrl'],
+                    attributes: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'description', 'dietPreference', 'allergies', 'drivingDistance', 'profileUrl', 'coverPhotoUrl', 'isEligibleForHire', 'isFacebookConnected'],
                     include: [{
                         model: db.Address,
                         attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country']
+                    }, {
+                        model: db.IdentificationCard,
+                        attributes: ['id', 'type', 'typeId', 'country'],
+                        include: [{
+                            model: db.MediaObject,
+                            attributes: ['imageUrl']
+                        }]
+                    }, {
+                        model: db.Certificate,
+                        attributes: ['id', 'profileId'],
+                        include: [{
+                            model: db.MediaObject,
+                            attributes: ['imageUrl']
+                        }]
                     }]
                 }]
             })
@@ -59,7 +73,7 @@ AuthService.prototype.User = {
                     attributes: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'description', 'dietPreference', 'allergies', 'drivingDistance', 'profileUrl', 'coverPhotoUrl'],
                     include: [{
                         model: db.Address,
-                        attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country']
+                        attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country', 'latitude', 'longitude']
                     }]
                 }]
             })

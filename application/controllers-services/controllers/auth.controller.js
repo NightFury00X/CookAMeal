@@ -136,6 +136,18 @@ let User = {
             next(error)
         }
     },
+    updateProfile: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {profile, address} = req.body
+            console.log('profile: ', profile)
+            console.log('address: ', address)
+            return ResponseHelpers.SetSuccessResponse({id, profile, address}, res, CommonConfig.STATUS_CODE.OK)
+        }
+        catch (error) {
+            next(error)
+        }
+    },
     GetAllReviewsByProfileId: async (req, res, next) => {
         try {
             const userId = req.user.id
