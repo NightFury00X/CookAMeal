@@ -152,7 +152,7 @@ let User = {
                 console.log('Error')
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update profile.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            const data = await AuthService.User.GetProfileDataIfProfileUpdated(userData.id)
+            const data = await AuthService.User.GetProfileDataIfProfileUpdated(id)
             return ResponseHelpers.SetSuccessResponse(data, res, CommonConfig.STATUS_CODE.OK)
         }
         catch (error) {
