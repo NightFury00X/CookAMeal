@@ -101,16 +101,22 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 await db.MediaObject.create(certificateMedia, {transaction: trans})
             }
         }
+        console.log('facebook: ', facebookId)
+        console.log('files.identificationCard: ', files.identificationCard)
+        console.log('registrationData.identificationCard: ', registrationData.identificationCard)
+
         if (facebookId || (files.identificationCard && registrationData.identificationCard)) {
-            await db.Profile.update({
+            const d = await db.Profile.update({
                 isEligibleForHire: true
             }, {
                 where: {
                     id: {
                         [Op.eq]: userProfileData.id
                     }
-                }
-            }, {transaction: trans})
+                },
+                transaction: trans
+            })
+            console.log('D: ', d)
         }
         await trans.commit()
         return {
@@ -126,6 +132,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             }
         }
     } catch (error) {
+        console.log('Error: ', error)
         await trans.rollback()
         throw (error)
     }
@@ -204,8 +211,9 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
                     id: {
                         [Op.eq]: tokenData.tokenId
                     }
-                }
-            }, {transaction: trans})
+                },
+                transaction: trans
+            })
             if (!data) {
                 await trans.rollback()
                 return null

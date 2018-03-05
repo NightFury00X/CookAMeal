@@ -204,8 +204,9 @@ AuthService.prototype.ChangePassword = async (userDetails) => {
                     id: records.id,
                     email: records.email
                 }]
-            }
-        }, {transaction: trans})
+            },
+            transaction: trans
+        })
         if (!resetPasswordData) {
             trans.rollback()
             return null
@@ -218,8 +219,9 @@ AuthService.prototype.ChangePassword = async (userDetails) => {
                     id: userDetails.id,
                     email: userDetails.email
                 }]
-            }
-        }, {transaction: trans})
+            },
+            transaction: trans
+        })
         if (!userData) {
             trans.rollback()
             return null

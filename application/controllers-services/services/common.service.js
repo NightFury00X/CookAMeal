@@ -237,8 +237,9 @@ CommonService.prototype.User = {
                             id: `${userId}`,
                             facebookId: `${facebookId}`
                         }
-                    }
-                }, {transaction: trans})
+                    },
+                    transaction: trans
+                })
                 if (!userRoleChanged) {
                     trans.rollback()
                     return null
@@ -250,8 +251,9 @@ CommonService.prototype.User = {
                         [Op.and]: {
                             createdBy: `${userId}`
                         }
-                    }
-                }, {transaction: trans})
+                    },
+                    transaction: trans
+                })
                 if (!profileChanged) {
                     trans.rollback()
                     return null
