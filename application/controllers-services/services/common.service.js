@@ -319,6 +319,106 @@ CommonService.prototype.User = {
             throw (error)
         }
     },
+    CheckProfileCoverUploaded: async (profileId) => {
+        try {
+            return await db.ProfileCover.findOne({
+                attributes: ['id'],
+                where: {
+                    profileId: {
+                        [Op.eq]: `${profileId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    CheckProfileImageUploaded: async (profileId) => {
+        try {
+            return await db.MediaObject.findOne({
+                attributes: ['id'],
+                where: {
+                    profileId: {
+                        [Op.eq]: `${profileId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    UpdateProfileCover: async (profileImageFile, profileCoverId, profileId) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const mediaObject = await db.MediaObject.update(profileImageFile, {
+                where: {
+                    profileCoverId: {
+                        [Op.eq]: `${profileCoverId}`
+                    }
+                },
+                transaction: trans
+            })
+            if (!mediaObject) {
+                trans.rollback()
+                return false
+            }
+            const profile = await db.Profile.update({
+                coverPhotoUrl: profileImageFile.imageUrl
+            }, {
+                where: {
+                    [Op.and]: {
+                        id: `${profileId}`
+                    }
+                },
+                transaction: trans
+            })
+            if (!profile) {
+                trans.rollback()
+                return false
+            }
+            trans.commit()
+            return profileImageFile.imageUrl
+        } catch (error) {
+            trans.rollback()
+            throw (error)
+        }
+    },
+    UpdateProfileImage: async (profileImageFile, mediaObjectId, profileId) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const mediaObject = await db.MediaObject.update(profileImageFile, {
+                where: {
+                    id: {
+                        [Op.eq]: `${mediaObjectId}`
+                    }
+                },
+                transaction: trans
+            })
+            if (!mediaObject) {
+                trans.rollback()
+                return false
+            }
+            const profile = await db.Profile.update({
+                profileUrl: profileImageFile.imageUrl
+            }, {
+                where: {
+                    [Op.and]: {
+                        id: `${profileId}`
+                    }
+                },
+                transaction: trans
+            })
+            if (!profile) {
+                trans.rollback()
+                return false
+            }
+            trans.commit()
+            return profileImageFile.imageUrl
+        } catch (error) {
+            trans.rollback()
+            throw (error)
+        }
+    },
     ProfileImage: async (profileImageData, files) => {
         const trans = await db.sequelize.transaction()
         try {
@@ -484,6 +584,38 @@ CommonService.prototype.User = {
 }
 
 CommonService.prototype.Recipe = {
+
+    FindCookDetailsByRecipeId: async (recipeId) => {
+        try {
+            return await db.Profile.findOne({
+                include: [{
+                    model: db.Recipe,
+                    where: {
+                        id: {
+                            [Op.eq]: `${recipeId}`
+                        }
+                    }
+                }, {
+                    model: db.MediaObject,
+                    attributes: ['id', 'imageUrl']
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    FindRecipePrice: async (recipeId) => {
+        try {
+            return await db.Recipe.findById(recipeId, {
+                include: [{
+                    model: db.MediaObject,
+                    attributes: ['id', 'imageUrl']
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     FindProfileIsEligible: async (profileId, eligibility) => {
         try {
             return await db.Profile.findOne({
@@ -690,6 +822,68 @@ CommonService.prototype.Recipe = {
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
+
+CommonService.prototype.Cart = {
+    CheckCartIsOpen: async (createdBy) => {
+        try {
+            return await db.AddToCart.findOne({
+                where: {
+                    [Op.and]: {
+                        createdBy: `${createdBy}`,
+                        status: false
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    AddToCart: async (addToCartDetails) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const addToCart = await db.AddToCart.create({createdBy: addToCartDetails.createdBy}, {transaction: trans})
+            if (!addToCart) {
+                return false
+            }
+            addToCartDetails.cartId = addToCart.id
+            const cartItem = await db.CartItem.create(addToCartDetails, {transaction: trans})
+            if (!cartItem) {
+                return false
+            }
+            trans.commit()
+            return true
+        } catch (error) {
+            trans.rollback()
+            throw (error)
+        }
+    },
+    AddItemToExistingCart: async (addToCartDetails) => {
+        try {
+            const cartItem = await db.CartItem.create(addToCartDetails)
+            return cartItem
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetCartDetails: async (createdBy) => {
+        try {
+            return await db.AddToCart.findOne({
+                attributes: ['id'],
+                where: {
+                    createdBy: {
+                        [Op.eq]: createdBy
+                    }
+                },
+                include: [{
+                    attributes: ['id', 'noOfServing', 'price', 'recipeId'],
+                    model: db.CartItem
                 }]
             })
         } catch (error) {

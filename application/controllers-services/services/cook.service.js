@@ -211,4 +211,34 @@ CookService.prototype.Order = {
     }
 }
 
+CookService.prototype.Certificate = {
+    CheckCertificateIsUploaded: async (profileId) => {
+        try {
+            return await db.Certificate.findOne({
+                attributes: ['id'],
+                where: {
+                    profileId: {
+                        [Op.eq]: `${profileId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    UpdateCertificate: async (certificateFile, certificateId) => {
+        try {
+            return await db.MediaObject.update(certificateFile, {
+                where: {
+                    certificateId: {
+                        [Op.eq]: `${certificateId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
+
 module.exports = new CookService()

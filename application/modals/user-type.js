@@ -153,6 +153,14 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
+
+        UserTypeModel.hasOne(models.AddToCart, {
+            foreignKey: {
+                name: 'createdBy',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
     }
     return UserTypeModel
 }

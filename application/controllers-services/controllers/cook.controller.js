@@ -74,9 +74,44 @@ const Order = {
     }
 }
 
+const Certificate = {
+    Update: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {files} = req
+            if (!files) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            } else if (!files.certificate) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            const certificateUploaded = await CookService.Certificate.CheckCertificateIsUploaded(profile.id)
+            if (!certificateUploaded) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            let certificateFile = files.certificate[0]
+            certificateFile.fileName = certificateFile.filename
+            certificateFile.originalName = certificateFile.originalname
+            certificateFile.mimeType = certificateFile.mimetype
+            certificateFile.imageUrl = CommonConfig.FILE_LOCATIONS.CERTIFICATE + certificateFile.filename
+            delete certificateFile.filename
+            delete certificateFile.originalname
+            delete certificateFile.mimetype
+            const result = await CookService.Certificate.UpdateCertificate(certificateFile, certificateUploaded.id)
+            if (!result) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update certificate'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            return ResponseHelpers.SetSuccessResponse({result, certificateFile}, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
 const CookController = {
     Recipe: Recipe,
-    Order: Order
+    Order: Order,
+    Certificate: Certificate
 }
 
 module.exports = CookController

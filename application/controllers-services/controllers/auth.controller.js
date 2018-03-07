@@ -74,16 +74,42 @@ let Auth = {
     ProfileCover: async (req, res, next) => {
         try {
             const userId = req.user.id
+            const {files} = req
+            if (!files) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Please select a valid profile cover image.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            } else if (!files.profileCover) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Please select a valid profile cover image.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
             const profileId = profile.id
-            const result = await CommonService.User.ProfileCover({profileId: profileId}, req.files)
-            if (!result) {
-                return ResponseHelpers.SetSuccessResponse({message: 'Profile cover not updated.'}, res, CommonConfig.STATUS_CODE.OK)
+            const profileCover = await CommonService.User.CheckProfileCoverUploaded(profileId)
+            if (!profileCover) {
+                const result = await CommonService.User.ProfileCover({profileId: profileId}, req.files)
+                if (!result) {
+                    return ResponseHelpers.SetSuccessResponse({message: 'Profile cover not updated.'}, res, CommonConfig.STATUS_CODE.OK)
+                }
+                return ResponseHelpers.SetSuccessResponse({
+                    message: 'Profile cover uploaded.',
+                    profileCover: result
+                }, res, CommonConfig.STATUS_CODE.OK)
+            } else {
+                let profileCoverFile = files.profileCover[0]
+                profileCoverFile.fileName = profileCoverFile.filename
+                profileCoverFile.originalName = profileCoverFile.originalname
+                profileCoverFile.mimeType = profileCoverFile.mimetype
+                profileCoverFile.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILECOVER + profileCoverFile.filename
+                delete profileCoverFile.filename
+                delete profileCoverFile.originalname
+                delete profileCoverFile.mimetype
+                const result = await CommonService.User.UpdateProfileImage(profileCoverFile, profileCover.id, profileId)
+                if (!result) {
+                    return ResponseHelpers.SetSuccessResponse({message: 'Profile cover not updated.'}, res, CommonConfig.STATUS_CODE.OK)
+                }
+                return ResponseHelpers.SetSuccessResponse({
+                    message: 'Profile cover updated.',
+                    profileCover: result
+                }, res, CommonConfig.STATUS_CODE.OK)
             }
-            return ResponseHelpers.SetSuccessResponse({
-                message: 'Profile cover updated.',
-                profileCover: result
-            }, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }
@@ -91,16 +117,42 @@ let Auth = {
     ProfileImage: async (req, res, next) => {
         try {
             const userId = req.user.id
+            const {files} = req
+            if (!files) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Please select a valid profile image.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            } else if (!files.profile) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Please select a valid profile image.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
             const profileId = profile.id
-            const result = await CommonService.User.ProfileImage({profileId: profileId}, req.files)
-            if (!result) {
-                return ResponseHelpers.SetSuccessResponse({message: 'Profile image not updated.'}, res, CommonConfig.STATUS_CODE.OK)
+            const profileImage = await CommonService.User.CheckProfileImageUploaded(profileId)
+            if (!profileImage) {
+                const result = await CommonService.User.ProfileImage({profileId: profileId}, req.files)
+                if (!result) {
+                    return ResponseHelpers.SetSuccessResponse({message: 'Profile image not uploaded.'}, res, CommonConfig.STATUS_CODE.OK)
+                }
+                return ResponseHelpers.SetSuccessResponse({
+                    message: `Profile image uploaded.`,
+                    profileUrl: result
+                }, res, CommonConfig.STATUS_CODE.OK)
+            } else {
+                let profileImageFile = files.profile[0]
+                profileImageFile.fileName = profileImageFile.filename
+                profileImageFile.originalName = profileImageFile.originalname
+                profileImageFile.mimeType = profileImageFile.mimetype
+                profileImageFile.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILE + profileImageFile.filename
+                delete profileImageFile.filename
+                delete profileImageFile.originalname
+                delete profileImageFile.mimetype
+                const result = await CommonService.User.UpdateProfileImage(profileImageFile, profileImage.id, profileId)
+                if (!result) {
+                    return ResponseHelpers.SetSuccessResponse({message: 'Profile image not updated.'}, res, CommonConfig.STATUS_CODE.OK)
+                }
+                return ResponseHelpers.SetSuccessResponse({
+                    message: `Profile image updated.`,
+                    profileUrl: result
+                }, res, CommonConfig.STATUS_CODE.OK)
             }
-            return ResponseHelpers.SetSuccessResponse({
-                message: 'Profile image updated.',
-                profileUrl: result
-            }, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }
@@ -523,6 +575,70 @@ let Order = {
     }
 }
 
+const Cart = {
+    AddToCart: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {recipeId, noOfServing} = req.body
+            const recipeDetails = await CommonService.Recipe.FindRecipePrice(recipeId)
+            if (!recipeDetails) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
+            }
+            const isCartOpen = await CommonService.Cart.CheckCartIsOpen(id)
+            if (isCartOpen) {
+                const addToCartData = {
+                    recipeId: recipeId,
+                    noOfServing: noOfServing,
+                    cartId: isCartOpen.id,
+                    price: recipeDetails.costPerServing
+                }
+                const result = CommonService.Cart.AddItemToExistingCart(addToCartData)
+                if (!result) {
+                    return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
+                }
+                return ResponseHelpers.SetSuccessResponse({Message: 'Added to Cart.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            } else {
+                const addToCartData = {
+                    recipeId: recipeId,
+                    noOfServing: noOfServing,
+                    createdBy: id,
+                    price: recipeDetails.costPerServing
+                }
+                const result = await CommonService.Cart.AddToCart(addToCartData)
+                if (!result) {
+                    return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
+                }
+                return ResponseHelpers.SetSuccessResponse({Message: 'Added to Cart.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+        } catch (error) {
+            next(error)
+        }
+    },
+    GetCartDetails: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const cartDetails = await CommonService.Cart.GetCartDetails(id)
+            if (!cartDetails) {
+                return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.NOT_FOUND)
+            }
+            let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
+            for (const index in convertedJSON.CartItems) {
+                if (convertedJSON.CartItems.hasOwnProperty(index)) {
+                    const {recipeId} = convertedJSON.CartItems[index]
+                    const recipeDetails = await CommonService.Recipe.FindRecipePrice(recipeId)
+                    const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
+                    delete convertedJSON.CartItems[index].recipeId
+                    convertedJSON.CartItems[index].Recipe = recipeDetails
+                    convertedJSON.CartItems[index].Cook = cookDetails
+                }
+            }
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
 let AuthController = {
     Auth: Auth,
     User: User,
@@ -533,7 +649,8 @@ let AuthController = {
     Feedback: Feedback,
     Favorite: Favorite,
     ReviewDetails: ReviewDetails,
-    Order: Order
+    Order: Order,
+    Cart: Cart
 }
 
 module.exports = AuthController

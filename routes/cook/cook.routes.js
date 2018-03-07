@@ -28,4 +28,8 @@ router.get('/recipe/my-recipes',
 router.get('/order/current-orders',
     CookController.Order.CurrentOrders)
 
+router.post('/certificate',
+    FileUploader.UploadCertificate,
+    CookController.Certificate.Update)
+
 module.exports = router

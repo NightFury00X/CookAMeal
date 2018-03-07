@@ -113,6 +113,10 @@ module.exports = {
             spiceLevel: Joi.string().required().allow('Mild', 'Medium', 'Hot'),
             orderServings: Joi.number().required(),
             specialInstruction: Joi.string().required()
+        }),
+        AddToCart: Joi.object().keys({
+            recipeId: Joi.string().required(),
+            noOfServing: Joi.string().required()
         })
     }
 }

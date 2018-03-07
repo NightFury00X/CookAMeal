@@ -21,7 +21,7 @@ const localLogin = new LocalStrategy(localOptions, async (userEmail, password, d
             }
         })
         if (!userType) {
-            done({
+            return done({
                 message: 'Email not found.',
                 status: CommonConfig.STATUS_CODE.NOT_FOUND
             }, false)
@@ -34,7 +34,7 @@ const localLogin = new LocalStrategy(localOptions, async (userEmail, password, d
             }
         })
         if (!user) {
-            done({
+            return done({
                 message: 'Invalid user id or password.',
                 status: CommonConfig.STATUS_CODE.OK
             }, false)
@@ -53,15 +53,20 @@ const localLogin = new LocalStrategy(localOptions, async (userEmail, password, d
             }
         })
         if (!userForResetPassword) {
-            done({
+            return done({
                 message: 'Invalid user id or password.',
                 status: CommonConfig.STATUS_CODE.OK
             }, false)
         }
         const isTempPasswordMatch = await userForResetPassword.comparePasswords(password)
-        if (isTempPasswordMatch) {
-            return done(null, userForResetPassword)
+        console.log('====================', isTempPasswordMatch)
+        if (!isTempPasswordMatch) {
+            return done({
+                message: 'Invalid user id or password.',
+                status: CommonConfig.STATUS_CODE.OK
+            }, false)
         }
+        return done(null, userForResetPassword)
 
         // const normalUserLogin = await db.User.findOne({
         //     where: {
@@ -111,7 +116,7 @@ const localLogin = new LocalStrategy(localOptions, async (userEmail, password, d
         //     status: CommonConfig.STATUS_CODE.OK
         // }, false)
     } catch (error) {
-        done({
+        return done({
             message: error,
             status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
         }, false)
@@ -140,7 +145,7 @@ let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
             }, false)
         }
         if (!uniqueKey) {
-            done(null, user)
+            return done(null, user)
         } else {
             const userForResetPassword = await db.ResetPassword.findOne({
                 where: {
@@ -157,11 +162,12 @@ let jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
                     status: CommonConfig.STATUS_CODE.FORBIDDEN
                 }, false)
             }
+            console.log('=======================================')
             user.userRole = userRole
-            done(null, user)
+            return done(null, user)
         }
     } catch (error) {
-        done({
+        return done({
             message: error,
             status: CommonConfig.STATUS_CODE.INTERNAL_SERVER_ERROR
         }, false)

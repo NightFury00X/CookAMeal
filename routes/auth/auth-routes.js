@@ -44,6 +44,11 @@ router.post('/profile-cover',
     FileUploader.UploadProfileCover,
     AuthController.Auth.ProfileCover)
 
+router.post('/profile-cover',
+    RequestMethodsMiddlewares.ApplicationFormData,
+    FileUploader.UploadProfileCover,
+    AuthController.Auth.ProfileCover)
+
 router.post('/profile-image',
     RequestMethodsMiddlewares.ApplicationFormData,
     FileUploader.UploadProfileImage,
@@ -95,3 +100,13 @@ router.post('/order/check-out',
 
 router.get('/my-order',
     AuthController.Order.GetMyOrders)
+
+router.post('/cart',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.AddToCart),
+    AuthController.Cart.AddToCart)
+
+router.get('/cart',
+    AuthController.Cart.GetCartDetails)
+
+module.exports = router
