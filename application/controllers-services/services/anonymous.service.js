@@ -140,6 +140,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
 
 AnonymousService.prototype.Authenticate = async (userDetails) => {
     try {
+        console.log('userDetails: ', userDetails)
         let userTypeDetails
         if (userDetails.tokenStatus && userDetails.tokenId) {
             userTypeDetails = await db.UserType.findOne({
@@ -167,9 +168,9 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
         } else {
             userTypeDetails = await db.UserType.findOne({
                 where: {
-                    [Op.and]: [{
-                        id: userDetails.createdBy
-                    }]
+                    id: {
+                        [Op.eq]: `${userDetails.createdBy}`
+                    }
                 },
                 include: [{
                     model: db.Profile,
@@ -179,6 +180,7 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 }]
             })
         }
+        console.log('userTypeDetails', userTypeDetails)
         if (!userTypeDetails) {
             return null
         }

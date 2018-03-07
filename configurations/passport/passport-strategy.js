@@ -12,6 +12,7 @@ const localOptions = {
 }
 const localLogin = new LocalStrategy(localOptions, async (userEmail, password, done) => {
     try {
+
         const userType = await db.UserType.findOne({
             where: {
                 [Op.or]: {
@@ -23,7 +24,7 @@ const localLogin = new LocalStrategy(localOptions, async (userEmail, password, d
         if (!userType) {
             return done({
                 message: 'Email not found.',
-                status: CommonConfig.STATUS_CODE.NOT_FOUND
+                status: CommonConfig.STATUS_CODE.OK
             }, false)
         }
         const user = await db.User.findOne({
@@ -52,12 +53,14 @@ const localLogin = new LocalStrategy(localOptions, async (userEmail, password, d
                 }]
             }
         })
+        console.log('compare pawd')
         if (!userForResetPassword) {
             return done({
                 message: 'Invalid user id or password.',
                 status: CommonConfig.STATUS_CODE.OK
             }, false)
         }
+        console.log('compare pawd')
         const isTempPasswordMatch = await userForResetPassword.comparePasswords(password)
         console.log('====================', isTempPasswordMatch)
         if (!isTempPasswordMatch) {
@@ -66,6 +69,7 @@ const localLogin = new LocalStrategy(localOptions, async (userEmail, password, d
                 status: CommonConfig.STATUS_CODE.OK
             }, false)
         }
+        CONSOLE.LOG('done')
         return done(null, userForResetPassword)
 
         // const normalUserLogin = await db.User.findOne({

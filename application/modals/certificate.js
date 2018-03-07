@@ -14,7 +14,7 @@ module.exports = function (sequelize, DataTypes) {
     let Certificate = sequelize.define('Certificate', modelDefinition)
 
     Certificate.associate = function (models) {
-        Certificate.hasMany(models.MediaObject, {
+        Certificate.hasOne(models.MediaObject, {
             foreignKey: {
                 name: 'certificateId',
                 onDelete: 'CASCADE'
