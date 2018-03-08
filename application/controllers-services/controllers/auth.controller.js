@@ -126,7 +126,6 @@ let Auth = {
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
             const profileId = profile.id
             const profileImage = await CommonService.User.CheckProfileImageUploaded(profileId)
-            console.log('==========================', profileImage)
             if (!profileImage) {
                 const result = await CommonService.User.ProfileImage({profileId: profileId}, req.files)
                 if (!result) {
