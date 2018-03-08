@@ -101,7 +101,7 @@ let Auth = {
                 delete profileCoverFile.filename
                 delete profileCoverFile.originalname
                 delete profileCoverFile.mimetype
-                const result = await CommonService.User.UpdateProfileImage(profileCoverFile, profileCover.id, profileId)
+                const result = await CommonService.User.UpdateProfileCover(profileCoverFile, profileCover.id, profileId)
                 if (!result) {
                     return ResponseHelpers.SetSuccessResponse({message: 'Profile cover not updated.'}, res, CommonConfig.STATUS_CODE.OK)
                 }
@@ -126,6 +126,7 @@ let Auth = {
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
             const profileId = profile.id
             const profileImage = await CommonService.User.CheckProfileImageUploaded(profileId)
+            console.log('==========================', profileImage)
             if (!profileImage) {
                 const result = await CommonService.User.ProfileImage({profileId: profileId}, req.files)
                 if (!result) {
