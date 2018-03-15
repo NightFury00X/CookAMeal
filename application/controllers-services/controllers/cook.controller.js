@@ -114,8 +114,8 @@ const IdentificationCard = {
     Update: async (req, res, next) => {
         try {
             const userId = req.user.id
-            const {identificationCardDetails} = req.body
-            if (!identificationCardDetails) {
+            const {details} = req.body
+            if (!details) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
             }
             if (!req.files) {
@@ -125,7 +125,8 @@ const IdentificationCard = {
             if (!profile) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Profile not found.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            let result = await CookService.UpdateIdentificationCard(profile.id, identificationCardDetails, req.files)
+            console.log('details: ', details)
+            let result = await CookService.UpdateIdentificationCard(profile.id, details, req.files)
             if (!result) {
                 return ResponseHelpers.SetSuccessErrorResponse('Unable to update Identification Card.', res, CommonConfig.STATUS_CODE.OK)
             }
