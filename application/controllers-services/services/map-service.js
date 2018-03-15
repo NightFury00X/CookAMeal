@@ -5,12 +5,26 @@ const Config = require('../../../configurations/main')
 const db = require('../../modals')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 
+const NodeGeocoder = require('node-geocoder')
+
+const options = {
+    provider: 'google',
+    httpAdapter: 'https',
+    apiKey: 'AIzaSyCyZjxhFaAPLudPLGLUjJ24DkAw-so__fg',
+    formatter: null
+}
+
+let geocoder = NodeGeocoder(options)
+
 distance.apiKey = Config.Google.Map.key
 
 MapService = function () {
 }
 
 MapService.prototype.Map = {
+    GetGeoCordinatesFromAddress: async (address) => {
+        return await geocoder.geocode(`${address}`)
+    },
     FindAllCooksLocationsForMap: async () => {
         return await db.Profile.findAll({
             attributes: ['id', 'firstname', 'lastname'],
@@ -67,26 +81,28 @@ MapService.prototype.Map = {
             throw (error)
         }
     },
-    FindGeoDistance: async (origin, destination) => {
+    FindGeoDistance: async (origin, destination, units, filter) => {
+        let distanceValue = 5000
+        if (units === 'metric') {
+            distanceValue = filter * 1000
+        } else {
+            distanceValue = filter * 1600
+        }
+        console.log('units: ', units)
+        console.log('distance: ', distanceValue)
         const distanceData = await new Promise((resolve, reject) => {
             distance.get(
                 {
-                    origin: origin,
+                    origin: `${origin}`,
                     destination: `${destination.latitude}` + ',' + `${destination.longitude}`,
-                    units: 'metric'
+                    units: `${units}`
                 },
                 function (err, data) {
                     if (err) return reject(err)
                     return resolve(data)
                 })
         })
-        let totalMeters = 0
-        if (distanceData.distance.indexOf('km')) {
-            totalMeters = distanceData.distance.split(' ')[0] * 1000
-        } else {
-            totalMeters = distanceData.distance.split(' ')[0]
-        }
-        if (totalMeters >= 0 && totalMeters < 10000) {
+        if (distanceData.distanceValue <= distanceValue) {
             return distanceData
         } else {
             return false

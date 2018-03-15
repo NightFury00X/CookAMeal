@@ -750,6 +750,8 @@ CommonService.prototype.Recipe = {
                         required: true,
                         model: db.MediaObject,
                         attributes: ['id', 'imageUrl']
+                    }, {
+                        model: db.RecipesGeoLocations
                     }]
                 }]
             })

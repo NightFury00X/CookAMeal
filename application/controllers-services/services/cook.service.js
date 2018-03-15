@@ -71,6 +71,18 @@ CookService.prototype.Recipe = {
                     categoryId: recipe.categoryId
                 }, {transaction: trans})
             }
+            const recipeGeoLocationsData = {
+                latitude: geoCordinations.latitude,
+                longitude: geoCordinations.longitude,
+                profileId: profile.id,
+                recipeId: recipeData.id
+            }
+
+            const recipeGeoLocations = await db.RecipesGeoLocations.create(recipeGeoLocationsData, {transaction: trans})
+            if (!recipeGeoLocations) {
+                await trans.rollback()
+                return null
+            }
             for (const index in allergies) {
                 if (allergies.hasOwnProperty(index)) {
                     allergies[index].recipeId = recipeData.id

@@ -141,8 +141,14 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
-
         Recipe.hasOne(models.RecipesGeoLocations, {
+            foreignKey: {
+                name: 'recipeId',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+        Recipe.hasMany(models.RecipeImage, {
             foreignKey: {
                 name: 'recipeId',
                 allowNull: false,

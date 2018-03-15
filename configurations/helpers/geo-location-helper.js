@@ -8,5 +8,6 @@ const options = {
 }
 
 module.exports = {
-    geocoder: NodeGeocoder(options)
+    geocoder: NodeGeocoder(options),
+    GeoCoder: NodeGeocoder(options)
 }

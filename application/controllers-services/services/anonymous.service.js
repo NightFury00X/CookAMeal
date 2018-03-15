@@ -4,6 +4,7 @@ const db = require('../../modals')
 const CommonService = require('./common.service')
 const {AuthenticationHelpers, MailingHelpers} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
+const MapService = require('../services/map-service')
 
 AnonymousService = function () {
 }
@@ -39,13 +40,21 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         let userProfileData = await db.Profile.create(tempData, {transaction: trans})
         let profileImagePic = null
         registrationData.address.profileId = userProfileData.id
+
+        const {address} = registrationData
+        delete address.latitude
+        delete address.longitude
+        delete address.profileId
+        const location = await MapService.Map.GetGeoCordinatesFromAddress(`${address.street}, ${address.city}, ${address.state}, ${address.country}`)
+        registrationData.address.latitude = location[0].latitude
+        registrationData.address.longitude = location[0].longitude
+        registrationData.address.profileId = userProfileData.id
         await db.Address.create(registrationData.address, {transaction: trans})
         let ProfileMediaObject
         let identificationCardData
         if (files) {
             if (files.profile) {
                 let profileImage = files.profile[0]
-                console.log('Profile: ', profileImage)
                 profileImage.profileId = userProfileData.id
                 profileImage.objectType = CommonConfig.OBJECT_TYPE.PROFILE
                 profileImage.imageUrl = CommonConfig.FILE_LOCATIONS.PROFILE + profileImage.filename

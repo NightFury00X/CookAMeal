@@ -102,9 +102,9 @@ let Category = {
             const categoryId = req.value.params.id
             const type = req.value.params.type
             const userId = req.user.id
+            const {unit, filter} = req.value.params
+
             const {lat, long} = req.value.params
-            console.log('latitude: ', lat)
-            console.log('longitude: ', long)
             const recipesList = await CommonService.Recipe.FindAllByCategoryId(categoryId, type)
             let convertedJSON = JSON.parse(JSON.stringify(recipesList))
             convertedJSON = convertedJSON.filter(function (item) {
@@ -116,14 +116,28 @@ let Category = {
                         if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const recipeId = convertedJSON[outer].Recipes[inner].id
                             const profileId = convertedJSON[outer].Recipes[inner].profileId
-                            // if (type === '1') {
-                            //     const cookProfile = await CommonService.Recipe.FindProfileIsEligible(profileId, true)
-                            //     if (!cookProfile) {
-                            //         convertedJSON[outer].isEligibleForHire = false
-                            //     } else {
-                            //         onvertedJSON[outer].isEligibleForHire = true
-                            //     }
-                            // }
+                            if (!convertedJSON[outer].Recipes[inner].RecipesGeoLocation) {
+                                convertedJSON[outer].Recipes[inner].map = null
+                                continue
+                            }
+                            const destination = {
+                                latitude: convertedJSON[outer].Recipes[inner].RecipesGeoLocation.latitude,
+                                longitude: convertedJSON[outer].Recipes[inner].RecipesGeoLocation.longitude
+                            }
+                            let unitValue = 'metric'
+                            if (unit.toLowerCase() === 'usa') {
+                                unitValue = 'imperial'
+                            }
+                            let filterValue = 5
+                            if (filter) {
+                                filterValue = filter
+                            }
+                            const map = await MapService.Map.FindGeoDistance(`${lat}, ${long}`, destination, `${unitValue}`, filterValue)
+                            if (!map) {
+                                convertedJSON[outer].Recipes[inner].map = null
+                                continue
+                            }
+                            convertedJSON[outer].Recipes[inner].map = true
                             const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
                             const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
                             if (userId) {
@@ -138,12 +152,13 @@ let Category = {
                     }
                 }
             }
-            // if (type === '1') {
-            //     convertedJSON = convertedJSON.filter(function (item) {
-            //         return item.isEligibleForHire === true
-            //     })
-            // }
-            console.log('convertedJSON: ', convertedJSON)
+            convertedJSON = convertedJSON.filter(function (item) {
+                item.Recipes = item.Recipes.filter(function (recipe) {
+                    return recipe.map != null
+                })
+                return item.Recipes.length > 0
+
+            })
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
