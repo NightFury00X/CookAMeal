@@ -183,7 +183,7 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
-        ProfileModel.hasMany(models.ProfileCover, {
+        ProfileModel.hasOne(models.ProfileCover, {
             foreignKey: {
                 name: 'profileId',
                 onDelete: 'CASCADE'

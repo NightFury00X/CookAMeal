@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
     let IdentificationCard = sequelize.define('IdentificationCard', modelDefinition)
 
     IdentificationCard.associate = function (models) {
-        IdentificationCard.hasOne(models.MediaObject, {
+        IdentificationCard.hasMany(models.MediaObject, {
             foreignKey: {
                 name: 'identificationCardId',
                 onDelete: 'CASCADE'

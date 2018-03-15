@@ -2,22 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/application/modals/preparation-method.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/application/modals/recipes-geo-location.js" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/cart-items.js" afterPath="$PROJECT_DIR$/application/modals/cart-items.js" />
+      <change beforePath="$PROJECT_DIR$/application/modals/identificationcard.js" afterPath="$PROJECT_DIR$/application/modals/identificationcard.js" />
       <change beforePath="$PROJECT_DIR$/application/modals/profile.js" afterPath="$PROJECT_DIR$/application/modals/profile.js" />
       <change beforePath="$PROJECT_DIR$/application/modals/recipe.js" afterPath="$PROJECT_DIR$/application/modals/recipe.js" />
-      <change beforePath="$PROJECT_DIR$/application/schemas/schema.js" afterPath="$PROJECT_DIR$/application/schemas/schema.js" />
-      <change beforePath="$PROJECT_DIR$/configurations/helpers/file-upload-multer.js" afterPath="$PROJECT_DIR$/configurations/helpers/file-upload-multer.js" />
-      <change beforePath="$PROJECT_DIR$/routes/auth/auth-routes.js" afterPath="$PROJECT_DIR$/routes/auth/auth-routes.js" />
-      <change beforePath="$PROJECT_DIR$/routes/common/common-routes.js" afterPath="$PROJECT_DIR$/routes/common/common-routes.js" />
-      <change beforePath="$PROJECT_DIR$/routes/cook/cook.routes.js" afterPath="$PROJECT_DIR$/routes/cook/cook.routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -32,101 +20,101 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="geo-location-helper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configurations/helpers/geo-location-helper.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common-config.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configurations/helpers/common-config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1386">
-              <caret line="63" column="31" lean-forward="false" selection-start-line="63" selection-start-column="19" selection-end-line="63" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="helper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configurations/helpers/helper.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="16" column="33" lean-forward="true" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="file-upload-multer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configurations/helpers/file-upload-multer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4840">
-              <caret line="220" column="42" lean-forward="true" selection-start-line="220" selection-start-column="42" selection-end-line="220" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="middlewares.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configurations/middlewares/middlewares.js">
+      <file leaf-file-name="profile.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="358">
-              <caret line="146" column="22" lean-forward="true" selection-start-line="146" selection-start-column="22" selection-end-line="146" selection-end-column="22" />
+              <caret line="192" column="57" lean-forward="true" selection-start-line="192" selection-start-column="57" selection-end-line="192" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cook.routes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/cook/cook.routes.js">
+      <file leaf-file-name="recipes-geo-location.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/recipes-geo-location.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="38" column="42" lean-forward="true" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
+            <state relative-caret-position="484">
+              <caret line="22" column="49" lean-forward="true" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.routes.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/routes/admin/admin.routes.js">
+      <file leaf-file-name="add-to-cart.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/add-to-cart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="396">
+              <caret line="27" column="8" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="27" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cook.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js">
+      <file leaf-file-name="mediaobject.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/mediaobject.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="127" column="54" lean-forward="false" selection-start-line="127" selection-start-column="54" selection-end-line="127" selection-end-column="54" />
+            <state relative-caret-position="1012">
+              <caret line="48" column="21" lean-forward="true" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cook.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/cook.service.js">
+      <file leaf-file-name="certificate.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/certificate.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="39">
-              <caret line="255" column="0" lean-forward="false" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
+            <state relative-caret-position="330">
+              <caret line="15" column="3" lean-forward="false" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="anonymous.routes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/anonymous/anonymous.routes.js">
+      <file leaf-file-name="cook-deal-with-category.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/cook-deal-with-category.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="59" column="39" lean-forward="true" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
+            <state relative-caret-position="682">
+              <caret line="31" column="34" lean-forward="true" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="identificationcard.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/modals/identificationcard.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="33" column="35" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="profile-cover.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/profile-cover.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="14" column="41" lean-forward="true" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cart-items.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="550">
+              <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="recipe.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/recipe.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="149" column="40" lean-forward="true" selection-start-line="149" selection-start-column="40" selection-end-line="149" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -136,7 +124,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isJSON</find>
       <find>'imageUrl'</find>
       <find>'imageurl'</find>
       <find>Logout</find>
@@ -166,6 +153,7 @@
       <find>certificate</find>
       <find>face</find>
       <find>const {</find>
+      <find>PreparationMethod</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -205,9 +193,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/modals/allergies.js" />
-        <option value="$PROJECT_DIR$/application/modals/cook-deal-with-category.js" />
-        <option value="$PROJECT_DIR$/application/modals/identificationcard.js" />
         <option value="$PROJECT_DIR$/application/modals/recipe-allergies.js" />
         <option value="$PROJECT_DIR$/application/modals/subcategory.js" />
         <option value="$PROJECT_DIR$/application/modals/mediaobject.js" />
@@ -234,11 +219,9 @@
         <option value="$PROJECT_DIR$/configurations/helpers/helper.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
         <option value="$PROJECT_DIR$/application/modals/user-type.js" />
-        <option value="$PROJECT_DIR$/application/modals/add-to-cart.js" />
         <option value="$PROJECT_DIR$/configurations/passport/passport-strategy.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/anonymous.controller.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" />
-        <option value="$PROJECT_DIR$/application/modals/certificate.js" />
         <option value="$PROJECT_DIR$/application/modals/cart-items.js" />
         <option value="$PROJECT_DIR$/application/modals/preparation-method.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js" />
@@ -248,14 +231,19 @@
         <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
         <option value="$PROJECT_DIR$/application/modals/recipe-geo-location.js" />
         <option value="$PROJECT_DIR$/application/modals/recipes-geo-location.js" />
-        <option value="$PROJECT_DIR$/application/modals/recipe.js" />
-        <option value="$PROJECT_DIR$/application/modals/profile.js" />
         <option value="$PROJECT_DIR$/application/schemas/schema.js" />
         <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
         <option value="$PROJECT_DIR$/configurations/middlewares/validation.js" />
         <option value="$PROJECT_DIR$/routes/auth/auth-routes.js" />
         <option value="$PROJECT_DIR$/routes/cook/cook.routes.js" />
+        <option value="$PROJECT_DIR$/application/modals/cook-deal-with-category.js" />
+        <option value="$PROJECT_DIR$/application/modals/index.js" />
+        <option value="$PROJECT_DIR$/application/modals/recipe.js" />
+        <option value="$PROJECT_DIR$/application/modals/add-to-cart.js" />
+        <option value="$PROJECT_DIR$/application/modals/certificate.js" />
+        <option value="$PROJECT_DIR$/application/modals/profile.js" />
+        <option value="$PROJECT_DIR$/application/modals/identificationcard.js" />
       </list>
     </option>
   </component>
@@ -358,6 +346,12 @@
               <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="controllers-services" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="modals" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
@@ -622,14 +616,7 @@
       <workItem from="1521009909531" duration="1945000" />
       <workItem from="1521012855096" duration="7182000" />
       <workItem from="1521032347920" duration="3779000" />
-      <workItem from="1521089977315" duration="176000" />
-    </task>
-    <task id="LOCAL-00476" summary="Major fixes">
-      <created>1517927933545</created>
-      <option name="number" value="00476" />
-      <option name="presentableId" value="LOCAL-00476" />
-      <option name="project" value="LOCAL" />
-      <updated>1517927933546</updated>
+      <workItem from="1521089977315" duration="2810000" />
     </task>
     <task id="LOCAL-00477" summary="Major fixes">
       <created>1518174802684</created>
@@ -967,11 +954,18 @@
       <option name="project" value="LOCAL" />
       <updated>1520484032643</updated>
     </task>
-    <option name="localTasksCounter" value="525" />
+    <task id="LOCAL-00525" summary="Add new API Update Profile.">
+      <created>1521090188778</created>
+      <option name="number" value="00525" />
+      <option name="presentableId" value="LOCAL-00525" />
+      <option name="project" value="LOCAL" />
+      <updated>1521090188778</updated>
+    </task>
+    <option name="localTasksCounter" value="526" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1179389000" />
+    <option name="totallyTimeSpent" value="1182023000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -991,7 +985,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7567861" sideWeight="0.51664144" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32790446" sideWeight="0.4969743" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55500823" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18132465" sideWeight="0.48335856" order="20" side_tool="true" content_ui="tabs" x="-83" y="-14" width="1366" height="705" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36807817" sideWeight="0.48335856" order="20" side_tool="true" content_ui="tabs" x="-83" y="-14" width="1366" height="705" />
       <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24093817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1115,27 +1109,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/admin.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="76" column="37" lean-forward="true" selection-start-line="76" selection-start-column="37" selection-end-line="76" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/scheduler.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="49" column="54" lean-forward="false" selection-start-line="49" selection-start-column="54" selection-end-line="49" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/admin.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -1154,13 +1127,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
           <caret line="36" column="5" lean-forward="false" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/profile-cover.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="14" column="41" lean-forward="true" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -1189,13 +1155,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="556">
           <caret line="41" column="11" lean-forward="false" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configurations/main/development.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -1269,45 +1228,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/identificationcard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/certificate.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.eslintrc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
           <caret line="329" column="13" lean-forward="false" selection-start-line="329" selection-start-column="13" selection-end-line="329" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/add-to-cart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="14" lean-forward="false" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="11" lean-forward="false" selection-start-line="5" selection-start-column="11" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/preparation-method.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="14" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -1329,34 +1253,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="16324">
           <caret line="742" column="28" lean-forward="false" selection-start-line="742" selection-start-column="28" selection-end-line="742" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/cook-deal-with-category.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="40" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/recipes-geo-location.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="54" lean-forward="true" selection-start-line="13" selection-start-column="54" selection-end-line="13" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="194" column="38" lean-forward="true" selection-start-line="194" selection-start-column="38" selection-end-line="194" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/recipe.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="147" column="35" lean-forward="true" selection-start-line="147" selection-start-column="35" selection-end-line="147" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1364,6 +1261,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1483,6 +1381,120 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configurations/main/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="17" column="33" lean-forward="true" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configurations/main/development.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="20" column="46" lean-forward="true" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/preparation-method.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="21" column="46" lean-forward="false" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/recipes-geo-location.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="22" column="49" lean-forward="true" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/recipe.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="149" column="40" lean-forward="true" selection-start-line="149" selection-start-column="40" selection-end-line="149" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/add-to-cart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="27" column="8" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="27" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/cook-deal-with-category.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="31" column="34" lean-forward="true" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/certificate.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="3" lean-forward="false" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/mediaobject.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1012">
+          <caret line="48" column="21" lean-forward="true" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/profile-cover.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="14" column="41" lean-forward="true" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="192" column="57" lean-forward="true" selection-start-line="192" selection-start-column="57" selection-end-line="192" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/identificationcard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="33" column="35" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
           <folding />
         </state>
       </provider>

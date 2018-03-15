@@ -142,7 +142,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         })
 
-        Recipe.hasMany(models.RecipesGeoLocations, {
+        Recipe.hasOne(models.RecipesGeoLocations, {
             foreignKey: {
                 name: 'recipeId',
                 allowNull: false,
