@@ -101,7 +101,36 @@ const Certificate = {
             if (!result) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update certificate'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
-            return ResponseHelpers.SetSuccessResponse({result, certificateFile}, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse({
+                Message: 'Certificate updated successfully.'
+            }, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
+const IdentificationCard = {
+    Update: async (req, res, next) => {
+        try {
+            const userId = req.user.id
+            const {identificationCardDetails} = req.body
+            if (!identificationCardDetails) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            if (!req.files) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            if (!profile) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Profile not found.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            let result = await CookService.UpdateIdentificationCard(profile.id, identificationCardDetails, req.files)
+            if (!result) {
+                return ResponseHelpers.SetSuccessErrorResponse('Unable to update Identification Card.', res, CommonConfig.STATUS_CODE.OK)
+            }
+            result.type = true
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
@@ -111,7 +140,8 @@ const Certificate = {
 const CookController = {
     Recipe: Recipe,
     Order: Order,
-    Certificate: Certificate
+    Certificate: Certificate,
+    IdentificationCard: IdentificationCard
 }
 
 module.exports = CookController

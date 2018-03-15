@@ -640,7 +640,7 @@ CommonService.prototype.Recipe = {
     FindRecipeByCatIdAndSubIds: async (categoryId, subCategoryId) => {
         try {
             return await db.Recipe.findAll({
-                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'profileId'],
+                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'profileId'],
                 where: {
                     [Op.and]: [{
                         categoryId: categoryId,
@@ -668,7 +668,7 @@ CommonService.prototype.Recipe = {
                     attributes: ['id', 'imageUrl']
                 }, {
                     model: db.Recipe,
-                    attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
+                    attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
                     where: {
                         id: {
                             [Op.eq]: recipeId
@@ -733,11 +733,16 @@ CommonService.prototype.Recipe = {
                 attributes: ['id', 'name'],
                 include: [{
                     model: db.Recipe,
-                    attributes: ['id', 'dishName', 'costPerServing', 'subCategoryId', 'orderByDateTime', 'profileId'],
+                    attributes: ['id', 'dishName', 'costPerServing', 'subCategoryId', 'orderByDateTime', 'profileId', 'eligibleFor'],
                     where: {
-                        categoryId: {
-                            [Op.eq]: [categoryId]
-                        }
+                        [Op.and]: [{
+                            categoryId: categoryId
+                        }],
+                        [Op.or]: [{
+                            eligibleFor: `${type}`
+                        }, {
+                            eligibleFor: `${3}`
+                        }]
                     },
                     required: true,
                     limit: 10,
@@ -792,7 +797,7 @@ CommonService.prototype.Recipe = {
                         [Op.ne]: `${recipeId}`
                     }
                 },
-                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
+                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']
@@ -818,7 +823,7 @@ CommonService.prototype.Recipe = {
                         [Op.eq]: `${subCategoryId}`
                     }
                 },
-                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationMethod', 'preparationTime', 'cookTime', 'categoryId', 'subCategoryId', 'profileId'],
+                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'categoryId', 'subCategoryId', 'profileId'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']
@@ -885,6 +890,53 @@ CommonService.prototype.Cart = {
                     attributes: ['id', 'noOfServing', 'price', 'recipeId'],
                     model: db.CartItem
                 }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    DeleteCartDetails: async (id) => {
+        try {
+            return await db.CartItem.destroy({
+                where: {
+                    id: {
+                        [Op.eq]: id
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
+
+CommonService.prototype.Facebook = {
+    CheckFacebookIsConnected: async (createdBy) => {
+        try {
+            return await db.Profile.findOne({
+                attributes: ['id', 'isFacebookConnected'],
+                where: {
+                    createdBy: {
+                        [Op.eq]: `${createdBy}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    UpdateUserFacebookConnectionStatus: async (createdBy, isFacebookConnected) => {
+        try {
+            const profile = {
+                isFacebookConnected: isFacebookConnected,
+                updatedAt: Sequelize.fn('NOW')
+            }
+            return await db.Profile.update(profile, {
+                where: {
+                    createdBy: {
+                        [Op.eq]: `${createdBy}`
+                    }
+                }
             })
         } catch (error) {
             throw (error)

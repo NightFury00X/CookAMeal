@@ -29,7 +29,13 @@ router.get('/order/current-orders',
     CookController.Order.CurrentOrders)
 
 router.post('/certificate',
+    RequestMethodsMiddlewares.ApplicationFormData,
     FileUploader.UploadCertificate,
     CookController.Certificate.Update)
+
+router.post('/identificationCard',
+    RequestMethodsMiddlewares.ApplicationFormData,
+    FileUploader.UploadIdentificationCard,
+    CookController.IdentificationCard.Update)
 
 module.exports = router

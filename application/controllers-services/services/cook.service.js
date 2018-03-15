@@ -42,6 +42,7 @@ CookService.prototype.Recipe = {
             if (recipe.ingredients) {
                 ingredients = JSON.parse(recipe.ingredients)
             }
+            let preparationMethod = JSON.parse(recipe.preparationMethod)
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userTypeId)
             recipe.profileId = profile.id
             const recipeData = await db.Recipe.create(recipe, {transaction: trans})
@@ -70,17 +71,17 @@ CookService.prototype.Recipe = {
                     categoryId: recipe.categoryId
                 }, {transaction: trans})
             }
-            // for (const index in allergies) {
-            //     if (allergies.hasOwnProperty(index)) {
-            //         allergies[index].recipeId = recipeData.id
-            //         console.log('allergies: ', allergies)
-            //         let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans})
-            //         if (!allergydata) {
-            //             await trans.rollback()
-            //             return null
-            //         }
-            //     }
-            // }
+            for (const index in allergies) {
+                if (allergies.hasOwnProperty(index)) {
+                    allergies[index].recipeId = recipeData.id
+                    console.log('allergies: ', allergies)
+                    let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans})
+                    if (!allergydata) {
+                        await trans.rollback()
+                        return null
+                    }
+                }
+            }
             for (let index in files.recipe) {
                 if (files.recipe.hasOwnProperty(index)) {
                     files.recipe[index].recipeId = recipeData.id
@@ -112,6 +113,17 @@ CookService.prototype.Recipe = {
                     ingredients[index].recipeId = recipeData.id
                     let ingredientData = await db.Ingredient.create(ingredients[index], {transaction: trans})
                     if (!ingredientData) {
+                        await trans.rollback()
+                        return null
+                    }
+                }
+            }
+            for (const index in preparationMethod) {
+                if (preparationMethod.hasOwnProperty(index)) {
+                    preparationMethod[index].recipeId = recipeData.id
+                    preparationMethod[index].step = parseInt(index) + 1
+                    let preparationMethodData = await db.PreparationMethod.create(preparationMethod[index], {transaction: trans})
+                    if (!preparationMethodData) {
                         await trans.rollback()
                         return null
                     }
@@ -238,6 +250,58 @@ CookService.prototype.Certificate = {
         } catch (error) {
             throw (error)
         }
+    }
+}
+
+CookService.prototype.UpdateIdentificationCard = async (profileId, identificationCardData, files) => {
+    const trans = await db.sequelize.transaction()
+    try {
+        const identificationCardDetails = await db.IdentificationCard.findOne({
+            where: {
+                profileId: {
+                    [Op.eq]: profileId
+                }
+            }
+        })
+        if (files.identificationCard) {
+            identificationCardData.updatedAt = Sequelize.fn('NOW')
+            await db.IdentificationCard.update(identificationCardData,
+                {
+                    where: {
+                        id: {
+                            [Op.eq]: identificationCardDetails.id
+                        }
+                    },
+                    transaction: trans
+                })
+            let identificationCardMedia = files.identificationCard[0]
+            identificationCardMedia.objectType = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD
+            identificationCardMedia.imageUrl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename
+            identificationCardMedia.fileName = identificationCardMedia.filename
+            identificationCardMedia.originalName = identificationCardMedia.originalname
+            identificationCardMedia.mimeType = identificationCardMedia.mimetype
+            delete identificationCardMedia.filename
+            delete identificationCardMedia.originalname
+            delete identificationCardMedia.mimetype
+            const identificationCardMediaObject = await db.MediaObject.update(identificationCardMedia, {
+                where: {
+                    [Op.and]: [{
+                        identificationCardId: `${identificationCardDetails.id}`,
+                        profileId: `${profileId}`
+                    }]
+                },
+                transaction: trans
+            })
+            if (!identificationCardMediaObject) {
+                trans.rollback()
+                return false
+            }
+            await trans.commit()
+            return true
+        }
+    } catch (error) {
+        trans.rollback()
+        throw (error)
     }
 }
 

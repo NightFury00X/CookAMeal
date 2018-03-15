@@ -17,10 +17,6 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('dishName', CommonConfig.toTitleCase(value))
             }
         },
-        preparationMethod: {
-            type: DataTypes.TEXT,
-            allowNull: false
-        },
         preparationTime: {
             type: DataTypes.STRING,
             allowNull: false
@@ -61,6 +57,11 @@ module.exports = function (sequelize, DataTypes) {
         totalCostOfIngredients: {
             type: DataTypes.DECIMAL,
             allowNull: false
+        },
+        eligibleFor: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: 0
         },
         updatedAt: DataTypes.DATE,
         deletedAt: DataTypes.DATE
@@ -127,6 +128,21 @@ module.exports = function (sequelize, DataTypes) {
             }
         })
         Recipe.hasMany(models.CartItem, {
+            foreignKey: {
+                name: 'recipeId',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+        Recipe.hasMany(models.PreparationMethod, {
+            foreignKey: {
+                name: 'recipeId',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+
+        Recipe.hasMany(models.RecipesGeoLocations, {
             foreignKey: {
                 name: 'recipeId',
                 allowNull: false,

@@ -34,7 +34,7 @@ module.exports = {
         }),
         Recipe: Joi.object().options({abortEarly: false}).keys({
             dishName: Joi.string().required().label('dish name'),
-            preparationMethod: Joi.string().required(),
+            preparationMethod: Joi.any().required(),
             preparationTime: Joi.string().required(),
             cookTime: Joi.string().required(),
             categoryId: Joi.string().required(),
@@ -48,6 +48,7 @@ module.exports = {
             totalCostOfIngredients: Joi.string().required(),
             servingDays: Joi.any().required(),
             ingredients: Joi.any().required(),
+            eligibleFor: Joi.number().allow(1, 2, 3),
             baseAllergies: Joi.any(),
             serve: Joi.string(),
             mon: Joi.number().allow(0, 1),

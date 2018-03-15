@@ -18,9 +18,11 @@ router.get('/category',
     CommonController.Category.GetAll)
 
 // 6. Get all recipies list categorised by sub-category by category id
-router.get('/category/:id/sub-category/recipe-list/:type',
+router.get('/category/:id/sub-category/recipe-list/:type/lat/:lat/long/:long',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     ValidateParams(ParamSchemas.idSchema, 'type'),
+    ValidateParams(ParamSchemas.idSchema, 'lat'),
+    ValidateParams(ParamSchemas.idSchema, 'long'),
     CommonController.Category.GetAllRecipeByCategoryId)
 
 // 7. Get all recipies list by category id and sub-category id

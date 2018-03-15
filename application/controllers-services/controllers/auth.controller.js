@@ -617,9 +617,10 @@ const Cart = {
     GetCartDetails: async (req, res, next) => {
         try {
             const {id} = req.user
+            console.log('id: ', id)
             const cartDetails = await CommonService.Cart.GetCartDetails(id)
             if (!cartDetails) {
-                return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.NOT_FOUND)
+                return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
             }
             let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
             for (const index in convertedJSON.CartItems) {
@@ -628,11 +629,42 @@ const Cart = {
                     const recipeDetails = await CommonService.Recipe.FindRecipePrice(recipeId)
                     const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
                     delete convertedJSON.CartItems[index].recipeId
+                    const categoryId = recipeDetails.categoryId
+                    const category = await CommonService.GetCategoryById(categoryId)
                     convertedJSON.CartItems[index].Recipe = recipeDetails
+                    convertedJSON.CartItems[index].Recipe.categoryName = category.name
                     convertedJSON.CartItems[index].Cook = cookDetails
                 }
             }
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    },
+    DeleteCartItem: async (req, res, next) => {
+        try {
+            const {id} = req.params
+            const cartDetails = await CommonService.Cart.DeleteCartDetails(id)
+            if (!cartDetails) {
+                return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.NOT_FOUND)
+            }
+            return ResponseHelpers.SetSuccessResponse({Message: 'remove cart item successfully!'}, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
+const Facebook = {
+    ConenctOrDisconnect: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const profileFacebookDetails = await CommonService.Facebook.CheckFacebookIsConnected(id)
+            await CommonService.Facebook.UpdateUserFacebookConnectionStatus(id, !profileFacebookDetails.isFacebookConnected)
+            return ResponseHelpers.SetSuccessResponse({
+                Message: 'Facebook status updated.',
+                status: !profileFacebookDetails.isFacebookConnected
+            }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
@@ -650,7 +682,8 @@ let AuthController = {
     Favorite: Favorite,
     ReviewDetails: ReviewDetails,
     Order: Order,
-    Cart: Cart
+    Cart: Cart,
+    Facebook: Facebook
 }
 
 module.exports = AuthController

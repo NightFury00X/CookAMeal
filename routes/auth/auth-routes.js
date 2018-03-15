@@ -109,4 +109,12 @@ router.post('/cart',
 router.get('/cart',
     AuthController.Cart.GetCartDetails)
 
+router.delete('/cart/:id',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    AuthController.Cart.DeleteCartItem)
+
+router.post('/facebook',
+    // ValidateBody(BodySchemas.FbCheck),
+    AuthController.Facebook.ConenctOrDisconnect)
+
 module.exports = router

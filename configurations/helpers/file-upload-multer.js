@@ -76,8 +76,8 @@ let uploadFile = function (req, res, next) {
                     }, false)
                 }
             }
-            if (req.files.identification_card) {
-                if (!CheckFile(req.files.identification_card)) {
+            if (req.files.identificationCard) {
+                if (!CheckFile(req.files.identificationCard)) {
                     return next({
                         message: 'You are uploading an invalid identification card image file.',
                         status: CommonConfig.STATUS_CODE.BAD_REQUEST
@@ -165,6 +165,23 @@ const UploadCertificate = function (req, res, next) {
     })
 }
 
+const UploadIdentificationCard = function (req, res, next) {
+    upload(req, res, function (error) {
+        if (error) return next(error)
+        if (req.files) {
+            if (req.files.identificationCard) {
+                if (!CheckFile(req.files.identificationCard)) {
+                    next({
+                        message: 'You are uploading an invalid identification card.',
+                        status: CommonConfig.STATUS_CODE.BAD_REQUEST
+                    }, false)
+                }
+            }
+        }
+        return next()
+    })
+}
+
 /**
  * @return {boolean}
  */
@@ -199,7 +216,8 @@ let FileUploader = {
     uploadDataFiles: uploadDataFiles,
     UploadProfileCover: UploadProfileCover,
     UploadProfileImage: UploadProfileImage,
-    UploadCertificate: UploadCertificate
+    UploadCertificate: UploadCertificate,
+    UploadIdentificationCard: UploadIdentificationCard
 }
 
 module.exports = FileUploader
