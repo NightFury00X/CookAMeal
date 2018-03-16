@@ -125,7 +125,7 @@ const IdentificationCard = {
             if (!profile) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Profile not found.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            console.log('details: ', details)
+            console.log('=========================================================details: ', details)
             let result = await CookService.UpdateIdentificationCard(profile.id, details, req.files)
             if (!result) {
                 return ResponseHelpers.SetSuccessErrorResponse('Unable to update Identification Card.', res, CommonConfig.STATUS_CODE.OK)
