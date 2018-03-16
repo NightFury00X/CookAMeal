@@ -279,18 +279,18 @@ CookService.prototype.UpdateIdentificationCard = async (profileId, identificatio
             }
         })
         console.log('identificationCardData: ', identificationCardData)
+        identificationCardData.updatedAt = Sequelize.fn('NOW')
+        await db.IdentificationCard.update(identificationCardData,
+            {
+                where: {
+                    id: {
+                        [Op.eq]: identificationCardDetails.id
+                    }
+                },
+                transaction: trans
+            })
+        console.log('identificationCardData: ', identificationCardData)
         if (files.identificationCard) {
-            console.log('identificationCardData: ', identificationCardData)
-            identificationCardData.updatedAt = Sequelize.fn('NOW')
-            await db.IdentificationCard.update(identificationCardData,
-                {
-                    where: {
-                        id: {
-                            [Op.eq]: identificationCardDetails.id
-                        }
-                    },
-                    transaction: trans
-                })
             let identificationCardMedia = files.identificationCard[0]
             identificationCardMedia.objectType = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD
             identificationCardMedia.imageUrl = CommonConfig.FILE_LOCATIONS.IDENTIFICATIONCARD + identificationCardMedia.filename
