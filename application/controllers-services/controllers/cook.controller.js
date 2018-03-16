@@ -113,19 +113,19 @@ const Certificate = {
 const IdentificationCard = {
     Update: async (req, res, next) => {
         try {
-            const userId = req.user.id
+            const {id} = req.user.id
             const {type, typeId, country} = req.body
+            console.log('=========================================================details: ', {type, typeId, country})
             if (!type && !typeId && !country) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
             }
             if (!req.files) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
             if (!profile) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Profile not found.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: 'Profile not found.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            console.log('=========================================================details: ', {type, typeId, country})
             let result = await CookService.UpdateIdentificationCard(profile.id, {type, typeId, country}, req.files)
             if (!result) {
                 return ResponseHelpers.SetSuccessErrorResponse('Unable to update Identification Card.', res, CommonConfig.STATUS_CODE.OK)
