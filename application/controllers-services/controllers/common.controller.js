@@ -3,9 +3,6 @@ const AuthService = require('../services/auth-service')
 const CommonService = require('../services/common.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const MapService = require('../services/map-service')
-const config = require('../../../configurations/main')
-const Mailgun = require('mailgun-js')
-const validator = require('mailgun-validate-email')(config.MAILGUN.PUBLIC_API_KEY)
 
 let User = {
     ChangeProfile: async (req, res, next) => {
@@ -102,36 +99,6 @@ let Category = {
     },
     GetAllRecipeByCategoryId: async (req, res, next) => {
         try {
-            const mailgun = new Mailgun({apiKey: config.MAILGUN.PRIVATE_API_KEY, domain: config.MAILGUN.DOMAIN})
-            const body = await mailgun.validate('test@mail.com')
-            console.log('----------------------------------------------------------------------------------')
-            console.log('body: ', body)
-            console.log('----------------------------------------------------------------------------------')
-
-            let data = {
-                from: 'cookameal@gmail.com',
-                to: 'surendra.chauhan@cynoteck.com',
-                subject: 'Hello from Mailgun',
-                html: 'Hello, This is not a plain-text email, I wanted to test some spicy Mailgun sauce in NodeJS! <a href="http://0.0.0.0:3030/validate?' + req.params.mail + '">Click here to add your email address to a mailing list</a>'
-            }
-            console.log('----------------------------------------------------------------------------------')
-            console.log('data: ', data)
-            console.log('----------------------------------------------------------------------------------')
-            const abc = await mailgun.messages().send(data)
-            console.log('Data: ', abc)
-            // await mailgun.messages().send(data, function (err, body) {
-            //     if (err) {
-            //         console.log('----------------------------------------------------------------------------------')
-            //         console.log('got an error: ', err)
-            //         console.log('----------------------------------------------------------------------------------')
-            //     }
-            //     else {
-            //         console.log('----------------------------------------------------------------------------------')
-            //         console.log(body)
-            //         console.log('----------------------------------------------------------------------------------')
-            //     }
-            // })
-
             const categoryId = req.value.params.id
             const type = req.value.params.type
             const userId = req.user.id
