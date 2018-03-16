@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const db = require('../../modals')
 const CommonService = require('./common.service')
-const {AuthenticationHelpers, MailingHelpers} = require('../../../configurations/helpers/helper')
+const {AuthenticationHelpers, MailingHelpers, MailGun} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const MapService = require('../services/map-service')
 
@@ -291,7 +291,7 @@ AnonymousService.prototype.SendResetPasswordKeyToMail = async (email) => {
 
         console.log('Sending mail ... Please wait......')
 
-        return await MailingHelpers.ToResetPassword({
+        return await MailGun.ToResetPassword({
             fullname: tokenData.Profile.firstname + ' ' + tokenData.Profile.lastname,
             email: email,
             key: tokenData.ResetPasswords[0].random_key

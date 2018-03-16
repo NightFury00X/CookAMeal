@@ -278,7 +278,9 @@ CookService.prototype.UpdateIdentificationCard = async (profileId, identificatio
                 }
             }
         })
+        console.log('identificationCardData: ', identificationCardData)
         if (files.identificationCard) {
+            console.log('identificationCardData: ', identificationCardData)
             identificationCardData.updatedAt = Sequelize.fn('NOW')
             await db.IdentificationCard.update(identificationCardData,
                 {

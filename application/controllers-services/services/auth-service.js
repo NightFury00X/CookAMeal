@@ -521,4 +521,147 @@ AuthService.prototype.Units = {
     }
 }
 
+AuthService.prototype.Facebook = {
+    CheckFacebookIsConnected: async (createdBy) => {
+        try {
+            return await db.Profile.findOne({
+                attributes: ['id', 'isFacebookConnected'],
+                where: {
+                    createdBy: {
+                        [Op.eq]: `${createdBy}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    UpdateUserFacebookConnectionStatus: async (createdBy, isFacebookConnected) => {
+        try {
+            const profile = {
+                isFacebookConnected: isFacebookConnected,
+                updatedAt: Sequelize.fn('NOW')
+            }
+            return await db.Profile.update(profile, {
+                where: {
+                    createdBy: {
+                        [Op.eq]: `${createdBy}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
+
+AuthService.prototype.Cart = {
+    CheckCartItemOwner: async (createdBy) => {
+        try {
+            return await db.AddToCart.findOne({
+                where: {
+                    [Op.and]: [{
+                        createdBy: `${createdBy}`,
+                        status: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    UpdateNoOfServing: async (cartItemId, cartId, noOfServing, recipeId) => {
+        try {
+            const updatedAt = Sequelize.fn('NOW')
+            return await db.CartItem.update({
+                noOfServing, updatedAt
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${cartItemId}`,
+                        cartId: `${cartId}`,
+                        recipeId: `${recipeId}`,
+                        isDeleted: false
+                    }]
+                }
+            })
+        } catch (errro) {
+            throw (errro)
+        }
+    },
+    CheckCartIsOpen: async (createdBy) => {
+        try {
+            return await db.AddToCart.findOne({
+                where: {
+                    [Op.and]: {
+                        createdBy: `${createdBy}`,
+                        status: false
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    AddToCart: async (addToCartDetails) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const addToCart = await db.AddToCart.create({createdBy: addToCartDetails.createdBy}, {transaction: trans})
+            if (!addToCart) {
+                return false
+            }
+            addToCartDetails.cartId = addToCart.id
+            const cartItem = await db.CartItem.create(addToCartDetails, {transaction: trans})
+            if (!cartItem) {
+                return false
+            }
+            trans.commit()
+            return true
+        } catch (error) {
+            trans.rollback()
+            throw (error)
+        }
+    },
+    AddItemToExistingCart: async (addToCartDetails) => {
+        try {
+            const cartItem = await db.CartItem.create(addToCartDetails)
+            return cartItem
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetCartDetails: async (createdBy) => {
+        try {
+            return await db.AddToCart.findOne({
+                attributes: ['id'],
+                where: {
+                    createdBy: {
+                        [Op.eq]: createdBy
+                    }
+                },
+                include: [{
+                    attributes: ['id', 'noOfServing', 'price', 'recipeId'],
+                    model: db.CartItem
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    DeleteCartDetails: async (id) => {
+        try {
+            return await db.CartItem.destroy({
+                where: {
+                    id: {
+                        [Op.eq]: id
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+
+}
+
 module.exports = new AuthService()

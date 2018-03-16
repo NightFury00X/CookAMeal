@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 const CommonConfig = require('./common-config')
 const config = require('../main/development')
 const lookup = require('country-data').lookup
+const Mailgun = require('mailgun-js')
+const mailgun = new Mailgun({apiKey: config.MAILGUN.PRIVATE_API_KEY, domain: config.MAILGUN.DOMAIN})
 
 module.exports = {
     Country: {
@@ -126,7 +128,23 @@ module.exports = {
     MailGun: {
         ValidateEmailAddress: async () => {
         },
-        ValidateEmailAddresSend: async () => {
+        ToResetPassword: async (data) => {
+            const mailOptions = {
+                from: config.MAILGUN.FROM_WHO,
+                to: 'surendra.chauhan@cynoteck.com',
+                subject: 'Reset Your Password',
+                template: CommonConfig.EMAIL_TEMPLATES.RESET_PASSWORD,
+                context: {
+                    fullname: data.fullname,
+                    email: data.email,
+                    key: data.key
+                }
+            }
+            const data1 = await mailgun.messages().send(mailOptions)
+            console.log('-----------------------------------------------------')
+            console.log('Data1: ', data1)
+            console.log('-----------------------------------------------------')
+            return data
         }
     }
 }

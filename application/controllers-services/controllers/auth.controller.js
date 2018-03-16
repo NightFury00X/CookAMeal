@@ -584,15 +584,15 @@ const Cart = {
             if (!recipeDetails) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
             }
-            const isCartOpen = await CommonService.Cart.CheckCartIsOpen(id)
+            const isCartOpen = await AuthService.Cart.CheckCartIsOpen(id)
             if (isCartOpen) {
                 const addToCartData = {
                     recipeId: recipeId,
-                    noOfServing: noOfServing,
+                    noOfServing: 1, // noOfServing
                     cartId: isCartOpen.id,
                     price: recipeDetails.costPerServing
                 }
-                const result = CommonService.Cart.AddItemToExistingCart(addToCartData)
+                const result = AuthService.Cart.AddItemToExistingCart(addToCartData)
                 if (!result) {
                     return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
                 }
@@ -604,7 +604,7 @@ const Cart = {
                     createdBy: id,
                     price: recipeDetails.costPerServing
                 }
-                const result = await CommonService.Cart.AddToCart(addToCartData)
+                const result = await AuthService.Cart.AddToCart(addToCartData)
                 if (!result) {
                     return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
                 }
@@ -617,8 +617,7 @@ const Cart = {
     GetCartDetails: async (req, res, next) => {
         try {
             const {id} = req.user
-            console.log('id: ', id)
-            const cartDetails = await CommonService.Cart.GetCartDetails(id)
+            const cartDetails = await AuthService.Cart.GetCartDetails(id)
             if (!cartDetails) {
                 return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
             }
@@ -652,6 +651,25 @@ const Cart = {
         } catch (error) {
             next(error)
         }
+    },
+    UpdateTotalServing: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {itemId, recipeId, noOfServing} = req.body
+            // validate recipe is added by user
+            const cartOwner = await AuthService.Cart.CheckCartItemOwner(id)
+            if (!cartOwner) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            console.log('Cart Id: ', cartOwner.id)
+            const result = await AuthService.Cart.UpdateNoOfServing(itemId, cartOwner.id, noOfServing, recipeId)
+            if (!result) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            return ResponseHelpers.SetSuccessResponse({Message: 'Item Updated.'}, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
     }
 }
 
@@ -659,8 +677,8 @@ const Facebook = {
     ConenctOrDisconnect: async (req, res, next) => {
         try {
             const {id} = req.user
-            const profileFacebookDetails = await CommonService.Facebook.CheckFacebookIsConnected(id)
-            await CommonService.Facebook.UpdateUserFacebookConnectionStatus(id, !profileFacebookDetails.isFacebookConnected)
+            const profileFacebookDetails = await AuthService.Facebook.CheckFacebookIsConnected(id)
+            await AuthService.Facebook.UpdateUserFacebookConnectionStatus(id, !profileFacebookDetails.isFacebookConnected)
             return ResponseHelpers.SetSuccessResponse({
                 Message: 'Facebook status updated.',
                 status: !profileFacebookDetails.isFacebookConnected
