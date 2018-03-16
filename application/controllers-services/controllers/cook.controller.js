@@ -115,6 +115,7 @@ const IdentificationCard = {
         try {
             const {id} = req.user.id
             const {type, typeId, country} = req.body
+            console.log('Req: ', req.body)
             console.log('=========================================================details: ', {type, typeId, country})
             if (!type && !typeId && !country) {
                 return ResponseHelpers.SetSuccessErrorResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
