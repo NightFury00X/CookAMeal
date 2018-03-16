@@ -202,7 +202,6 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 profileUrl: userTypeDetails.Profile.profileUrl,
                 hasProfile: true,
                 profileSelected: false,
-                userTypeDetails: userTypeDetails,
                 currencySymbol: userTypeDetails.Profile.Address.currencySymbol
             }
         }

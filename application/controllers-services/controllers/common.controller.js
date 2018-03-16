@@ -153,11 +153,10 @@ let Category = {
                 }
             }
             convertedJSON = convertedJSON.filter(function (item) {
-                item.Recipes = item.Recipes.filter(function (recipe) {
-                    return recipe.map != null
-                })
+                // item.Recipes = item.Recipes.filter(function (recipe) {
+                //     return recipe.map != null
+                // })
                 return item.Recipes.length > 0
-
             })
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {

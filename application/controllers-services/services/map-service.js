@@ -88,6 +88,7 @@ MapService.prototype.Map = {
         } else {
             distanceValue = filter * 1600
         }
+        distanceValue = 5000000
         console.log('units: ', units)
         console.log('distance: ', distanceValue)
         const distanceData = await new Promise((resolve, reject) => {
@@ -102,11 +103,12 @@ MapService.prototype.Map = {
                     return resolve(data)
                 })
         })
-        if (distanceData.distanceValue <= distanceValue) {
-            return distanceData
-        } else {
-            return false
-        }
+        // if (distanceData.distanceValue <= distanceValue) {
+        //     return distanceData
+        // } else {
+        //     return false
+        // }
+        return distanceData
     }
 }
 

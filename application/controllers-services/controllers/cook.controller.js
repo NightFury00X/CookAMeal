@@ -80,14 +80,14 @@ const Certificate = {
             const {id} = req.user
             const {files} = req
             if (!files) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
+                return ResponseHelpers.SetSuccessResponse({message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
             } else if (!files.certificate) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
+                return ResponseHelpers.SetSuccessResponse({message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
             const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
             const certificateUploaded = await CookService.Certificate.CheckCertificateIsUploaded(profile.id)
             if (!certificateUploaded) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
+                return ResponseHelpers.SetSuccessResponse({message: 'You did not upload any certificate.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
             let certificateFile = files.certificate[0]
             certificateFile.fileName = certificateFile.filename
@@ -99,10 +99,10 @@ const Certificate = {
             delete certificateFile.mimetype
             const result = await CookService.Certificate.UpdateCertificate(certificateFile, certificateUploaded.id)
             if (!result) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update certificate'}, res, CommonConfig.STATUS_CODE.CREATED)
+                return ResponseHelpers.SetSuccessResponse({message: 'Unable to update certificate'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
             return ResponseHelpers.SetSuccessResponse({
-                Message: 'Certificate updated successfully.'
+                message: 'Certificate updated successfully.'
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
