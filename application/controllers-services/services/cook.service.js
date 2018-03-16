@@ -278,7 +278,6 @@ CookService.prototype.UpdateIdentificationCard = async (profileId, identificatio
                 }
             }
         })
-        console.log('identificationCardData: ', identificationCardData)
         identificationCardData.updatedAt = Sequelize.fn('NOW')
         await db.IdentificationCard.update(identificationCardData,
             {
@@ -289,7 +288,6 @@ CookService.prototype.UpdateIdentificationCard = async (profileId, identificatio
                 },
                 transaction: trans
             })
-        console.log('identificationCardData: ', identificationCardData)
         if (files.identificationCard) {
             let identificationCardMedia = files.identificationCard[0]
             identificationCardMedia.objectType = CommonConfig.OBJECT_TYPE.IDENTIFICATIONCARD

@@ -113,26 +113,23 @@ const Certificate = {
 const IdentificationCard = {
     Update: async (req, res, next) => {
         try {
-            const {id} = req.user.id
+            const {id} = req.user
             const {type, typeId, country} = req.body
-            console.log('Req: ', req.body)
-            console.log('=========================================================details: ', {type, typeId, country})
             if (!type && !typeId && !country) {
-                return ResponseHelpers.SetSuccessErrorResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse('Invalid request.', res, CommonConfig.STATUS_CODE.OK)
             }
             if (!req.files) {
-                return ResponseHelpers.SetSuccessErrorResponse({Message: 'Invalid request.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse('Invalid request.', res, CommonConfig.STATUS_CODE.OK)
             }
             const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
             if (!profile) {
-                return ResponseHelpers.SetSuccessErrorResponse({Message: 'Profile not found.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse('Profile not found.', res, CommonConfig.STATUS_CODE.OK)
             }
             let result = await CookService.UpdateIdentificationCard(profile.id, {type, typeId, country}, req.files)
             if (!result) {
                 return ResponseHelpers.SetSuccessErrorResponse('Unable to update Identification Card.', res, CommonConfig.STATUS_CODE.OK)
             }
-            result.type = true
-            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse({message: 'Identification details updated successfully.'}, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }

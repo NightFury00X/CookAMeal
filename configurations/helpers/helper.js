@@ -31,8 +31,8 @@ module.exports = {
         SetSuccessErrorResponse: function (data, res, statusCode) {
             let response = {
                 success: false,
-                data: data,
-                error: null,
+                data: [],
+                error: data,
                 status: statusCode
             }
             this.SetResponse(statusCode, response, res)
