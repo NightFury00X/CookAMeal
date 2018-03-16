@@ -631,8 +631,8 @@ const Cart = {
                     const categoryId = recipeDetails.categoryId
                     const category = await CommonService.GetCategoryById(categoryId)
                     convertedJSON.CartItems[index].Recipe = recipeDetails
-                    convertedJSON.CartItems[index].Recipe.categoryName = category.name
-                    convertedJSON.CartItems[index].Cook = cookDetails
+                    convertedJSON.CartItems[index].categoryName = category.name
+                    convertedJSON.CartItems[index].Cook = cookDetails.fullName
                 }
             }
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
