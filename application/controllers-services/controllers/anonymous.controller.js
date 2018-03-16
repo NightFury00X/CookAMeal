@@ -47,7 +47,8 @@ let Anonymous = {
                     userRole: 2,
                     profileUrl: imageUrl,
                     hasProfile: false,
-                    profileSelected: false
+                    profileSelected: false,
+                    currencySymbol: null
                 }
                 let userDetails = await CommonService.GetUserDetailsByUserTypeId(facebookUser.createdBy)
                 const result = await CommonService.Token.FacebookToken(userDetails.userInfo, userData, false)
@@ -65,7 +66,8 @@ let Anonymous = {
                 userRole: userDetails.userRole,
                 profileUrl: userDetails.Profile.profileUrl,
                 hasProfile: true,
-                profileSelected: userDetails.profileSelected
+                profileSelected: userDetails.profileSelected,
+                currencySymbol: userDetails.currencySymbol || null
             }
             let result = await CommonService.GenerateToken(userDetails.userInfo, userData)
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)

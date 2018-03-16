@@ -131,9 +131,9 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 fullName: userProfileData.fullName,
                 userRole: userType.userRole,
                 profileUrl: profileImagePic,
-                currencySymbol: addressDetails.currencySymbol,
                 hasProfile: true,
-                profileSelected: true
+                profileSelected: true,
+                currencySymbol: addressDetails.currencySymbol
             }
         }
     } catch (error) {
@@ -200,10 +200,10 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 fullName: userTypeDetails.Profile.fullName,
                 userRole: userTypeDetails.userRole,
                 profileUrl: userTypeDetails.Profile.profileUrl,
-                currencySymbol: userTypeDetails.Profile.Address.currencySymbol,
                 hasProfile: true,
                 profileSelected: false,
-                userTypeDetails: userTypeDetails
+                userTypeDetails: userTypeDetails,
+                currencySymbol: userTypeDetails.Profile.Address.currencySymbol
             }
         }
     } catch (error) {

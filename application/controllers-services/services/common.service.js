@@ -41,7 +41,10 @@ CommonService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
                 }
             },
             include: [{
-                model: db.Profile
+                model: db.Profile,
+                include: [{
+                    model: db.Address
+                }]
             }]
         })
     } catch (error) {
