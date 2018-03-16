@@ -122,5 +122,11 @@ module.exports = {
 
             return await transporter.sendMail(mailOptions)
         }
+    },
+    MailGun: {
+        ValidateEmailAddress: async () => {
+        },
+        ValidateEmailAddresSend: async () => {
+        }
     }
 }

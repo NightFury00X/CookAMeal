@@ -64,6 +64,13 @@ exports.keys = {
     secret: '/jVdfUX+u/Kn3qPY4+ahjwQgyV5UhkM5cdh1i2xhozE='
 }
 
+exports.MAILGUN = {
+    PRIVATE_API_KEY: 'key-c0e4cf4cc068c360151d0a340caac8f8',
+    PUBLIC_API_KEY: 'pubkey-dbce41fb19ad034f384fc0db83334435',
+    DOMAIN: 'sandbox3230c1959d20441480107c4dcf373acf.mailgun.org',
+    FROM_WHO: 'your@email.com'
+}
+
 const FileLocations = {
     Profile: Uploads + '/profiles',
     ProfileCover: Uploads + '/profile_cover',

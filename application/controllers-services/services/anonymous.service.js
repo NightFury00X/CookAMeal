@@ -40,7 +40,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         let userProfileData = await db.Profile.create(tempData, {transaction: trans})
         let profileImagePic = null
         registrationData.address.profileId = userProfileData.id
-
         const {address} = registrationData
         delete address.latitude
         delete address.longitude
@@ -49,7 +48,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
         registrationData.address.latitude = location[0].latitude
         registrationData.address.longitude = location[0].longitude
         registrationData.address.profileId = userProfileData.id
-        await db.Address.create(registrationData.address, {transaction: trans})
+        const addressDetails = await db.Address.create(registrationData.address, {transaction: trans})
         let ProfileMediaObject
         let identificationCardData
         if (files) {
@@ -110,10 +109,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 await db.MediaObject.create(certificateMedia, {transaction: trans})
             }
         }
-        console.log('facebook: ', facebookId)
-        console.log('files.identificationCard: ', files.identificationCard)
-        console.log('registrationData.identificationCard: ', registrationData.identificationCard)
-
         if (facebookId || (files.identificationCard && registrationData.identificationCard)) {
             const d = await db.Profile.update({
                 isEligibleForHire: true
@@ -136,6 +131,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 fullName: userProfileData.fullName,
                 userRole: userType.userRole,
                 profileUrl: profileImagePic,
+                currencySymbol: addressDetails.currencySymbol,
                 hasProfile: true,
                 profileSelected: true
             }
@@ -161,6 +157,8 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 include: [{
                     model: db.Profile,
                     include: [{
+                        model: db.Address
+                    }, {
                         model: db.MediaObject
                     }]
                 }, {
@@ -184,12 +182,13 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 include: [{
                     model: db.Profile,
                     include: [{
+                        model: db.Address
+                    }, {
                         model: db.MediaObject
                     }]
                 }]
             })
         }
-        console.log('userTypeDetails', userTypeDetails)
         if (!userTypeDetails) {
             return null
         }
@@ -201,8 +200,10 @@ AnonymousService.prototype.Authenticate = async (userDetails) => {
                 fullName: userTypeDetails.Profile.fullName,
                 userRole: userTypeDetails.userRole,
                 profileUrl: userTypeDetails.Profile.profileUrl,
+                currencySymbol: userTypeDetails.Profile.Address.currencySymbol,
                 hasProfile: true,
-                profileSelected: false
+                profileSelected: false,
+                userTypeDetails: userTypeDetails
             }
         }
     } catch (error) {
