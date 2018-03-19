@@ -699,7 +699,7 @@ AuthService.prototype.WishList = {
     },
     CheckItemIsOwnedByCurrentUser: async (createdBy, itemId) => {
         try {
-            return await db.Review.findOne({
+            return await db.Favorite.findOne({
                 where: {
                     [Op.and]: [{
                         createdBy: `${createdBy}`,
@@ -713,7 +713,7 @@ AuthService.prototype.WishList = {
     },
     Delete: async (itemId, createdBy) => {
         try {
-            return await db.Review.destroy({
+            return await db.Favorite.destroy({
                 where: {
                     [Op.and]: [{
                         createdBy: `${createdBy}`,
