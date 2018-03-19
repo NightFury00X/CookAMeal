@@ -689,6 +689,49 @@ const Facebook = {
     }
 }
 
+const WishList = {
+    GetAll: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const recipeList = await AuthService.WishList.All(id)
+            let convertedJSON = JSON.parse(JSON.stringify(recipeList))
+            for (const index in convertedJSON) {
+                if (convertedJSON.hasOwnProperty(index)) {
+                    const {id, profileId} = convertedJSON[index]
+                    const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(id)
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
+                    convertedJSON[index].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating
+                    convertedJSON[index].CurrencySymbol = currencyDetails.currencySymbol
+                }
+            }
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    },
+    DeleteFromWishList: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const itemId = req.value.params.id
+            console.log('id: ', id)
+            console.log('itemId: ', itemId)
+            const item = await AuthService.WishList.CheckItemIsOwnedByCurrentUser(id, itemId)
+            if (!item) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Item not found.'
+                }, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const result = await AuthService.WishList.Delete(itemId, id)
+            if (!result) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove item.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            return ResponseHelpers.SetSuccessResponse({ressage: 'Item removed successfully.'}, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
 let AuthController = {
     Auth: Auth,
     User: User,
@@ -701,7 +744,8 @@ let AuthController = {
     ReviewDetails: ReviewDetails,
     Order: Order,
     Cart: Cart,
-    Facebook: Facebook
+    Facebook: Facebook,
+    WishList: WishList
 }
 
 module.exports = AuthController

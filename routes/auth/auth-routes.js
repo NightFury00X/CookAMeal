@@ -121,4 +121,11 @@ router.post('/facebook',
     // ValidateBody(BodySchemas.FbCheck),
     AuthController.Facebook.ConenctOrDisconnect)
 
+router.get('/recipe/wishlist',
+    AuthController.WishList.GetAll)
+
+router.delete('/recipe/wishlist/:id',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    AuthController.WishList.DeleteFromWishList)
+
 module.exports = router

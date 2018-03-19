@@ -664,4 +664,67 @@ AuthService.prototype.Cart = {
 
 }
 
+AuthService.prototype.WishList = {
+    All: async (createdBy) => {
+        try {
+            return db.Recipe.findAll({
+                attributes: ['id', 'dishName', 'costPerServing', 'profileId'],
+                include: [{
+                    attributes: ['imageUrl'],
+                    model: db.MediaObject
+                }, {
+                    model: db.Favorite,
+                    attributes: ['id'],
+                    required: true,
+                    where: {
+                        createdBy: {
+                            [Op.eq]: `${createdBy}`
+                        }
+                    }
+                }]
+            })
+            // return db.Favorite.findAll({
+            //     where: {
+            //         createdBy: {
+            //             [Op.eq]: `${createdBy}`
+            //         }
+            //     },
+            //     include: [{
+            //         model: db.Recipe
+            //     }]
+            // })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    CheckItemIsOwnedByCurrentUser: async (createdBy, itemId) => {
+        try {
+            return await db.Review.findOne({
+                where: {
+                    [Op.and]: [{
+                        createdBy: `${createdBy}`,
+                        id: `${itemId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    Delete: async (itemId, createdBy) => {
+        try {
+            return await db.Review.destroy({
+                where: {
+                    [Op.and]: [{
+                        createdBy: `${createdBy}`,
+                        id: `${itemId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
+
 module.exports = new AuthService()
