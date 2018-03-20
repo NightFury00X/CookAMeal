@@ -12,7 +12,7 @@ CookService.prototype.Recipe = {
     GetMyAllRecipesList: async (profileId) => {
         try {
             return await db.Recipe.findAll({
-                attributes: ['id', 'dishName', 'createdAt', 'subCategoryId', 'categoryId'],
+                attributes: ['id', 'dishName', 'createdAt', 'subCategoryId', 'categoryId', 'costPerServing'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['imageUrl']
