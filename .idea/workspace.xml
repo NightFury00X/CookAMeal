@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
+    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="Add new API Update Profile.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
       <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,20 +18,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="map-service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="85" column="29" lean-forward="false" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="29" />
-              <folding>
-                <element signature="e#765#1242#0" expanded="false" />
-                <element signature="e#1301#1527#0" expanded="false" />
-                <element signature="e#1582#2623#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="customer.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/customer.controller.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -46,8 +31,18 @@
       <file leaf-file-name="cook.controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="42" column="44" lean-forward="true" selection-start-line="42" selection-start-column="44" selection-end-line="42" selection-end-column="44" />
+            <state relative-caret-position="274">
+              <caret line="49" column="55" lean-forward="false" selection-start-line="49" selection-start-column="55" selection-end-line="49" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="384">
+              <caret line="704" column="83" lean-forward="false" selection-start-line="704" selection-start-column="77" selection-end-line="704" selection-end-column="83" />
               <folding />
             </state>
           </provider>
@@ -76,8 +71,8 @@
       <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2728">
-              <caret line="187" column="51" lean-forward="false" selection-start-line="187" selection-start-column="38" selection-end-line="187" selection-end-column="51" />
+            <state relative-caret-position="198">
+              <caret line="140" column="28" lean-forward="false" selection-start-line="140" selection-start-column="28" selection-end-line="140" selection-end-column="107" />
               <folding />
             </state>
           </provider>
@@ -130,7 +125,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>consfig</find>
       <find>cover</find>
       <find>user_id</find>
       <find>profile</find>
@@ -160,6 +154,7 @@
       <find>des</find>
       <find>de</find>
       <find>all</find>
+      <find>rating</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -615,35 +610,7 @@
       <workItem from="1521123779754" duration="1547000" />
       <workItem from="1521173466591" duration="20838000" />
       <workItem from="1521436713147" duration="10088000" />
-      <workItem from="1521517035414" duration="6686000" />
-    </task>
-    <task id="LOCAL-00505" summary="Fixed recipes details API.">
-      <created>1519813536170</created>
-      <option name="number" value="00505" />
-      <option name="presentableId" value="LOCAL-00505" />
-      <option name="project" value="LOCAL" />
-      <updated>1519813536170</updated>
-    </task>
-    <task id="LOCAL-00506" summary="Fixed recipes details API.">
-      <created>1519815548078</created>
-      <option name="number" value="00506" />
-      <option name="presentableId" value="LOCAL-00506" />
-      <option name="project" value="LOCAL" />
-      <updated>1519815548078</updated>
-    </task>
-    <task id="LOCAL-00507" summary="Add new API Update Profile.">
-      <created>1519883971260</created>
-      <option name="number" value="00507" />
-      <option name="presentableId" value="LOCAL-00507" />
-      <option name="project" value="LOCAL" />
-      <updated>1519883971261</updated>
-    </task>
-    <task id="LOCAL-00508" summary="Add new API Update Profile.">
-      <created>1519884794634</created>
-      <option name="number" value="00508" />
-      <option name="presentableId" value="LOCAL-00508" />
-      <option name="project" value="LOCAL" />
-      <updated>1519884794634</updated>
+      <workItem from="1521517035414" duration="7694000" />
     </task>
     <task id="LOCAL-00509" summary="Add new API Update Profile.">
       <created>1519885244788</created>
@@ -960,11 +927,39 @@
       <option name="project" value="LOCAL" />
       <updated>1521530595421</updated>
     </task>
-    <option name="localTasksCounter" value="554" />
+    <task id="LOCAL-00554" summary="Add new API Update Profile.">
+      <created>1521540276504</created>
+      <option name="number" value="00554" />
+      <option name="presentableId" value="LOCAL-00554" />
+      <option name="project" value="LOCAL" />
+      <updated>1521540276505</updated>
+    </task>
+    <task id="LOCAL-00555" summary="Add new API Update Profile.">
+      <created>1521540403171</created>
+      <option name="number" value="00555" />
+      <option name="presentableId" value="LOCAL-00555" />
+      <option name="project" value="LOCAL" />
+      <updated>1521540403171</updated>
+    </task>
+    <task id="LOCAL-00556" summary="Add new API Update Profile.">
+      <created>1521540421988</created>
+      <option name="number" value="00556" />
+      <option name="presentableId" value="LOCAL-00556" />
+      <option name="project" value="LOCAL" />
+      <updated>1521540421988</updated>
+    </task>
+    <task id="LOCAL-00557" summary="Add new API Update Profile.">
+      <created>1521541080463</created>
+      <option name="number" value="00557" />
+      <option name="presentableId" value="LOCAL-00557" />
+      <option name="project" value="LOCAL" />
+      <updated>1521541080463</updated>
+    </task>
+    <option name="localTasksCounter" value="558" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1237499000" />
+    <option name="totallyTimeSpent" value="1238507000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1154,6 +1149,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
           <caret line="22" column="26" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1165,18 +1161,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="839" column="48" lean-forward="true" selection-start-line="839" selection-start-column="48" selection-end-line="839" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/anonymous.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2068">
           <caret line="145" column="26" lean-forward="true" selection-start-line="145" selection-start-column="26" selection-end-line="145" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1503,14 +1492,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2728">
-          <caret line="187" column="51" lean-forward="false" selection-start-line="187" selection-start-column="38" selection-end-line="187" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1876">
@@ -1522,10 +1503,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="140" column="28" lean-forward="false" selection-start-line="140" selection-start-column="28" selection-end-line="140" selection-end-column="107" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="704" column="83" lean-forward="false" selection-start-line="704" selection-start-column="77" selection-end-line="704" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="42" column="44" lean-forward="true" selection-start-line="42" selection-start-column="44" selection-end-line="42" selection-end-column="44" />
+        <state relative-caret-position="274">
+          <caret line="49" column="55" lean-forward="false" selection-start-line="49" selection-start-column="55" selection-end-line="49" selection-end-column="55" />
           <folding />
         </state>
       </provider>
