@@ -5,10 +5,9 @@ module.exports = function (sequelize, DataTypes) {
     // 1: The model schema.
     let modelDefinition = {
         id: {
-            type: DataTypes.BIGINT,
             primaryKey: true,
-            allowNull: false,
-            autoIncrement: true
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
         },
         facebook: {
             type: DataTypes.BOOLEAN,

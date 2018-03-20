@@ -5,10 +5,9 @@ const CommonConfig = require('../../configurations/helpers/common-config')
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
         id: {
-            type: DataTypes.BIGINT,
             primaryKey: true,
-            allowNull: false,
-            autoIncrement: true
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
         },
         name: {
             type: DataTypes.STRING(100),

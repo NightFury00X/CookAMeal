@@ -3,10 +3,9 @@
 module.exports = function (sequelize, DataTypes) {
     let modelDefinition = {
         id: {
-            type: DataTypes.BIGINT,
             primaryKey: true,
-            allowNull: false,
-            autoIncrement: true
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
         },
         updatedAt: DataTypes.DATE,
         deletedAt: DataTypes.DATE
