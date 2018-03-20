@@ -91,7 +91,7 @@ CookService.prototype.Recipe = {
                         recipeId: recipeData.id
                     }
                     console.log('=======================================================')
-                    console.log('recipeData.id: ', recipeData.id)
+                    console.log('recipeData: ', allergies[index])
                     console.log('allergiesData: ', allergiesData)
                     console.log('=======================================================')
                     let allergydata = await db.RecipeAllergy.create(allergiesData, {transaction: trans})
