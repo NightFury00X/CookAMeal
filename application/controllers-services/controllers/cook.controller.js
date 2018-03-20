@@ -56,7 +56,7 @@ const Recipe = {
                     recipeDetailsToJSON[index].currencySymbol = currencyDetails.currencySymbol
                 }
             }
-            return ResponseHelpers.SetSuccessResponse(recipeDetailsToJSON, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse(recipeDetailsToJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }
