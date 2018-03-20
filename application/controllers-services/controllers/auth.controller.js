@@ -713,8 +713,6 @@ const WishList = {
         try {
             const {id} = req.user
             const itemId = req.value.params.id
-            console.log('id: ', id)
-            console.log('itemId: ', itemId)
             const item = await AuthService.WishList.CheckItemIsOwnedByCurrentUser(id, itemId)
             if (!item) {
                 return ResponseHelpers.SetSuccessErrorResponse({

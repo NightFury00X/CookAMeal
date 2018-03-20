@@ -52,6 +52,8 @@ const Recipe = {
                     const subCategoryId = recipeDetailsToJSON[index].subCategoryId
                     const subCategory = await AuthService.SubCategory.FindById(subCategoryId)
                     recipeDetailsToJSON[index].subCategoryName = subCategory.name
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+                    recipeDetailsToJSON[index].currencyDetails = currencyDetails
                 }
             }
             return ResponseHelpers.SetSuccessResponse(recipeDetailsToJSON, res, CommonConfig.STATUS_CODE.CREATED)
