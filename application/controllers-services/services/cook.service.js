@@ -90,6 +90,10 @@ CookService.prototype.Recipe = {
                         allergyId: allergies[index],
                         recipeId: recipeData.id
                     }
+                    console.log('=======================================================')
+                    console.log('recipeData.id: ', recipeData.id)
+                    console.log('allergiesData: ', allergiesData)
+                    console.log('=======================================================')
                     let allergydata = await db.RecipeAllergy.create(allergiesData, {transaction: trans})
                     if (!allergydata) {
                         await trans.rollback()
