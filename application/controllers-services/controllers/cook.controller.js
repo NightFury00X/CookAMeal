@@ -52,7 +52,9 @@ const Recipe = {
                     const subCategoryId = recipeDetailsToJSON[index].subCategoryId
                     const subCategory = await AuthService.SubCategory.FindById(subCategoryId)
                     recipeDetailsToJSON[index].subCategoryName = subCategory.name
+                    const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeDetailsToJSON[index].id)
                     const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+                    recipeDetailsToJSON[index].Rating = ratingDetails.rating
                     recipeDetailsToJSON[index].currencySymbol = currencyDetails.currencySymbol
                 }
             }
