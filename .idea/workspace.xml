@@ -3,34 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/modals/address.js" afterPath="$PROJECT_DIR$/application/modals/address.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/allergies.js" afterPath="$PROJECT_DIR$/application/modals/allergies.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/category.js" afterPath="$PROJECT_DIR$/application/modals/category.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/certificate.js" afterPath="$PROJECT_DIR$/application/modals/certificate.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/cook-deal-with-category.js" afterPath="$PROJECT_DIR$/application/modals/cook-deal-with-category.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/day.js" afterPath="$PROJECT_DIR$/application/modals/day.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/favorite.js" afterPath="$PROJECT_DIR$/application/modals/favorite.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/feedback.js" afterPath="$PROJECT_DIR$/application/modals/feedback.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/identificationcard.js" afterPath="$PROJECT_DIR$/application/modals/identificationcard.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/ingredient.js" afterPath="$PROJECT_DIR$/application/modals/ingredient.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/mediaobject.js" afterPath="$PROJECT_DIR$/application/modals/mediaobject.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/order-items.js" afterPath="$PROJECT_DIR$/application/modals/order-items.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/order.js" afterPath="$PROJECT_DIR$/application/modals/order.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/preparation-method.js" afterPath="$PROJECT_DIR$/application/modals/preparation-method.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/profile-cover.js" afterPath="$PROJECT_DIR$/application/modals/profile-cover.js" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" afterPath="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" />
       <change beforePath="$PROJECT_DIR$/application/modals/recipe-allergies.js" afterPath="$PROJECT_DIR$/application/modals/recipe-allergies.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/recipe-images.js" afterPath="$PROJECT_DIR$/application/modals/recipe-images.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/recipe.js" afterPath="$PROJECT_DIR$/application/modals/recipe.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/recipes-geo-location.js" afterPath="$PROJECT_DIR$/application/modals/recipes-geo-location.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/reset-password.js" afterPath="$PROJECT_DIR$/application/modals/reset-password.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/review.js" afterPath="$PROJECT_DIR$/application/modals/review.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/social.js" afterPath="$PROJECT_DIR$/application/modals/social.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/subcategory.js" afterPath="$PROJECT_DIR$/application/modals/subcategory.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/tax.js" afterPath="$PROJECT_DIR$/application/modals/tax.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/token-blacklist.js" afterPath="$PROJECT_DIR$/application/modals/token-blacklist.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/transaction-details.js" afterPath="$PROJECT_DIR$/application/modals/transaction-details.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/unit.js" afterPath="$PROJECT_DIR$/application/modals/unit.js" />
-      <change beforePath="$PROJECT_DIR$/application/modals/user.js" afterPath="$PROJECT_DIR$/application/modals/user.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -44,7 +18,92 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="map-service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="85" column="29" lean-forward="false" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="29" />
+              <folding>
+                <element signature="e#765#1242#0" expanded="false" />
+                <element signature="e#1301#1527#0" expanded="false" />
+                <element signature="e#1582#2623#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="customer.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/customer.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cook.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="28" column="55" lean-forward="false" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cook.service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/cook.service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="90" column="32" lean-forward="false" selection-start-line="90" selection-start-column="24" selection-end-line="90" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-988">
+              <caret line="117" column="93" lean-forward="true" selection-start-line="117" selection-start-column="91" selection-end-line="138" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="allergies.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/allergies.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="31" column="44" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="recipe-allergies.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/recipe-allergies.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="recipe.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/modals/recipe.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="102" column="39" lean-forward="false" selection-start-line="102" selection-start-column="36" selection-end-line="102" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -132,7 +191,6 @@
         <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
         <option value="$PROJECT_DIR$/routes/cook/cook.routes.js" />
         <option value="$PROJECT_DIR$/configurations/helpers/helper.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/map-service.js" />
@@ -156,7 +214,6 @@
         <option value="$PROJECT_DIR$/application/modals/preparation-method.js" />
         <option value="$PROJECT_DIR$/application/modals/profile-cover.js" />
         <option value="$PROJECT_DIR$/application/modals/recipe.js" />
-        <option value="$PROJECT_DIR$/application/modals/recipe-allergies.js" />
         <option value="$PROJECT_DIR$/application/modals/recipe-images.js" />
         <option value="$PROJECT_DIR$/application/modals/recipes-geo-location.js" />
         <option value="$PROJECT_DIR$/application/modals/reset-password.js" />
@@ -168,6 +225,8 @@
         <option value="$PROJECT_DIR$/application/modals/transaction-details.js" />
         <option value="$PROJECT_DIR$/application/modals/unit.js" />
         <option value="$PROJECT_DIR$/application/modals/user.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/cook.service.js" />
+        <option value="$PROJECT_DIR$/application/modals/recipe-allergies.js" />
       </list>
     </option>
   </component>
@@ -270,6 +329,13 @@
               <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="controllers-services" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers-services" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
@@ -526,28 +592,7 @@
       <workItem from="1521123779754" duration="1547000" />
       <workItem from="1521173466591" duration="20838000" />
       <workItem from="1521436713147" duration="10088000" />
-      <workItem from="1521517035414" duration="2431000" />
-    </task>
-    <task id="LOCAL-00496" summary="Fixed recipes details API.">
-      <created>1519732091433</created>
-      <option name="number" value="00496" />
-      <option name="presentableId" value="LOCAL-00496" />
-      <option name="project" value="LOCAL" />
-      <updated>1519732091433</updated>
-    </task>
-    <task id="LOCAL-00497" summary="Fixed recipes details API.">
-      <created>1519738711451</created>
-      <option name="number" value="00497" />
-      <option name="presentableId" value="LOCAL-00497" />
-      <option name="project" value="LOCAL" />
-      <updated>1519738711451</updated>
-    </task>
-    <task id="LOCAL-00498" summary="Fixed recipes details API.">
-      <created>1519738805701</created>
-      <option name="number" value="00498" />
-      <option name="presentableId" value="LOCAL-00498" />
-      <option name="project" value="LOCAL" />
-      <updated>1519738805701</updated>
+      <workItem from="1521517035414" duration="4233000" />
     </task>
     <task id="LOCAL-00499" summary="Fixed recipes details API.">
       <created>1519739135076</created>
@@ -871,11 +916,32 @@
       <option name="project" value="LOCAL" />
       <updated>1521468798606</updated>
     </task>
-    <option name="localTasksCounter" value="545" />
+    <task id="LOCAL-00545" summary="Add new API Update Profile.">
+      <created>1521525463756</created>
+      <option name="number" value="00545" />
+      <option name="presentableId" value="LOCAL-00545" />
+      <option name="project" value="LOCAL" />
+      <updated>1521525463757</updated>
+    </task>
+    <task id="LOCAL-00546" summary="Add new API Update Profile.">
+      <created>1521528597368</created>
+      <option name="number" value="00546" />
+      <option name="presentableId" value="LOCAL-00546" />
+      <option name="project" value="LOCAL" />
+      <updated>1521528597368</updated>
+    </task>
+    <task id="LOCAL-00547" summary="Add new API Update Profile.">
+      <created>1521528700755</created>
+      <option name="number" value="00547" />
+      <option name="presentableId" value="LOCAL-00547" />
+      <option name="project" value="LOCAL" />
+      <updated>1521528700755</updated>
+    </task>
+    <option name="localTasksCounter" value="548" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1233244000" />
+    <option name="totallyTimeSpent" value="1235046000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1024,17 +1090,11 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/mailgun-js/lib/mailgun.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="165" column="36" lean-forward="false" selection-start-line="165" selection-start-column="30" selection-end-line="165" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/configurations/helpers/file-upload-multer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1052,13 +1112,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="689">
-          <caret line="102" column="26" lean-forward="true" selection-start-line="102" selection-start-column="26" selection-end-line="102" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/anonymous/anonymous.routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1012">
@@ -1070,18 +1123,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3190">
           <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1254">
-          <caret line="110" column="27" lean-forward="false" selection-start-line="110" selection-start-column="27" selection-end-line="110" selection-end-column="27" />
-          <folding>
-            <element signature="e#765#1242#0" expanded="false" />
-            <element signature="e#1301#1527#0" expanded="false" />
-            <element signature="e#1582#2623#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1104,13 +1146,6 @@
         <state relative-caret-position="280">
           <caret line="124" column="32" lean-forward="false" selection-start-line="124" selection-start-column="32" selection-end-line="124" selection-end-column="32" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/cook.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="303" column="27" lean-forward="false" selection-start-line="303" selection-start-column="25" selection-end-line="303" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -1163,14 +1198,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="117" column="93" lean-forward="true" selection-start-line="117" selection-start-column="91" selection-end-line="138" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/add-to-cart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -1183,14 +1210,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/allergies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1323,22 +1342,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/recipe.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/recipe-allergies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="42" lean-forward="false" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/recipe-images.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -1431,6 +1434,74 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="12" column="102" lean-forward="true" selection-start-line="12" selection-start-column="102" selection-end-line="12" selection-end-column="102" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/map-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="85" column="29" lean-forward="false" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="29" />
+          <folding>
+            <element signature="e#765#1242#0" expanded="false" />
+            <element signature="e#1301#1527#0" expanded="false" />
+            <element signature="e#1582#2623#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/customer.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-988">
+          <caret line="117" column="93" lean-forward="true" selection-start-line="117" selection-start-column="91" selection-end-line="138" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="28" column="55" lean-forward="false" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/cook.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="90" column="32" lean-forward="false" selection-start-line="90" selection-start-column="24" selection-end-line="90" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/allergies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="31" column="44" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/recipe-allergies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/recipe.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="102" column="39" lean-forward="false" selection-start-line="102" selection-start-column="36" selection-end-line="102" selection-end-column="39" />
           <folding />
         </state>
       </provider>
