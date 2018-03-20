@@ -86,15 +86,7 @@ CookService.prototype.Recipe = {
             for (const index in allergies) {
                 if (allergies.hasOwnProperty(index)) {
                     allergies[index].recipeId = recipeData.id
-                    const allergiesData = {
-                        allergyId: allergies[index],
-                        recipeId: recipeData.id
-                    }
-                    console.log('=======================================================')
-                    console.log('recipeData: ', allergies[index])
-                    console.log('allergiesData: ', allergiesData)
-                    console.log('=======================================================')
-                    let allergydata = await db.RecipeAllergy.create(allergiesData, {transaction: trans})
+                    let allergydata = await db.RecipeAllergy.create(allergies[index], {transaction: trans})
                     if (!allergydata) {
                         await trans.rollback()
                         return null
