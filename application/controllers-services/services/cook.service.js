@@ -235,7 +235,7 @@ CookService.prototype.Recipe = {
         try {
             return await db.Recipe.update({
                 isDeleted: true,
-                deletedAt: Sequelize.fn('NOW')
+                deletedAt: new Date()
             }, {
                 where: {
                     [Op.and]: [{
