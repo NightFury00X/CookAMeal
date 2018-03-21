@@ -237,19 +237,19 @@ CookService.prototype.Recipe = {
             const updatedAt = Sequelize.fn('NOW')
             console.log('deletedAt: ', deletedAt)
             console.log('updatedAt: ', updatedAt)
-            return true
-            // return await db.Recipe.update({
-            //     isDeleted: true,
-            //     deletedAt: deletedAt,
-            //     updatedAt: updatedAt
-            // }, {
-            //     where: {
-            //         [Op.and]: [{
-            //             recipeId: `${recipeId}`,
-            //             profileId: `${profileId}`
-            //         }]
-            //     }
-            // })
+            const updatedData = {
+                isDeleted: true,
+                deletedAt: deletedAt,
+                updatedAt: updatedAt
+            }
+            return await db.Recipe.update(updatedData, {
+                where: {
+                    [Op.and]: [{
+                        recipeId: `${recipeId}`,
+                        profileId: `${profileId}`
+                    }]
+                }
+            })
         } catch (error) {
             throw (error)
         }
