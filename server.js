@@ -155,7 +155,7 @@ app.use(expressWinston.errorLogger({
             datePattern: 'YYYY-MM-DD-HH',
             colorize: true,
             json: true,
-            filename: 'application-%DATE%.log',
+            filename: './logs/errors/error_log',
             maxsize: 50 * 1024 * 1024,
             maxFiles: 10,
             zippedArchive: true
