@@ -239,7 +239,6 @@ CookService.prototype.Recipe = {
             console.log('updatedAt: ', updatedAt)
             const updatedData = {
                 isDeleted: true,
-                deletedAt: deletedAt,
                 updatedAt: updatedAt
             }
             return await db.Recipe.update(updatedData, {
