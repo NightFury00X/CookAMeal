@@ -152,13 +152,12 @@ app.use(expressWinston.errorLogger({
     transports: [
         new winston.transports.DailyRotateFile({
             name: 'file',
-            datePattern: 'YYYY-MM-DD-HH',
+            datePattern: 'yyyy-MM-dd',
             colorize: true,
             json: true,
             filename: './logs/errors/error_log',
             maxsize: 50 * 1024 * 1024,
-            maxFiles: 10,
-            zippedArchive: true
+            prepend: true
         })
     ],
     meta: true
