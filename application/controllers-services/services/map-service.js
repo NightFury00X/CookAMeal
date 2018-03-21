@@ -105,6 +105,7 @@ MapService.prototype.Map = {
                     units: `${units}`
                 },
                 function (err, data) {
+                    console.log('Results: ', err)
                     if (err) return reject(err)
                     return resolve(data)
                 })
