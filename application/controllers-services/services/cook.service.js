@@ -244,7 +244,7 @@ CookService.prototype.Recipe = {
             return await db.Recipe.update(updatedData, {
                 where: {
                     [Op.and]: [{
-                        recipeId: `${recipeId}`,
+                        id: `${recipeId}`,
                         profileId: `${profileId}`
                     }]
                 }
