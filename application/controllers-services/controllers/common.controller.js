@@ -124,6 +124,7 @@ let Category = {
                                 latitude: convertedJSON[outer].Recipes[inner].RecipesGeoLocation.latitude,
                                 longitude: convertedJSON[outer].Recipes[inner].RecipesGeoLocation.longitude
                             }
+                            console.log('Units: ', unit)
                             let unitValue = 'metric'
                             if (unit.toLowerCase() === 'unitedstates') {
                                 unitValue = 'imperial'
