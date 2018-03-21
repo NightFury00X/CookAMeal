@@ -85,10 +85,11 @@ MapService.prototype.Map = {
         let distanceValue = 5000
         if (units === 'metric') {
             distanceValue = filter * 1000
+            distanceValue = 10000
         } else {
             distanceValue = filter * 1600
+            distanceValue = 16000
         }
-        distanceValue = 5000000
         console.log('units: ', units)
         console.log('distance: ', distanceValue)
         const distanceData = await new Promise((resolve, reject) => {
