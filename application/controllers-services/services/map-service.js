@@ -106,7 +106,13 @@ MapService.prototype.Map = {
                 },
                 function (err, data) {
                     console.log('Results: ', err)
-                    if (err) return reject(err)
+                    if (err) {
+                        return resolve(null)
+                        // if (err.indexOf('ZERO_RESULTS') > -1) {
+                        //     return resolve(null)
+                        // }
+                        // return reject(err)
+                    }
                     return resolve(data)
                 })
         })
