@@ -44,6 +44,7 @@ const logger = new (winston.Logger)({
 })
 const uploadFileLocation = path.resolve('/uploads')
 const logLocation = path.resolve('/logs/errors')
+
 mkdirp.sync(uploadFileLocation)
 mkdirp.sync(logLocation)
 config.UPLOAD_LOCATION.forEach(function (location) {
@@ -151,10 +152,10 @@ app.use(expressWinston.errorLogger({
     transports: [
         new winston.transports.DailyRotateFile({
             name: 'file',
-            datePattern: '_dd-MM-yyyy.log',
+            datePattern: 'YYYY-MM-DD-HH',
             colorize: true,
             json: true,
-            filename: './logs/errors/error_log',
+            filename: 'application-%DATE%.log',
             maxsize: 50 * 1024 * 1024,
             maxFiles: 10,
             zippedArchive: true
