@@ -33,9 +33,10 @@ CookService.prototype.Recipe = {
                     attributes: ['imageUrl']
                 }],
                 where: {
-                    profileId: {
-                        [Op.eq]: `${profileId}`
-                    }
+                    [Op.and]: [{
+                        profileId: `${profileId}`,
+                        isDeleted: false
+                    }]
                 }
             })
         } catch (error) {
