@@ -22,6 +22,10 @@ router.post('/recipe',
     ValidateBody(BodySchemas.Recipe),
     CookController.Recipe.Add)
 
+router.delete('/recipe/:id',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    CookController.Recipe.DeleteRecipe)
+
 router.get('/recipe/my-recipes',
     CookController.Recipe.GetAllRecipesList)
 

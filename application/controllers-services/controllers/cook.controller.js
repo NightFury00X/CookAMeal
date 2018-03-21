@@ -38,6 +38,28 @@ const Recipe = {
             next(error)
         }
     },
+    DeleteRecipe: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const recipeId = req.value.params.id
+
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            if (!profile) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Recipe not found.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const isOwnedBy = await CookService.Recipe.CheckRecipeOwner(recipeId, profile.id)
+            if (!isOwnedBy) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Recipe not found.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const result = await CookService.Recipe.DeleteById(recipeId, profile.id)
+            if (!result) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Recipe not found.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            return ResponseHelpers.SetSuccessResponse({message: 'Recipe remove successfully.'}, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
     GetAllRecipesList: async (req, res, next) => {
         try {
             const {id} = req.user

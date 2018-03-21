@@ -9,6 +9,21 @@ CookService = function () {
 }
 
 CookService.prototype.Recipe = {
+    CheckRecipeOwner: async (recipeId, profileId) => {
+        try {
+            return await db.Recipe.findOne({
+                attributes: ['id'],
+                where: {
+                    [Op.and]: [{
+                        id: `${recipeId}`,
+                        profileId: `${profileId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetMyAllRecipesList: async (profileId) => {
         try {
             return await db.Recipe.findAll({
@@ -210,6 +225,24 @@ CookService.prototype.Recipe = {
                     id: {
                         [Op.eq]: recipeId
                     }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    DeleteById: async (recipeId, profileId) => {
+        try {
+            return await db.Recipe.Update({
+                isDeleted: true,
+                deletedAt: Sequelize.fn('NOW'),
+                updatedAt: Sequelize.fn('NOW')
+            }, {
+                where: {
+                    [Op.and]: [{
+                        recipeId: `${recipeId}`,
+                        profileId: `${profileId}`
+                    }]
                 }
             })
         } catch (error) {
