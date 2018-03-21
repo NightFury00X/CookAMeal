@@ -82,6 +82,11 @@ MapService.prototype.Map = {
         }
     },
     FindGeoDistance: async (origin, destination, units, filter) => {
+
+        console.log('origin: ', origin)
+        console.log('destination: ', destination)
+        console.log('units: ', units)
+        console.log('filter: ', filter)
         let distanceValue = 5000
         if (units === 'metric') {
             distanceValue = filter * 1000
@@ -104,6 +109,7 @@ MapService.prototype.Map = {
                     return resolve(data)
                 })
         })
+        console.log('distanceData: ', distanceData)
         // if (distanceData.distanceValue <= distanceValue) {
         //     return distanceData
         // } else {
