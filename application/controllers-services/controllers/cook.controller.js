@@ -26,7 +26,10 @@ const Recipe = {
     },
     Add: async (req, res, next) => {
         try {
-            let recipeData = await CookService.Recipe.Add(req.body, req.files, req.user.id)
+            const {id} = req.user
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            const {currencySymbol} = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+            let recipeData = await CookService.Recipe.Add(req.body, req.files, req.user.id, currencySymbol)
             if (!recipeData) {
                 return next({
                     message: CommonConfig.ERRORS.CREATION,

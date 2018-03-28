@@ -448,6 +448,54 @@ const ReviewDetails = {
 }
 
 let Order = {
+    GetCurrentDeliverAddress: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            const {fullName} = profile
+            let address = await AuthService.Order.GetCurrentAddressByProfileId(profile.id)
+            if (!address) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Address not found.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            let addressData = JSON.parse(JSON.stringify(address))
+            addressData.fullName = fullName
+
+            const topDeliveryAddress = await AuthService.Order.GetTopDeliveryAddressByProfileId(profile.id)
+            const result = {
+                currentAddress: addressData,
+                otherAddresses: topDeliveryAddress
+            }
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+    AddDeliverAddress: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {fullName, mobileNumber, street, city, state, zipCode, country, latitude, longitude} = req.body
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            const deliverAddressData = {
+                fullName,
+                mobileNumber,
+                street,
+                city,
+                state,
+                zipCode,
+                country,
+                latitude,
+                longitude,
+                profileId: profile.id
+            }
+            const result = await AuthService.Order.AddNewDeliveryAddress(deliverAddressData)
+            if (!result) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to add deliver address.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            return ResponseHelpers.SetSuccessResponse({message: 'Doen'}, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    },
     GetMyOrders: async (req, res, next) => {
         try {
             console.log('Done')
@@ -580,21 +628,22 @@ const Cart = {
         try {
             const {id} = req.user
             const {recipeId, noOfServing} = req.body
-            const recipeDetails = await CommonService.Recipe.FindRecipePrice(recipeId)
+            const recipeDetails = await CommonService.Recipe.FindRecipePriceByRecipeId(recipeId)
             if (!recipeDetails) {
-                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
             }
             const isCartOpen = await AuthService.Cart.CheckCartIsOpen(id)
             if (isCartOpen) {
                 const addToCartData = {
                     recipeId: recipeId,
-                    noOfServing: 1, // noOfServing
+                    noOfServing: 1,
+                    spiceLevel: 'Mild',
                     cartId: isCartOpen.id,
                     price: recipeDetails.costPerServing
                 }
                 const result = AuthService.Cart.AddItemToExistingCart(addToCartData)
                 if (!result) {
-                    return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
+                    return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
                 }
                 return ResponseHelpers.SetSuccessResponse({Message: 'Added to Cart.'}, res, CommonConfig.STATUS_CODE.CREATED)
             } else {
@@ -602,11 +651,12 @@ const Cart = {
                     recipeId: recipeId,
                     noOfServing: noOfServing,
                     createdBy: id,
+                    spiceLevel: 'Mild',
                     price: recipeDetails.costPerServing
                 }
                 const result = await AuthService.Cart.AddToCart(addToCartData)
                 if (!result) {
-                    return ResponseHelpers.SetSuccessResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.BAD_REQUEST)
+                    return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
                 }
                 return ResponseHelpers.SetSuccessResponse({Message: 'Added to Cart.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
@@ -621,20 +671,27 @@ const Cart = {
             if (!cartDetails) {
                 return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
             }
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
             let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
+            let price = 0
             for (const index in convertedJSON.CartItems) {
                 if (convertedJSON.CartItems.hasOwnProperty(index)) {
                     const {recipeId} = convertedJSON.CartItems[index]
-                    const recipeDetails = await CommonService.Recipe.FindRecipePrice(recipeId)
+                    const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
                     const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
                     delete convertedJSON.CartItems[index].recipeId
                     const categoryId = recipeDetails.categoryId
                     const category = await CommonService.GetCategoryById(categoryId)
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
                     convertedJSON.CartItems[index].Recipe = recipeDetails
                     convertedJSON.CartItems[index].categoryName = category.name
                     convertedJSON.CartItems[index].Cook = cookDetails.fullName
+                    convertedJSON.CartItems[index].CurrencySymbol = currencyDetails.currencySymbol
+                    price = price + parseInt(convertedJSON.CartItems[index].price)
                 }
             }
+            convertedJSON.totalItems = convertedJSON.CartItems.length
+            convertedJSON.totalPrice = price
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
@@ -642,12 +699,42 @@ const Cart = {
     },
     DeleteCartItem: async (req, res, next) => {
         try {
-            const {id} = req.params
-            const cartDetails = await CommonService.Cart.DeleteCartDetails(id)
-            if (!cartDetails) {
-                return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.NOT_FOUND)
+            const {id} = req.user
+            const {itemId} = req.value.params
+            const cartOwner = await AuthService.Cart.CheckCartItemOwner(id)
+            if (!cartOwner) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove from cart.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            return ResponseHelpers.SetSuccessResponse({Message: 'remove cart item successfully!'}, res, CommonConfig.STATUS_CODE.CREATED)
+            const deletedCartItem = await AuthService.Cart.DeleteCartDetails(itemId, cartOwner.id)
+            if (!deletedCartItem) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove from cart.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const cartDetails = await AuthService.Cart.GetCartDetails(id)
+            if (!cartDetails) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove from cart.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
+            let totalPrice = 0
+            for (const index in convertedJSON.CartItems) {
+                if (convertedJSON.CartItems.hasOwnProperty(index)) {
+                    const {recipeId} = convertedJSON.CartItems[index]
+                    const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+                    const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
+                    delete convertedJSON.CartItems[index].recipeId
+                    const categoryId = recipeDetails.categoryId
+                    const category = await CommonService.GetCategoryById(categoryId)
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+                    convertedJSON.CartItems[index].Recipe = recipeDetails
+                    convertedJSON.CartItems[index].categoryName = category.name
+                    convertedJSON.CartItems[index].Cook = cookDetails.fullName
+                    convertedJSON.CartItems[index].CurrencySymbol = currencyDetails.currencySymbol
+                    totalPrice = totalPrice + parseInt(convertedJSON.CartItems[index].price)
+                }
+            }
+            convertedJSON.totalItems = convertedJSON.CartItems.length
+            convertedJSON.totalPrice = totalPrice
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
@@ -655,18 +742,88 @@ const Cart = {
     UpdateTotalServing: async (req, res, next) => {
         try {
             const {id} = req.user
-            const {itemId, recipeId, noOfServing} = req.body
-            // validate recipe is added by user
+            const {itemId} = req.value.params
+            const {recipeId, noOfServing} = req.body
             const cartOwner = await AuthService.Cart.CheckCartItemOwner(id)
             if (!cartOwner) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
-            console.log('Cart Id: ', cartOwner.id)
-            const result = await AuthService.Cart.UpdateNoOfServing(itemId, cartOwner.id, noOfServing, recipeId)
+            const {costPerServing} = await AuthService.Cart.GetPriceOfRecipeByCartItemId(itemId)
+            const result = await AuthService.Cart.UpdateNoOfServing(itemId, cartOwner.id, noOfServing, recipeId, (costPerServing * noOfServing))
             if (!result) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
-            return ResponseHelpers.SetSuccessResponse({Message: 'Item Updated.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            const cartDetails = await AuthService.Cart.GetCartDetails(id)
+            if (!cartDetails) {
+                return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
+            let totalPrice = 0
+            for (const index in convertedJSON.CartItems) {
+                if (convertedJSON.CartItems.hasOwnProperty(index)) {
+                    const {recipeId} = convertedJSON.CartItems[index]
+                    const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+                    const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
+                    delete convertedJSON.CartItems[index].recipeId
+                    const categoryId = recipeDetails.categoryId
+                    const category = await CommonService.GetCategoryById(categoryId)
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+                    convertedJSON.CartItems[index].Recipe = recipeDetails
+                    convertedJSON.CartItems[index].categoryName = category.name
+                    convertedJSON.CartItems[index].Cook = cookDetails.fullName
+                    convertedJSON.CartItems[index].currencySymbol = currencyDetails.currencySymbol
+                    totalPrice = totalPrice + parseInt(convertedJSON.CartItems[index].price)
+                }
+            }
+            convertedJSON.totalItems = convertedJSON.CartItems.length
+            convertedJSON.totalPrice = totalPrice
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    },
+    UpdateSpiceLevel: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {itemId} = req.value.params
+            const {recipeId, spiceLevel} = req.body
+            console.log('RecipeId: ', recipeId)
+            console.log('spiceLevel: ', spiceLevel)
+            const cartOwner = await AuthService.Cart.CheckCartItemOwner(id)
+            if (!cartOwner) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update space level.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            const result = await AuthService.Cart.UpdateSpiceLevel(itemId, cartOwner.id, recipeId, spiceLevel)
+            if (!result) {
+                return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update spice level.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            const cartDetails = await AuthService.Cart.GetCartDetails(id)
+            if (!cartDetails) {
+                return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
+            let totalPrice = 0
+            for (const index in convertedJSON.CartItems) {
+                if (convertedJSON.CartItems.hasOwnProperty(index)) {
+                    const {recipeId} = convertedJSON.CartItems[index]
+                    const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+                    const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
+                    delete convertedJSON.CartItems[index].recipeId
+                    const categoryId = recipeDetails.categoryId
+                    const category = await CommonService.GetCategoryById(categoryId)
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+                    convertedJSON.CartItems[index].Recipe = recipeDetails
+                    convertedJSON.CartItems[index].categoryName = category.name
+                    convertedJSON.CartItems[index].Cook = cookDetails.fullName
+                    convertedJSON.CartItems[index].currencySymbol = currencyDetails.currencySymbol
+                    totalPrice = totalPrice + parseInt(convertedJSON.CartItems[index].price)
+                }
+            }
+            convertedJSON.totalItems = convertedJSON.CartItems.length
+            convertedJSON.totalPrice = totalPrice
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
@@ -697,11 +854,9 @@ const WishList = {
             let convertedJSON = JSON.parse(JSON.stringify(recipeList))
             for (const index in convertedJSON) {
                 if (convertedJSON.hasOwnProperty(index)) {
-                    const {id, profileId} = convertedJSON[index]
+                    const {id} = convertedJSON[index]
                     const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(id)
-                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
                     convertedJSON[index].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating
-                    convertedJSON[index].CurrencySymbol = currencyDetails.currencySymbol
                 }
             }
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
@@ -724,6 +879,62 @@ const WishList = {
                 return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove item.'}, res, CommonConfig.STATUS_CODE.OK)
             }
             return ResponseHelpers.SetSuccessResponse({ressage: 'Item removed successfully.'}, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+    UpdateSpiceLevel: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {cartItemId, recipeId} = req.value.params
+            const {spiceLevel} = req.body
+            const cart = await AuthService.Cart.CheckCartItemOwner(id)
+            if (!cart) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Cart not found.'
+                }, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const cartItem = await AuthService.Cart.CheckCartItemIsExists(cart.id, cartItemId, recipeId)
+            if (!cartItem) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Item not found.'
+                }, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const updatedData = await AuthService.Cart.UpdateSpiceLevel(cartItemId, cart.id, spiceLevel, recipeId)
+            if (!updatedData) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Item not found.'
+                }, res, CommonConfig.STATUS_CODE.OK)
+            }
+            return ResponseHelpers.SetSuccessResponse({ressage: 'No. of serve updated'}, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+    UpdateNoOfServe: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {cartItemId, recipeId} = req.value.params
+            const {noOfServing} = req.body
+            const cart = await AuthService.Cart.CheckCartItemOwner(id)
+            if (!cart) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Cart not found.'
+                }, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const cartItem = await AuthService.Cart.CheckCartItemIsExists(cart.id, cartItemId, recipeId)
+            if (!cartItem) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Item not found.'
+                }, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const updatedData = await AuthService.Cart.UpdateNoOfServing(noOfServing, cart.id, noOfServing, recipeId)
+            if (!updatedData) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Item not found.'
+                }, res, CommonConfig.STATUS_CODE.OK)
+            }
+            return ResponseHelpers.SetSuccessResponse({ressage: 'No. of serve updated'}, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }

@@ -109,13 +109,21 @@ router.post('/cart',
 router.get('/cart',
     AuthController.Cart.GetCartDetails)
 
-router.delete('/cart/:id',
-    ValidateParams(ParamSchemas.idSchema, 'id'),
+router.delete('/cart/:itemId',
+    ValidateParams(ParamSchemas.idSchema, 'itemId'),
     AuthController.Cart.DeleteCartItem)
 
-router.put('/cart/:id',
-    ValidateParams(ParamSchemas.idSchema, 'id'),
-    AuthController.Cart.DeleteCartItem)
+router.put('/cart/serve/:itemId',
+    ValidateParams(ParamSchemas.idSchema, 'itemId'),
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.ServingData),
+    AuthController.Cart.UpdateTotalServing)
+
+router.put('/cart/spice-level/:itemId',
+    ValidateParams(ParamSchemas.idSchema, 'itemId'),
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.SpiceLevelData),
+    AuthController.Cart.UpdateSpiceLevel)
 
 router.post('/facebook',
     // ValidateBody(BodySchemas.FbCheck),
@@ -127,5 +135,12 @@ router.get('/recipe/wishlist',
 router.delete('/recipe/wishlist/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     AuthController.WishList.DeleteFromWishList)
+
+router.get('/delivery-address/current',
+    AuthController.Order.GetCurrentDeliverAddress)
+
+router.post('/delivery-address',
+    ValidateBody(BodySchemas.DeliveryAddress),
+    AuthController.Order.AddDeliverAddress)
 
 module.exports = router

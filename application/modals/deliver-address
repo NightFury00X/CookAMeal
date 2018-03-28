@@ -1,0 +1,56 @@
+'use strict'
+
+module.exports = function (sequelize, DataTypes) {
+    let modelDefinition = {
+        id: {
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
+        },
+        fullName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 1
+        },
+        mobileNumber: {
+            type: DataTypes.BIGINT,
+            allowNull: false
+        },
+        street: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        state: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        country: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        zipCode: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        latitude: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        longitude: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        updatedAt: DataTypes.DATE,
+        deletedAt: DataTypes.DATE
+    }
+
+    return sequelize.define('DeliverAddress', modelDefinition)
+}

@@ -31,12 +31,30 @@ router.get('/category/:id/sub-category/recipe-list/:type/lat/:lat/long/:long/uni
 router.get('/category/:catid/sub-category/:subid/recipe-list',
     ValidateParams(ParamSchemas.idSchema, 'catid'),
     ValidateParams(ParamSchemas.idSchema, 'subid'),
+    // ValidateParams(ParamSchemas.idSchema, 'lat'),
+    // ValidateParams(ParamSchemas.idSchema, 'long'),
+    // ValidateParams(ParamSchemas.idSchema, 'unit'),
+    // ValidateParams(ParamSchemas.idSchema, 'filter'),
     CommonController.Recipe.GetRecipeListByCategoryAndSubCategoryIds)
 
 // 8. Get recipe details by recipe id
-router.get('/recipe/:id',
+router.get('/recipe/:id/lat/:lat/long/:long/unit/:unit/filter/:filter',
     ValidateParams(ParamSchemas.idSchema, 'id'),
+    ValidateParams(ParamSchemas.idSchema, 'lat'),
+    ValidateParams(ParamSchemas.idSchema, 'long'),
+    ValidateParams(ParamSchemas.idSchema, 'unit'),
+    ValidateParams(ParamSchemas.idSchema, 'filter'),
     CommonController.Recipe.GetRecipeById)
+
+// 8. Get recipe details by recipe id
+router.get('/recipe/:id/lat/:lat/long/:long/unit/:unit/filter/:filter/cart-item/:cartId',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    ValidateParams(ParamSchemas.idSchema, 'lat'),
+    ValidateParams(ParamSchemas.idSchema, 'long'),
+    ValidateParams(ParamSchemas.idSchema, 'unit'),
+    ValidateParams(ParamSchemas.idSchema, 'cartId'),
+    ValidateParams(ParamSchemas.idSchema, 'filter'),
+    CommonController.Recipe.GetRecipeByCartItemId)
 
 // 9. Get cook-profile by profile id
 router.get('/cook-profile/:id',

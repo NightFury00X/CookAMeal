@@ -72,6 +72,10 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: true,
             allowNull: false
         },
+        currencySymbol: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         updatedAt: DataTypes.DATE,
         deletedAt: DataTypes.DATE
     }

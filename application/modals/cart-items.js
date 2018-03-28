@@ -16,6 +16,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BIGINT,
             allowNull: false
         },
+        spiceLevel: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         isDeleted: {
             type: DataTypes.BOOLEAN,
             defaultValue: false

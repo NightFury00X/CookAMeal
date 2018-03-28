@@ -587,7 +587,6 @@ CommonService.prototype.User = {
 }
 
 CommonService.prototype.Recipe = {
-
     FindCookDetailsByRecipeId: async (recipeId) => {
         try {
             return await db.Profile.findOne({
@@ -599,6 +598,28 @@ CommonService.prototype.Recipe = {
                         }
                     }
                 }, {
+                    model: db.MediaObject,
+                    attributes: ['id', 'imageUrl']
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    FindRecipePriceByRecipeId: async (recipeId) => {
+        try {
+            return await db.Recipe.findById(recipeId, {
+                attributes: ['id', 'costPerServing']
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    FindRecipeDetailsForCartById: async (recipeId) => {
+        try {
+            return await db.Recipe.findById(recipeId, {
+                attributes: ['id', 'dishName', 'availableServings', 'costPerServing', 'categoryId', 'subCategoryId', 'deliveryFee'],
+                include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']
                 }]
@@ -671,7 +692,7 @@ CommonService.prototype.Recipe = {
                     attributes: ['id', 'imageUrl']
                 }, {
                     model: db.Recipe,
-                    attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
+                    attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId', 'currencySymbol'],
                     where: {
                         id: {
                             [Op.eq]: recipeId
@@ -687,6 +708,9 @@ CommonService.prototype.Recipe = {
                     }, {
                         attributes: ['id', 'imageUrl'],
                         model: db.MediaObject
+                    }, {
+                        attributes: ['id', 'latitude', 'longitude'],
+                        model: db.RecipesGeoLocations
                     }]
                 }]
             })
@@ -714,7 +738,7 @@ CommonService.prototype.Recipe = {
                 attributes: ['id', 'name'],
                 include: [{
                     model: db.Recipe,
-                    attributes: ['id', 'dishName', 'costPerServing', 'orderByDateTime'],
+                    attributes: ['id', 'dishName', 'costPerServing', 'orderByDateTime', 'currencySymbol'],
                     where: {
                         profileId: {
                             [Op.eq]: `${profileId}`
@@ -736,7 +760,7 @@ CommonService.prototype.Recipe = {
                 attributes: ['id', 'name'],
                 include: [{
                     model: db.Recipe,
-                    attributes: ['id', 'dishName', 'costPerServing', 'subCategoryId', 'orderByDateTime', 'profileId', 'eligibleFor'],
+                    attributes: ['id', 'dishName', 'costPerServing', 'subCategoryId', 'orderByDateTime', 'profileId', 'eligibleFor', 'currencySymbol'],
                     where: {
                         [Op.and]: [{
                             categoryId: categoryId
@@ -747,13 +771,14 @@ CommonService.prototype.Recipe = {
                             eligibleFor: `${3}`
                         }]
                     },
-                    required: true,
+                    // required: true,
                     limit: 10,
                     include: [{
-                        required: true,
+                        // required: true,
                         model: db.MediaObject,
                         attributes: ['id', 'imageUrl']
                     }, {
+                        attributes: ['id', 'latitude', 'longitude'],
                         model: db.RecipesGeoLocations
                     }]
                 }]
@@ -768,7 +793,7 @@ CommonService.prototype.Recipe = {
                 attributes: ['id', 'name'],
                 include: [{
                     model: db.Recipe,
-                    attributes: ['id', 'dishName', 'costPerServing', 'subCategoryId', 'orderByDateTime', 'profileId'],
+                    attributes: ['id', 'dishName', 'costPerServing', 'subCategoryId', 'orderByDateTime', 'profileId', 'currencySymbol'],
                     where: {
                         profileId: {
                             [Op.eq]: `${profileId}`
@@ -802,10 +827,13 @@ CommonService.prototype.Recipe = {
                         [Op.ne]: `${recipeId}`
                     }
                 },
-                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId'],
+                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'serve', 'categoryId', 'subCategoryId', 'profileId', 'currencySymbol'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']
+                }, {
+                    attributes: ['id', 'latitude', 'longitude'],
+                    model: db.RecipesGeoLocations
                 }]
             })
         } catch (error) {
@@ -828,10 +856,13 @@ CommonService.prototype.Recipe = {
                         [Op.eq]: `${subCategoryId}`
                     }
                 },
-                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'categoryId', 'subCategoryId', 'profileId'],
+                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'categoryId', 'subCategoryId', 'profileId', 'currencySymbol'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']
+                }, {
+                    attributes: ['id', 'latitude', 'longitude'],
+                    model: db.RecipesGeoLocations
                 }]
             })
         } catch (error) {

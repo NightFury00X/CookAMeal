@@ -195,6 +195,12 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
+        ProfileModel.hasMany(models.DeliverAddress, {
+            foreignKey: {
+                name: 'profileId',
+                onDelete: 'CASCADE'
+            }
+        })
     }
 
     return ProfileModel

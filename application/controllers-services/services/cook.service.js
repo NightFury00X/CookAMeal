@@ -43,7 +43,7 @@ CookService.prototype.Recipe = {
             throw (error)
         }
     },
-    Add: async (recipe, files, userTypeId) => {
+    Add: async (recipe, files, userTypeId, currencySymbol) => {
         const trans = await db.sequelize.transaction()
         try {
             let allergies
@@ -61,6 +61,7 @@ CookService.prototype.Recipe = {
             let preparationMethod = JSON.parse(recipe.preparationMethod)
             const profile = await CommonService.User.GetProfileIdByUserTypeId(userTypeId)
             recipe.profileId = profile.id
+            recipe.currencySymbol = currencySymbol
             const recipeData = await db.Recipe.create(recipe, {transaction: trans})
             if (!recipeData) {
                 await trans.rollback()

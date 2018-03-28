@@ -7,6 +7,14 @@ module.exports = {
         })
     },
     BodySchemas: {
+        ServingData: Joi.object().options({abortEarly: false}).keys({
+            recipeId: Joi.string().required(),
+            noOfServing: Joi.number().required()
+        }),
+        SpiceLevelData: Joi.object().options({abortEarly: false}).keys({
+            recipeId: Joi.string().required(),
+            spiceLevel: Joi.string().required().allow('Mild', 'Medium', 'Hot')
+        }),
         FbCheck: Joi.object().options({abortEarly: false}).keys({
             facebookId: Joi.string().required(),
             facebookEmailId: Joi.any()
@@ -118,6 +126,17 @@ module.exports = {
         AddToCart: Joi.object().keys({
             recipeId: Joi.string().required(),
             noOfServing: Joi.string().required()
+        }),
+        DeliveryAddress: Joi.object().keys({
+            fullName: Joi.string().required(),
+            mobileNumber: Joi.string().required(),
+            street: Joi.string().required(),
+            city: Joi.string().required(),
+            state: Joi.string().required(),
+            zipCode: Joi.string().required(),
+            country: Joi.string().required(),
+            latitude: Joi.any().required(),
+            longitude: Joi.any().required()
         })
     }
 }

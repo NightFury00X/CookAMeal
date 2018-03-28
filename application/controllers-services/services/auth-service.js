@@ -5,6 +5,7 @@ const isJSON = require('is-json')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
 const CommonConfig = require('../../../configurations/helpers/common-config')
+const MapService = require('../services/map-service')
 AuthService = function () {
 }
 
@@ -252,6 +253,46 @@ AuthService.prototype.Recipe = {
 }
 
 AuthService.prototype.Order = {
+    GetCurrentAddressByProfileId: async (profileId) => {
+        try {
+            return await db.Address.findOne({
+                attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country'],
+                where: {
+                    profileId: {
+                        [Op.eq]: `${profileId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetTopDeliveryAddressByProfileId: async (profileId) => {
+        try {
+            return await db.DeliverAddress.findAll({
+                attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country', 'fullName'],
+                where: {
+                    profileId: {
+                        [Op.eq]: `${profileId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    AddNewDeliveryAddress: async (address) => {
+        try {
+            const location = await MapService.Map.GetGeoCordinatesFromAddress(`${address.street}, ${address.city}, ${address.state}, ${address.country}`)
+            address.latitude = location[0].latitude
+            address.longitude = location[0].longitude
+
+            console.log('deliverAddressData: ', address)
+            return await db.DeliverAddress.create(address)
+        } catch (error) {
+            throw (error)
+        }
+    },
     ValidateOrder: async (totalAmount, taxes, deliveryFee, noOfServes, recipes, deliveryType) => {
         const recipesToJson = !isJSON(recipes) ? JSON.parse(JSON.stringify(recipes)) : JSON.parse(recipes)
         const recipeId = recipesToJson[0].recipeId
@@ -570,11 +611,46 @@ AuthService.prototype.Cart = {
             throw (error)
         }
     },
-    UpdateNoOfServing: async (cartItemId, cartId, noOfServing, recipeId) => {
+    CheckCartItemIsExists: async (cartId, cartItemId, recipeId) => {
+        try {
+            return await db.CartItem.findOne({
+                where: {
+                    [Op.and]: [{
+                        id: `${cartItemId}`,
+                        cartId: `${cartId}`,
+                        recipeId: `${recipeId}`,
+                        status: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    UpdateSpiceLevel: async (cartItemId, cartId, recipeId, spiceLevel) => {
         try {
             const updatedAt = Sequelize.fn('NOW')
             return await db.CartItem.update({
-                noOfServing, updatedAt
+                spiceLevel, updatedAt
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${cartItemId}`,
+                        cartId: `${cartId}`,
+                        recipeId: `${recipeId}`,
+                        isDeleted: false
+                    }]
+                }
+            })
+        } catch (errro) {
+            throw (errro)
+        }
+    },
+    UpdateNoOfServing: async (cartItemId, cartId, noOfServing, recipeId, price) => {
+        try {
+            const updatedAt = Sequelize.fn('NOW')
+            return await db.CartItem.update({
+                noOfServing, updatedAt, price
             }, {
                 where: {
                     [Op.and]: [{
@@ -622,8 +698,32 @@ AuthService.prototype.Cart = {
             throw (error)
         }
     },
+    GetCartRecipeItemByRecipeId: async (recipeId, createdBy, cartId) => {
+        try {
+            return await db.AddToCart.findOne({
+                where: [{
+                    createdBy: {
+                        [Op.eq]: `${createdBy}`
+                    }
+                }],
+                include: [{
+                    model: db.CartItem,
+                    attributes: ['id', 'spiceLevel', 'noOfServing'],
+                    where: {
+                        [Op.and]: [{
+                            recipeId: `${recipeId}`,
+                            id: `${cartId}`
+                        }]
+                    }
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     AddItemToExistingCart: async (addToCartDetails) => {
         try {
+            console.log(':addToCartDetails: ', addToCartDetails)
             const cartItem = await db.CartItem.create(addToCartDetails)
             return cartItem
         } catch (error) {
@@ -640,7 +740,7 @@ AuthService.prototype.Cart = {
                     }
                 },
                 include: [{
-                    attributes: ['id', 'noOfServing', 'price', 'recipeId'],
+                    attributes: ['id', 'noOfServing', 'price', 'recipeId', 'spiceLevel'],
                     model: db.CartItem
                 }]
             })
@@ -648,27 +748,51 @@ AuthService.prototype.Cart = {
             throw (error)
         }
     },
-    DeleteCartDetails: async (id) => {
+    GetPriceOfRecipeByCartItemId: async (itemId) => {
         try {
-            return await db.CartItem.destroy({
-                where: {
-                    id: {
-                        [Op.eq]: id
+            return await db.Recipe.findOne({
+                attributes: ['costPerServing'],
+                include: [{
+                    model: db.CartItem,
+                    where: {
+                        id: {
+                            [Op.eq]: `${itemId}`
+                        }
                     }
-                }
+                }]
             })
         } catch (error) {
             throw (error)
         }
     },
-
+    GetCartItemDetailsById: async (itemId) => {
+        try {
+            return await db.CartItem.findById(itemId)
+        } catch (error) {
+            throw (error)
+        }
+    },
+    DeleteCartDetails: async (itemId, cartId) => {
+        try {
+            return await db.CartItem.destroy({
+                where: {
+                    [Op.and]: [{
+                        id: `${itemId}`,
+                        cartId: `${cartId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    }
 }
 
 AuthService.prototype.WishList = {
     All: async (createdBy) => {
         try {
             return db.Recipe.findAll({
-                attributes: ['id', 'dishName', 'costPerServing', 'profileId'],
+                attributes: ['id', 'dishName', 'costPerServing', 'profileId', 'currencySymbol'],
                 include: [{
                     attributes: ['imageUrl'],
                     model: db.MediaObject

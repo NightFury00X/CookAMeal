@@ -120,7 +120,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
                 },
                 transaction: trans
             })
-            console.log('D: ', d)
         }
         await trans.commit()
         return {
@@ -137,7 +136,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             }
         }
     } catch (error) {
-        console.log('Error: ', error)
         await trans.rollback()
         throw (error)
     }
@@ -145,7 +143,6 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
 
 AnonymousService.prototype.Authenticate = async (userDetails) => {
     try {
-        console.log('userDetails: ', userDetails)
         let userTypeDetails
         if (userDetails.tokenStatus && userDetails.tokenId) {
             userTypeDetails = await db.UserType.findOne({

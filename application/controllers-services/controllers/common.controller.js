@@ -115,16 +115,14 @@ let Category = {
                     for (const inner in convertedJSON[outer].Recipes) {
                         if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const recipeId = convertedJSON[outer].Recipes[inner].id
-                            const profileId = convertedJSON[outer].Recipes[inner].profileId
                             if (!convertedJSON[outer].Recipes[inner].RecipesGeoLocation) {
-                                convertedJSON[outer].Recipes[inner].map = null
+                                convertedJSON[outer].Recipes[inner].map = false
                                 continue
                             }
                             const destination = {
                                 latitude: convertedJSON[outer].Recipes[inner].RecipesGeoLocation.latitude,
                                 longitude: convertedJSON[outer].Recipes[inner].RecipesGeoLocation.longitude
                             }
-                            console.log('Units: ', unit)
                             let unitValue = 'metric'
                             if (unit.toLowerCase() === 'unitedstates') {
                                 unitValue = 'imperial'
@@ -134,13 +132,13 @@ let Category = {
                                 filterValue = filter
                             }
                             const map = await MapService.Map.FindGeoDistance(`${lat}, ${long}`, destination, `${unitValue}`, filterValue)
+
                             if (!map) {
-                                convertedJSON[outer].Recipes[inner].map = null
+                                convertedJSON[outer].Recipes[inner].map = false
                                 continue
                             }
                             convertedJSON[outer].Recipes[inner].map = true
                             const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
-                            const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
                             if (userId) {
                                 const favorite = await AuthService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
                                 convertedJSON[outer].Recipes[inner].Favorite = !!favorite
@@ -148,15 +146,14 @@ let Category = {
                                 convertedJSON[outer].Recipes[inner].Favorite = false
                             }
                             convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating
-                            convertedJSON[outer].Recipes[inner].CurrencySymbol = currencyDetails.currencySymbol
                         }
                     }
                 }
             }
             convertedJSON = convertedJSON.filter(function (item) {
-                // item.Recipes = item.Recipes.filter(function (recipe) {
-                //     return recipe.map != null
-                // })
+                item.Recipes = item.Recipes.filter(function (recipe) {
+                    return recipe.map === true
+                })
                 return item.Recipes.length > 0
             })
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
@@ -204,11 +201,14 @@ const Recipe = {
         try {
             const userId = req.user.id
             const recipeId = req.value.params.id
+            const {unit, filter, lat, long} = req.value.params
+
             const recipeDetails = await CommonService.Recipe.FindRecipeById(recipeId)
             if (!recipeDetails && recipeDetails.Recipes.length === 0) {
-                return ResponseHelpers.SetNotFoundResponse(CommonConfig.ERRORS.RECIPE.NOT_FOUND, res)
+                return ResponseHelpers.SetSuccessErrorResponse({messgae: 'Recipe not found.'}, res, CommonConfig.ERRORS.RECIPE.OK)
             }
             let recipeDetailsToJSON = JSON.parse(JSON.stringify(recipeDetails.Recipes[0]))
+
             const rating = await CommonService.Recipe.FindRatingByRecipeId(recipeDetailsToJSON.id)
             recipeDetailsToJSON.rating = !rating[0].rating ? 0 : rating[0].rating
             if (userId) {
@@ -219,8 +219,6 @@ const Recipe = {
             }
             const profileId = recipeDetailsToJSON.profileId
             const profileDetails = await CommonService.User.GetCookProfileDetailsById(profileId)
-            const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
-            recipeDetailsToJSON.CurrencySymbol = currencyDetails.currencySymbol
             const cookRecipes = await CommonService.Recipe.FindAllRecipeByCookIdExcludeSelectedRecipe(profileId, recipeId)
             let cookRecipesToJSON = JSON.parse(JSON.stringify(cookRecipes))
             for (const index in cookRecipesToJSON) {
@@ -234,9 +232,6 @@ const Recipe = {
                     }
                     const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
                     cookRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
-                    const profileId = cookRecipesToJSON[index].profileId
-                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
-                    cookRecipesToJSON[index].currencySymbol = currencyDetails.currencySymbol
                 }
             }
             const similarRecipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryIdExcludeSelectedCookRecipe(recipeDetailsToJSON.subCategoryId, profileId)
@@ -244,6 +239,29 @@ const Recipe = {
             for (const index in similarRecipesToJSON) {
                 if (similarRecipesToJSON.hasOwnProperty(index)) {
                     const tempRecipeId = similarRecipesToJSON[index].id
+                    if (!similarRecipesToJSON[index].RecipesGeoLocation) {
+                        similarRecipesToJSON[index].map = false
+                        continue
+                    }
+                    const destination = {
+                        latitude: similarRecipesToJSON[index].RecipesGeoLocation.latitude,
+                        longitude: similarRecipesToJSON[index].RecipesGeoLocation.longitude
+                    }
+                    let unitValue = 'metric'
+                    if (unit.toLowerCase() === 'unitedstates') {
+                        unitValue = 'imperial'
+                    }
+                    let filterValue = 5
+                    if (filter) {
+                        filterValue = filter
+                    }
+                    const map = await MapService.Map.FindGeoDistance(`${lat}, ${long}`, destination, `${unitValue}`, filterValue)
+                    if (!map) {
+                        similarRecipesToJSON[index].map = false
+                        continue
+                    }
+                    similarRecipesToJSON[index].map = true
+
                     if (userId) {
                         const tempFav = await AuthService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
                         similarRecipesToJSON[index].favorite = !!tempFav
@@ -252,13 +270,114 @@ const Recipe = {
                     }
                     const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
                     similarRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
-                    const profileId = similarRecipesToJSON[index].profileId
-                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
-                    similarRecipesToJSON[index].currencySymbol = currencyDetails.currencySymbol
                 }
             }
+
+            similarRecipesToJSON = similarRecipesToJSON.filter(function (recipe) {
+                return recipe.map === true
+            })
+
             const result = {
                 recipeDetails: recipeDetailsToJSON,
+                cartItemDetails: null,
+                profile: profileDetails,
+                cookRecipes: cookRecipesToJSON,
+                similarRecipes: similarRecipesToJSON
+            }
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+    GetRecipeByCartItemId: async (req, res, next) => {
+        try {
+            const userId = req.user.id
+            const recipeId = req.value.params.id
+            const cartItemId = req.value.params.cartId
+            const {unit, filter, lat, long} = req.value.params
+
+            const recipeDetails = await CommonService.Recipe.FindRecipeById(recipeId)
+            if (!recipeDetails && recipeDetails.Recipes.length === 0) {
+                return ResponseHelpers.SetSuccessErrorResponse({messgae: 'Recipe not found.'}, res, CommonConfig.ERRORS.RECIPE.OK)
+            }
+            let recipeDetailsToJSON = JSON.parse(JSON.stringify(recipeDetails.Recipes[0]))
+
+            const rating = await CommonService.Recipe.FindRatingByRecipeId(recipeDetailsToJSON.id)
+            recipeDetailsToJSON.rating = !rating[0].rating ? 0 : rating[0].rating
+            if (userId) {
+                const favorite = await AuthService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId, cartItemId)
+                recipeDetailsToJSON.favorite = !!favorite
+            } else {
+                recipeDetailsToJSON.favorite = false
+            }
+
+            let cartItemDetails = await AuthService.Cart.GetCartRecipeItemByRecipeId(recipeId, userId, cartItemId)
+            if (cartItemDetails) {
+                cartItemDetails = cartItemDetails.CartItems[0]
+            }
+            const profileId = recipeDetailsToJSON.profileId
+            const profileDetails = await CommonService.User.GetCookProfileDetailsById(profileId)
+            const cookRecipes = await CommonService.Recipe.FindAllRecipeByCookIdExcludeSelectedRecipe(profileId, recipeId)
+            let cookRecipesToJSON = JSON.parse(JSON.stringify(cookRecipes))
+            for (const index in cookRecipesToJSON) {
+                if (cookRecipesToJSON.hasOwnProperty(index)) {
+                    const tempRecipeId = cookRecipesToJSON[index].id
+                    if (userId) {
+                        const tempFav = await AuthService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
+                        cookRecipesToJSON[index].favorite = !!tempFav
+                    } else {
+                        cookRecipesToJSON[index].favorite = false
+                    }
+                    const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
+                    cookRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
+                }
+            }
+            const similarRecipes = await CommonService.Recipe.FindSimilarRecipesBySubCategoryIdExcludeSelectedCookRecipe(recipeDetailsToJSON.subCategoryId, profileId)
+            let similarRecipesToJSON = JSON.parse(JSON.stringify(similarRecipes))
+            for (const index in similarRecipesToJSON) {
+                if (similarRecipesToJSON.hasOwnProperty(index)) {
+                    const tempRecipeId = similarRecipesToJSON[index].id
+                    if (!similarRecipesToJSON[index].RecipesGeoLocation) {
+                        similarRecipesToJSON[index].map = false
+                        continue
+                    }
+                    const destination = {
+                        latitude: similarRecipesToJSON[index].RecipesGeoLocation.latitude,
+                        longitude: similarRecipesToJSON[index].RecipesGeoLocation.longitude
+                    }
+                    let unitValue = 'metric'
+                    if (unit.toLowerCase() === 'unitedstates') {
+                        unitValue = 'imperial'
+                    }
+                    let filterValue = 5
+                    if (filter) {
+                        filterValue = filter
+                    }
+                    const map = await MapService.Map.FindGeoDistance(`${lat}, ${long}`, destination, `${unitValue}`, filterValue)
+                    if (!map) {
+                        similarRecipesToJSON[index].map = false
+                        continue
+                    }
+                    similarRecipesToJSON[index].map = true
+
+                    if (userId) {
+                        const tempFav = await AuthService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, tempRecipeId)
+                        similarRecipesToJSON[index].favorite = !!tempFav
+                    } else {
+                        similarRecipesToJSON[index].favorite = false
+                    }
+                    const tempRating = await CommonService.Recipe.FindRatingByRecipeId(tempRecipeId)
+                    similarRecipesToJSON[index].rating = !tempRating[0].rating ? 0 : tempRating[0].rating
+                }
+            }
+
+            similarRecipesToJSON = similarRecipesToJSON.filter(function (recipe) {
+                return recipe.map === true
+            })
+
+            const result = {
+                recipeDetails: recipeDetailsToJSON,
+                cartItemDetails: cartItemDetails,
                 profile: profileDetails,
                 cookRecipes: cookRecipesToJSON,
                 similarRecipes: similarRecipesToJSON
@@ -291,9 +410,7 @@ const Recipe = {
                     for (const inner in convertedJSON[outer].Recipes) {
                         if (convertedJSON[outer].Recipes.hasOwnProperty(inner)) {
                             const recipeId = convertedJSON[outer].Recipes[inner].id
-                            const profileId = convertedJSON[outer].Recipes[inner].profileId
                             const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
-                            const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profileId)
                             if (userId) {
                                 const favorite = await AuthService.Favorite.Recipe.CheckRecipeIsFavoriteByRecipeIdAndUserId(userId, recipeId)
                                 convertedJSON[outer].Recipes[inner].Favorite = !!favorite
@@ -302,7 +419,6 @@ const Recipe = {
                             }
                             convertedJSON[outer].Recipes[inner].Rating = !ratingDetails[0].rating ? 0 : ratingDetails[0].rating
                             convertedJSON[outer].Recipes[inner].Favorite = !!favorite
-                            convertedJSON[outer].Recipes[inner].CurrencySymbol = currencyDetails.currencySymbol
                         }
                     }
                 }
