@@ -222,12 +222,30 @@ CookService.prototype.Recipe = {
     GetDeliveryFeesByRecipeId: async (recipeId) => {
         try {
             return db.Recipe.findOne({
-                attributes: ['costPerServing', 'availableServings', 'deliveryFee', 'profileId'],
+                attributes: ['costPerServing', 'availableServings', 'deliveryFee', 'profileId', 'currencySymbol'],
                 where: {
                     id: {
                         [Op.eq]: recipeId
                     }
                 }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetRecipeDetailsForOrderSummaryByRecipeId: async (recipeId) => {
+        try {
+            return db.Recipe.findOne({
+                attributes: ['id', 'dishName', 'costPerServing', 'availableServings', 'deliveryFee', 'profileId', 'currencySymbol'],
+                where: {
+                    id: {
+                        [Op.eq]: `${recipeId}`
+                    }
+                },
+                include: [{
+                    attributes: ['imageUrl'],
+                    model: db.MediaObject
+                }]
             })
         } catch (error) {
             throw (error)
@@ -347,6 +365,33 @@ CookService.prototype.UpdateIdentificationCard = async (profileId, identificatio
     } catch (error) {
         trans.rollback()
         throw (error)
+    }
+}
+
+CookService.prototype.Availability = {
+    Add: async (createdBy, date, startTime, endTime) => {
+        return await db.CookAvailability.create({createdBy, date, startTime, endTime})
+    },
+    GetAllCookAvailabilityDetails: async (createdBy) => {
+        return await db.CookAvailability.findAll({
+            attributes: ['startTime', 'endTime'],
+            where: {
+                createdBy: {
+                    [Op.eq]: createdBy
+                }
+            }
+        })
+    },
+    GetAllCookAvailabilityDetailsByDate: async (createdBy, date) => {
+        return await db.CookAvailability.findAll({
+            attributes: ['id', 'startTime', 'endTime'],
+            where: {
+                [Op.and]: [{
+                    createdBy: `${createdBy}`,
+                    date: `${date}`
+                }]
+            }
+        })
     }
 }
 

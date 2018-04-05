@@ -664,7 +664,7 @@ CommonService.prototype.Recipe = {
     FindRecipeByCatIdAndSubIds: async (categoryId, subCategoryId) => {
         try {
             return await db.Recipe.findAll({
-                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'preparationTime', 'cookTime', 'profileId'],
+                attributes: ['id', 'dishName', 'availableServings', 'orderByDateTime', 'costPerServing', 'orderByDateTime', 'preparationTime', 'cookTime', 'profileId'],
                 where: {
                     [Op.and]: [{
                         categoryId: categoryId,

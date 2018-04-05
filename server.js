@@ -91,7 +91,7 @@ if (app.get('env') === 'development') {
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
         res.header('Access-Control-Allow-Credentials', 'true')
         if (req.method === 'OPTIONS') {
-            res.send(200)
+            res.sendStatus(200)
         } else {
             next()
         }
@@ -103,7 +103,7 @@ if (app.get('env') === 'development') {
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
         res.header('Access-Control-Allow-Credentials', 'true')
         if (req.method === 'OPTIONS') {
-            res.send(200)
+            res.sendStatus(200)
         } else {
             next()
         }

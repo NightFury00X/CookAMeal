@@ -2,6 +2,7 @@
 
 const router = require('express').Router()
 const CommonController = require('../../application/controllers-services/controllers/common.controller')
+const AuthController = require('../../application/controllers-services/controllers/auth.controller')
 const {ValidateParams, ValidateBody} = require('../../configurations/middlewares/validation')
 const {ParamSchemas, BodySchemas} = require('../../application/schemas/schema')
 const {
@@ -73,4 +74,11 @@ router.get('/profile/:profileId/sub-categories/recipes',
     ValidateParams(ParamSchemas.idSchema, 'profileId'),
     CommonController.Recipe.GetAllRecipesByCookId)
 
+router.get('/order/prepare-data/:id',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    AuthController.Order.PrepareData)
+
+router.get('/order/order-summary/:id',
+    ValidateParams(ParamSchemas.idSchema, 'id'),
+    CommonController.Order.GetOrderSummaryDetailsByRecipeId)
 module.exports = router

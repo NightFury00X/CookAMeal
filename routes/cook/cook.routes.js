@@ -42,4 +42,16 @@ router.post('/identificationCard',
     FileUploader.UploadIdentificationCard,
     CookController.IdentificationCard.Update)
 
+router.post('/availability',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.AvailabilityDetails),
+    CookController.Availability.Add)
+
+router.get('/availability',
+    CookController.Availability.CookAvailabilityList)
+
+router.get('/availability/:date',
+    ValidateParams(ParamSchemas.idSchema, 'date'),
+    CookController.Availability.CookAvailabilityListByDate)
+
 module.exports = router

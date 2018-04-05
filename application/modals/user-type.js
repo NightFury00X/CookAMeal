@@ -161,6 +161,14 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
+
+        UserTypeModel.hasOne(models.CookAvailability, {
+            foreignKey: {
+                name: 'createdBy',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
     }
     return UserTypeModel
 }

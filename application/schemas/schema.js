@@ -137,6 +137,11 @@ module.exports = {
             country: Joi.string().required(),
             latitude: Joi.any().required(),
             longitude: Joi.any().required()
+        }),
+        AvailabilityDetails: Joi.object().keys({
+            date: Joi.string().required(),
+            startTime: Joi.string().required(),
+            endTime: Joi.string().required()
         })
     }
 }

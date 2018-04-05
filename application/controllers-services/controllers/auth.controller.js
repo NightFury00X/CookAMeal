@@ -686,7 +686,7 @@ const Cart = {
                     convertedJSON.CartItems[index].Recipe = recipeDetails
                     convertedJSON.CartItems[index].categoryName = category.name
                     convertedJSON.CartItems[index].Cook = cookDetails.fullName
-                    convertedJSON.CartItems[index].CurrencySymbol = currencyDetails.currencySymbol
+                    convertedJSON.CartItems[index].currencySymbol = currencyDetails.currencySymbol
                     price = price + parseInt(convertedJSON.CartItems[index].price)
                 }
             }

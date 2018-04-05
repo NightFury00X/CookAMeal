@@ -165,11 +165,63 @@ const IdentificationCard = {
     }
 }
 
+const Availability = {
+    Add: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {date, startTime, endTime} = req.body
+            const result = await CookService.Availability.Add(id, date, startTime, endTime)
+            if (!result) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Unable to process request.'
+                }, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            return ResponseHelpers.SetSuccessResponse({
+                message: 'Successfully Added.'
+            }, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    },
+    CookAvailabilityList: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const result = await CookService.Availability.GetAllCookAvailabilityDetails(id)
+            if (!result) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Unable to process request.'
+                }, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    },
+    CookAvailabilityListByDate: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {date} = req.params
+            let datePart = date.split('-')
+            const selctedDate = datePart[0] + ' ' + datePart[1] + ', ' + datePart[2]
+            const result = await CookService.Availability.GetAllCookAvailabilityDetailsByDate(id, selctedDate)
+            if (!result) {
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    message: 'Unable to process request.'
+                }, res, CommonConfig.STATUS_CODE.CREATED)
+            }
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
 const CookController = {
     Recipe: Recipe,
     Order: Order,
     Certificate: Certificate,
-    IdentificationCard: IdentificationCard
+    IdentificationCard: IdentificationCard,
+    Availability: Availability
 }
 
 module.exports = CookController

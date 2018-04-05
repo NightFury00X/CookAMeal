@@ -31,12 +31,12 @@ module.exports = {
                     }
                 }
             })
-            if (!userDetails.profileSelected) {
-                return next({
-                    profileSelected: userDetails.profileSelected,
-                    message: 'Please select profile'
-                }, false)
-            }
+            // if (!userDetails.profileSelected) {
+            //     return next({
+            //         profileSelected: userDetails.profileSelected,
+            //         message: 'Please select profile'
+            //     }, false)
+            // }
             next(null, req)
         }
     },

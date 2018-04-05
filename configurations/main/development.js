@@ -1,5 +1,5 @@
 const path = require('path')
-const timezone = 'UTC'
+const timezone = '+8:30'
 process.env.TZ = timezone
 
 exports.app = app = {

@@ -1,6 +1,7 @@
 const {ResponseHelpers} = require('../../../configurations/helpers/helper')
 const AuthService = require('../services/auth-service')
 const CommonService = require('../services/common.service')
+const CookService = require('../services/cook.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const MapService = require('../services/map-service')
 
@@ -492,11 +493,37 @@ const Map = {
     }
 }
 
+let Order = {
+    GetOrderSummaryDetailsByRecipeId: async (req, res, next) => {
+        try {
+            const recipeId = req.value.params.id
+            const recipeData = await CookService.Recipe.GetRecipeDetailsForOrderSummaryByRecipeId(recipeId)
+            const {profileId} = recipeData
+            const cookProfile = await CommonService.User.GetCookProfileDetailsById(profileId)
+            const result = {
+                RecipeDetails: {
+                    cookProfile: cookProfile,
+                    recipeData: recipeData,
+                    costPerServing: parseFloat(recipeData.costPerServing),
+                    availableServings: parseFloat(recipeData.availableServings),
+                    deliveryFees: parseFloat(recipeData.deliveryFee),
+                    currencySymbol: parseFloat(recipeData.currencySymbol)
+                },
+                Tax: parseFloat(5)
+            }
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
+}
+
 const CommonController = {
     User: User,
     Category: Category,
     Recipe: Recipe,
-    Map: Map
+    Map: Map,
+    Order: Order,
 }
 
 module.exports = CommonController
