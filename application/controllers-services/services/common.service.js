@@ -561,6 +561,16 @@ CommonService.prototype.User = {
                 throw (error)
             }
         },
+    GetCookProfileDetailsForCartById:
+        async (profileId) => {
+            try {
+                return await db.Profile.findById(profileId, {
+                    attributes: ['id', 'firstName', 'lastName', 'profileUrl']
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
     GetProfileIdByUserTypeId:
         async (userTypeId) => {
             try {
@@ -609,7 +619,7 @@ CommonService.prototype.Recipe = {
     FindRecipePriceByRecipeId: async (recipeId) => {
         try {
             return await db.Recipe.findById(recipeId, {
-                attributes: ['id', 'costPerServing']
+                attributes: ['id', 'costPerServing', 'profileId']
             })
         } catch (error) {
             throw (error)

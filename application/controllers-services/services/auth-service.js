@@ -597,6 +597,21 @@ AuthService.prototype.Facebook = {
 }
 
 AuthService.prototype.Cart = {
+    GetCartIdFromCartByCreatedBy: async (createdBy) => {
+        try {
+            return await db.AddToCart.findOne({
+                attributes: ['id'],
+                where: {
+                    [Op.and]: [{
+                        createdBy: `${createdBy}`,
+                        status: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     CheckCartItemOwner: async (createdBy) => {
         try {
             return await db.AddToCart.findOne({
@@ -723,26 +738,40 @@ AuthService.prototype.Cart = {
     },
     AddItemToExistingCart: async (addToCartDetails) => {
         try {
-            console.log(':addToCartDetails: ', addToCartDetails)
-            const cartItem = await db.CartItem.create(addToCartDetails)
-            return cartItem
+            return await db.CartItem.create(addToCartDetails)
         } catch (error) {
             throw (error)
         }
     },
-    GetCartDetails: async (createdBy) => {
+    GetCartDetails: async (cartId) => {
         try {
-            return await db.AddToCart.findOne({
-                attributes: ['id'],
+            return await db.Profile.findAll({
+                attributes: ['id', 'firstName', 'lastName', 'createdBy', 'profileUrl'],
+                include: [{
+                    required: true,
+                    model: db.CartItem,
+                    where: {
+                        cartId: {
+                            [Op.eq]: cartId
+                        }
+                    },
+                    attributes: ['id', 'id', 'noOfServing', 'price', 'recipeId', 'spiceLevel', 'cookId']
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetCartItemsGroupedByCook: async (cartId) => {
+        try {
+            return await db.CartItem.findAll({
+                attributes: ['cookId'],
                 where: {
-                    createdBy: {
-                        [Op.eq]: createdBy
+                    cartId: {
+                        [Op.eq]: cartId
                     }
                 },
-                include: [{
-                    attributes: ['id', 'noOfServing', 'price', 'recipeId', 'spiceLevel'],
-                    model: db.CartItem
-                }]
+                group: ['cookId']
             })
         } catch (error) {
             throw (error)

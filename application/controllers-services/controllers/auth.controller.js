@@ -639,8 +639,10 @@ const Cart = {
                     noOfServing: 1,
                     spiceLevel: 'Mild',
                     cartId: isCartOpen.id,
+                    cookId: recipeDetails.profileId,
                     price: recipeDetails.costPerServing
                 }
+                console.log('recipeDetails.profileId: ', recipeDetails.profileId)
                 const result = AuthService.Cart.AddItemToExistingCart(addToCartData)
                 if (!result) {
                     return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
@@ -652,6 +654,7 @@ const Cart = {
                     noOfServing: noOfServing,
                     createdBy: id,
                     spiceLevel: 'Mild',
+                    cookId: recipeDetails.profileId,
                     price: recipeDetails.costPerServing
                 }
                 const result = await AuthService.Cart.AddToCart(addToCartData)
@@ -667,32 +670,74 @@ const Cart = {
     GetCartDetails: async (req, res, next) => {
         try {
             const {id} = req.user
-            const cartDetails = await AuthService.Cart.GetCartDetails(id)
+            const cartDetails = await AuthService.Cart.GetCartIdFromCartByCreatedBy(id)
             if (!cartDetails) {
                 return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
             }
-            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
-            let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
-            let price = 0
-            for (const index in convertedJSON.CartItems) {
-                if (convertedJSON.CartItems.hasOwnProperty(index)) {
-                    const {recipeId} = convertedJSON.CartItems[index]
-                    const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
-                    const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
-                    delete convertedJSON.CartItems[index].recipeId
-                    const categoryId = recipeDetails.categoryId
-                    const category = await CommonService.GetCategoryById(categoryId)
-                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
-                    convertedJSON.CartItems[index].Recipe = recipeDetails
-                    convertedJSON.CartItems[index].categoryName = category.name
-                    convertedJSON.CartItems[index].Cook = cookDetails.fullName
-                    convertedJSON.CartItems[index].currencySymbol = currencyDetails.currencySymbol
-                    price = price + parseInt(convertedJSON.CartItems[index].price)
+            const cartItemDetails = await AuthService.Cart.GetCartDetails(cartDetails.id)
+            if (!cartItemDetails) {
+                return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
+            }
+            let convertedJSON = JSON.parse(JSON.stringify(cartItemDetails))
+            for (let outer in convertedJSON) {
+                if (convertedJSON.hasOwnProperty(outer)) {
+                    let covertedCartItems = JSON.parse(JSON.stringify(convertedJSON[outer].CartItems))
+                    for (let inner in covertedCartItems) {
+                        if (covertedCartItems.hasOwnProperty(inner)) {
+                            const recipeId = covertedCartItems[inner].recipeId
+                            const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+                            convertedJSON[outer].CartItems[inner].recipeDetails = recipeDetails
+                            console.log('recipe Details: ', recipeDetails)
+                        }
+                    }
                 }
             }
-            convertedJSON.totalItems = convertedJSON.CartItems.length
-            convertedJSON.totalPrice = price
-            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.CREATED)
+            // let cookDetails = await AuthService.Cart.GetCartItemsGroupedByCook(cartDetails.id)
+            // if (!cookDetails) {
+            //     return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
+            // }
+            // let convertedJSON = JSON.parse(JSON.stringify(cookDetails))
+            // for (let index in convertedJSON) {
+            //     if (convertedJSON.hasOwnProperty(index)) {
+            //         convertedJSON[index].cookDetails = await CommonService.User.GetCookProfileDetailsForCartById(convertedJSON[index].cookId)
+            //         convertedJSON[index].cartId = cartDetails.id
+            //         convertedJSON[index].recipes = await AuthService.Cart.GetCartItemsByCartIdAndCookId(convertedJSON[index].cookId, cartDetails.id)
+            //         let convertedRecipeData = JSON.parse(JSON.stringify(convertedJSON[index].recipes))
+            //         for (let recipeIndex in convertedRecipeData) {
+            //             if (convertedRecipeData.hasOwnProperty(recipeIndex)) {
+            //                 console.log('convertedRecipeData[recipeIndex].recipeId: ', convertedRecipeData[recipeIndex].recipeId)
+            //                 convertedRecipeData[recipeIndex].Details = await CommonService.Recipe.FindRecipeDetailsForCartById(convertedRecipeData[recipeIndex].recipeId)
+            //                 convertedJSON[index].recipes[recipeIndex].details = convertedRecipeData[recipeIndex].Details
+            //             }
+            //             // convertedJSON[index].recipes[recipeIndex].Details = recipeDetails
+            //         }
+            //     }
+            // }
+            // let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
+            // let cookDetails = []
+            //
+            // // const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+            // let price = 0
+            // for (const index in convertedJSON.CartItems) {
+            //     if (convertedJSON.CartItems.hasOwnProperty(index)) {
+            //         const {recipeId} = convertedJSON.CartItems[index]
+            //         const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+            //         const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
+            //         delete convertedJSON.CartItems[index].recipeId
+            //         const categoryId = recipeDetails.categoryId
+            //         const category = await CommonService.GetCategoryById(categoryId)
+            //         // const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+            //         convertedJSON.CartItems[index].Recipe = recipeDetails
+            //         convertedJSON.CartItems[index].categoryName = category.name
+            //         convertedJSON.CartItems[index].Cook = cookDetails.fullName
+            //         convertedJSON.CartItems[index].cookId = cookDetails.id
+            //         // convertedJSON.CartItems[index].currencySymbol = currencyDetails.currencySymbol
+            //         price = price + parseInt(convertedJSON.CartItems[index].price)
+            //     }
+            // }
+            // convertedJSON.totalItems = convertedJSON.CartItems.length
+            // convertedJSON.totalPrice = price
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }
