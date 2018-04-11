@@ -561,6 +561,16 @@ CommonService.prototype.User = {
                 throw (error)
             }
         },
+    GetCookDrivingDistanceById:
+        async (profileId) => {
+            try {
+                return await db.Profile.findById(profileId, {
+                    attributes: ['drivingDistance']
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
     GetCookProfileDetailsForCartById:
         async (profileId) => {
             try {
@@ -597,6 +607,13 @@ CommonService.prototype.User = {
 }
 
 CommonService.prototype.Recipe = {
+    FindMaxDeliverFeesForcart: async (cartId) => {
+        try {
+            return await db.CartItem.findAll()
+        } catch (error) {
+            throw (error)
+        }
+    },
     FindCookDetailsByRecipeId: async (recipeId) => {
         try {
             return await db.Profile.findOne({
@@ -628,7 +645,7 @@ CommonService.prototype.Recipe = {
     FindRecipeDetailsForCartById: async (recipeId) => {
         try {
             return await db.Recipe.findById(recipeId, {
-                attributes: ['id', 'dishName', 'availableServings', 'costPerServing', 'categoryId', 'subCategoryId', 'deliveryFee'],
+                attributes: ['id', 'dishName', 'availableServings', 'costPerServing', 'categoryId', 'subCategoryId', 'deliveryFee', 'currencySymbol'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']

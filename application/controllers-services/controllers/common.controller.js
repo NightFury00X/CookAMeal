@@ -36,6 +36,8 @@ let User = {
             categoryList = categoryList.substr(0, categoryList.length - 2)
             let cookProfileDetailsToJSON = JSON.parse(JSON.stringify(cookProfileDetails))
             cookProfileDetailsToJSON.rating = !profileReview[0].rating ? 0 : profileReview[0].rating
+            let favoriteDetails = await AuthService.Favorite.Profile.CheckProfileIsFavoriteByProfileIdAndUserId(userId, cookProfileDetails.id)
+            cookProfileDetailsToJSON.favorite = !!favoriteDetails
             const cookRecipesDetails = await CommonService.Recipe.FindAllRecipeByProfileId(profileId)
             let cookRecipesToJSON = JSON.parse(JSON.stringify(cookRecipesDetails))
             for (const outer in cookRecipesToJSON) {
@@ -133,11 +135,32 @@ let Category = {
                                 filterValue = filter
                             }
                             const map = await MapService.Map.FindGeoDistance(`${lat}, ${long}`, destination, `${unitValue}`, filterValue)
-
                             if (!map) {
                                 convertedJSON[outer].Recipes[inner].map = false
                                 continue
                             }
+
+                            const cookId = convertedJSON[outer].Recipes[inner].profileId
+                            const cookProfile = await CommonService.User.GetCookDrivingDistanceById(cookId)
+                            if (!cookProfile) {
+                                convertedJSON[outer].Recipes[inner].map = false
+                                continue
+                            }
+
+                            if (unitValue === 'metric') {
+                                const cookDrivingDistance = cookProfile.drivingDistance * 1000
+                                if (cookDrivingDistance < map.distanceValue) {
+                                    convertedJSON[outer].Recipes[inner].map = false
+                                    continue
+                                }
+                            } else {
+                                const cookDrivingDistance = cookProfile.drivingDistance * 1609.34
+                                if (cookDrivingDistance < map.distanceValue) {
+                                    convertedJSON[outer].Recipes[inner].map = false
+                                    continue
+                                }
+                            }
+
                             convertedJSON[outer].Recipes[inner].map = true
                             const ratingDetails = await CommonService.Recipe.FindRatingByRecipeId(recipeId)
                             if (userId) {
@@ -261,6 +284,28 @@ const Recipe = {
                         similarRecipesToJSON[index].map = false
                         continue
                     }
+
+                    const cookId = similarRecipesToJSON[index].profileId
+                    const cookProfile = await CommonService.User.GetCookDrivingDistanceById(cookId)
+                    if (!cookProfile) {
+                        similarRecipesToJSON[index].map = false
+                        continue
+                    }
+
+                    if (unitValue === 'metric') {
+                        const cookDrivingDistance = cookProfile.drivingDistance * 1000
+                        if (cookDrivingDistance < map.distanceValue) {
+                            similarRecipesToJSON[index].map = false
+                            continue
+                        }
+                    } else {
+                        const cookDrivingDistance = cookProfile.drivingDistance * 1609.34
+                        if (cookDrivingDistance < map.distanceValue) {
+                            similarRecipesToJSON[index].map = false
+                            continue
+                        }
+                    }
+
                     similarRecipesToJSON[index].map = true
 
                     if (userId) {
@@ -359,6 +404,28 @@ const Recipe = {
                         similarRecipesToJSON[index].map = false
                         continue
                     }
+
+                    const cookId = similarRecipesToJSON[index].profileId
+                    const cookProfile = await CommonService.User.GetCookDrivingDistanceById(cookId)
+                    if (!cookProfile) {
+                        similarRecipesToJSON[index].map = false
+                        continue
+                    }
+
+                    if (unitValue === 'metric') {
+                        const cookDrivingDistance = cookProfile.drivingDistance * 1000
+                        if (cookDrivingDistance < map.distanceValue) {
+                            similarRecipesToJSON[index].map = false
+                            continue
+                        }
+                    } else {
+                        const cookDrivingDistance = cookProfile.drivingDistance * 1609.34
+                        if (cookDrivingDistance < map.distanceValue) {
+                            similarRecipesToJSON[index].map = false
+                            continue
+                        }
+                    }
+
                     similarRecipesToJSON[index].map = true
 
                     if (userId) {

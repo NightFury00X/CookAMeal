@@ -52,5 +52,5 @@ module.exports = function (sequelize, DataTypes) {
         deletedAt: DataTypes.DATE
     }
 
-    return sequelize.define('DeliverAddress', modelDefinition)
+    return sequelize.define('DeliveryAddress', modelDefinition)
 }

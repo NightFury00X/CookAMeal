@@ -83,20 +83,18 @@ MapService.prototype.Map = {
     },
     FindGeoDistance: async (origin, destination, units, filter) => {
 
-        console.log('origin: ', origin)
-        console.log('destination: ', destination)
-        console.log('units: ', units)
-        console.log('filter: ', filter)
+        // console.log('origin: ', origin)
+        // console.log('destination: ', destination)
+        // console.log('units: ', units)
+        // console.log('filter: ', filter)
         let distanceValue = 5000
         if (units === 'metric') {
             distanceValue = filter * 1000
-            distanceValue = 10000
         } else {
             distanceValue = filter * 1600
-            distanceValue = 16000
         }
-        console.log('units: ', units)
-        console.log('distance: ', distanceValue)
+        // console.log('units: ', units)
+        // console.log('distance: ', distanceValue)
         const distanceData = await new Promise((resolve, reject) => {
             distance.get(
                 {
@@ -116,13 +114,15 @@ MapService.prototype.Map = {
                     return resolve(data)
                 })
         })
-        console.log('distanceData: ', distanceData)
-        // if (distanceData.distanceValue <= distanceValue) {
-        //     return distanceData
-        // } else {
-        //     return false
-        // }
-        return distanceData
+        if (!distanceData) {
+            return false
+        }
+        if (distanceData.distanceValue <= distanceValue) {
+            return distanceData
+        } else {
+            return false
+        }
+        // return distanceData
     }
 }
 

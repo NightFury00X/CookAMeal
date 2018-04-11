@@ -269,13 +269,18 @@ AuthService.prototype.Order = {
     },
     GetTopDeliveryAddressByProfileId: async (profileId) => {
         try {
-            return await db.DeliverAddress.findAll({
-                attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country', 'fullName'],
+            return await db.DeliveryAddress.findAll({
+                attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country', 'fullName', 'createdAt'],
                 where: {
-                    profileId: {
-                        [Op.eq]: `${profileId}`
-                    }
-                }
+                    [Op.and]: [{
+                        isDeleted: 0,
+                        profileId: `${profileId}`
+                    }]
+                },
+                limit: 5,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
             })
         } catch (error) {
             throw (error)
@@ -288,7 +293,25 @@ AuthService.prototype.Order = {
             address.longitude = location[0].longitude
 
             console.log('deliverAddressData: ', address)
-            return await db.DeliverAddress.create(address)
+            return await db.DeliveryAddress.create(address)
+        } catch (error) {
+            throw (error)
+        }
+    },
+    DeleteDeliveryAddress: async (addressId, profileId) => {
+        try {
+            const address = {
+                isDeleted: 1,
+                deletedAt: new Date()
+            }
+            return await db.DeliveryAddress.update(address, {
+                where: {
+                    [Op.and]: [{
+                        id: `${addressId}`,
+                        profileId: `${profileId}`
+                    }]
+                }
+            })
         } catch (error) {
             throw (error)
         }
@@ -597,6 +620,20 @@ AuthService.prototype.Facebook = {
 }
 
 AuthService.prototype.Cart = {
+    GetCartItemByCartItemId: async (cartItemId, cartId) => {
+        try {
+            return await db.CartItem.findOne({
+                where: {
+                    [Op.and]: [{
+                        id: `${cartItemId}`,
+                        cartId: `${cartId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetCartIdFromCartByCreatedBy: async (createdBy) => {
         try {
             return await db.AddToCart.findOne({

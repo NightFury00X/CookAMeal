@@ -137,10 +137,14 @@ router.delete('/recipe/wishlist/:id',
     AuthController.WishList.DeleteFromWishList)
 
 router.get('/delivery-address/current',
-    AuthController.Order.GetCurrentDeliverAddress)
+    AuthController.Order.GetCurrentDeliveryAddress)
 
 router.post('/delivery-address',
     ValidateBody(BodySchemas.DeliveryAddress),
-    AuthController.Order.AddDeliverAddress)
+    AuthController.Order.AddDeliveryAddress)
+
+router.delete('/delivery-address/:address',
+    ValidateParams(ParamSchemas.idSchema, 'address'),
+    AuthController.Order.DeleteDeliveryAddress)
 
 module.exports = router
