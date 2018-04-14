@@ -654,6 +654,24 @@ AuthService.prototype.Facebook = {
 }
 
 AuthService.prototype.Cart = {
+    UpdateCartByCookIdAfterOrder: async (cartId, cookId, trans) => {
+        try {
+            const updatedAt = Sequelize.fn('NOW')
+
+            return await db.CartItem.update({
+                isOrdered: true, updatedAt: updatedAt
+            }, {
+                where: {
+                    [Op.and]: [{
+                        cartId: `${cartId}`,
+                        cookId: `${cookId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetAllCartItemByCartIdAndCookId: async (cartId, cookId) => {
         try {
             return await db.CartItem.findAll({
@@ -864,9 +882,11 @@ AuthService.prototype.Cart = {
                     required: true,
                     model: db.CartItem,
                     where: {
-                        cartId: {
-                            [Op.eq]: `${cartId}`
-                        }
+                        [Op.and]: [{
+                            cartId: `${cartId}`,
+                            isOrdered: false,
+                            isDeleted: false
+                        }]
                     },
                     attributes: ['id', 'id', 'noOfServing', 'price', 'recipeId', 'spiceLevel', 'cookId']
                 }]
@@ -885,7 +905,9 @@ AuthService.prototype.Cart = {
                     where: {
                         [Op.and]: [{
                             cartId: `${cartId}`,
-                            cookId: `${cookId}`
+                            cookId: `${cookId}`,
+                            isOrdered: false,
+                            isDeleted: false
                         }]
                     },
                     attributes: ['id', 'id', 'noOfServing', 'price', 'recipeId', 'spiceLevel', 'cookId']
@@ -917,9 +939,11 @@ AuthService.prototype.Cart = {
                 include: [{
                     model: db.CartItem,
                     where: {
-                        id: {
-                            [Op.eq]: `${itemId}`
-                        }
+                        [Op.and]: [{
+                            id: `${itemId}`,
+                            isOrdered: false,
+                            isDeleted: false
+                        }]
                     }
                 }]
             })

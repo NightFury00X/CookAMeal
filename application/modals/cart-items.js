@@ -24,6 +24,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
+        isOrdered: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         updatedAt: DataTypes.DATE,
         deletedAt: DataTypes.DATE
     }

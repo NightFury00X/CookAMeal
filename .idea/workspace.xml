@@ -1,25 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="Add new API Update Profile.">
-      <change afterPath="$PROJECT_DIR$/application/modals/payment-gateway.js" afterDir="false" />
+    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/anonymous.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/anonymous.controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/add-to-cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/add-to-cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/address.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/address.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/deliver-address" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/deliver-address" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/order-items.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/order-items.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/order.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/recipe.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/recipe.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/user-type.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/user-type.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/anonymous/anonymous.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/anonymous/anonymous.routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/auth/auth-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth/auth-routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/common/common-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/common/common-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/modals/cart-items.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/cart-items.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -40,8 +26,8 @@
       <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="93" column="30" selection-start-line="93" selection-start-column="30" selection-end-line="93" selection-end-column="30" />
+            <state relative-caret-position="676">
+              <caret line="80" column="37" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -49,8 +35,8 @@
       <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="591" column="82" lean-forward="true" selection-start-line="591" selection-start-column="82" selection-end-line="591" selection-end-column="82" />
+            <state relative-caret-position="391">
+              <caret line="825" column="67" selection-start-line="825" selection-start-column="67" selection-end-line="825" selection-end-column="67" />
             </state>
           </provider>
         </entry>
@@ -67,8 +53,8 @@
       <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="363" column="4" selection-start-line="363" selection-start-column="4" selection-end-line="363" selection-end-column="4" />
+            <state relative-caret-position="439">
+              <caret line="948" column="38" lean-forward="true" selection-start-line="948" selection-start-column="38" selection-end-line="948" selection-end-column="38" />
               <folding>
                 <element signature="e#10926#10992#0" />
                 <element signature="e#12141#13113#0" />
@@ -77,11 +63,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="cart-items.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="559">
+              <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="auth-routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-550">
-              <caret line="114" column="39" selection-start-line="114" selection-start-column="39" selection-end-line="114" selection-end-column="39" />
+            <state relative-caret-position="528">
+              <caret line="114" column="30" lean-forward="true" selection-start-line="114" selection-start-column="30" selection-end-line="114" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -108,7 +103,7 @@
         <entry file="file://$PROJECT_DIR$/application/modals/payment-gateway.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1">
-              <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -126,9 +121,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>update</find>
-      <find>FindRecipeById</find>
-      <find>SetSuccessErrorResponse</find>
       <find>cartItemId</find>
       <find>please select profile</find>
       <find>res.send</find>
@@ -154,8 +146,11 @@
       <find>order/order-summary</find>
       <find>Sequelize.fn</find>
       <find>create-purchase</find>
-      <find>cart</find>
       <find>JSON.stringify</find>
+      <find>update</find>
+      <find>CAR</find>
+      <find>cart</find>
+      <find>model: db.CartItem</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -218,7 +213,6 @@
         <option value="$PROJECT_DIR$/application/modals/unit.js" />
         <option value="$PROJECT_DIR$/application/modals/user.js" />
         <option value="$PROJECT_DIR$/application/modals/recipe-allergies.js" />
-        <option value="$PROJECT_DIR$/application/modals/cart-items.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/anonymous.service.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/configurations/middlewares/middlewares.js" />
@@ -244,8 +238,9 @@
         <option value="$PROJECT_DIR$/application/modals/order.js" />
         <option value="$PROJECT_DIR$/application/modals/payment-gateway.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
+        <option value="$PROJECT_DIR$/application/modals/cart-items.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
       </list>
     </option>
   </component>
@@ -325,6 +320,12 @@
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
               <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="modals" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
@@ -592,14 +593,7 @@
       <workItem from="1523424694132" duration="13345000" />
       <workItem from="1523509717125" duration="12581000" />
       <workItem from="1523596317923" duration="14439000" />
-      <workItem from="1523680399330" duration="14737000" />
-    </task>
-    <task id="LOCAL-00536" summary="Add new API Update Profile.">
-      <created>1521197668492</created>
-      <option name="number" value="00536" />
-      <option name="presentableId" value="LOCAL-00536" />
-      <option name="project" value="LOCAL" />
-      <updated>1521197668507</updated>
+      <workItem from="1523680399330" duration="16043000" />
     </task>
     <task id="LOCAL-00537" summary="Add new API Update Profile.">
       <created>1521197812960</created>
@@ -937,11 +931,18 @@
       <option name="project" value="LOCAL" />
       <updated>1523455509593</updated>
     </task>
-    <option name="localTasksCounter" value="585" />
+    <task id="LOCAL-00585" summary="Add new API Update Profile.">
+      <created>1523701727760</created>
+      <option name="number" value="00585" />
+      <option name="presentableId" value="LOCAL-00585" />
+      <option name="project" value="LOCAL" />
+      <updated>1523701727761</updated>
+    </task>
+    <option name="localTasksCounter" value="586" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1441232000" />
+    <option name="totallyTimeSpent" value="1442538000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -954,6 +955,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3536184" />
       <window_info id="DB Browser" order="6" />
@@ -1073,24 +1075,6 @@
           <url>file://$PROJECT_DIR$/application/controllers-services/services/map-service.js</url>
           <line>45</line>
           <option name="timeStamp" value="103" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js</url>
-          <line>624</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js</url>
-          <line>617</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js</url>
-          <line>612</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="115" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1366,13 +1350,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="39" lean-forward="true" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/recipe.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3190">
@@ -1435,21 +1412,7 @@
     <entry file="file://$PROJECT_DIR$/application/modals/payment-gateway.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1">
-          <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-550">
-          <caret line="114" column="39" selection-start-line="114" selection-start-column="39" selection-end-line="114" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="93" column="30" selection-start-line="93" selection-start-column="30" selection-end-line="93" selection-end-column="30" />
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -1460,17 +1423,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="80" column="37" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="114" column="30" lean-forward="true" selection-start-line="114" selection-start-column="30" selection-end-line="114" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="591" column="82" lean-forward="true" selection-start-line="591" selection-start-column="82" selection-end-line="591" selection-end-column="82" />
+        <state relative-caret-position="391">
+          <caret line="825" column="67" selection-start-line="825" selection-start-column="67" selection-end-line="825" selection-end-column="67" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="363" column="4" selection-start-line="363" selection-start-column="4" selection-end-line="363" selection-end-column="4" />
+        <state relative-caret-position="439">
+          <caret line="948" column="38" lean-forward="true" selection-start-line="948" selection-start-column="38" selection-end-line="948" selection-end-column="38" />
           <folding>
             <element signature="e#10926#10992#0" />
             <element signature="e#12141#13113#0" />

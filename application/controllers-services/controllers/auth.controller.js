@@ -627,6 +627,12 @@ let Order = {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
+            const cartUpdated = await AuthService.Cart.UpdateCartByCookIdAfterOrder(cartId, cookId, id)
+            if (!cartUpdated) {
+                trans.rollback()
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+
             trans.commit()
             return ResponseHelpers.SetSuccessResponse(orderDetailsData, res, CommonConfig.STATUS_CODE.CREATED)
 
