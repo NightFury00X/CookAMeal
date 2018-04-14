@@ -2,8 +2,37 @@ const AnonymousService = require('../services/anonymous.service')
 const CommonService = require('../services/common.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const {ResponseHelpers, AuthenticationHelpers} = require('../../../configurations/helpers/helper')
-
+const braintree = require('braintree')
+const config = require('../../../configurations/main')
+const gateway = braintree.connect({
+    environment: braintree.Environment.Sandbox,
+    merchantId: config.braintree.merchantId,
+    publicKey: config.braintree.publicKey,
+    privateKey: config.braintree.privateKey
+})
 let Anonymous = {
+    GetClientToken: async (req, res, next) => {
+        try {
+            const clientToken = await gateway.clientToken.generate()
+            // const recipeId = req.value.params.id
+            // const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
+            // const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profileId)
+            const prepareData = {
+                token: clientToken.clientToken
+                // RecipeDetails: {
+                //     costPerServing: parseFloat(recipeData.costPerServing),
+                //     availableServings: parseFloat(recipeData.availableServings),
+                //     deliveryFees: parseFloat(recipeData.deliveryFee),
+                //     currencySymbol: currencySymbol.currencySymbol
+                // },
+                // Tax: parseFloat(5)
+            }
+            return res.status(200).json({token: clientToken.clientToken})
+            // return ResponseHelpers.SetSuccessResponse({token: clientToken.clientToken}, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
     Check: async (req, res, next) => {
         return ResponseHelpers.SetSuccessResponse({
             message: req

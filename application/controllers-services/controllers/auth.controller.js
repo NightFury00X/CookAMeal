@@ -3,7 +3,7 @@ const {ResponseHelpers} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const AuthService = require('../services/auth-service')
 const CommonService = require('../services/common.service')
-const CookService = require('../services/cook.service')
+// const CookService = require('../services/cook.service')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
 const gateway = braintree.connect({
@@ -523,136 +523,217 @@ let Order = {
             next(error)
         }
     },
+    GetClientToken: async (req, res, next) => {
+        try {
+            const clientToken = await gateway.clientToken.generate()
+            const clientTokenDetails = {
+                token: clientToken.clientToken
+            }
+            return ResponseHelpers.SetSuccessResponse(clientTokenDetails, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
     PrepareData: async (req, res, next) => {
         try {
             const clientToken = await gateway.clientToken.generate()
-            const recipeId = req.value.params.id
-            const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
-            const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profileId)
+            // const recipeId = req.value.params.id
+            // const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
+            // const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profileId)
             const prepareData = {
-                ClientToken: clientToken.clientToken,
-                RecipeDetails: {
-                    costPerServing: parseFloat(recipeData.costPerServing),
-                    availableServings: parseFloat(recipeData.availableServings),
-                    deliveryFees: parseFloat(recipeData.deliveryFee),
-                    currencySymbol: currencySymbol.currencySymbol
-                },
-                Tax: parseFloat(5)
+                token: clientToken.clientToken
+                // RecipeDetails: {
+                //     costPerServing: parseFloat(recipeData.costPerServing),
+                //     availableServings: parseFloat(recipeData.availableServings),
+                //     deliveryFees: parseFloat(recipeData.deliveryFee),
+                //     currencySymbol: currencySymbol.currencySymbol
+                // },
+                // Tax: parseFloat(5)
             }
             return ResponseHelpers.SetSuccessResponse(prepareData, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }
     },
-    MakeOrder: async (req, res, next) => {
-        let flag = false
-        let payment = false
-        let OId
-        let TId
+    CreatePurchase: async (req, res, next) => {
+        const {id} = req.user
         const trans = await db.sequelize.transaction()
         try {
-            const orderData = req.body
-            const userId = req.user.id
-            const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
-            const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
-            let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
-            const {totalAmount, taxes, orderServings, deliveryFee, deliveryType} = orderData
-            const valid = await AuthService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson, deliveryType)
-            if (!valid) {
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            const {
+                nonce,
+                chargeAmount,
+                paymentType,
+                deliveryAddress,
+                cartId,
+                cookId,
+                specialInstruction,
+                deliveryType,
+                pickUpTime
+            } = req.body
+
+            // check deliver address is current address
+
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+
+            let isCurrentAddress = false
+            const address = await CommonService.User.CheckAddressIsCurrentAddress(deliveryAddress, profile.id)
+            if (address) {
+                isCurrentAddress = true
             }
-            orderData.createdBy = userId
-            const orderDetails = await AuthService.Order.PlaceOrder(orderData, recipesToJson, trans)
-            if (!orderDetails) {
+
+            const paymentData = {
+                nonce: nonce,
+                amount: chargeAmount,
+                paymentType: paymentType,
+                cookId: cookId,
+                createdBy: id
+            }
+
+            const paymentGatewayDetails = await AuthService.Order.CreateAndHoldPayment(paymentData, trans)
+            if (!paymentGatewayDetails) {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
-            OId = orderDetails.id
-            const orderId = orderDetails.id
-            const paymentMethodNonce = orderData.paymentMethodNonce
-            const checkOutDetails = await AuthService.Order.CheckOut(paymentMethodNonce, orderId, totalAmount)
-            if (!checkOutDetails) {
+            const orderData = {
+                paymentGatwayId: paymentGatewayDetails.id,
+                orderType: 'food',
+                specialInstruction: specialInstruction,
+                deliveryType: deliveryType,
+                deliveryFee: 50,
+                pickUpTime: pickUpTime,
+                taxes: 5,
+                totalAmount: 55,
+                isCurrentAddress: isCurrentAddress,
+                cartId: cartId,
+                deliveredToCurrentAddressId: deliveryAddress,
+                deliveredToOtherAddressId: null,
+                createdBy: id
+            }
+
+            const cartItemList = await AuthService.Cart.GetAllCartItemByCartIdAndCookId(cartId, cookId)
+            if (!cartItemList) {
+                trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
-            console.log('Transaction Details: ', checkOutDetails)
-            payment = true
-            const transactionData = {
-                transactionId: checkOutDetails.transaction.id,
-                amount: checkOutDetails.transaction.amount,
-                discountAmount: checkOutDetails.transaction.discountAmount,
-                type: checkOutDetails.transaction.type,
-                paymentInstrumentType: checkOutDetails.transaction.paymentInstrumentType,
-                merchantAccountId: checkOutDetails.transaction.merchantAccountId,
-                taxAmount: checkOutDetails.transaction.taxAmount,
-                recurring: checkOutDetails.transaction.recurring,
-                orderId: orderId,
-                paidTo: checkOutDetails.transaction.merchantAccountId,
-                paidBy: userId,
-                status: checkOutDetails.transaction.status
+            let cartItemsToJson = JSON.parse(JSON.stringify(cartItemList))
+            for (const index in cartItemsToJson) {
+                if (cartItemsToJson.hasOwnProperty(index)) {
+                    const {costPerServing} = await CommonService.Recipe.FindRecipePriceByRecipeId(cartItemsToJson[index].recipeId)
+                    cartItemsToJson[index].costPerServing = costPerServing
+                }
             }
-            TId = transactionData.transactionId
-            const transactionDetails = await AuthService.Order.Transaction(transactionData, trans)
-            if (!transactionDetails) {
+            const orderDetailsData = await AuthService.Order.PlaceOrder(orderData, cartItemsToJson, trans)
+            if (!orderDetailsData) {
                 trans.rollback()
-                return ResponseHelpers.SetSuccessResponse({
-                    orderState: false,
-                    message: CommonConfig.ERRORS.ORDER.FAILURE,
-                    orderId: OId,
-                    transactionId: TId
-                }, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
-            flag = true
-            const result = await AuthService.Order.UpdatePaymentStateAfterSuccess(orderId, trans)
             trans.commit()
-            if (!result) {
-                return ResponseHelpers.SetSuccessResponse({
-                    orderState: false,
-                    message: CommonConfig.ERRORS.ORDER.FAILURE,
-                    orderId: orderId,
-                    transactionId: transactionData.transactionId
-                }, res, CommonConfig.STATUS_CODE.OK)
-            }
-            return ResponseHelpers.SetSuccessResponse({
-                orderState: true,
-                paymentDetails: {
-                    transactionId: transactionDetails.id,
-                    amount: currencySymbol.currencySymbol + ' ' + parseFloat(transactionDetails.amount),
-                    paymentMethod: transactionDetails.paymentInstrumentType,
-                    merchantAccountId: transactionDetails.merchantAccountId
-                },
-                orderDetails: {
-                    id: orderDetails.id,
-                    orderDate: orderDetails.createdAt,
-                    amount: currencySymbol.currencySymbol + ' ' + parseFloat(orderDetails.totalAmount)
-                },
-                Message: CommonConfig.ERRORS.ORDER.SUCCESS
-            }, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse(orderDetailsData, res, CommonConfig.STATUS_CODE.CREATED)
+
+            // const userId = req.user.id
+            // const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            // const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+            // let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
+            // const {totalAmount, taxes, orderServings, deliveryFee, deliveryType} = orderData
+            // const valid = await AuthService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson, deliveryType)
+            // if (!valid) {
+            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            // }
+            // orderData.createdBy = userId
+            // const orderDetails = await AuthService.Order.PlaceOrder(orderData, recipesToJson, trans)
+            // if (!orderDetails) {
+            //     trans.rollback()
+            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            // }
+            // OId = orderDetails.id
+            // const orderId = orderDetails.id
+            // const paymentMethodNonce = orderData.paymentMethodNonce
+            // const checkOutDetails = await AuthService.Order.CheckOut(paymentMethodNonce, totalAmount)
+            // if (!checkOutDetails) {
+            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            // }
+            // console.log('Transaction Details: ', checkOutDetails)
+            // payment = true
+            // const transactionData = {
+            //     transactionId: checkOutDetails.transaction.id,
+            //     amount: checkOutDetails.transaction.amount,
+            //     discountAmount: checkOutDetails.transaction.discountAmount,
+            //     type: checkOutDetails.transaction.type,
+            //     paymentInstrumentType: checkOutDetails.transaction.paymentInstrumentType,
+            //     merchantAccountId: checkOutDetails.transaction.merchantAccountId,
+            //     taxAmount: checkOutDetails.transaction.taxAmount,
+            //     recurring: checkOutDetails.transaction.recurring,
+            //     orderId: orderId,
+            //     paidTo: checkOutDetails.transaction.merchantAccountId,
+            //     paidBy: userId,
+            //     status: checkOutDetails.transaction.status
+            // }
+            // TId = transactionData.transactionId
+            // const transactionDetails = await AuthService.Order.Transaction(transactionData, trans)
+            // if (!transactionDetails) {
+            //     trans.rollback()
+            //     return ResponseHelpers.SetSuccessResponse({
+            //         orderState: false,
+            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
+            //         orderId: OId,
+            //         transactionId: TId
+            //     }, res, CommonConfig.STATUS_CODE.OK)
+            // }
+            // flag = true
+            // const result = await AuthService.Order.UpdatePaymentStateAfterSuccess(orderId, trans)
+            // trans.commit()
+            // if (!result) {
+            //     return ResponseHelpers.SetSuccessResponse({
+            //         orderState: false,
+            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
+            //         orderId: orderId,
+            //         transactionId: transactionData.transactionId
+            //     }, res, CommonConfig.STATUS_CODE.OK)
+            // }
+            // return ResponseHelpers.SetSuccessResponse({
+            //     orderState: true,
+            //     paymentDetails: {
+            //         transactionId: transactionDetails.id,
+            //         amount: currencySymbol.currencySymbol + ' ' + parseFloat(transactionDetails.amount),
+            //         paymentMethod: transactionDetails.paymentInstrumentType,
+            //         merchantAccountId: transactionDetails.merchantAccountId
+            //     },
+            //     orderDetails: {
+            //         id: orderDetails.id,
+            //         orderDate: orderDetails.createdAt,
+            //         amount: currencySymbol.currencySymbol + ' ' + parseFloat(orderDetails.totalAmount)
+            //     },
+            //     Message: CommonConfig.ERRORS.ORDER.SUCCESS
+            // }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
-            if (!flag && !payment) {
-                trans.rollback()
-                next(error)
-            } else {
-                return ResponseHelpers.SetSuccessResponse({
-                    orderState: false,
-                    message: CommonConfig.ERRORS.ORDER.FAILURE,
-                    orderId: OId,
-                    transactionId: TId
-                }, res, CommonConfig.STATUS_CODE.CREATED)
-            }
+            trans.rollback()
+            next(error)
+            // if (!flag && !payment) {
+            //     trans.rollback()
+            //     next(error)
+            // } else {
+            //     return ResponseHelpers.SetSuccessResponse({
+            //         orderState: false,
+            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
+            //         orderId: OId,
+            //         transactionId: TId
+            //     }, res, CommonConfig.STATUS_CODE.CREATED)
+            // }
         }
     }
 }
 
 const Cart = {
-    AddToCart: async (req, res, next) => {
+    AddToCartForRecipe: async (req, res, next) => {
         try {
             const {id} = req.user
             const {recipeId, noOfServing} = req.body
+            console.log('recipeId: ', recipeId)
             const recipeDetails = await CommonService.Recipe.FindRecipePriceByRecipeId(recipeId)
             if (!recipeDetails) {
                 return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            const isCartOpen = await AuthService.Cart.CheckCartIsOpen(id)
+            const isCartOpen = await AuthService.Cart.CheckRecipeCartIsOpen(id)
             if (isCartOpen) {
                 const addToCartData = {
                     recipeId: recipeId,
@@ -662,8 +743,7 @@ const Cart = {
                     cookId: recipeDetails.profileId,
                     price: recipeDetails.costPerServing
                 }
-                console.log('recipeDetails.profileId: ', recipeDetails.profileId)
-                const result = AuthService.Cart.AddItemToExistingCart(addToCartData)
+                const result = AuthService.Cart.AddItemToExistingRecipeCart(addToCartData)
                 if (!result) {
                     return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
                 }
@@ -677,7 +757,7 @@ const Cart = {
                     cookId: recipeDetails.profileId,
                     price: recipeDetails.costPerServing
                 }
-                const result = await AuthService.Cart.AddToCart(addToCartData)
+                const result = await AuthService.Cart.AddToCartRecipe(addToCartData)
                 if (!result) {
                     return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
                 }
@@ -687,14 +767,57 @@ const Cart = {
             next(error)
         }
     },
-    GetCartDetails: async (req, res, next) => {
+    // AddToCart: async (req, res, next) => {
+    //     try {
+    //         const {id} = req.user
+    //         const {recipeId, noOfServing} = req.body
+    //         const recipeDetails = await CommonService.Recipe.FindRecipePriceByRecipeId(recipeId)
+    //         if (!recipeDetails) {
+    //             return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
+    //         }
+    //         const isCartOpen = await AuthService.Cart.CheckCartIsOpen(id)
+    //         if (isCartOpen) {
+    //             const addToCartData = {
+    //                 recipeId: recipeId,
+    //                 noOfServing: 1,
+    //                 spiceLevel: 'Mild',
+    //                 cartId: isCartOpen.id,
+    //                 cookId: recipeDetails.profileId,
+    //                 price: recipeDetails.costPerServing
+    //             }
+    //             console.log('recipeDetails.profileId: ', recipeDetails.profileId)
+    //             const result = AuthService.Cart.AddItemToExistingCart(addToCartData)
+    //             if (!result) {
+    //                 return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
+    //             }
+    //             return ResponseHelpers.SetSuccessResponse({Message: 'Added to Cart.'}, res, CommonConfig.STATUS_CODE.CREATED)
+    //         } else {
+    //             const addToCartData = {
+    //                 recipeId: recipeId,
+    //                 noOfServing: noOfServing,
+    //                 createdBy: id,
+    //                 spiceLevel: 'Mild',
+    //                 cookId: recipeDetails.profileId,
+    //                 price: recipeDetails.costPerServing
+    //             }
+    //             const result = await AuthService.Cart.AddToCart(addToCartData)
+    //             if (!result) {
+    //                 return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to add to cart.'}, res, CommonConfig.STATUS_CODE.OK)
+    //             }
+    //             return ResponseHelpers.SetSuccessResponse({Message: 'Added to Cart.'}, res, CommonConfig.STATUS_CODE.CREATED)
+    //         }
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // },
+    GetRecipeCartDetails: async (req, res, next) => {
         try {
             const {id} = req.user
-            const cartDetails = await AuthService.Cart.GetCartIdFromCartByCreatedBy(id)
+            const cartDetails = await AuthService.Cart.GetRecipeCartIdFromCartByCreatedBy(id)
             if (!cartDetails) {
                 return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
             }
-            const cartItemDetails = await AuthService.Cart.GetCartDetails(cartDetails.id)
+            const cartItemDetails = await AuthService.Cart.GetRecipeCartDetails(cartDetails.id)
             if (!cartItemDetails) {
                 return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
             }
@@ -728,57 +851,13 @@ const Cart = {
                             }
                         }
                     }
+                    convertedJSON[outer].cartId = cartDetails.id
                     convertedJSON[outer].maxDeliverFees = maxDeliverFees
                     convertedJSON[outer].price = totalPrice
                     convertedJSON[outer].currencySymbol = currencyDetails.currencySymbol
                     convertedJSON[outer].item = convertedJSON[outer].CartItems.length
                 }
             }
-            // let cookDetails = await AuthService.Cart.GetCartItemsGroupedByCook(cartDetails.id)
-            // if (!cookDetails) {
-            //     return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
-            // }
-            // let convertedJSON = JSON.parse(JSON.stringify(cookDetails))
-            // for (let index in convertedJSON) {
-            //     if (convertedJSON.hasOwnProperty(index)) {
-            //         convertedJSON[index].cookDetails = await CommonService.User.GetCookProfileDetailsForCartById(convertedJSON[index].cookId)
-            //         convertedJSON[index].cartId = cartDetails.id
-            //         convertedJSON[index].recipes = await AuthService.Cart.GetCartItemsByCartIdAndCookId(convertedJSON[index].cookId, cartDetails.id)
-            //         let convertedRecipeData = JSON.parse(JSON.stringify(convertedJSON[index].recipes))
-            //         for (let recipeIndex in convertedRecipeData) {
-            //             if (convertedRecipeData.hasOwnProperty(recipeIndex)) {
-            //                 console.log('convertedRecipeData[recipeIndex].recipeId: ', convertedRecipeData[recipeIndex].recipeId)
-            //                 convertedRecipeData[recipeIndex].Details = await CommonService.Recipe.FindRecipeDetailsForCartById(convertedRecipeData[recipeIndex].recipeId)
-            //                 convertedJSON[index].recipes[recipeIndex].details = convertedRecipeData[recipeIndex].Details
-            //             }
-            //             // convertedJSON[index].recipes[recipeIndex].Details = recipeDetails
-            //         }
-            //     }
-            // }
-            // let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
-            // let cookDetails = []
-            //
-            // // const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
-            // let price = 0
-            // for (const index in convertedJSON.CartItems) {
-            //     if (convertedJSON.CartItems.hasOwnProperty(index)) {
-            //         const {recipeId} = convertedJSON.CartItems[index]
-            //         const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
-            //         const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
-            //         delete convertedJSON.CartItems[index].recipeId
-            //         const categoryId = recipeDetails.categoryId
-            //         const category = await CommonService.GetCategoryById(categoryId)
-            //         // const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
-            //         convertedJSON.CartItems[index].Recipe = recipeDetails
-            //         convertedJSON.CartItems[index].categoryName = category.name
-            //         convertedJSON.CartItems[index].Cook = cookDetails.fullName
-            //         convertedJSON.CartItems[index].cookId = cookDetails.id
-            //         // convertedJSON.CartItems[index].currencySymbol = currencyDetails.currencySymbol
-            //         price = price + parseInt(convertedJSON.CartItems[index].price)
-            //     }
-            // }
-            // convertedJSON.totalItems = convertedJSON.CartItems.length
-            // convertedJSON.totalPrice = price
             return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -788,86 +867,51 @@ const Cart = {
         try {
             const {id} = req.user
             const {itemId} = req.value.params
-            const cartOwner = await AuthService.Cart.CheckCartItemOwner(id)
-            if (!cartOwner) {
-                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove from cart.'}, res, CommonConfig.STATUS_CODE.OK)
+            const cart = await AuthService.Cart.CheckCartItemOwner(id)
+            if (!cart) {
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove from cart. 0'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            const deletedCartItem = await AuthService.Cart.DeleteCartDetails(itemId, cartOwner.id)
+
+            const {profileId} = await AuthService.Cart.GetPriceOfRecipeByCartItemId(itemId)
+            const cookId = profileId
+            const deletedCartItem = await AuthService.Cart.DeleteCartDetails(itemId, cart.id)
             if (!deletedCartItem) {
-                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove from cart.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove from cart. 1'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            // const cartDetails = await AuthService.Cart.GetCartDetails(id)
+            const totalPrice = await AuthService.Cart.GetSelectedCartTotalPrice(cart.id, cookId)
+            const cartItem = {
+                price: totalPrice[0].price
+            }
+            // const cartDetails = await AuthService.Cart.GetRecipeCartIdFromCartByCreatedBy(id)
             // if (!cartDetails) {
-            //     return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to remove from cart.'}, res, CommonConfig.STATUS_CODE.OK)
+            //     return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
             // }
-            // const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
-            // let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
-            // let totalPrice = 0
-            // for (const index in convertedJSON.CartItems) {
-            //     if (convertedJSON.CartItems.hasOwnProperty(index)) {
-            //         const {recipeId} = convertedJSON.CartItems[index]
-            //         const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
-            //         const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
-            //         delete convertedJSON.CartItems[index].recipeId
-            //         const categoryId = recipeDetails.categoryId
-            //         const category = await CommonService.GetCategoryById(categoryId)
-            //         const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
-            //         convertedJSON.CartItems[index].Recipe = recipeDetails
-            //         convertedJSON.CartItems[index].categoryName = category.name
-            //         convertedJSON.CartItems[index].Cook = cookDetails.fullName
-            //         convertedJSON.CartItems[index].CurrencySymbol = currencyDetails.currencySymbol
-            //         totalPrice = totalPrice + parseInt(convertedJSON.CartItems[index].price)
+            // const cartItemDetails = await AuthService.Cart.GetRecipeCartDetails(cartDetails.id)
+            // if (!cartItemDetails) {
+            //     return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
+            // }
+            // let convertedJSON = JSON.parse(JSON.stringify(cartItemDetails))
+            // for (let outer in convertedJSON) {
+            //     if (convertedJSON.hasOwnProperty(outer)) {
+            //         let covertedCartItems = JSON.parse(JSON.stringify(convertedJSON[outer].CartItems))
+            //         let totalPrice = 0
+            //         const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(convertedJSON[outer].id)
+            //         if (!currencyDetails) {
+            //             return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
+            //         }
+            //         for (let inner in covertedCartItems) {
+            //             if (covertedCartItems.hasOwnProperty(inner)) {
+            //                 totalPrice += parseFloat(covertedCartItems[inner].price)
+            //             }
+            //         }
+            //         convertedJSON[outer].price = totalPrice
+            //         convertedJSON[outer].currencySymbol = currencyDetails.currencySymbol
+            //         convertedJSON[outer].item = convertedJSON[outer].CartItems.length
             //     }
             // }
-            // convertedJSON.totalItems = convertedJSON.CartItems.length
-            // convertedJSON.totalPrice = totalPrice
-            const cartDetails = await AuthService.Cart.GetCartIdFromCartByCreatedBy(id)
-            if (!cartDetails) {
-                return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
-            }
-            const cartItemDetails = await AuthService.Cart.GetCartDetails(cartDetails.id)
-            if (!cartItemDetails) {
-                return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
-            }
-            let convertedJSON = JSON.parse(JSON.stringify(cartItemDetails))
-            for (let outer in convertedJSON) {
-                if (convertedJSON.hasOwnProperty(outer)) {
-                    let covertedCartItems = JSON.parse(JSON.stringify(convertedJSON[outer].CartItems))
-                    let totalPrice = 0
-                    // let maxDeliverFees = {
-                    //     cartItemId: null,
-                    //     deliveryfees: 0
-                    // }
-                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(convertedJSON[outer].id)
-                    if (!currencyDetails) {
-                        return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
-                    }
-                    for (let inner in covertedCartItems) {
-                        if (covertedCartItems.hasOwnProperty(inner)) {
-                            // const recipeId = covertedCartItems[inner].recipeId
-                            // const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
-                            // const category = await CommonService.GetCategoryById(recipeDetails.categoryId)
-                            // let convertedRecipe = JSON.parse(JSON.stringify(recipeDetails))
-                            // convertedRecipe.categoryName = category.name
-                            // convertedJSON[outer].CartItems[inner].recipeDetails = convertedRecipe
-                            totalPrice += parseFloat(covertedCartItems[inner].price)
-                            // if (parseFloat(convertedJSON[outer].CartItems[inner].recipeDetails.deliveryFee) > maxDeliverFees.deliveryfees) {
-                            //     maxDeliverFees = {
-                            //         cartItemId: convertedJSON[outer].CartItems[inner].id,
-                            //         deliveryfees: convertedJSON[outer].CartItems[inner].recipeDetails.deliveryFee
-                            //     }
-                            // }
-                        }
-                    }
-                    // convertedJSON[outer].maxDeliverFees = maxDeliverFees
-                    convertedJSON[outer].price = totalPrice
-                    convertedJSON[outer].currencySymbol = currencyDetails.currencySymbol
-                    convertedJSON[outer].item = convertedJSON[outer].CartItems.length
-                }
-            }
             return ResponseHelpers.SetSuccessResponse({
                 message: 'Cart Item removed successfully.',
-                details: convertedJSON
+                price: totalPrice[0].price
             }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
@@ -882,65 +926,23 @@ const Cart = {
             if (!cart) {
                 return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to update.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
-            const {costPerServing} = await AuthService.Cart.GetPriceOfRecipeByCartItemId(itemId)
+            const {costPerServing, profileId} = await AuthService.Cart.GetPriceOfRecipeByCartItemId(itemId)
+            const cookId = profileId
+
             const result = await AuthService.Cart.UpdateNoOfServing(itemId, cart.id, noOfServing, recipeId, (costPerServing * noOfServing))
             if (!result) {
                 return ResponseHelpers.SetSuccessErrorResponse({Message: 'Unable to update.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
-            // const cartDetails = await AuthService.Cart.GetCartIdFromCartByCreatedBy(id)
-            // if (!cartDetails) {
-            //     return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
-            // }
-            // const cartItemDetails = await AuthService.Cart.GetCartDetails(cartDetails.id)
-            // if (!cartItemDetails) {
-            //     return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
-            // }
-            //
-            // const result1 = await AuthService.Cart.GetCartItemByCartItemId(itemId, cart.id)
-            //
-            // let convertedJSON = JSON.parse(JSON.stringify(cartItemDetails))
-            // for (let outer in convertedJSON) {
-            //     if (convertedJSON.hasOwnProperty(outer)) {
-            //         let covertedCartItems = JSON.parse(JSON.stringify(convertedJSON[outer].CartItems))
-            //         for (let inner in covertedCartItems) {
-            //             if (covertedCartItems.hasOwnProperty(inner)) {
-            //                 const recipeId = covertedCartItems[inner].recipeId
-            //                 const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
-            //                 convertedJSON[outer].CartItems[inner].recipeDetails = recipeDetails
-            //             }
-            //         }
-            //     }
-            // }
-            // const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
-            // let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
-            // let totalPrice = 0
-            // for (const index in convertedJSON.CartItems) {
-            //     if (convertedJSON.CartItems.hasOwnProperty(index)) {
-            //         const {recipeId} = convertedJSON.CartItems[index]
-            //         const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
-            //         const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
-            //         delete convertedJSON.CartItems[index].recipeId
-            //         const categoryId = recipeDetails.categoryId
-            //         const category = await CommonService.GetCategoryById(categoryId)
-            //         const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
-            //         convertedJSON.CartItems[index].Recipe = recipeDetails
-            //         convertedJSON.CartItems[index].categoryName = category.name
-            //         convertedJSON.CartItems[index].Cook = cookDetails.fullName
-            //         convertedJSON.CartItems[index].currencySymbol = currencyDetails.currencySymbol
-            //         totalPrice = totalPrice + parseInt(convertedJSON.CartItems[index].price)
-            //     }
-            // }
-            // convertedJSON.totalItems = convertedJSON.CartItems.length
-            // convertedJSON.totalPrice = totalPrice
             const cartItemDataDetails = await AuthService.Cart.GetCartItemByCartItemId(itemId, cart.id)
             if (!cartItemDataDetails) {
                 return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
             }
+            const totalPrice = await AuthService.Cart.GetSelectedCartTotalPrice(cart.id, cookId)
             const cartItem = {
                 id: cartItemDataDetails.id,
                 noOfServing: cartItemDataDetails.noOfServing,
                 spiceLevel: cartItemDataDetails.spiceLevel,
-                price: cartItemDataDetails.price
+                price: totalPrice[0].price
             }
             return ResponseHelpers.SetSuccessResponse({cartItem}, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
@@ -952,8 +954,6 @@ const Cart = {
             const {id} = req.user
             const {itemId} = req.value.params
             const {recipeId, spiceLevel} = req.body
-            console.log('RecipeId: ', recipeId)
-            console.log('spiceLevel: ', spiceLevel)
             const cartOwner = await AuthService.Cart.CheckCartItemOwner(id)
             if (!cartOwner) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update space level.'}, res, CommonConfig.STATUS_CODE.CREATED)
@@ -962,52 +962,6 @@ const Cart = {
             if (!result) {
                 return ResponseHelpers.SetSuccessResponse({Message: 'Unable to update spice level.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
-            // const cartDetails = await AuthService.Cart.GetCartIdFromCartByCreatedBy(id)
-            // // if (!cartDetails) {
-            // //     return ResponseHelpers.SetSuccessResponse(null, res, CommonConfig.STATUS_CODE.OK)
-            // // }
-            // // const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
-            // // let convertedJSON = JSON.parse(JSON.stringify(cartDetails))
-            // // let totalPrice = 0
-            // // for (const index in convertedJSON.CartItems) {
-            // //     if (convertedJSON.CartItems.hasOwnProperty(index)) {
-            // //         const {recipeId} = convertedJSON.CartItems[index]
-            // //         const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
-            // //         const cookDetails = await CommonService.Recipe.FindCookDetailsByRecipeId(recipeId)
-            // //         delete convertedJSON.CartItems[index].recipeId
-            // //         const categoryId = recipeDetails.categoryId
-            // //         const category = await CommonService.GetCategoryById(categoryId)
-            // //         const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
-            // //         convertedJSON.CartItems[index].Recipe = recipeDetails
-            // //         convertedJSON.CartItems[index].categoryName = category.name
-            // //         convertedJSON.CartItems[index].Cook = cookDetails.fullName
-            // //         convertedJSON.CartItems[index].currencySymbol = currencyDetails.currencySymbol
-            // //         totalPrice = totalPrice + parseInt(convertedJSON.CartItems[index].price)
-            // //     }
-            // // }
-            // // convertedJSON.totalItems = convertedJSON.CartItems.length
-            // // convertedJSON.totalPrice = totalPrice
-            // if (!cartDetails) {
-            //     return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
-            // }
-            // const cartItemDetails = await AuthService.Cart.GetCartDetails(cartDetails.id)
-            // if (!cartItemDetails) {
-            //     return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
-            // }
-            // console.log('=-============================================', cartItemDetails)
-            // let convertedJSON = JSON.parse(JSON.stringify(cartItemDetails))
-            // for (let outer in convertedJSON) {
-            //     if (convertedJSON.hasOwnProperty(outer)) {
-            //         let covertedCartItems = JSON.parse(JSON.stringify(convertedJSON[outer].CartItems))
-            //         for (let inner in covertedCartItems) {
-            //             if (covertedCartItems.hasOwnProperty(inner)) {
-            //                 const recipeId = covertedCartItems[inner].recipeId
-            //                 const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
-            //                 convertedJSON[outer].CartItems[inner].recipeDetails = recipeDetails
-            //             }
-            //         }
-            //     }
-            // }
             const cartItemDataDetails = await AuthService.Cart.GetCartItemByCartItemId(itemId, cartOwner.id)
             if (!cartItemDataDetails) {
                 return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)

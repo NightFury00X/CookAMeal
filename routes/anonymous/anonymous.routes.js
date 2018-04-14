@@ -56,4 +56,6 @@ router.post('/forgot-password',
 router.get('/guest-login',
     AnonymousController.Anonymous.GuestLogin)
 
+router.get('/braintree/getclienttoken',
+    AnonymousController.Anonymous.GetClientToken)
 module.exports = router

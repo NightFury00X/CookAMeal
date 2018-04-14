@@ -561,6 +561,60 @@ const Map = {
 }
 
 let Order = {
+    GetOrderSummaryDetailsByCookId: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const cartDetails = await AuthService.Cart.GetRecipeCartIdFromCartByCreatedBy(id)
+            const {cookId} = req.params
+            if (!cartDetails) {
+                return ResponseHelpers.SetSuccessErrorResponse({messgae: 'Unable to laod cart. Please try again later.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const cartItemDetails = await AuthService.Cart.GetRecipeCartDetailsByCookId(cartDetails.id, cookId)
+            if (!cartItemDetails) {
+                return ResponseHelpers.SetSuccessErrorResponse({messgae: 'Unable to laod cart. Please try again later.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            let convertedJSON = JSON.parse(JSON.stringify(cartItemDetails))
+            for (let outer in convertedJSON) {
+                if (convertedJSON.hasOwnProperty(outer)) {
+                    let covertedCartItems = JSON.parse(JSON.stringify(convertedJSON[outer].CartItems))
+                    let totalPrice = 0
+                    let maxDeliverFees = {
+                        cartItemId: null,
+                        deliveryfees: 0
+                    }
+                    const currencyDetails = await CommonService.User.GetCurrencySymbolByProfileId(convertedJSON[outer].id)
+                    if (!currencyDetails) {
+                        return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
+                    }
+                    for (let inner in covertedCartItems) {
+                        if (covertedCartItems.hasOwnProperty(inner)) {
+                            const recipeId = covertedCartItems[inner].recipeId
+                            const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+                            const category = await CommonService.GetCategoryById(recipeDetails.categoryId)
+                            let convertedRecipe = JSON.parse(JSON.stringify(recipeDetails))
+                            convertedRecipe.categoryName = category.name
+                            convertedJSON[outer].CartItems[inner].recipeDetails = convertedRecipe
+                            totalPrice += parseFloat(covertedCartItems[inner].price)
+                            if (parseFloat(convertedJSON[outer].CartItems[inner].recipeDetails.deliveryFee) > maxDeliverFees.deliveryfees) {
+                                maxDeliverFees = {
+                                    cartItemId: convertedJSON[outer].CartItems[inner].id,
+                                    deliveryfees: convertedJSON[outer].CartItems[inner].recipeDetails.deliveryFee
+                                }
+                            }
+                        }
+                    }
+                    convertedJSON[outer].maxDeliverFees = maxDeliverFees
+                    convertedJSON[outer].price = totalPrice
+                    convertedJSON[outer].tax = parseFloat(5)
+                    convertedJSON[outer].currencySymbol = currencyDetails.currencySymbol
+                    convertedJSON[outer].item = convertedJSON[outer].CartItems.length
+                }
+            }
+            return ResponseHelpers.SetSuccessResponse(convertedJSON, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
     GetOrderSummaryDetailsByRecipeId: async (req, res, next) => {
         try {
             const recipeId = req.value.params.id
@@ -574,7 +628,7 @@ let Order = {
                     costPerServing: parseFloat(recipeData.costPerServing),
                     availableServings: parseFloat(recipeData.availableServings),
                     deliveryFees: parseFloat(recipeData.deliveryFee),
-                    currencySymbol: parseFloat(recipeData.currencySymbol)
+                    currencySymbol: recipeData.currencySymbol
                 },
                 Tax: parseFloat(5)
             }
@@ -582,7 +636,7 @@ let Order = {
         } catch (error) {
             next(error)
         }
-    },
+    }
 }
 
 const CommonController = {

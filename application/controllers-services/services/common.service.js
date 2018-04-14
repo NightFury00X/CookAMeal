@@ -150,6 +150,22 @@ CommonService.prototype.InvalidateResetPasswordTokenData = async (id) => {
 }
 
 CommonService.prototype.User = {
+    CheckAddressIsCurrentAddress: async (addressId, profileId) => {
+        console.log('addressId: ', addressId)
+        console.log('profileId: ', profileId)
+        try {
+            return await db.Address.findOne({
+                where: {
+                    [Op.and]: {
+                        id: `${addressId}`,
+                        profileId: `${profileId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetUserTypeDetailsById: async (userId) => {
         try {
             return await db.UserType.findOne({

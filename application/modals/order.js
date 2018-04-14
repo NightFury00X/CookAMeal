@@ -22,19 +22,6 @@ module.exports = function (sequelize, DataTypes) {
                 }
             }
         },
-        spiceLevel: {
-            type: DataTypes.STRING(100),
-            validate: {
-                isIn: {
-                    args: [['Mild', 'Medium', 'Hot']],
-                    msg: 'Invalid spice Level.'
-                }
-            }
-        },
-        orderServings: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         specialInstruction: {
             type: DataTypes.TEXT,
             allowNull: false
@@ -80,6 +67,10 @@ module.exports = function (sequelize, DataTypes) {
                     msg: 'Invalid Payment State.'
                 }
             }
+        },
+        isCurrentAddress: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         },
         isAccepted: {
             type: DataTypes.BOOLEAN,

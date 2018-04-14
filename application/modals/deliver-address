@@ -52,5 +52,16 @@ module.exports = function (sequelize, DataTypes) {
         deletedAt: DataTypes.DATE
     }
 
-    return sequelize.define('DeliveryAddress', modelDefinition)
+    const DeliveryAddress = sequelize.define('DeliveryAddress', modelDefinition)
+
+    DeliveryAddress.associate = function (models) {
+        DeliveryAddress.hasMany(models.Order, {
+            foreignKey: {
+                name: 'deliveredToOtherAddressId',
+                onDelete: 'CASCADE'
+            }
+        })
+    }
+
+    return DeliveryAddress
 }

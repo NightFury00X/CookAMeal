@@ -143,7 +143,6 @@ module.exports = function (sequelize, DataTypes) {
         Recipe.hasMany(models.CartItem, {
             foreignKey: {
                 name: 'recipeId',
-                allowNull: false,
                 onDelete: 'CASCADE'
             }
         })

@@ -169,6 +169,14 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
+
+        UserTypeModel.hasMany(models.PaymentGateway, {
+            foreignKey: {
+                name: 'createdBy',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
     }
     return UserTypeModel
 }

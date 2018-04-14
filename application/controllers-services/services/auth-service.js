@@ -333,7 +333,42 @@ AuthService.prototype.Order = {
         const totalAmountIncludingTax = (total || 0) + (taxAmount || 0)
         return parseFloat(totalAmount) === parseFloat(totalAmountIncludingTax)
     },
-    CheckOut: async (paymentMethodNonce, orderId, totalAmount) => {
+    // CheckOut: async (paymentMethodNonce, orderId, totalAmount) => {
+    //     try {
+    //         let gateway = await braintree.connect({
+    //             environment: braintree.Environment.Sandbox,
+    //             merchantId: config.braintree.merchantId,
+    //             publicKey: config.braintree.publicKey,
+    //             privateKey: config.braintree.privateKey
+    //         })
+    //         return await new Promise((resolve, reject) => {
+    //             gateway.transaction.sale({
+    //                 amount: totalAmount,
+    //                 orderId: orderId,
+    //                 paymentMethodNonce: paymentMethodNonce,
+    //                 options: {
+    //                     submitForSettlement: true
+    //                 }
+    //             }, function (err, result) {
+    //                 if (err || !result.success) {
+    //                     return reject(err || result.message)
+    //                 } else {
+    //                     return resolve(result)
+    //                 }
+    //             })
+    //         })
+    //     } catch (error) {
+    //         throw (error)
+    //     }
+    // },
+    CreateAndHoldPayment: async (paymentData, trans) => {
+        try {
+            return db.PaymentGateway.create(paymentData, {transaction: trans})
+        } catch (error) {
+            throw (errorl)
+        }
+    },
+    CheckOut: async (paymentMethodNonce, totalAmount) => {
         try {
             let gateway = await braintree.connect({
                 environment: braintree.Environment.Sandbox,
@@ -344,7 +379,6 @@ AuthService.prototype.Order = {
             return await new Promise((resolve, reject) => {
                 gateway.transaction.sale({
                     amount: totalAmount,
-                    orderId: orderId,
                     paymentMethodNonce: paymentMethodNonce,
                     options: {
                         submitForSettlement: true
@@ -365,9 +399,9 @@ AuthService.prototype.Order = {
         let recipesToJson = !isJSON(recipesData) ? JSON.parse(JSON.stringify(recipesData)) : JSON.parse(recipesData)
         try {
             const order = await db.Order.create(orderDetails, {transaction: trans})
-            if (!order) {
-                return false
-            }
+            // if (!order) {
+            //     return false
+            // }
             for (const index in recipesToJson) {
                 if (recipesToJson.hasOwnProperty(index)) {
                     recipesToJson[index].orderId = order.id
@@ -375,13 +409,13 @@ AuthService.prototype.Order = {
             }
             for (const recipe of recipesToJson) {
                 const orderItem = await db.OrderItem.create(recipe, {transaction: trans})
-                if (!orderItem) {
-                    return false
-                }
+                // if (!orderItem) {
+                //     return false
+                // }
             }
             return order
         } catch (error) {
-            return false
+            return error
         }
     },
     Transaction: async (transactionData, trans) => {
@@ -620,6 +654,21 @@ AuthService.prototype.Facebook = {
 }
 
 AuthService.prototype.Cart = {
+    GetAllCartItemByCartIdAndCookId: async (cartId, cookId) => {
+        try {
+            return await db.CartItem.findAll({
+                attributes: ['noOfServing', 'spiceLevel', 'recipeId'],
+                where: {
+                    [Op.and]: [{
+                        cartId: `${cartId}`,
+                        cookId: `${cookId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetCartItemByCartItemId: async (cartItemId, cartId) => {
         try {
             return await db.CartItem.findOne({
@@ -634,13 +683,29 @@ AuthService.prototype.Cart = {
             throw (error)
         }
     },
-    GetCartIdFromCartByCreatedBy: async (createdBy) => {
+    GetSelectedCartTotalPrice: async (cartId, cookId) => {
+        try {
+            return await db.CartItem.findAll({
+                where: {
+                    [Op.and]: [{
+                        cartId: `${cartId}`,
+                        cookId: `${cookId}`
+                    }]
+                },
+                attributes: [[Sequelize.fn('SUM', Sequelize.col('price')), 'price']]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetRecipeCartIdFromCartByCreatedBy: async (createdBy) => {
         try {
             return await db.AddToCart.findOne({
                 attributes: ['id'],
                 where: {
                     [Op.and]: [{
                         createdBy: `${createdBy}`,
+                        cartFor: `${1}`,
                         status: 0
                     }]
                 }
@@ -717,12 +782,13 @@ AuthService.prototype.Cart = {
             throw (errro)
         }
     },
-    CheckCartIsOpen: async (createdBy) => {
+    CheckRecipeCartIsOpen: async (createdBy) => {
         try {
             return await db.AddToCart.findOne({
                 where: {
                     [Op.and]: {
                         createdBy: `${createdBy}`,
+                        cartFor: `${1}`,
                         status: false
                     }
                 }
@@ -731,15 +797,25 @@ AuthService.prototype.Cart = {
             throw (error)
         }
     },
-    AddToCart: async (addToCartDetails) => {
+    AddToCartRecipe: async (addToCartDetails) => {
         const trans = await db.sequelize.transaction()
         try {
-            const addToCart = await db.AddToCart.create({createdBy: addToCartDetails.createdBy}, {transaction: trans})
+            const addToCart = await db.AddToCart.create({
+                createdBy: addToCartDetails.createdBy,
+                cartFor: 1
+            }, {transaction: trans})
             if (!addToCart) {
                 return false
             }
             addToCartDetails.cartId = addToCart.id
-            const cartItem = await db.CartItem.create(addToCartDetails, {transaction: trans})
+            const cartItem = await db.CartItem.create({
+                spiceLevel: addToCartDetails.spiceLevel,
+                noOfServing: addToCartDetails.noOfServing,
+                price: addToCartDetails.price,
+                cartId: addToCart.id,
+                cookId: addToCartDetails.cookId,
+                recipeId: addToCartDetails.recipeId
+            }, {transaction: trans})
             if (!cartItem) {
                 return false
             }
@@ -773,14 +849,14 @@ AuthService.prototype.Cart = {
             throw (error)
         }
     },
-    AddItemToExistingCart: async (addToCartDetails) => {
+    AddItemToExistingRecipeCart: async (addToCartDetails) => {
         try {
             return await db.CartItem.create(addToCartDetails)
         } catch (error) {
             throw (error)
         }
     },
-    GetCartDetails: async (cartId) => {
+    GetRecipeCartDetails: async (cartId) => {
         try {
             return await db.Profile.findAll({
                 attributes: ['id', 'firstName', 'lastName', 'createdBy', 'profileUrl'],
@@ -789,8 +865,28 @@ AuthService.prototype.Cart = {
                     model: db.CartItem,
                     where: {
                         cartId: {
-                            [Op.eq]: cartId
+                            [Op.eq]: `${cartId}`
                         }
+                    },
+                    attributes: ['id', 'id', 'noOfServing', 'price', 'recipeId', 'spiceLevel', 'cookId']
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetRecipeCartDetailsByCookId: async (cartId, cookId) => {
+        try {
+            return await db.Profile.findAll({
+                attributes: ['id', 'firstName', 'lastName', 'createdBy', 'profileUrl'],
+                include: [{
+                    required: true,
+                    model: db.CartItem,
+                    where: {
+                        [Op.and]: [{
+                            cartId: `${cartId}`,
+                            cookId: `${cookId}`
+                        }]
                     },
                     attributes: ['id', 'id', 'noOfServing', 'price', 'recipeId', 'spiceLevel', 'cookId']
                 }]
@@ -817,7 +913,7 @@ AuthService.prototype.Cart = {
     GetPriceOfRecipeByCartItemId: async (itemId) => {
         try {
             return await db.Recipe.findOne({
-                attributes: ['costPerServing'],
+                attributes: ['costPerServing', 'profileId'],
                 include: [{
                     model: db.CartItem,
                     where: {

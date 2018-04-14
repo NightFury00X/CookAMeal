@@ -87,7 +87,18 @@ module.exports = function (sequelize, DataTypes) {
         }
     }
 
-    return sequelize.define('Address', modelDefinition, modelOptions)
+    const Address = sequelize.define('Address', modelDefinition, modelOptions)
+
+    Address.associate = function (models) {
+        Address.hasMany(models.Order, {
+            foreignKey: {
+                name: 'deliveredToCurrentAddressId',
+                onDelete: 'CASCADE'
+            }
+        })
+    }
+
+    return Address
 }
 
 async function FindConutryDetails (address) {

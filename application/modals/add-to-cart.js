@@ -7,6 +7,11 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
         },
+        cartFor: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: false
+        },
         status: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -19,6 +24,13 @@ module.exports = function (sequelize, DataTypes) {
     const AddToCart = sequelize.define('AddToCart', modelDefinition)
     AddToCart.associate = function (models) {
         AddToCart.hasMany(models.CartItem, {
+            foreignKey: {
+                name: 'cartId',
+                allowNull: false,
+                onDelete: 'CASCADE'
+            }
+        })
+        AddToCart.hasMany(models.Order, {
             foreignKey: {
                 name: 'cartId',
                 allowNull: false,

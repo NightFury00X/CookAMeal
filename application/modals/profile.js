@@ -208,6 +208,12 @@ module.exports = function (sequelize, DataTypes) {
                 onDelete: 'CASCADE'
             }
         })
+        ProfileModel.hasMany(models.PaymentGateway, {
+            foreignKey: {
+                name: 'cookId',
+                onDelete: 'CASCADE'
+            }
+        })
     }
 
     return ProfileModel

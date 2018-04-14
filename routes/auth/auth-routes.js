@@ -92,22 +92,27 @@ router.post('/feedback',
 router.get('/order/prepare-data/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     AuthController.Order.PrepareData)
-
-router.post('/order/check-out',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    ValidateBody(BodySchemas.OrderFood),
-    AuthController.Order.MakeOrder)
+//
+// router.post('/order/check-out',
+//     RequestMethodsMiddlewares.ApplicationJsonData,
+//     ValidateBody(BodySchemas.OrderFood),
+//     AuthController.Order.MakeOrder)
 
 router.get('/my-order',
     AuthController.Order.GetMyOrders)
 
-router.post('/cart',
+router.post('/cart/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.AddToCart),
-    AuthController.Cart.AddToCart)
+    AuthController.Cart.AddToCartForRecipe)
 
-router.get('/cart',
-    AuthController.Cart.GetCartDetails)
+// router.post('/cart/cook',
+//     RequestMethodsMiddlewares.ApplicationJsonData,
+//     ValidateBody(BodySchemas.AddToCart),
+//     AuthController.Cart.AddToCart)
+
+router.get('/cart/recipe',
+    AuthController.Cart.GetRecipeCartDetails)
 
 router.delete('/cart/:itemId',
     ValidateParams(ParamSchemas.idSchema, 'itemId'),
