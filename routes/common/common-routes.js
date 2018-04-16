@@ -89,8 +89,12 @@ router.get('/order/order-summary/:id',
 router.get('/order/client-token',
     AuthController.Order.GetClientToken)
 
-router.post('/order/create-purchase',
+router.post('/order/create-purchase-cart',
     RequestMethodsMiddlewares.ApplicationJsonData,
-    AuthController.Order.CreatePurchase)
+    AuthController.Order.CreatePurchaseOrderForCart)
+
+router.post('/order/create-purchase-recipe',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    AuthController.Order.CreatePurchaseOrderForRecipe)
 
 module.exports = router

@@ -35,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         pickUpTime: {
-            type: DataTypes.TIME,
+            type: DataTypes.DATE,
             allowNull: false
         },
         taxes: {
@@ -70,6 +70,14 @@ module.exports = function (sequelize, DataTypes) {
         },
         isCurrentAddress: {
             type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
+        isOrderFromCart: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
+        cookId: {
+            type: DataTypes.UUID,
             allowNull: false
         },
         isAccepted: {

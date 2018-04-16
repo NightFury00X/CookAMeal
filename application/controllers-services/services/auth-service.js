@@ -365,7 +365,7 @@ AuthService.prototype.Order = {
         try {
             return db.PaymentGateway.create(paymentData, {transaction: trans})
         } catch (error) {
-            throw (errorl)
+            throw (error)
         }
     },
     CheckOut: async (paymentMethodNonce, totalAmount) => {
@@ -395,13 +395,13 @@ AuthService.prototype.Order = {
             throw (error)
         }
     },
-    PlaceOrder: async (orderDetails, recipesData, trans) => {
+    PlaceOrderForCartItems: async (orderDetails, recipesData, trans) => {
         let recipesToJson = !isJSON(recipesData) ? JSON.parse(JSON.stringify(recipesData)) : JSON.parse(recipesData)
         try {
             const order = await db.Order.create(orderDetails, {transaction: trans})
-            // if (!order) {
-            //     return false
-            // }
+            if (!order) {
+                return false
+            }
             for (const index in recipesToJson) {
                 if (recipesToJson.hasOwnProperty(index)) {
                     recipesToJson[index].orderId = order.id
@@ -409,13 +409,44 @@ AuthService.prototype.Order = {
             }
             for (const recipe of recipesToJson) {
                 const orderItem = await db.OrderItem.create(recipe, {transaction: trans})
-                // if (!orderItem) {
-                //     return false
-                // }
+                if (!orderItem) {
+                    return false
+                }
             }
             return order
         } catch (error) {
             return error
+        }
+    },
+    PlaceOrderForRecipe: async (orderDetails, recipesData, trans) => {
+        let recipesToJson = !isJSON(recipesData) ? JSON.parse(JSON.stringify(recipesData)) : JSON.parse(recipesData)
+        try {
+            const order = await db.Order.create(orderDetails, {transaction: trans})
+            if (!order) {
+                return false
+            }
+            recipesToJson.orderId = order.id
+            const orderItem = await db.OrderItem.create(recipesToJson, {transaction: trans})
+            if (!orderItem) {
+                return false
+            }
+            return order
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetMyPendingOrdersOrdersForCustomer: async (customerId) => {
+        try {
+            return await db.Order.findAll({
+                where: {
+                    [Op.and]: [{
+                        createdBy: `${customerId}`,
+                        orderState: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
         }
     },
     Transaction: async (transactionData, trans) => {
@@ -666,7 +697,8 @@ AuthService.prototype.Cart = {
                         cartId: `${cartId}`,
                         cookId: `${cookId}`
                     }]
-                }
+                },
+                transaction: trans
             })
         } catch (error) {
             throw (error)
@@ -679,7 +711,9 @@ AuthService.prototype.Cart = {
                 where: {
                     [Op.and]: [{
                         cartId: `${cartId}`,
-                        cookId: `${cookId}`
+                        cookId: `${cookId}`,
+                        isOrdered: 0,
+                        isDeleted: 0
                     }]
                 }
             })
@@ -707,7 +741,9 @@ AuthService.prototype.Cart = {
                 where: {
                     [Op.and]: [{
                         cartId: `${cartId}`,
-                        cookId: `${cookId}`
+                        cookId: `${cookId}`,
+                        isOrdered: 0,
+                        isDeleted: 0
                     }]
                 },
                 attributes: [[Sequelize.fn('SUM', Sequelize.col('price')), 'price']]
@@ -725,6 +761,21 @@ AuthService.prototype.Cart = {
                         createdBy: `${createdBy}`,
                         cartFor: `${1}`,
                         status: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    CheckCartStatus: async (createdBy, cartFor) => {
+        try {
+            return await db.AddToCart.findOne({
+                where: {
+                    [Op.and]: [{
+                        createdBy: `${createdBy}`,
+                        status: 0,
+                        cartFor: `${cartFor}`
                     }]
                 }
             })
@@ -858,7 +909,9 @@ AuthService.prototype.Cart = {
                     where: {
                         [Op.and]: [{
                             recipeId: `${recipeId}`,
-                            id: `${cartId}`
+                            id: `${cartId}`,
+                            isOrdered: false,
+                            isDeleted: false
                         }]
                     }
                 }]
@@ -993,16 +1046,6 @@ AuthService.prototype.WishList = {
                     }
                 }]
             })
-            // return db.Favorite.findAll({
-            //     where: {
-            //         createdBy: {
-            //             [Op.eq]: `${createdBy}`
-            //         }
-            //     },
-            //     include: [{
-            //         model: db.Recipe
-            //     }]
-            // })
         } catch (error) {
             throw (error)
         }

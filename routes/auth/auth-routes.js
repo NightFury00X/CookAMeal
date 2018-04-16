@@ -98,8 +98,8 @@ router.get('/order/prepare-data/:id',
 //     ValidateBody(BodySchemas.OrderFood),
 //     AuthController.Order.MakeOrder)
 
-router.get('/my-order',
-    AuthController.Order.GetMyOrders)
+router.get('/my-order/customer',
+    AuthController.Order.GetMyOrdersForCustomer)
 
 router.post('/cart/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,

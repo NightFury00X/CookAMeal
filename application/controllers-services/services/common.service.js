@@ -151,10 +151,22 @@ CommonService.prototype.InvalidateResetPasswordTokenData = async (id) => {
 
 CommonService.prototype.User = {
     CheckAddressIsCurrentAddress: async (addressId, profileId) => {
-        console.log('addressId: ', addressId)
-        console.log('profileId: ', profileId)
         try {
             return await db.Address.findOne({
+                where: {
+                    [Op.and]: {
+                        id: `${addressId}`,
+                        profileId: `${profileId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    CheckAddressIsOtherAddress: async (addressId, profileId) => {
+        try {
+            return await db.DeliveryAddress.findOne({
                 where: {
                     [Op.and]: {
                         id: `${addressId}`,
@@ -661,7 +673,7 @@ CommonService.prototype.Recipe = {
     FindRecipeDetailsForCartById: async (recipeId) => {
         try {
             return await db.Recipe.findById(recipeId, {
-                attributes: ['id', 'dishName', 'availableServings', 'costPerServing', 'categoryId', 'subCategoryId', 'deliveryFee', 'currencySymbol'],
+                attributes: ['id', 'dishName', 'availableServings', 'costPerServing', 'categoryId', 'subCategoryId', 'deliveryFee', 'currencySymbol', 'profileId'],
                 include: [{
                     model: db.MediaObject,
                     attributes: ['id', 'imageUrl']

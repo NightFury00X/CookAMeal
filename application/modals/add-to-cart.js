@@ -33,7 +33,6 @@ module.exports = function (sequelize, DataTypes) {
         AddToCart.hasMany(models.Order, {
             foreignKey: {
                 name: 'cartId',
-                allowNull: false,
                 onDelete: 'CASCADE'
             }
         })

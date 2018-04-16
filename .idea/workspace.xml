@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
+    <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="Add new API Update Profile.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/modals/cart-items.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/cart-items.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/modals/add-to-cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/add-to-cart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/modals/order.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/modals/order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/auth/auth-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth/auth-routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/common/common-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/common/common-routes.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,17 +30,17 @@
       <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="676">
-              <caret line="80" column="37" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="37" />
+            <state relative-caret-position="274">
+              <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="825" column="67" selection-start-line="825" selection-start-column="67" selection-end-line="825" selection-end-column="67" />
+            <state relative-caret-position="192">
+              <caret line="847" column="146" selection-start-line="847" selection-start-column="146" selection-end-line="847" selection-end-column="146" />
             </state>
           </provider>
         </entry>
@@ -45,29 +49,7 @@
         <entry file="file://$PROJECT_DIR$/application/modals/order.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="220">
-              <caret line="68" column="24" lean-forward="true" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="948" column="38" lean-forward="true" selection-start-line="948" selection-start-column="38" selection-end-line="948" selection-end-column="38" />
-              <folding>
-                <element signature="e#10926#10992#0" />
-                <element signature="e#12141#13113#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cart-items.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
-              <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+              <caret line="37" column="32" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -75,35 +57,30 @@
       <file leaf-file-name="auth-routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="114" column="30" lean-forward="true" selection-start-line="114" selection-start-column="30" selection-end-line="114" selection-end-column="30" />
+            <state relative-caret-position="188">
+              <caret line="100" column="30" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add-to-cart.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/modals/add-to-cart.js">
+      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="31" column="12" lean-forward="true" selection-start-line="24" selection-start-column="3" selection-end-line="31" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="address.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/modals/address.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="94" column="45" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="payment-gateway.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/modals/payment-gateway.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1">
-              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            <state relative-caret-position="192">
+              <caret line="437" column="4" selection-start-line="437" selection-start-column="4" selection-end-line="437" selection-end-column="4" />
+              <folding>
+                <element signature="e#7954#8329#0" />
+                <element signature="e#8390#8951#0" />
+                <element signature="e#8999#9460#0" />
+                <element signature="e#9521#9986#0" />
+                <element signature="e#10085#10920#0" />
+                <element signature="e#10926#10992#0" />
+                <element signature="e#12140#12303#0" />
+                <element signature="e#12362#13334#0" />
+                <element signature="e#13396#14230#0" />
+                <element signature="e#14283#14457#0" />
+                <element signature="e#14521#14961#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -111,8 +88,26 @@
       <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="651" column="4" selection-start-line="651" selection-start-column="4" selection-end-line="651" selection-end-column="4" />
+            <state relative-caret-position="192">
+              <caret line="611" column="4" selection-start-line="611" selection-start-column="4" selection-end-line="611" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add-to-cart.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/add-to-cart.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="689">
+              <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="deliver-address" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/modals/deliver-address">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="58" column="39" lean-forward="true" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -121,15 +116,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cartItemId</find>
-      <find>please select profile</find>
-      <find>res.send</find>
-      <find>profileSelected: false</find>
-      <find>Please select profile'</find>
-      <find>prep</find>
-      <find>req.params</find>
-      <find>hasO</find>
-      <find>Order</find>
       <find>group: ['cookId', Sequelize.fn('max', Sequelize.col('cookId'))],</find>
       <find>AVG</find>
       <find>FindRecipeDetailsForCartById</find>
@@ -147,10 +133,19 @@
       <find>Sequelize.fn</find>
       <find>create-purchase</find>
       <find>JSON.stringify</find>
-      <find>update</find>
       <find>CAR</find>
-      <find>cart</find>
       <find>model: db.CartItem</find>
+      <find>CartItem</find>
+      <find>max</find>
+      <find>cart</find>
+      <find>FindMaxDeliverFeesForcart</find>
+      <find>deliver</find>
+      <find>delivery</find>
+      <find>maxDeliveryFess</find>
+      <find>update</find>
+      <find>GetMyPendingOrdersOrders</find>
+      <find>order</find>
+      <find>GetMyOrders</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -227,20 +222,20 @@
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/anonymous.controller.js" />
         <option value="$PROJECT_DIR$/application/modals/user-type.js" />
         <option value="$PROJECT_DIR$/application/modals/recipe.js" />
-        <option value="$PROJECT_DIR$/application/modals/add-to-cart.js" />
-        <option value="$PROJECT_DIR$/routes/auth/auth-routes.js" />
         <option value="$PROJECT_DIR$/application/modals/profile.js" />
-        <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/controllers/common.controller.js" />
         <option value="$PROJECT_DIR$/application/modals/order-items.js" />
         <option value="$PROJECT_DIR$/application/modals/deliver-address" />
         <option value="$PROJECT_DIR$/application/modals/address.js" />
-        <option value="$PROJECT_DIR$/application/modals/order.js" />
         <option value="$PROJECT_DIR$/application/modals/payment-gateway.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
         <option value="$PROJECT_DIR$/application/modals/cart-items.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
+        <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
+        <option value="$PROJECT_DIR$/application/modals/add-to-cart.js" />
+        <option value="$PROJECT_DIR$/routes/auth/auth-routes.js" />
         <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
+        <option value="$PROJECT_DIR$/application/modals/order.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
       </list>
     </option>
   </component>
@@ -263,6 +258,11 @@
   </component>
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
@@ -309,6 +309,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -320,12 +321,6 @@
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
               <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Cook-A-Meal" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="modals" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Cook-A-Meal" type="b2602c69:ProjectViewProjectNode" />
@@ -366,7 +361,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -593,14 +587,8 @@
       <workItem from="1523424694132" duration="13345000" />
       <workItem from="1523509717125" duration="12581000" />
       <workItem from="1523596317923" duration="14439000" />
-      <workItem from="1523680399330" duration="16043000" />
-    </task>
-    <task id="LOCAL-00537" summary="Add new API Update Profile.">
-      <created>1521197812960</created>
-      <option name="number" value="00537" />
-      <option name="presentableId" value="LOCAL-00537" />
-      <option name="project" value="LOCAL" />
-      <updated>1521197812960</updated>
+      <workItem from="1523680399330" duration="17103000" />
+      <workItem from="1523853650023" duration="20212000" />
     </task>
     <task id="LOCAL-00538" summary="Add new API Update Profile.">
       <created>1521198034986</created>
@@ -938,11 +926,18 @@
       <option name="project" value="LOCAL" />
       <updated>1523701727761</updated>
     </task>
-    <option name="localTasksCounter" value="586" />
+    <task id="LOCAL-00586" summary="Add new API Update Profile.">
+      <created>1523703053612</created>
+      <option name="number" value="00586" />
+      <option name="presentableId" value="LOCAL-00586" />
+      <option name="project" value="LOCAL" />
+      <updated>1523703053612</updated>
+    </task>
+    <option name="localTasksCounter" value="587" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1442538000" />
+    <option name="totallyTimeSpent" value="1463810000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -963,9 +958,9 @@
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.51664144" side_tool="true" weight="0.42546245" />
       <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4969743" weight="0.32790446" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.43634385" />
-      <window_info anchor="bottom" x="-83" y="-14" width="1366" height="705" id="Terminal" order="20" sideWeight="0.50053304" side_tool="true" visible="true" weight="0.21980414" />
+      <window_info active="true" anchor="bottom" x="-83" y="-14" width="1366" height="705" id="Terminal" order="20" sideWeight="0.50053304" side_tool="true" visible="true" weight="0.3188248" />
       <window_info anchor="right" auto_hide="true" id="FAQ Robot" internal_type="SLIDING" order="3" type="SLIDING" weight="0.32980332" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4937833" visible="true" weight="0.2228145" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4937833" visible="true" weight="0.2249467" />
       <window_info id="Project Explorer" order="2" />
       <window_info id="Job Explorer" order="3" weight="0.32980332" />
       <window_info anchor="bottom" id="Docker" order="16" show_stripe_button="false" />
@@ -975,15 +970,15 @@
       <window_info id="Favorites" order="5" sideWeight="0.5062167" side_tool="true" weight="0.2675906" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.39717084" />
       <window_info anchor="bottom" id="SFDX" order="7" weight="0.32894737" />
-      <window_info anchor="bottom" id="Execute Anonymous" order="14" weight="0.32894737" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.24958949" />
       <window_info anchor="bottom" id="Thumbnails" order="11" weight="0.32894737" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info id="npm" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Execute Anonymous" order="14" weight="0.32894737" />
       <window_info anchor="bottom" id="Log Manager" order="18" weight="0.32894737" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.24958949" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Salesforce" order="19" weight="0.32894737" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -996,12 +991,11 @@
       <window_info anchor="bottom" id="DB Execution Console" order="8" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.24958949" />
       <window_info anchor="bottom" id="Salesforce" order="19" weight="0.32894737" />
-      <window_info id="Project Explorer" order="2" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.55500823" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="DB Browser" order="6" />
+      <window_info id="Project Explorer" order="2" />
       <window_info anchor="bottom" id="Log Manager" order="18" weight="0.32894737" />
       <window_info anchor="bottom" id="SFDX" order="7" weight="0.32894737" />
       <window_info id="Favorites" order="5" side_tool="true" />
@@ -1011,6 +1005,7 @@
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.51664144" side_tool="true" weight="0.7389163" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21055438" />
+      <window_info id="DB Browser" order="6" />
       <window_info id="npm" order="4" side_tool="true" />
       <window_info id="Job Explorer" order="3" weight="0.32980332" />
       <window_info anchor="right" auto_hide="true" id="FAQ Robot" internal_type="SLIDING" order="3" type="SLIDING" weight="0.32980332" />
@@ -1093,13 +1088,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/modals/profile-cover.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/recipe-images.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -1381,84 +1369,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/deliver-address">
+    <entry file="file://$PROJECT_DIR$/application/modals/address.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="58" column="25" lean-forward="true" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+        <state relative-caret-position="2068">
+          <caret line="94" column="45" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/address.js">
+    <entry file="file://$PROJECT_DIR$/application/modals/payment-gateway.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="94" column="45" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
+        <state relative-caret-position="330">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/feedback.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="136" lean-forward="true" selection-start-line="13" selection-start-column="136" selection-end-line="13" selection-end-column="136" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/deliver-address">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="58" column="39" lean-forward="true" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/modals/add-to-cart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="689">
+          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="437" column="4" selection-start-line="437" selection-start-column="4" selection-end-line="437" selection-end-column="4" />
+          <folding>
+            <element signature="e#7954#8329#0" />
+            <element signature="e#8390#8951#0" />
+            <element signature="e#8999#9460#0" />
+            <element signature="e#9521#9986#0" />
+            <element signature="e#10085#10920#0" />
+            <element signature="e#10926#10992#0" />
+            <element signature="e#12140#12303#0" />
+            <element signature="e#12362#13334#0" />
+            <element signature="e#13396#14230#0" />
+            <element signature="e#14283#14457#0" />
+            <element signature="e#14521#14961#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="611" column="4" selection-start-line="611" selection-start-column="4" selection-end-line="611" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="100" column="30" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/modals/order.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
-          <caret line="68" column="24" lean-forward="true" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/add-to-cart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="31" column="12" lean-forward="true" selection-start-line="24" selection-start-column="3" selection-end-line="31" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/payment-gateway.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
-          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="651" column="4" selection-start-line="651" selection-start-column="4" selection-end-line="651" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/modals/cart-items.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+          <caret line="37" column="32" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="676">
-          <caret line="80" column="37" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="114" column="30" lean-forward="true" selection-start-line="114" selection-start-column="30" selection-end-line="114" selection-end-column="30" />
+        <state relative-caret-position="274">
+          <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="825" column="67" selection-start-line="825" selection-start-column="67" selection-end-line="825" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="948" column="38" lean-forward="true" selection-start-line="948" selection-start-column="38" selection-end-line="948" selection-end-column="38" />
-          <folding>
-            <element signature="e#10926#10992#0" />
-            <element signature="e#12141#13113#0" />
-          </folding>
+        <state relative-caret-position="192">
+          <caret line="847" column="146" selection-start-line="847" selection-start-column="146" selection-end-line="847" selection-end-column="146" />
         </state>
       </provider>
     </entry>

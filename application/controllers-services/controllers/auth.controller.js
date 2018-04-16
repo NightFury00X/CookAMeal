@@ -491,7 +491,7 @@ let Order = {
             if (!result) {
                 return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to add delivery address.'}, res, CommonConfig.STATUS_CODE.CREATED)
             }
-            return ResponseHelpers.SetSuccessResponse({message: 'Delivery address added successfully.'}, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             next(error)
         }
@@ -516,9 +516,18 @@ let Order = {
             next(error)
         }
     },
-    GetMyOrders: async (req, res, next) => {
+    GetMyOrdersForCustomer: async (req, res, next) => {
         try {
-            console.log('Done')
+            const {id} = req.user
+            const orderDetails = await AuthService.Order.GetMyPendingOrdersOrdersForCustomer(id)
+            let convertedOrderDetailsJSON = JSON.parse(JSON.stringify(orderDetails))
+            for (let index in convertedOrderDetailsJSON) {
+                if (convertedOrderDetailsJSON.hasOwnProperty(index)) {
+                    const cookProfile = await CommonService.User.GetProfileIdByUserTypeId(convertedOrderDetailsJSON[index].cookId)
+                    convertedOrderDetailsJSON[index].cookProfile = cookProfile
+                }
+            }
+            return ResponseHelpers.SetSuccessResponse(convertedOrderDetailsJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }
@@ -537,25 +546,15 @@ let Order = {
     PrepareData: async (req, res, next) => {
         try {
             const clientToken = await gateway.clientToken.generate()
-            // const recipeId = req.value.params.id
-            // const recipeData = await CookService.Recipe.GetDeliveryFeesByRecipeId(recipeId)
-            // const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(recipeData.profileId)
             const prepareData = {
                 token: clientToken.clientToken
-                // RecipeDetails: {
-                //     costPerServing: parseFloat(recipeData.costPerServing),
-                //     availableServings: parseFloat(recipeData.availableServings),
-                //     deliveryFees: parseFloat(recipeData.deliveryFee),
-                //     currencySymbol: currencySymbol.currencySymbol
-                // },
-                // Tax: parseFloat(5)
             }
             return ResponseHelpers.SetSuccessResponse(prepareData, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
         }
     },
-    CreatePurchase: async (req, res, next) => {
+    CreatePurchaseOrderForCart: async (req, res, next) => {
         const {id} = req.user
         const trans = await db.sequelize.transaction()
         try {
@@ -571,16 +570,29 @@ let Order = {
                 pickUpTime
             } = req.body
 
-            // check deliver address is current address
-
             const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
-
-            let isCurrentAddress = false
-            const address = await CommonService.User.CheckAddressIsCurrentAddress(deliveryAddress, profile.id)
-            if (address) {
-                isCurrentAddress = true
+            const cart = await AuthService.Cart.CheckCartStatus(id, 1)
+            if (!cart) {
+                trans.rollback()
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
 
+            let address
+            let isCurrentAddress = false
+            const currentAddress = await CommonService.User.CheckAddressIsCurrentAddress(deliveryAddress, profile.id)
+            if (currentAddress) {
+                address = currentAddress.id
+                isCurrentAddress = true
+            } else {
+                const otherAddress = await CommonService.User.CheckAddressIsOtherAddress(deliveryAddress, profile.id)
+                if (otherAddress) {
+                    address = otherAddress.id
+                    isCurrentAddress = false
+                } else {
+                    trans.rollback()
+                    return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                }
+            }
             const paymentData = {
                 nonce: nonce,
                 amount: chargeAmount,
@@ -594,19 +606,59 @@ let Order = {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
-            const orderData = {
+            const taxes = 5
+            let maxDeliveryFees = 0
+            let totalPriceAmount = 0
+            const cartItemDetails = await AuthService.Cart.GetRecipeCartDetails(cart.id)
+            if (!cartItemDetails) {
+                return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
+            }
+            let convertedJSON = JSON.parse(JSON.stringify(cartItemDetails))
+            for (let outer in convertedJSON) {
+                if (convertedJSON.hasOwnProperty(outer)) {
+                    let covertedCartItems = JSON.parse(JSON.stringify(convertedJSON[outer].CartItems))
+                    let totalPrice = 0
+                    let tempMaxDeliverFees = 0
+                    for (let inner in covertedCartItems) {
+                        if (covertedCartItems.hasOwnProperty(inner)) {
+                            const recipeId = covertedCartItems[inner].recipeId
+                            const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+                            const category = await CommonService.GetCategoryById(recipeDetails.categoryId)
+                            let convertedRecipe = JSON.parse(JSON.stringify(recipeDetails))
+                            convertedRecipe.categoryName = category.name
+                            convertedJSON[outer].CartItems[inner].recipeDetails = convertedRecipe
+                            totalPrice += parseFloat(covertedCartItems[inner].price)
+                            if (parseFloat(convertedJSON[outer].CartItems[inner].recipeDetails.deliveryFee) > tempMaxDeliverFees) {
+                                tempMaxDeliverFees = convertedJSON[outer].CartItems[inner].recipeDetails.deliveryFee
+                            }
+                        }
+                    }
+                    maxDeliveryFees = tempMaxDeliverFees
+                    totalPriceAmount = totalPrice
+                }
+            }
+
+            const totalCharge = parseFloat((totalPriceAmount * 5 / 100) + totalPriceAmount) + parseFloat((parseInt(deliveryType) === 1 ? 0 : maxDeliveryFees))
+            if (parseFloat(chargeAmount) !== totalCharge) {
+                trans.rollback()
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+
+            let orderData = {
                 paymentGatwayId: paymentGatewayDetails.id,
-                orderType: 'food',
+                orderType: 'order-food',
                 specialInstruction: specialInstruction,
                 deliveryType: deliveryType,
-                deliveryFee: 50,
+                deliveryFee: maxDeliveryFees,
                 pickUpTime: pickUpTime,
-                taxes: 5,
-                totalAmount: 55,
+                taxes: taxes,
+                totalAmount: totalPriceAmount,
                 isCurrentAddress: isCurrentAddress,
+                isOrderFromCart: true,
                 cartId: cartId,
-                deliveredToCurrentAddressId: deliveryAddress,
-                deliveredToOtherAddressId: null,
+                cookId: cookId,
+                deliveredToCurrentAddressId: isCurrentAddress ? address : null,
+                deliveredToOtherAddressId: !isCurrentAddress ? address : null,
                 createdBy: id
             }
 
@@ -622,19 +674,221 @@ let Order = {
                     cartItemsToJson[index].costPerServing = costPerServing
                 }
             }
-            const orderDetailsData = await AuthService.Order.PlaceOrder(orderData, cartItemsToJson, trans)
+            const orderDetailsData = await AuthService.Order.PlaceOrderForCartItems(orderData, cartItemsToJson, trans)
             if (!orderDetailsData) {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
-            const cartUpdated = await AuthService.Cart.UpdateCartByCookIdAfterOrder(cartId, cookId, id)
+
+            const cartUpdated = await AuthService.Cart.UpdateCartByCookIdAfterOrder(cartId, cookId, trans)
             if (!cartUpdated) {
                 trans.rollback()
                 return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
             }
 
+            const successResultData = {
+                name: profile.fullName,
+                profileUrl: profile.profileUrl,
+                orderId: orderDetailsData.id
+            }
             trans.commit()
-            return ResponseHelpers.SetSuccessResponse(orderDetailsData, res, CommonConfig.STATUS_CODE.CREATED)
+            return ResponseHelpers.SetSuccessResponse(successResultData, res, CommonConfig.STATUS_CODE.CREATED)
+
+            // const userId = req.user.id
+            // const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
+            // const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+            // let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
+            // const {totalAmount, taxes, orderServings, deliveryFee, deliveryType} = orderData
+            // const valid = await AuthService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson, deliveryType)
+            // if (!valid) {
+            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            // }
+            // orderData.createdBy = userId
+            // const orderDetails = await AuthService.Order.PlaceOrder(orderData, recipesToJson, trans)
+            // if (!orderDetails) {
+            //     trans.rollback()
+            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            // }
+            // OId = orderDetails.id
+            // const orderId = orderDetails.id
+            // const paymentMethodNonce = orderData.paymentMethodNonce
+            // const checkOutDetails = await AuthService.Order.CheckOut(paymentMethodNonce, totalAmount)
+            // if (!checkOutDetails) {
+            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            // }
+            // console.log('Transaction Details: ', checkOutDetails)
+            // payment = true
+            // const transactionData = {
+            //     transactionId: checkOutDetails.transaction.id,
+            //     amount: checkOutDetails.transaction.amount,
+            //     discountAmount: checkOutDetails.transaction.discountAmount,
+            //     type: checkOutDetails.transaction.type,
+            //     paymentInstrumentType: checkOutDetails.transaction.paymentInstrumentType,
+            //     merchantAccountId: checkOutDetails.transaction.merchantAccountId,
+            //     taxAmount: checkOutDetails.transaction.taxAmount,
+            //     recurring: checkOutDetails.transaction.recurring,
+            //     orderId: orderId,
+            //     paidTo: checkOutDetails.transaction.merchantAccountId,
+            //     paidBy: userId,
+            //     status: checkOutDetails.transaction.status
+            // }
+            // TId = transactionData.transactionId
+            // const transactionDetails = await AuthService.Order.Transaction(transactionData, trans)
+            // if (!transactionDetails) {
+            //     trans.rollback()
+            //     return ResponseHelpers.SetSuccessResponse({
+            //         orderState: false,
+            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
+            //         orderId: OId,
+            //         transactionId: TId
+            //     }, res, CommonConfig.STATUS_CODE.OK)
+            // }
+            // flag = true
+            // const result = await AuthService.Order.UpdatePaymentStateAfterSuccess(orderId, trans)
+            // trans.commit()
+            // if (!result) {
+            //     return ResponseHelpers.SetSuccessResponse({
+            //         orderState: false,
+            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
+            //         orderId: orderId,
+            //         transactionId: transactionData.transactionId
+            //     }, res, CommonConfig.STATUS_CODE.OK)
+            // }
+            // return ResponseHelpers.SetSuccessResponse({
+            //     orderState: true,
+            //     paymentDetails: {
+            //         transactionId: transactionDetails.id,
+            //         amount: currencySymbol.currencySymbol + ' ' + parseFloat(transactionDetails.amount),
+            //         paymentMethod: transactionDetails.paymentInstrumentType,
+            //         merchantAccountId: transactionDetails.merchantAccountId
+            //     },
+            //     orderDetails: {
+            //         id: orderDetails.id,
+            //         orderDate: orderDetails.createdAt,
+            //         amount: currencySymbol.currencySymbol + ' ' + parseFloat(orderDetails.totalAmount)
+            //     },
+            //     Message: CommonConfig.ERRORS.ORDER.SUCCESS
+            // }, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            trans.rollback()
+            next(error)
+            // if (!flag && !payment) {
+            //     trans.rollback()
+            //     next(error)
+            // } else {
+            //     return ResponseHelpers.SetSuccessResponse({
+            //         orderState: false,
+            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
+            //         orderId: OId,
+            //         transactionId: TId
+            //     }, res, CommonConfig.STATUS_CODE.CREATED)
+            // }
+        }
+    },
+    CreatePurchaseOrderForRecipe: async (req, res, next) => {
+        const {id} = req.user
+        const trans = await db.sequelize.transaction()
+        try {
+            const {
+                nonce,
+                chargeAmount,
+                recipeId,
+                noOfServing,
+                spiceLevel,
+                paymentType,
+                deliveryAddress,
+                specialInstruction,
+                deliveryType,
+                pickUpTime
+            } = req.body
+
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+
+            let address
+            let isCurrentAddress = false
+            const currentAddress = await CommonService.User.CheckAddressIsCurrentAddress(deliveryAddress, profile.id)
+            if (currentAddress) {
+                address = currentAddress.id
+                isCurrentAddress = true
+            } else {
+                const otherAddress = await CommonService.User.CheckAddressIsOtherAddress(deliveryAddress, profile.id)
+                if (otherAddress) {
+                    address = otherAddress.id
+                    isCurrentAddress = false
+                } else {
+                    trans.rollback()
+                    return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                }
+            }
+
+            const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+            if (!recipeDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+
+            const paymentData = {
+                nonce: nonce,
+                amount: chargeAmount,
+                paymentType: paymentType,
+                cookId: recipeDetails.profileId,
+                createdBy: id
+            }
+
+            const paymentGatewayDetails = await AuthService.Order.CreateAndHoldPayment(paymentData, trans)
+            if (!paymentGatewayDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+            const taxes = 5
+
+            let totalPrice = parseFloat(recipeDetails.costPerServing) * parseInt(noOfServing)
+            let maxDeliveryFees = parseFloat(recipeDetails.deliveryFee)
+
+            const totalCharge = parseFloat((totalPrice * 5 / 100) + totalPrice) + parseFloat((parseInt(deliveryType) === 1 ? 0 : maxDeliveryFees))
+
+            if (parseFloat(chargeAmount) !== totalCharge) {
+                trans.rollback()
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+
+            let orderData = {
+                paymentGatwayId: paymentGatewayDetails.id,
+                orderType: 'order-food',
+                specialInstruction: specialInstruction,
+                deliveryType: deliveryType,
+                deliveryFee: maxDeliveryFees,
+                pickUpTime: pickUpTime,
+                taxes: taxes,
+                isOrderFromCart: false,
+                cookId: recipeDetails.profileId,
+                totalAmount: totalCharge,
+                isCurrentAddress: isCurrentAddress,
+                deliveredToCurrentAddressId: isCurrentAddress ? address : null,
+                deliveredToOtherAddressId: !isCurrentAddress ? address : null,
+                createdBy: id
+            }
+
+            const orderItemData = {
+                noOfServing: noOfServing,
+                costPerServing: recipeDetails.costPerServing,
+                spiceLevel: spiceLevel,
+                recipeId: recipeId
+            }
+
+            const orderDetailsData = await AuthService.Order.PlaceOrderForRecipe(orderData, orderItemData, trans)
+            if (!orderDetailsData) {
+                trans.rollback()
+                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+            }
+
+            const successResultData = {
+                name: profile.fullName,
+                profileUrl: profile.profileUrl,
+                orderId: orderDetailsData.id
+            }
+            trans.commit()
+            return ResponseHelpers.SetSuccessResponse(successResultData, res, CommonConfig.STATUS_CODE.CREATED)
 
             // const userId = req.user.id
             // const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
