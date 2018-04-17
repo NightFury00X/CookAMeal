@@ -30,7 +30,7 @@ module.exports = {
         },
         SetSuccessErrorResponse: function (data, res, statusCode) {
             let response = {
-                success: true,
+                success: false,
                 data: [],
                 error: data,
                 status: statusCode

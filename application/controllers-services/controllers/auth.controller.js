@@ -532,6 +532,37 @@ let Order = {
             next(error)
         }
     },
+    GetOrderDetailsByOrderId: async (req, res, next) => {
+        try {
+            const {id} = req.user
+            const {orderId} = req.params
+            const orderDetails = await AuthService.Order.GetOrderDetailsById(orderId, id)
+
+            let convertedOrderDetailsJSON = JSON.parse(JSON.stringify(orderDetails))
+            convertedOrderDetailsJSON.cookProfile = await CommonService.User.GetProfileIdByUserTypeId(convertedOrderDetailsJSON.cookId)
+
+            const orderItems = await AuthService.Order.GetOrderItemsByOrderId(orderId)
+            let convertedOrderItemsJSON = JSON.parse(JSON.stringify(orderItems))
+
+            for (let index in convertedOrderItemsJSON) {
+                if (convertedOrderItemsJSON.hasOwnProperty(index)) {
+                    const recipeDetails = await CommonService.Recipe.FindRecipeForOrderItemById(convertedOrderItemsJSON[index].recipeId)
+                    convertedOrderItemsJSON[index].id = recipeDetails.id
+                    convertedOrderItemsJSON[index].dishName = recipeDetails.dishName
+                    convertedOrderItemsJSON[index].currencySymbol = recipeDetails.currencySymbol
+                    if (recipeDetails.MediaObjects.length > 0) {
+                        convertedOrderItemsJSON[index].imageUrl = recipeDetails.MediaObjects[0].imageUrl
+                    } else {
+                        convertedOrderItemsJSON[index].imageUrl = null
+                    }
+                }
+            }
+            convertedOrderDetailsJSON.recipeDetails = convertedOrderItemsJSON
+            return ResponseHelpers.SetSuccessResponse(convertedOrderDetailsJSON, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            next(error)
+        }
+    },
     GetClientToken: async (req, res, next) => {
         try {
             const clientToken = await gateway.clientToken.generate()
@@ -574,7 +605,7 @@ let Order = {
             const cart = await AuthService.Cart.CheckCartStatus(id, 1)
             if (!cart) {
                 trans.rollback()
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
 
             let address
@@ -590,7 +621,7 @@ let Order = {
                     isCurrentAddress = false
                 } else {
                     trans.rollback()
-                    return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                    return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
                 }
             }
             const paymentData = {
@@ -604,14 +635,14 @@ let Order = {
             const paymentGatewayDetails = await AuthService.Order.CreateAndHoldPayment(paymentData, trans)
             if (!paymentGatewayDetails) {
                 trans.rollback()
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
             const taxes = 5
             let maxDeliveryFees = 0
             let totalPriceAmount = 0
             const cartItemDetails = await AuthService.Cart.GetRecipeCartDetails(cart.id)
             if (!cartItemDetails) {
-                return ResponseHelpers.SetSuccessErrorResponse(null, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
             let convertedJSON = JSON.parse(JSON.stringify(cartItemDetails))
             for (let outer in convertedJSON) {
@@ -639,9 +670,13 @@ let Order = {
             }
 
             const totalCharge = parseFloat((totalPriceAmount * 5 / 100) + totalPriceAmount) + parseFloat((parseInt(deliveryType) === 1 ? 0 : maxDeliveryFees))
+
+            console.log('total chargeAmount: ', chargeAmount)
+            console.log('total charge: ', totalCharge)
+
             if (parseFloat(chargeAmount) !== totalCharge) {
                 trans.rollback()
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
 
             let orderData = {
@@ -817,14 +852,14 @@ let Order = {
                     isCurrentAddress = false
                 } else {
                     trans.rollback()
-                    return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                    return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
                 }
             }
 
             const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
             if (!recipeDetails) {
                 trans.rollback()
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
 
             const paymentData = {
@@ -838,7 +873,7 @@ let Order = {
             const paymentGatewayDetails = await AuthService.Order.CreateAndHoldPayment(paymentData, trans)
             if (!paymentGatewayDetails) {
                 trans.rollback()
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
             const taxes = 5
 
@@ -849,7 +884,7 @@ let Order = {
 
             if (parseFloat(chargeAmount) !== totalCharge) {
                 trans.rollback()
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
 
             let orderData = {
@@ -879,7 +914,7 @@ let Order = {
             const orderDetailsData = await AuthService.Order.PlaceOrderForRecipe(orderData, orderItemData, trans)
             if (!orderDetailsData) {
                 trans.rollback()
-                return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
 
             const successResultData = {

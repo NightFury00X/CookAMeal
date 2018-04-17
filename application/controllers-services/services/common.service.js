@@ -738,6 +738,24 @@ CommonService.prototype.Recipe = {
             throw (error)
         }
     },
+    FindRecipeForOrderItemById: async (recipeId) => {
+        try {
+            return await db.Recipe.findOne({
+                attributes: ['id', 'dishName', 'currencySymbol'],
+                where: {
+                    id: {
+                        [Op.eq]: recipeId
+                    }
+                },
+                include: [{
+                    model: db.MediaObject,
+                    attributes: ['id', 'imageUrl']
+                }]
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     FindRecipeById: async (recipeId) => {
         try {
             return await db.Profile.findOne({

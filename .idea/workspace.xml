@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="08eee238-778e-4fa6-9853-83158f433a20" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers-services/services/common.service.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configurations/helpers/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/configurations/helpers/helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/auth/auth-routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth/auth-routes.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,30 +24,77 @@
     <favorites_list name="Cook-A-Meal" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
+      <file leaf-file-name="cook.routes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/cook/cook.routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="649">
+              <caret line="53" column="48" selection-start-line="53" selection-start-column="48" selection-end-line="53" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common-routes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="93" column="38" selection-start-line="93" selection-start-column="38" selection-end-line="93" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="679" column="43" lean-forward="true" selection-start-line="679" selection-start-column="43" selection-end-line="679" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="740" column="4" selection-start-line="740" selection-start-column="4" selection-end-line="740" selection-end-column="4" />
+              <folding>
+                <element signature="e#23076#24504#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="helper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/configurations/helpers/helper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="auth-service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="258">
+              <caret line="470" column="92" selection-start-line="470" selection-start-column="92" selection-end-line="470" selection-end-column="92" />
+              <folding>
+                <element signature="e#7954#8329#0" />
+                <element signature="e#8390#8951#0" />
+                <element signature="e#8999#9460#0" />
+                <element signature="e#9521#9986#0" />
+                <element signature="e#10085#10920#0" />
+                <element signature="e#10926#10992#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="auth-routes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="114" column="34" selection-start-line="114" selection-start-column="34" selection-end-line="114" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auth.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="1081" column="54" lean-forward="true" selection-start-line="1081" selection-start-column="54" selection-end-line="1081" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="helper.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/configurations/helpers/helper.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="26" column="40" lean-forward="true" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
+            <state relative-caret-position="254">
+              <caret line="105" column="37" lean-forward="true" selection-start-line="105" selection-start-column="37" selection-end-line="105" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -52,9 +103,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>AVG</find>
-      <find>FindRecipeDetailsForCartById</find>
-      <find>curr</find>
       <find>favorite/recipe</find>
       <find>currencySymbol</find>
       <find>delete</find>
@@ -82,6 +130,9 @@
       <find>order</find>
       <find>GetMyOrders</find>
       <find>cart/recipe</find>
+      <find>db.AddToCart</find>
+      <find>SetSuccessErrorResponse</find>
+      <find>my-order</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -164,14 +215,14 @@
         <option value="$PROJECT_DIR$/application/modals/address.js" />
         <option value="$PROJECT_DIR$/application/modals/payment-gateway.js" />
         <option value="$PROJECT_DIR$/application/modals/cart-items.js" />
-        <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
         <option value="$PROJECT_DIR$/application/modals/add-to-cart.js" />
-        <option value="$PROJECT_DIR$/routes/auth/auth-routes.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
         <option value="$PROJECT_DIR$/application/modals/order.js" />
-        <option value="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
+        <option value="$PROJECT_DIR$/routes/common/common-routes.js" />
         <option value="$PROJECT_DIR$/configurations/helpers/helper.js" />
+        <option value="$PROJECT_DIR$/routes/auth/auth-routes.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/common.service.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/services/auth-service.js" />
+        <option value="$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js" />
       </list>
     </option>
   </component>
@@ -245,7 +296,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -297,6 +347,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -524,14 +575,8 @@
       <workItem from="1523509717125" duration="12581000" />
       <workItem from="1523596317923" duration="14439000" />
       <workItem from="1523680399330" duration="17103000" />
-      <workItem from="1523853650023" duration="20989000" />
-    </task>
-    <task id="LOCAL-00539" summary="Add new API Update Profile.">
-      <created>1521198424163</created>
-      <option name="number" value="00539" />
-      <option name="presentableId" value="LOCAL-00539" />
-      <option name="project" value="LOCAL" />
-      <updated>1521198424163</updated>
+      <workItem from="1523853650023" duration="21397000" />
+      <workItem from="1523938066266" duration="12695000" />
     </task>
     <task id="LOCAL-00540" summary="Add new API Update Profile.">
       <created>1521203315130</created>
@@ -869,11 +914,18 @@
       <option name="project" value="LOCAL" />
       <updated>1523887331141</updated>
     </task>
-    <option name="localTasksCounter" value="588" />
+    <task id="LOCAL-00588" summary="Add new API Update Profile.">
+      <created>1523888460202</created>
+      <option name="number" value="00588" />
+      <option name="presentableId" value="LOCAL-00588" />
+      <option name="project" value="LOCAL" />
+      <updated>1523888460202</updated>
+    </task>
+    <option name="localTasksCounter" value="589" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1464587000" />
+    <option name="totallyTimeSpent" value="1477690000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -894,31 +946,31 @@
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.51664144" side_tool="true" weight="0.42546245" />
       <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4969743" weight="0.32790446" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.43634385" />
-      <window_info anchor="bottom" x="-83" y="-14" width="1366" height="705" id="Terminal" order="20" sideWeight="0.50053304" side_tool="true" visible="true" weight="0.3188248" />
+      <window_info anchor="bottom" x="-83" y="-14" width="1366" height="705" id="Terminal" order="20" sideWeight="0.50053304" side_tool="true" visible="true" weight="0.3547334" />
       <window_info anchor="right" auto_hide="true" id="FAQ Robot" internal_type="SLIDING" order="3" type="SLIDING" weight="0.32980332" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4937833" visible="true" weight="0.2249467" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4937833" visible="true" weight="0.22707888" />
       <window_info id="Project Explorer" order="2" />
       <window_info id="Job Explorer" order="3" weight="0.32980332" />
       <window_info anchor="bottom" id="Docker" order="16" show_stripe_button="false" />
       <window_info anchor="bottom" id="Console" order="17" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49573562" weight="0.39630836" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24962178" />
       <window_info id="Favorites" order="5" sideWeight="0.5062167" side_tool="true" weight="0.2675906" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.39717084" />
-      <window_info anchor="bottom" id="SFDX" order="7" weight="0.32894737" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.24958949" />
       <window_info anchor="bottom" id="Thumbnails" order="11" weight="0.32894737" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info id="npm" order="4" side_tool="true" />
-      <window_info anchor="bottom" id="Execute Anonymous" order="14" weight="0.32894737" />
-      <window_info anchor="bottom" id="Log Manager" order="18" weight="0.32894737" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.24958949" />
       <window_info anchor="bottom" id="Salesforce" order="19" weight="0.32894737" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="TypeScript" order="9" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Log Manager" order="18" weight="0.32894737" />
+      <window_info anchor="bottom" id="SFDX" order="7" weight="0.32894737" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="npm" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49573562" weight="0.39630836" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Execute Anonymous" order="14" weight="0.32894737" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="MaxCompute Console" order="15" />
     </layout>
     <layout-to-restore>
@@ -926,12 +978,12 @@
       <window_info anchor="bottom" id="Console" order="17" />
       <window_info anchor="bottom" id="DB Execution Console" order="8" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.24958949" />
-      <window_info anchor="bottom" id="Salesforce" order="19" weight="0.32894737" />
+      <window_info id="Project Explorer" order="2" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.55500823" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="Project Explorer" order="2" />
+      <window_info id="DB Browser" order="6" />
       <window_info anchor="bottom" id="Log Manager" order="18" weight="0.32894737" />
       <window_info anchor="bottom" id="SFDX" order="7" weight="0.32894737" />
       <window_info id="Favorites" order="5" side_tool="true" />
@@ -941,10 +993,10 @@
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.51664144" side_tool="true" weight="0.7389163" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21055438" />
-      <window_info id="DB Browser" order="6" />
+      <window_info anchor="right" auto_hide="true" id="FAQ Robot" internal_type="SLIDING" order="3" type="SLIDING" weight="0.32980332" />
       <window_info id="npm" order="4" side_tool="true" />
       <window_info id="Job Explorer" order="3" weight="0.32980332" />
-      <window_info anchor="right" auto_hide="true" id="FAQ Robot" internal_type="SLIDING" order="3" type="SLIDING" weight="0.32980332" />
+      <window_info anchor="bottom" id="Salesforce" order="19" weight="0.32894737" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Execute Anonymous" order="14" weight="0.32894737" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1171,13 +1223,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/cook/cook.routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="52" column="31" selection-start-line="52" selection-start-column="27" selection-end-line="52" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/cook.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="451">
@@ -1347,24 +1392,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
+    <entry file="file://$PROJECT_DIR$/routes/cook/cook.routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
+        <state relative-caret-position="649">
+          <caret line="53" column="48" selection-start-line="53" selection-start-column="48" selection-end-line="53" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configurations/helpers/helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="105" column="37" lean-forward="true" selection-start-line="105" selection-start-column="37" selection-end-line="105" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/common.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="611" column="4" selection-start-line="611" selection-start-column="4" selection-end-line="611" selection-end-column="4" />
+        <state relative-caret-position="192">
+          <caret line="740" column="4" selection-start-line="740" selection-start-column="4" selection-end-line="740" selection-end-column="4" />
+          <folding>
+            <element signature="e#23076#24504#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/services/auth-service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="443" column="37" lean-forward="true" selection-start-line="443" selection-start-column="37" selection-end-line="443" selection-end-column="37" />
+        <state relative-caret-position="258">
+          <caret line="470" column="92" selection-start-line="470" selection-start-column="92" selection-end-line="470" selection-end-column="92" />
           <folding>
             <element signature="e#7954#8329#0" />
             <element signature="e#8390#8951#0" />
@@ -1372,33 +1434,21 @@
             <element signature="e#9521#9986#0" />
             <element signature="e#10085#10920#0" />
             <element signature="e#10926#10992#0" />
-            <element signature="e#12140#12303#0" />
-            <element signature="e#12362#13334#0" />
-            <element signature="e#13396#14230#0" />
-            <element signature="e#14283#14457#0" />
-            <element signature="e#14521#14961#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/auth/auth-routes.js">
+    <entry file="file://$PROJECT_DIR$/routes/common/common-routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="114" column="34" selection-start-line="114" selection-start-column="34" selection-end-line="114" selection-end-column="34" />
+        <state relative-caret-position="186">
+          <caret line="93" column="38" selection-start-line="93" selection-start-column="38" selection-end-line="93" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers-services/controllers/auth.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="1081" column="54" lean-forward="true" selection-start-line="1081" selection-start-column="54" selection-end-line="1081" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configurations/helpers/helper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="26" column="40" lean-forward="true" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
+        <state relative-caret-position="357">
+          <caret line="679" column="43" lean-forward="true" selection-start-line="679" selection-start-column="43" selection-end-line="679" selection-end-column="43" />
         </state>
       </provider>
     </entry>

@@ -101,6 +101,10 @@ router.get('/order/prepare-data/:id',
 router.get('/my-order/customer',
     AuthController.Order.GetMyOrdersForCustomer)
 
+router.get('/my-order/customer/:orderId',
+    ValidateParams(ParamSchemas.idSchema, 'orderId'),
+    AuthController.Order.GetOrderDetailsByOrderId)
+
 router.post('/cart/recipe',
     RequestMethodsMiddlewares.ApplicationJsonData,
     ValidateBody(BodySchemas.AddToCart),

@@ -449,6 +449,36 @@ AuthService.prototype.Order = {
             throw (error)
         }
     },
+    GetOrderDetailsById: async (orderId, createdBy) => {
+        try {
+            return await db.Order.findOne({
+                attributes: ['id', 'totalAmount', 'taxes', 'specialInstruction', 'pickUpTime', 'deliveryFee', 'deliveryType', 'orderType', 'cookId', 'createdBy'],
+                where: {
+                    [Op.and]: [{
+                        id: `${orderId}`,
+                        createdBy: `${createdBy}`,
+                        orderState: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetOrderItemsByOrderId: async (orderId) => {
+        try {
+            return await db.OrderItem.findAll({
+                attributes: ['id', 'costPerServing', 'noOfServing', 'spiceLevel', 'recipeId'],
+                where: {
+                    orderId: {
+                        [Op.eq]: orderId
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     Transaction: async (transactionData, trans) => {
         try {
             return await db.TransactionDetail.create(transactionData, {transaction: trans})
@@ -899,9 +929,10 @@ AuthService.prototype.Cart = {
         try {
             return await db.AddToCart.findOne({
                 where: [{
-                    createdBy: {
-                        [Op.eq]: `${createdBy}`
-                    }
+                    [Op.and]: [{
+                        createdBy: `${createdBy}`,
+                        status: 0
+                    }]
                 }],
                 include: [{
                     model: db.CartItem,
