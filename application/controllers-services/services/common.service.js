@@ -499,11 +499,26 @@ CommonService.prototype.User = {
             throw (error)
         }
     },
+    GetCurrencyCodeProfileId:
+        async (profileId) => {
+            try {
+                return await db.Address.findOne({
+                    attributes: ['currencySymbol', 'currencyCode'],
+                    where: {
+                        profileId: {
+                            [Op.eq]: profileId
+                        }
+                    }
+                })
+            } catch (error) {
+                throw (error)
+            }
+        },
     GetCurrencySymbolByProfileId:
         async (profileId) => {
             try {
                 return await db.Address.findOne({
-                    attributes: ['currencySymbol'],
+                    attributes: ['currencySymbol', 'currencyCode'],
                     where: {
                         profileId: {
                             [Op.eq]: profileId
@@ -635,6 +650,19 @@ CommonService.prototype.User = {
 }
 
 CommonService.prototype.Recipe = {
+    GetProfileIdByRecipeId: async (recipeId) => {
+        try {
+            return await db.Recipe.findOne({
+                where: {
+                    id: {
+                        [Op.eq]: `${recipeId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     FindMaxDeliverFeesForcart: async (cartId) => {
         try {
             return await db.CartItem.findAll()

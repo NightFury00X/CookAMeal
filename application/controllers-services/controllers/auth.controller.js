@@ -3,7 +3,7 @@ const {ResponseHelpers} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const AuthService = require('../services/auth-service')
 const CommonService = require('../services/common.service')
-// const CookService = require('../services/cook.service')
+const CookService = require('../services/cook.service')
 const braintree = require('braintree')
 const config = require('../../../configurations/main')
 const gateway = braintree.connect({
@@ -516,15 +516,23 @@ let Order = {
             next(error)
         }
     },
-    GetMyOrdersForCustomer: async (req, res, next) => {
+    GetMyOrders: async (req, res, next) => {
         try {
-            const {id} = req.user
-            const orderDetails = await AuthService.Order.GetMyPendingOrdersOrdersForCustomer(id)
+            const {id, userRole} = req.user
+            let orderDetails
+            switch (userRole) {
+                case 1:
+                    orderDetails = await AuthService.Order.GetMyPendingOrdersForCook(id)
+                    break
+                case 2:
+                    orderDetails = await AuthService.Order.GetMyPendingOrdersForCustomer(id)
+                    break
+            }
             let convertedOrderDetailsJSON = JSON.parse(JSON.stringify(orderDetails))
             for (let index in convertedOrderDetailsJSON) {
                 if (convertedOrderDetailsJSON.hasOwnProperty(index)) {
-                    const cookProfile = await CommonService.User.GetProfileIdByUserTypeId(convertedOrderDetailsJSON[index].cookId)
-                    convertedOrderDetailsJSON[index].cookProfile = cookProfile
+                    const profileId = userRole === 1 ? convertedOrderDetailsJSON[index].createdBy : convertedOrderDetailsJSON[index].cookId
+                    convertedOrderDetailsJSON[index].cookProfile = await CommonService.User.GetProfileIdByUserTypeId(profileId)
                 }
             }
             return ResponseHelpers.SetSuccessResponse(convertedOrderDetailsJSON, res, CommonConfig.STATUS_CODE.OK)
@@ -534,13 +542,32 @@ let Order = {
     },
     GetOrderDetailsByOrderId: async (req, res, next) => {
         try {
-            const {id} = req.user
+            const {id, userRole} = req.user
             const {orderId} = req.params
-            const orderDetails = await AuthService.Order.GetOrderDetailsById(orderId, id)
+
+            let orderDetails
+            switch (userRole) {
+                case 1:
+                    orderDetails = await AuthService.Order.GetOrderDetailsForCookByOrderId(orderId, id)
+                    break
+                case 2:
+                    orderDetails = await AuthService.Order.GetOrderDetailsForCustomerByOrderId(orderId, id)
+                    break
+            }
 
             let convertedOrderDetailsJSON = JSON.parse(JSON.stringify(orderDetails))
-            convertedOrderDetailsJSON.cookProfile = await CommonService.User.GetProfileIdByUserTypeId(convertedOrderDetailsJSON.cookId)
+            const profileId = userRole === 1 ? convertedOrderDetailsJSON.createdBy : convertedOrderDetailsJSON.cookId
+            convertedOrderDetailsJSON.profile = await CommonService.User.GetProfileIdByUserTypeId(profileId)
 
+            // check delivery address
+            let deliveryAddress
+            const customerDetails = await CommonService.User.GetProfileIdByUserTypeId(convertedOrderDetailsJSON.createdBy)
+            if (convertedOrderDetailsJSON.deliveredToCurrentAddressId) {
+                deliveryAddress = await AuthService.Order.GetCurrentAddressDetailsByAddressId(convertedOrderDetailsJSON.deliveredToCurrentAddressId, customerDetails.createdBy)
+            } else if (convertedOrderDetailsJSON.deliveredToOtherAddressId) {
+                deliveryAddress = await AuthService.Order.GetOtherAddressDetailsByAddressId(convertedOrderDetailsJSON.deliveredToOtherAddressId, customerDetails.createdBy)
+            }
+            convertedOrderDetailsJSON.deliveryAddress = deliveryAddress
             const orderItems = await AuthService.Order.GetOrderItemsByOrderId(orderId)
             let convertedOrderItemsJSON = JSON.parse(JSON.stringify(orderItems))
 
@@ -558,6 +585,7 @@ let Order = {
                 }
             }
             convertedOrderDetailsJSON.recipeDetails = convertedOrderItemsJSON
+            convertedOrderDetailsJSON.userRole = userRole
             return ResponseHelpers.SetSuccessResponse(convertedOrderDetailsJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -565,9 +593,24 @@ let Order = {
     },
     GetClientToken: async (req, res, next) => {
         try {
+            const {orderType, id} = req.params
+            let cookProfile
+            let profileId
+            switch (parseInt(orderType)) {
+                case 1:
+                    cookProfile = await CommonService.User.GetProfileIdByUserTypeId(id)
+                    profileId = cookProfile.id
+                    break
+                case 2:
+                    cookProfile = await CommonService.Recipe.GetProfileIdByRecipeId(id)
+                    profileId = cookProfile.profileId
+                    break
+            }
+            const currencyDetails = await CommonService.User.GetCurrencyCodeProfileId(profileId)
             const clientToken = await gateway.clientToken.generate()
             const clientTokenDetails = {
-                token: clientToken.clientToken
+                token: clientToken.clientToken,
+                currencyCode: currencyDetails.currencyCode
             }
             return ResponseHelpers.SetSuccessResponse(clientTokenDetails, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
@@ -671,9 +714,6 @@ let Order = {
 
             const totalCharge = parseFloat((totalPriceAmount * 5 / 100) + totalPriceAmount) + parseFloat((parseInt(deliveryType) === 1 ? 0 : maxDeliveryFees))
 
-            console.log('total chargeAmount: ', chargeAmount)
-            console.log('total charge: ', totalCharge)
-
             if (parseFloat(chargeAmount) !== totalCharge) {
                 trans.rollback()
                 return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
@@ -684,7 +724,7 @@ let Order = {
                 orderType: 'order-food',
                 specialInstruction: specialInstruction,
                 deliveryType: deliveryType,
-                deliveryFee: maxDeliveryFees,
+                deliveryFee: parseInt(deliveryType) === 1 ? 0 : maxDeliveryFees,
                 pickUpTime: pickUpTime,
                 taxes: taxes,
                 totalAmount: totalPriceAmount,
@@ -892,7 +932,7 @@ let Order = {
                 orderType: 'order-food',
                 specialInstruction: specialInstruction,
                 deliveryType: deliveryType,
-                deliveryFee: maxDeliveryFees,
+                deliveryFee: parseInt(deliveryType) === 1 ? 0 : maxDeliveryFees,
                 pickUpTime: pickUpTime,
                 taxes: taxes,
                 isOrderFromCart: false,
@@ -1014,6 +1054,33 @@ let Order = {
             //         transactionId: TId
             //     }, res, CommonConfig.STATUS_CODE.CREATED)
             // }
+        }
+    },
+    CancelOrder: async (req, res, next) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const {id} = req.user
+            const {orderId} = req.params
+            const oId = req.body.orderId
+            console.log('order id: ', orderId)
+            console.log('id: ', id)
+            const orderDetails = await CookService.Order.GetOrderDetailsForCustomerByOrderIdAndCustomerId(orderId, id)
+            const paymentDetails = await CookService.Order.GetPaymentGatewayDetailsForCancellationById(orderDetails.paymentGatwayId, orderDetails.cookId, orderDetails.createdBy)
+            const cancelOrderDetails = await AuthService.Order.CancelOrder(orderDetails.id, id, trans)
+            if (!cancelOrderDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be cancel.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const cancelpaymentDetails = await AuthService.Order.CancelPaymentDetailsOrder(paymentDetails.id, id, trans)
+            if (!cancelpaymentDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be cancel.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            trans.commit()
+            return ResponseHelpers.SetSuccessResponse({message: 'You have successfully cancelled your order.'}, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            trans.rollback()
+            next(error)
         }
     }
 }

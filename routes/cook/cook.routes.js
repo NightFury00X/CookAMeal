@@ -54,4 +54,13 @@ router.get('/availability/:date',
     ValidateParams(ParamSchemas.idSchema, 'date'),
     CookController.Availability.CookAvailabilityListByDate)
 
+router.put('/accept-order/:orderId',
+    ValidateParams(ParamSchemas.idSchema, 'orderId'),
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    CookController.Availability.AceceptOrder)
+
+router.put('/reject-order/:orderId',
+    ValidateParams(ParamSchemas.idSchema, 'orderId'),
+    CookController.Availability.RejectOrder)
+
 module.exports = router

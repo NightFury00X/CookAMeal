@@ -29,12 +29,14 @@ CommonConfig.USER_TYPE = {
 CommonConfig.ORDER = {
     ORDER_STATE: {
         PENDING: 0,
-        COMPLETE: 1,
-        CANCEL: 2
+        PROCESSING: 1,
+        COMPLETE: 2,
+        CANCELLED: 3
     },
     PAYMENT_STATE: {
         PENDING: 0,
-        COMPLETE: 1
+        COMPLETE: 1,
+        CANCELLED: 2
     },
     ACCEPTED: true,
     NOT_ACCEPTED: false

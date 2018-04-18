@@ -86,15 +86,17 @@ router.get('/order/order-summary/:id',
     ValidateParams(ParamSchemas.idSchema, 'id'),
     CommonController.Order.GetOrderSummaryDetailsByRecipeId)
 
-router.get('/order/client-token',
+router.get('/order/client-token/:orderType/:id',
+    ValidateParams(ParamSchemas.idSchema, 'orderType'),
+    ValidateParams(ParamSchemas.idSchema, 'id'),
     AuthController.Order.GetClientToken)
 
-router.post('/order/create-purchase-cart',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    AuthController.Order.CreatePurchaseOrderForCart)
-
-router.post('/order/create-purchase-recipe',
-    RequestMethodsMiddlewares.ApplicationJsonData,
-    AuthController.Order.CreatePurchaseOrderForRecipe)
+// router.post('/order/create-purchase-cart',
+//     RequestMethodsMiddlewares.ApplicationJsonData,
+//     AuthController.Order.CreatePurchaseOrderForCart)
+//
+// router.post('/order/create-purchase-recipe',
+//     RequestMethodsMiddlewares.ApplicationJsonData,
+//     AuthController.Order.CreatePurchaseOrderForRecipe)
 
 module.exports = router

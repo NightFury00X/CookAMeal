@@ -3,7 +3,7 @@ const CookService = require('../services/cook.service')
 const AuthService = require('../services/auth-service')
 const CommonService = require('../services/common.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
-
+const db = require('../../modals')
 const Recipe = {
     GetAllRecipeBySubCategory: async (req, res, next) => {
         try {
@@ -211,6 +211,110 @@ const Availability = {
             }
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
+            next(error)
+        }
+    },
+    AceceptOrder: async (req, res, next) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const {id} = req.user
+            const {orderId} = req.params
+
+            const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
+
+            const orderDetails = await CookService.Order.GetOrderDetailsById(orderId, id)
+            const paymentDetails = await CookService.Order.GetPaymentGatewayDetailsById(orderDetails.paymentGatwayId, id, orderDetails.createdBy)
+
+            const currencyData = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+            const cancelOrderDetails = await CookService.Order.ApprovedOrder(orderDetails.id, id, orderDetails.createdBy, trans)
+            if (!cancelOrderDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const cancelpaymentDetails = await CookService.Order.ApprovedPaymentDetailsOrder(paymentDetails.id, id, orderDetails.createdBy, trans)
+            if (!cancelpaymentDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+
+            const checkOutDetails = await CookService.Order.CheckOut(paymentDetails.nonce, orderDetails.id, paymentDetails.amount)
+            if (!checkOutDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+
+            const transactionData = {
+                transactionId: checkOutDetails.transaction.id,
+                amount: checkOutDetails.transaction.amount,
+                discountAmount: checkOutDetails.transaction.discountAmount,
+                type: checkOutDetails.transaction.type,
+                paymentInstrumentType: checkOutDetails.transaction.paymentInstrumentType,
+                merchantAccountId: checkOutDetails.transaction.merchantAccountId,
+                taxAmount: checkOutDetails.transaction.taxAmount,
+                recurring: checkOutDetails.transaction.recurring,
+                orderId: orderDetails.id,
+                paidTo: checkOutDetails.transaction.merchantAccountId,
+                paidBy: orderDetails.createdBy,
+                status: checkOutDetails.transaction.status
+            }
+            const TId = transactionData.transactionId
+            const transactionDetails = await CookService.Order.Transaction(transactionData, trans)
+            if (!transactionDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({
+                    orderState: false,
+                    message: CommonConfig.ERRORS.ORDER.FAILURE,
+                    orderId: OId,
+                    transactionId: TId
+                }, res, CommonConfig.STATUS_CODE.OK)
+            }
+            trans.commit()
+            return ResponseHelpers.SetSuccessResponse({
+                orderState: true,
+                paymentDetails: {
+                    transactionId: transactionDetails.id,
+                    amount: currencyData.currencySymbol + ' ' + parseFloat(transactionDetails.amount),
+                    paymentMethod: transactionDetails.paymentInstrumentType,
+                    merchantAccountId: transactionDetails.merchantAccountId
+                },
+                orderDetails: {
+                    id: orderDetails.id,
+                    orderDate: orderDetails.createdAt,
+                    amount: currencyData.currencySymbol + ' ' + parseFloat(orderDetails.totalAmount)
+                },
+                Message: CommonConfig.ERRORS.ORDER.SUCCESS
+            }, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            trans.rollback()
+            next(error)
+        }
+    },
+    RejectOrder: async (req, res, next) => {
+        const trans = await db.sequelize.transaction()
+        try {
+            const {id} = req.user
+            const {orderId} = req.params
+            let datePart = date.split('-')
+
+            // get order details
+
+            const orderDetails = await CookService.Order.GetOrderDetailsById(orderId, id)
+            const paymentDetails = await CookService.Order.GetPaymentGatewayDetailsById(orderDetails.paymentGatwayId, id, orderDetails.createdBy)
+
+            const cancelOrderDetails = await AuthService.Order.ApprovedOrder(orderDetails.id, id, orderDetails.createdBy, trans)
+            if (!cancelOrderDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const cancelpaymentDetails = await AuthService.Order.CanceApprovedPaymentDetailsOrder(paymentDetails.id, id, trans)
+            if (!cancelpaymentDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            trans.commit()
+            return ResponseHelpers.SetSuccessResponse({message: 'Order Successfully Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+        } catch (error) {
+            trans.rollback()
             next(error)
         }
     }

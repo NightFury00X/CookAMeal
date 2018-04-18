@@ -52,7 +52,7 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: 0,
             validate: {
                 isIn: {
-                    args: [[0, 1, 2]],
+                    args: [[0, 1, 2, 3]],
                     msg: 'Invalid State.'
                 }
             }
@@ -63,7 +63,7 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: 0,
             validate: {
                 isIn: {
-                    args: [[0, 1]],
+                    args: [[0, 1, 2]],
                     msg: 'Invalid Payment State.'
                 }
             }

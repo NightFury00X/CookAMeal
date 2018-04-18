@@ -98,10 +98,10 @@ router.get('/order/prepare-data/:id',
 //     ValidateBody(BodySchemas.OrderFood),
 //     AuthController.Order.MakeOrder)
 
-router.get('/my-order/customer',
-    AuthController.Order.GetMyOrdersForCustomer)
+router.get('/my-order',
+    AuthController.Order.GetMyOrders)
 
-router.get('/my-order/customer/:orderId',
+router.get('/my-order/:orderId',
     ValidateParams(ParamSchemas.idSchema, 'orderId'),
     AuthController.Order.GetOrderDetailsByOrderId)
 
@@ -155,5 +155,18 @@ router.post('/delivery-address',
 router.delete('/delivery-address/:address',
     ValidateParams(ParamSchemas.idSchema, 'address'),
     AuthController.Order.DeleteDeliveryAddress)
+
+router.post('/order/create-purchase-cart',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    AuthController.Order.CreatePurchaseOrderForCart)
+
+router.post('/order/create-purchase-recipe',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    AuthController.Order.CreatePurchaseOrderForRecipe)
+
+router.put('/order/cancel-order/:orderId',
+    ValidateParams(ParamSchemas.idSchema, 'orderId'),
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    AuthController.Order.CancelOrder)
 
 module.exports = router

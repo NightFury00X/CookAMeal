@@ -4,7 +4,8 @@ const db = require('../../modals')
 const CommonService = require('./common.service')
 const MapService = require('./map-service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
-
+const braintree = require('braintree')
+const config = require('../../../configurations/main')
 CookService = function () {
 }
 
@@ -392,6 +393,173 @@ CookService.prototype.Availability = {
                 }]
             }
         })
+    }
+}
+
+CookService.prototype.Order = {
+    GetOrderDetailsForCustomerByOrderIdAndCustomerId: async (orderId, customerId) => {
+        try {
+            return await db.Order.findOne({
+                where: {
+                    [Op.and]: [{
+                        id: `${orderId}`,
+                        createdBy: `${customerId}`,
+                        orderState: 0,
+                        paymentState: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetPaymentGatewayDetailsForCancellationById: async (paymentGatewayId, cookId, createdBy) => {
+        try {
+            return await db.PaymentGateway.findOne({
+                attributes: ['id', 'nonce', 'amount', 'cookId', 'createdBy'],
+                where: {
+                    [Op.and]: [{
+                        id: `${paymentGatewayId}`,
+                        cookId: `${cookId}`,
+                        createdBy: `${createdBy}`,
+                        status: `Pending`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetOrderDetailsById: async (orderId, cookId) => {
+        try {
+            return await db.Order.findOne({
+                where: {
+                    [Op.and]: [{
+                        id: `${orderId}`,
+                        cookId: `${cookId}`,
+                        orderState: 0,
+                        paymentState: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetPaymentGatewayDetailsById: async (paymentGatewayId, cookId, customerId) => {
+        try {
+            return await db.PaymentGateway.findOne({
+                attributes: ['id', 'nonce', 'amount', 'cookId', 'createdBy'],
+                where: {
+                    [Op.and]: [{
+                        id: `${paymentGatewayId}`,
+                        cookId: `${cookId}`,
+                        createdBy: `${customerId}`,
+                        status: `Pending`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    ApprovedOrder: async (orderId, cookId, createdBy, trans) => {
+        try {
+            return await db.Order.update({
+                updatedAt: Sequelize.fn('NOW'),
+                orderState: CommonConfig.ORDER.ORDER_STATE.PROCESSING,
+                paymentState: CommonConfig.ORDER.PAYMENT_STATE.COMPLETE
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${orderId}`,
+                        cookId: `${cookId}`,
+                        createdBy: `${createdBy}`,
+                        orderState: 0,
+                        paymentState: 0
+                    }]
+                },
+                transaction: trans
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    ApprovedPaymentDetailsOrder: async (paymentGatewayId, cookId, createdBy, trans) => {
+        try {
+            return await db.PaymentGateway.update({
+                updatedAt: Sequelize.fn('NOW'),
+                status: 'APPROVED'
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${paymentGatewayId}`,
+                        cookId: `${cookId}`,
+                        createdBy: `${createdBy}`,
+                        status: 'Pending'
+                    }]
+                },
+                transaction: trans
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    CheckOut: async (paymentMethodNonce, orderId, totalAmount) => {
+        try {
+            let gateway = await braintree.connect({
+                environment: braintree.Environment.Sandbox,
+                merchantId: config.braintree.merchantId,
+                publicKey: config.braintree.publicKey,
+                privateKey: config.braintree.privateKey
+            })
+            return await new Promise((resolve, reject) => {
+                gateway.transaction.sale({
+                    amount: totalAmount,
+                    orderId: orderId,
+                    paymentMethodNonce: paymentMethodNonce,
+                    options: {
+                        submitForSettlement: true
+                    }
+                }, function (err, result) {
+                    if (err || !result.success) {
+                        return reject(err || result.message)
+                    } else {
+                        return resolve(result)
+                    }
+                })
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    Transaction: async (transactionData, trans) => {
+        try {
+            return await db.TransactionDetail.create(transactionData, {transaction: trans})
+        } catch (error) {
+            return false
+        }
+    },
+    RejectOrderByOrderId: async (orderId, cookId, trans) => {
+        try {
+            return await db.Order.update({
+                updatedAt: Sequelize.fn('NOW'),
+                orderState: CommonConfig.ORDER.ORDER_STATE.CANCELLED,
+                paymentState: CommonConfig.ORDER.PAYMENT_STATE.COMPLETE
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${orderId}`,
+                        cookId: `${cookId}`,
+                        orderState: 0,
+                        paymentState: 0
+                    }]
+                },
+                transaction: trans
+            })
+        } catch (error) {
+            throw (error)
+        }
     }
 }
 

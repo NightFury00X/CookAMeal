@@ -253,6 +253,36 @@ AuthService.prototype.Recipe = {
 }
 
 AuthService.prototype.Order = {
+    GetCurrentAddressDetailsByAddressId: async (addressId, profileId) => {
+        try {
+            return await db.Address.findOne({
+                attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country'],
+                where: {
+                    [Op.and]: [{
+                        id: `${addressId}`,
+                        profileId: `${profileId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetOtherAddressDetailsByAddressId: async (addressId, profileId) => {
+        try {
+            return await db.DeliveryAddress.findOne({
+                attributes: ['id', 'street', 'city', 'state', 'zipCode', 'country'],
+                where: {
+                    [Op.and]: [{
+                        id: `${addressId}`,
+                        profileId: `${profileId}`
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetCurrentAddressByProfileId: async (profileId) => {
         try {
             return await db.Address.findOne({
@@ -435,7 +465,7 @@ AuthService.prototype.Order = {
             throw (error)
         }
     },
-    GetMyPendingOrdersOrdersForCustomer: async (customerId) => {
+    GetMyPendingOrdersForCustomer: async (customerId) => {
         try {
             return await db.Order.findAll({
                 where: {
@@ -449,14 +479,44 @@ AuthService.prototype.Order = {
             throw (error)
         }
     },
-    GetOrderDetailsById: async (orderId, createdBy) => {
+    GetMyPendingOrdersForCook: async (cookId) => {
+        try {
+            return await db.Order.findAll({
+                where: {
+                    [Op.and]: [{
+                        cookId: `${cookId}`,
+                        orderState: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetOrderDetailsForCustomerByOrderId: async (orderId, customerId) => {
         try {
             return await db.Order.findOne({
-                attributes: ['id', 'totalAmount', 'taxes', 'specialInstruction', 'pickUpTime', 'deliveryFee', 'deliveryType', 'orderType', 'cookId', 'createdBy'],
+                attributes: ['id', 'totalAmount', 'taxes', 'specialInstruction', 'pickUpTime', 'deliveryFee', 'deliveryType', 'deliveredToCurrentAddressId', 'deliveredToOtherAddressId', 'orderType', 'cookId', 'createdBy'],
                 where: {
                     [Op.and]: [{
                         id: `${orderId}`,
-                        createdBy: `${createdBy}`,
+                        createdBy: `${customerId}`,
+                        orderState: 0
+                    }]
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetOrderDetailsForCookByOrderId: async (orderId, cookId) => {
+        try {
+            return await db.Order.findOne({
+                attributes: ['id', 'totalAmount', 'taxes', 'specialInstruction', 'pickUpTime', 'deliveryFee', 'deliveredToCurrentAddressId', 'deliveredToOtherAddressId', 'deliveryType', 'orderType', 'cookId', 'createdBy'],
+                where: {
+                    [Op.and]: [{
+                        id: `${orderId}`,
+                        cookId: `${cookId}`,
                         orderState: 0
                     }]
                 }
@@ -479,13 +539,6 @@ AuthService.prototype.Order = {
             throw (error)
         }
     },
-    Transaction: async (transactionData, trans) => {
-        try {
-            return await db.TransactionDetail.create(transactionData, {transaction: trans})
-        } catch (error) {
-            return false
-        }
-    },
     UpdatePaymentStateAfterSuccess: async (orderId, trans) => {
         try {
             return await db.Order.update({
@@ -500,6 +553,47 @@ AuthService.prototype.Order = {
             })
         } catch (error) {
             console.log('Error: ', error)
+            throw (error)
+        }
+    },
+    CancelOrder: async (orderId, createdBy, trans) => {
+        try {
+            return await db.Order.update({
+                updatedAt: Sequelize.fn('NOW'),
+                orderState: CommonConfig.ORDER.ORDER_STATE.CANCELLED,
+                paymentState: CommonConfig.ORDER.PAYMENT_STATE.CANCELLED
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${orderId}`,
+                        createdBy: `${createdBy}`,
+                        orderState: 0,
+                        paymentState: 0
+                    }]
+                },
+                transaction: trans
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    CancelPaymentDetailsOrder: async (paymentGatewayId, createdBy, trans) => {
+        try {
+            return await db.PaymentGateway.update({
+                updatedAt: Sequelize.fn('NOW'),
+                nonce: 'Order cancelled by the user.',
+                status: 'CENCELLED'
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${paymentGatewayId}`,
+                        createdBy: `${createdBy}`,
+                        status: 'Pending'
+                    }]
+                },
+                transaction: trans
+            })
+        } catch (error) {
             throw (error)
         }
     }
