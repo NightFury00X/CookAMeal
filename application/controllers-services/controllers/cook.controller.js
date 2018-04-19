@@ -221,11 +221,25 @@ const Availability = {
             const {orderId} = req.params
 
             const profile = await CommonService.User.GetProfileIdByUserTypeId(id)
-
+            if (!profile) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
             const orderDetails = await CookService.Order.GetOrderDetailsById(orderId, id)
+            if (!orderDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
             const paymentDetails = await CookService.Order.GetPaymentGatewayDetailsById(orderDetails.paymentGatwayId, id, orderDetails.createdBy)
-
+            if (!paymentDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
             const currencyData = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
+            if (!currencyData) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
             const cancelOrderDetails = await CookService.Order.ApprovedOrder(orderDetails.id, id, orderDetails.createdBy, trans)
             if (!cancelOrderDetails) {
                 trans.rollback()
@@ -294,25 +308,43 @@ const Availability = {
         try {
             const {id} = req.user
             const {orderId} = req.params
-            let datePart = date.split('-')
-
-            // get order details
+            const {reason, description} = req.body
 
             const orderDetails = await CookService.Order.GetOrderDetailsById(orderId, id)
-            const paymentDetails = await CookService.Order.GetPaymentGatewayDetailsById(orderDetails.paymentGatwayId, id, orderDetails.createdBy)
-
-            const cancelOrderDetails = await AuthService.Order.ApprovedOrder(orderDetails.id, id, orderDetails.createdBy, trans)
-            if (!cancelOrderDetails) {
+            if (!orderDetails) {
                 trans.rollback()
-                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order not found.'}, res, CommonConfig.STATUS_CODE.OK)
             }
-            const cancelpaymentDetails = await AuthService.Order.CanceApprovedPaymentDetailsOrder(paymentDetails.id, id, trans)
-            if (!cancelpaymentDetails) {
+            const paymentDetails = await CookService.Order.GetPaymentGatewayDetailsById(orderDetails.paymentGatwayId, id, orderDetails.createdBy)
+            if (!paymentDetails) {
                 trans.rollback()
-                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order not found.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const rejectOrderDetails = await CookService.Order.RejectedOrder(orderDetails.id, id, orderDetails.createdBy, trans)
+            if (!rejectOrderDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to reject Order.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const rejectpaymentDetails = await CookService.Order.RejectPaymentDetailsOrder(paymentDetails.id, id, orderDetails.createdBy, trans)
+            if (!rejectpaymentDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to reject Order.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const orderStateMasterData = {
+                orderId: orderDetails.id,
+                isRejected: true,
+                reason: reason,
+                description: description,
+                userType: CommonConfig.ORDER.USER_TYPE.COOK,
+                userId: orderDetails.createdBy
+            }
+            const orderStateMasterDetails = await AuthService.Order.AddToOrderStateMaster(orderStateMasterData, trans)
+            if (!orderStateMasterDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Unable to reject Order.'}, res, CommonConfig.STATUS_CODE.OK)
             }
             trans.commit()
-            return ResponseHelpers.SetSuccessResponse({message: 'Order Successfully Approved.'}, res, CommonConfig.STATUS_CODE.OK)
+            return ResponseHelpers.SetSuccessResponse({message: 'Order Successfully Rejected.'}, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             trans.rollback()
             next(error)

@@ -47,23 +47,23 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         orderState: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 0,
+            defaultValue: 'PENDING',
             validate: {
                 isIn: {
-                    args: [[0, 1, 2, 3]],
+                    args: [['PENDING', 'PROCESSING', 'COMPLETE', 'CANCELLED', 'REJECTED']],
                     msg: 'Invalid State.'
                 }
             }
         },
         paymentState: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 0,
+            defaultValue: 'PENDING',
             validate: {
                 isIn: {
-                    args: [[0, 1, 2]],
+                    args: [['PENDING', 'COMPLETE', 'CANCELLED', 'REJECTED']],
                     msg: 'Invalid Payment State.'
                 }
             }

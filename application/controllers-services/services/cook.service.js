@@ -404,8 +404,8 @@ CookService.prototype.Order = {
                     [Op.and]: [{
                         id: `${orderId}`,
                         createdBy: `${customerId}`,
-                        orderState: 0,
-                        paymentState: 0
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING,
+                        paymentState: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 }
             })
@@ -422,7 +422,7 @@ CookService.prototype.Order = {
                         id: `${paymentGatewayId}`,
                         cookId: `${cookId}`,
                         createdBy: `${createdBy}`,
-                        status: `Pending`
+                        status: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 }
             })
@@ -437,8 +437,8 @@ CookService.prototype.Order = {
                     [Op.and]: [{
                         id: `${orderId}`,
                         cookId: `${cookId}`,
-                        orderState: 0,
-                        paymentState: 0
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING,
+                        paymentState: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 }
             })
@@ -455,7 +455,7 @@ CookService.prototype.Order = {
                         id: `${paymentGatewayId}`,
                         cookId: `${cookId}`,
                         createdBy: `${customerId}`,
-                        status: `Pending`
+                        status: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 }
             })
@@ -467,7 +467,7 @@ CookService.prototype.Order = {
         try {
             return await db.Order.update({
                 updatedAt: Sequelize.fn('NOW'),
-                orderState: CommonConfig.ORDER.ORDER_STATE.PROCESSING,
+                orderState: CommonConfig.ORDER.ORDER_STATE.COMPLETE,
                 paymentState: CommonConfig.ORDER.PAYMENT_STATE.COMPLETE
             }, {
                 where: {
@@ -475,8 +475,8 @@ CookService.prototype.Order = {
                         id: `${orderId}`,
                         cookId: `${cookId}`,
                         createdBy: `${createdBy}`,
-                        orderState: 0,
-                        paymentState: 0
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING,
+                        paymentState: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 },
                 transaction: trans
@@ -489,14 +489,14 @@ CookService.prototype.Order = {
         try {
             return await db.PaymentGateway.update({
                 updatedAt: Sequelize.fn('NOW'),
-                status: 'APPROVED'
+                status: CommonConfig.ORDER.PAYMENT_STATE.APPROVED
             }, {
                 where: {
                     [Op.and]: [{
                         id: `${paymentGatewayId}`,
                         cookId: `${cookId}`,
                         createdBy: `${createdBy}`,
-                        status: 'Pending'
+                        status: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 },
                 transaction: trans
@@ -540,19 +540,41 @@ CookService.prototype.Order = {
             return false
         }
     },
-    RejectOrderByOrderId: async (orderId, cookId, trans) => {
+    RejectedOrder: async (orderId, cookId, createdBy, trans) => {
         try {
             return await db.Order.update({
                 updatedAt: Sequelize.fn('NOW'),
-                orderState: CommonConfig.ORDER.ORDER_STATE.CANCELLED,
-                paymentState: CommonConfig.ORDER.PAYMENT_STATE.COMPLETE
+                orderState: CommonConfig.ORDER.ORDER_STATE.REJECTED,
+                paymentState: CommonConfig.ORDER.PAYMENT_STATE.REJECTED
             }, {
                 where: {
                     [Op.and]: [{
                         id: `${orderId}`,
                         cookId: `${cookId}`,
-                        orderState: 0,
-                        paymentState: 0
+                        createdBy: `${createdBy}`,
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING,
+                        paymentState: CommonConfig.ORDER.PAYMENT_STATE.PENDING
+                    }]
+                },
+                transaction: trans
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    RejectPaymentDetailsOrder: async (paymentGatewayId, cookId, createdBy, trans) => {
+        try {
+            return await db.PaymentGateway.update({
+                updatedAt: Sequelize.fn('NOW'),
+                nonce: 'Order recjected by the cook.',
+                status: CommonConfig.ORDER.PAYMENT_STATE.REJECTED
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${paymentGatewayId}`,
+                        cookId: `${cookId}`,
+                        createdBy: `${createdBy}`,
+                        status: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 },
                 transaction: trans

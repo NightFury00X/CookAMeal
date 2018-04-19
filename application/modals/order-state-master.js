@@ -5,44 +5,45 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
         },
-        nonce: {
+        orderId: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        amount: {
+        isCancelled: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isRejected: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        reason: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        status: {
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        userType: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 'PENDING'
+            validate: {
+                isIn: {
+                    args: [['COOK', 'CUSTOMER']],
+                    msg: 'Invalid User Type.'
+                }
+            }
         },
-        currencyCode: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        currencySymbol: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        paymentType: {
-            type: DataTypes.STRING,
+        userId: {
+            type: DataTypes.UUID,
             allowNull: false
         },
         updatedAt: DataTypes.DATE,
         deletedAt: DataTypes.DATE
     }
 
-    const PaymentGateway = sequelize.define('PaymentGateway', modelDefinition)
-    PaymentGateway.associate = function (models) {
-        PaymentGateway.hasOne(models.Order, {
-            foreignKey: {
-                name: 'paymentGatwayId',
-                allowNull: false,
-                onDelete: 'CASCADE'
-            }
-        })
-    }
-    return PaymentGateway
+    return sequelize.define('OrderStateMaster', modelDefinition)
 }

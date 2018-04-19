@@ -13,6 +13,8 @@ const gateway = braintree.connect({
     privateKey: config.braintree.privateKey
 })
 
+const moment = require('moment')
+
 let Auth = {
     LogOutUser: async (req, res, next) => {
         try {
@@ -555,6 +557,17 @@ let Order = {
                     break
             }
 
+            const createdAt = moment(orderDetails.createdAt)
+            const currentDateTime = moment()
+            const duration = moment.duration(currentDateTime.diff(createdAt))
+
+            let isCancellable = true
+            if (Math.ceil(duration.asHours()) >= CommonConfig.ORDER.MAX_HOURS_VALUE_TO_CANCEL_OREDR) {
+                isCancellable = false
+            }
+
+            const paymentgatewayDetails = await AuthService.Order.GetPaymentGatewayDetailsById(orderDetails.paymentGatwayId, orderDetails.cookId, orderDetails.createdBy)
+
             let convertedOrderDetailsJSON = JSON.parse(JSON.stringify(orderDetails))
             const profileId = userRole === 1 ? convertedOrderDetailsJSON.createdBy : convertedOrderDetailsJSON.cookId
             convertedOrderDetailsJSON.profile = await CommonService.User.GetProfileIdByUserTypeId(profileId)
@@ -586,6 +599,9 @@ let Order = {
             }
             convertedOrderDetailsJSON.recipeDetails = convertedOrderItemsJSON
             convertedOrderDetailsJSON.userRole = userRole
+            convertedOrderDetailsJSON.currencyCode = paymentgatewayDetails.currencyCode
+            convertedOrderDetailsJSON.currencySymbol = paymentgatewayDetails.currencySymbol
+            convertedOrderDetailsJSON.isCancellable = isCancellable
             return ResponseHelpers.SetSuccessResponse(convertedOrderDetailsJSON, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
             next(error)
@@ -667,11 +683,20 @@ let Order = {
                     return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
                 }
             }
+
+            const currencyDetails = await CommonService.User.GetCurrencyCodeProfileId(cookId)
+            if (!currencyDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            }
+
             const paymentData = {
                 nonce: nonce,
                 amount: chargeAmount,
                 paymentType: paymentType,
                 cookId: cookId,
+                currencyCode: currencyDetails.currencyCode,
+                currencySymbol: currencyDetails.currencySymbol,
                 createdBy: id
             }
 
@@ -902,11 +927,18 @@ let Order = {
                 return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
             }
 
+            const currencyDetails = await CommonService.User.GetCurrencyCodeProfileId(recipeDetails.profileId)
+            if (!currencyDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            }
             const paymentData = {
                 nonce: nonce,
                 amount: chargeAmount,
                 paymentType: paymentType,
                 cookId: recipeDetails.profileId,
+                currencyCode: currencyDetails.currencyCode,
+                currencySymbol: currencyDetails.currencySymbol,
                 createdBy: id
             }
 
@@ -964,96 +996,9 @@ let Order = {
             }
             trans.commit()
             return ResponseHelpers.SetSuccessResponse(successResultData, res, CommonConfig.STATUS_CODE.CREATED)
-
-            // const userId = req.user.id
-            // const profile = await CommonService.User.GetProfileIdByUserTypeId(userId)
-            // const currencySymbol = await CommonService.User.GetCurrencySymbolByProfileId(profile.id)
-            // let recipesToJson = JSON.parse(JSON.stringify(orderData.recipes))
-            // const {totalAmount, taxes, orderServings, deliveryFee, deliveryType} = orderData
-            // const valid = await AuthService.Order.ValidateOrder(totalAmount, taxes, deliveryFee, orderServings, recipesToJson, deliveryType)
-            // if (!valid) {
-            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
-            // }
-            // orderData.createdBy = userId
-            // const orderDetails = await AuthService.Order.PlaceOrder(orderData, recipesToJson, trans)
-            // if (!orderDetails) {
-            //     trans.rollback()
-            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
-            // }
-            // OId = orderDetails.id
-            // const orderId = orderDetails.id
-            // const paymentMethodNonce = orderData.paymentMethodNonce
-            // const checkOutDetails = await AuthService.Order.CheckOut(paymentMethodNonce, totalAmount)
-            // if (!checkOutDetails) {
-            //     return ResponseHelpers.SetErrorResponse(CommonConfig.ERRORS.ORDER.FAILURE, res)
-            // }
-            // console.log('Transaction Details: ', checkOutDetails)
-            // payment = true
-            // const transactionData = {
-            //     transactionId: checkOutDetails.transaction.id,
-            //     amount: checkOutDetails.transaction.amount,
-            //     discountAmount: checkOutDetails.transaction.discountAmount,
-            //     type: checkOutDetails.transaction.type,
-            //     paymentInstrumentType: checkOutDetails.transaction.paymentInstrumentType,
-            //     merchantAccountId: checkOutDetails.transaction.merchantAccountId,
-            //     taxAmount: checkOutDetails.transaction.taxAmount,
-            //     recurring: checkOutDetails.transaction.recurring,
-            //     orderId: orderId,
-            //     paidTo: checkOutDetails.transaction.merchantAccountId,
-            //     paidBy: userId,
-            //     status: checkOutDetails.transaction.status
-            // }
-            // TId = transactionData.transactionId
-            // const transactionDetails = await AuthService.Order.Transaction(transactionData, trans)
-            // if (!transactionDetails) {
-            //     trans.rollback()
-            //     return ResponseHelpers.SetSuccessResponse({
-            //         orderState: false,
-            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
-            //         orderId: OId,
-            //         transactionId: TId
-            //     }, res, CommonConfig.STATUS_CODE.OK)
-            // }
-            // flag = true
-            // const result = await AuthService.Order.UpdatePaymentStateAfterSuccess(orderId, trans)
-            // trans.commit()
-            // if (!result) {
-            //     return ResponseHelpers.SetSuccessResponse({
-            //         orderState: false,
-            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
-            //         orderId: orderId,
-            //         transactionId: transactionData.transactionId
-            //     }, res, CommonConfig.STATUS_CODE.OK)
-            // }
-            // return ResponseHelpers.SetSuccessResponse({
-            //     orderState: true,
-            //     paymentDetails: {
-            //         transactionId: transactionDetails.id,
-            //         amount: currencySymbol.currencySymbol + ' ' + parseFloat(transactionDetails.amount),
-            //         paymentMethod: transactionDetails.paymentInstrumentType,
-            //         merchantAccountId: transactionDetails.merchantAccountId
-            //     },
-            //     orderDetails: {
-            //         id: orderDetails.id,
-            //         orderDate: orderDetails.createdAt,
-            //         amount: currencySymbol.currencySymbol + ' ' + parseFloat(orderDetails.totalAmount)
-            //     },
-            //     Message: CommonConfig.ERRORS.ORDER.SUCCESS
-            // }, res, CommonConfig.STATUS_CODE.CREATED)
         } catch (error) {
             trans.rollback()
             next(error)
-            // if (!flag && !payment) {
-            //     trans.rollback()
-            //     next(error)
-            // } else {
-            //     return ResponseHelpers.SetSuccessResponse({
-            //         orderState: false,
-            //         message: CommonConfig.ERRORS.ORDER.FAILURE,
-            //         orderId: OId,
-            //         transactionId: TId
-            //     }, res, CommonConfig.STATUS_CODE.CREATED)
-            // }
         }
     },
     CancelOrder: async (req, res, next) => {
@@ -1061,11 +1006,27 @@ let Order = {
         try {
             const {id} = req.user
             const {orderId} = req.params
-            const oId = req.body.orderId
-            console.log('order id: ', orderId)
-            console.log('id: ', id)
+            const {reason, description} = req.body
+
             const orderDetails = await CookService.Order.GetOrderDetailsForCustomerByOrderIdAndCustomerId(orderId, id)
+            if (!orderDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Invalid order details. Please try again later.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const createdAt = moment(orderDetails.createdAt)
+            const currentDateTime = moment()
+            const duration = moment.duration(currentDateTime.diff(createdAt))
+
+            if (Math.ceil(duration.asHours()) >= CommonConfig.ORDER.MAX_HOURS_VALUE_TO_CANCEL_OREDR) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'You can not cancel the order.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+
             const paymentDetails = await CookService.Order.GetPaymentGatewayDetailsForCancellationById(orderDetails.paymentGatwayId, orderDetails.cookId, orderDetails.createdBy)
+            if (!paymentDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Invalid order details. Please try again later.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
             const cancelOrderDetails = await AuthService.Order.CancelOrder(orderDetails.id, id, trans)
             if (!cancelOrderDetails) {
                 trans.rollback()
@@ -1073,6 +1034,19 @@ let Order = {
             }
             const cancelpaymentDetails = await AuthService.Order.CancelPaymentDetailsOrder(paymentDetails.id, id, trans)
             if (!cancelpaymentDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be cancel.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const orderStateMasterData = {
+                orderId: orderDetails.id,
+                isCancelled: true,
+                reason: reason,
+                description: description,
+                userType: CommonConfig.ORDER.USER_TYPE.COOK,
+                userId: orderDetails.createdBy
+            }
+            const orderStateMasterDetails = await AuthService.Order.AddToOrderStateMaster(orderStateMasterData, trans)
+            if (!orderStateMasterDetails) {
                 trans.rollback()
                 return ResponseHelpers.SetSuccessErrorResponse({message: 'Order can not be cancel.'}, res, CommonConfig.STATUS_CODE.OK)
             }

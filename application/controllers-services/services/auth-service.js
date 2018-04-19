@@ -471,7 +471,7 @@ AuthService.prototype.Order = {
                 where: {
                     [Op.and]: [{
                         createdBy: `${customerId}`,
-                        orderState: 0
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING
                     }]
                 }
             })
@@ -485,7 +485,7 @@ AuthService.prototype.Order = {
                 where: {
                     [Op.and]: [{
                         cookId: `${cookId}`,
-                        orderState: 0
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING
                     }]
                 }
             })
@@ -496,12 +496,12 @@ AuthService.prototype.Order = {
     GetOrderDetailsForCustomerByOrderId: async (orderId, customerId) => {
         try {
             return await db.Order.findOne({
-                attributes: ['id', 'totalAmount', 'taxes', 'specialInstruction', 'pickUpTime', 'deliveryFee', 'deliveryType', 'deliveredToCurrentAddressId', 'deliveredToOtherAddressId', 'orderType', 'cookId', 'createdBy'],
+                attributes: ['id', 'totalAmount', 'taxes', 'specialInstruction', 'pickUpTime', 'deliveryFee', 'deliveryType', 'deliveredToCurrentAddressId', 'deliveredToOtherAddressId', 'orderType', 'cookId', 'createdBy', 'paymentGatwayId'],
                 where: {
                     [Op.and]: [{
                         id: `${orderId}`,
                         createdBy: `${customerId}`,
-                        orderState: 0
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING
                     }]
                 }
             })
@@ -512,12 +512,12 @@ AuthService.prototype.Order = {
     GetOrderDetailsForCookByOrderId: async (orderId, cookId) => {
         try {
             return await db.Order.findOne({
-                attributes: ['id', 'totalAmount', 'taxes', 'specialInstruction', 'pickUpTime', 'deliveryFee', 'deliveredToCurrentAddressId', 'deliveredToOtherAddressId', 'deliveryType', 'orderType', 'cookId', 'createdBy'],
+                attributes: ['id', 'totalAmount', 'taxes', 'specialInstruction', 'pickUpTime', 'deliveryFee', 'deliveredToCurrentAddressId', 'deliveredToOtherAddressId', 'deliveryType', 'orderType', 'cookId', 'createdBy', 'paymentGatwayId'],
                 where: {
                     [Op.and]: [{
                         id: `${orderId}`,
                         cookId: `${cookId}`,
-                        orderState: 0
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING
                     }]
                 }
             })
@@ -539,23 +539,6 @@ AuthService.prototype.Order = {
             throw (error)
         }
     },
-    UpdatePaymentStateAfterSuccess: async (orderId, trans) => {
-        try {
-            return await db.Order.update({
-                paymentState: CommonConfig.ORDER.PAYMENT_STATE.COMPLETE
-            }, {
-                where: {
-                    id: {
-                        [Op.eq]: orderId
-                    }
-                },
-                transaction: trans
-            })
-        } catch (error) {
-            console.log('Error: ', error)
-            throw (error)
-        }
-    },
     CancelOrder: async (orderId, createdBy, trans) => {
         try {
             return await db.Order.update({
@@ -567,8 +550,8 @@ AuthService.prototype.Order = {
                     [Op.and]: [{
                         id: `${orderId}`,
                         createdBy: `${createdBy}`,
-                        orderState: 0,
-                        paymentState: 0
+                        orderState: CommonConfig.ORDER.ORDER_STATE.PENDING,
+                        paymentState: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 },
                 transaction: trans
@@ -582,16 +565,40 @@ AuthService.prototype.Order = {
             return await db.PaymentGateway.update({
                 updatedAt: Sequelize.fn('NOW'),
                 nonce: 'Order cancelled by the user.',
-                status: 'CENCELLED'
+                status: CommonConfig.ORDER.PAYMENT_STATE.CANCELLED
             }, {
                 where: {
                     [Op.and]: [{
                         id: `${paymentGatewayId}`,
                         createdBy: `${createdBy}`,
-                        status: 'Pending'
+                        status: CommonConfig.ORDER.PAYMENT_STATE.PENDING
                     }]
                 },
                 transaction: trans
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    AddToOrderStateMaster: async (orderStateMasterData, trans) => {
+        try {
+            return await db.OrderStateMaster.create(orderStateMasterData, {transaction: trans})
+        } catch (error) {
+            throw (error)
+        }
+    },
+    GetPaymentGatewayDetailsById: async (paymentGatewayId, cookId, customerId) => {
+        try {
+            return await db.PaymentGateway.findOne({
+                attributes: ['id', 'nonce', 'amount', 'cookId', 'createdBy', 'currencyCode', 'currencySymbol'],
+                where: {
+                    [Op.and]: [{
+                        id: `${paymentGatewayId}`,
+                        cookId: `${cookId}`,
+                        createdBy: `${customerId}`,
+                        status: CommonConfig.ORDER.PAYMENT_STATE.PENDING
+                    }]
+                }
             })
         } catch (error) {
             throw (error)

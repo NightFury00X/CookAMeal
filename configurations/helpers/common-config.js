@@ -28,19 +28,30 @@ CommonConfig.USER_TYPE = {
 
 CommonConfig.ORDER = {
     ORDER_STATE: {
-        PENDING: 0,
-        PROCESSING: 1,
-        COMPLETE: 2,
-        CANCELLED: 3
+        PENDING: 'PENDING',
+        PROCESSING: 'PROCESSING',
+        COMPLETE: 'COMPLETE',
+        CANCELLED: 'CANCELLED',
+        APPROVED: 'APPROVED',
+        REJECTED: 'REJECTED'
     },
     PAYMENT_STATE: {
-        PENDING: 0,
-        COMPLETE: 1,
-        CANCELLED: 2
+        PENDING: 'PENDING',
+        PROCESSING: 'PROCESSING',
+        COMPLETE: 'COMPLETE',
+        CANCELLED: 'CANCELLED',
+        APPROVED: 'APPROVED',
+        REJECTED: 'REJECTED'
     },
     ACCEPTED: true,
-    NOT_ACCEPTED: false
+    NOT_ACCEPTED: false,
+    USER_TYPE: {
+        COOK: 'COOK',
+        CUSTOMER: 'CUSTOMER'
+    },
+    MAX_HOURS_VALUE_TO_CANCEL_OREDR: 24
 }
+
 CommonConfig.STATUS_CODE = {
     OK: 200,
     CREATED: 201,
