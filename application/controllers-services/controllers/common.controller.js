@@ -4,6 +4,7 @@ const CommonService = require('../services/common.service')
 const CookService = require('../services/cook.service')
 const CommonConfig = require('../../../configurations/helpers/common-config')
 const MapService = require('../services/map-service')
+const db = require('../../modals')
 
 let User = {
     ChangeProfile: async (req, res, next) => {
@@ -634,6 +635,174 @@ let Order = {
             }
             return ResponseHelpers.SetSuccessResponse(result, res, CommonConfig.STATUS_CODE.OK)
         } catch (error) {
+            next(error)
+        }
+    },
+    CreatePurchaseOrderForGuest: async (req, res, next) => {
+        const trans = await db.sequelize.transaction()
+        console.log('=================START=====================')
+        try {
+            const {
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                streetAddress,
+                city,
+                state,
+                zipCode,
+                country
+            } = req.body
+
+            const {
+                nonce,
+                chargeAmount,
+                recipeId,
+                noOfServing,
+                spiceLevel,
+                paymentType,
+                specialInstruction,
+                deliveryType,
+                pickUpTime
+            } = req.body
+
+            console.log('PASSWORD: ', email)
+
+            // const checkUserEmailExist = await CommonService.User.CheckUserEmailIdExistForGuestLogin(email)
+            // if (checkUserEmailExist) {
+            //     trans.rollback()
+            //     return ResponseHelpers.SetSuccessErrorResponse({message: 'Email Id already registered.'}, res, CommonConfig.STATUS_CODE.OK)
+            // }
+
+            const password = await CommonService.Keys.GeneratePassword()
+
+            console.log('PASSWORD: ', password)
+            const userDetails = await CommonService.Order.GuestOrderFood({
+                firstName,
+                lastName,
+                email,
+                password,
+                phoneNumber,
+                streetAddress,
+                city,
+                state,
+                zipCode,
+                country
+            }, trans)
+
+            if (!userDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({message: 'Email Id already registered.'}, res, CommonConfig.STATUS_CODE.OK)
+            }
+
+            console.log('====================================')
+            console.log(JSON.parse(JSON.stringify(userDetails)))
+            // const profile = await CommonService.User.GetProfileIdByUserTypeId(userDetails.userType.id,)
+
+            let address = userDetails.addressDetails.id
+            let isCurrentAddress = true
+            // const currentAddress = await CommonService.User.CheckAddressIsCurrentAddress(id, userDetails.userProfileData.id)
+            // if (currentAddress) {
+            //     address = currentAddress.id
+            //     isCurrentAddress = true
+            // } else {
+            //     trans.rollback()
+            //     return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            // }
+
+            const recipeDetails = await CommonService.Recipe.FindRecipeDetailsForCartById(recipeId)
+            if (!recipeDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            }
+
+            if (parseInt(recipeDetails.availableServings) < noOfServing) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.OUT_OF_STOCK}, res, CommonConfig.STATUS_CODE.OK)
+            }
+
+            // const currencyDetails = await CommonService.User.GetCurrencyCodeProfileId(recipeDetails.profileId)
+            // if (!currencyDetails) {
+            //     trans.rollback()
+            //     return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            // }
+            const paymentData = {
+                nonce: nonce,
+                amount: chargeAmount,
+                paymentType: paymentType,
+                cookId: recipeDetails.profileId,
+                currencyCode: userDetails.addressDetails.currencyCode,
+                currencySymbol: userDetails.addressDetails.currencySymbol,
+                createdBy: userDetails.userType.id
+            }
+
+            console.log('====================================')
+            console.log(JSON.parse(JSON.stringify(paymentData)))
+
+            const paymentGatewayDetails = await AuthService.Order.CreateAndHoldPayment(paymentData, trans)
+            if (!paymentGatewayDetails) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const taxes = 5
+
+            let totalPrice = parseFloat(recipeDetails.costPerServing) * parseInt(noOfServing)
+            let maxDeliveryFees = parseFloat(recipeDetails.deliveryFee)
+
+            const totalCharge = parseFloat((totalPrice * 5 / 100) + totalPrice) + parseFloat((parseInt(deliveryType) === 1 ? 0 : maxDeliveryFees))
+
+            if (parseFloat(chargeAmount) !== totalCharge) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            }
+
+            let orderData = {
+                paymentGatwayId: paymentGatewayDetails.id,
+                orderType: 'order-food',
+                specialInstruction: specialInstruction,
+                deliveryType: deliveryType,
+                deliveryFee: parseInt(deliveryType) === 1 ? 0 : maxDeliveryFees,
+                pickUpTime: pickUpTime,
+                taxes: taxes,
+                isOrderFromCart: false,
+                cookId: recipeDetails.profileId,
+                totalAmount: totalCharge,
+                isCurrentAddress: isCurrentAddress,
+                deliveredToCurrentAddressId: isCurrentAddress ? address : null,
+                deliveredToOtherAddressId: !isCurrentAddress ? address : null,
+                createdBy: userDetails.userType.id
+            }
+
+            const orderItemData = {
+                noOfServing: noOfServing,
+                costPerServing: recipeDetails.costPerServing,
+                spiceLevel: spiceLevel,
+                recipeId: recipeId
+            }
+
+            const orderDetailsData = await AuthService.Order.PlaceOrderForRecipe(orderData, orderItemData, trans)
+            if (!orderDetailsData) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const updatedServingData = await AuthService.Order.UpdateAvailableServingsByRecipeId({
+                availableServings: parseInt(recipeDetails.availableServings) - parseInt(noOfServing),
+                recipeId: recipeId
+            }, trans)
+            if (!updatedServingData) {
+                trans.rollback()
+                return ResponseHelpers.SetSuccessErrorResponse({Message: CommonConfig.ERRORS.ORDER.FAILURE}, res, CommonConfig.STATUS_CODE.OK)
+            }
+            const successResultData = {
+                name: userDetails.userProfileData.fullName,
+                profileUrl: !userDetails.userProfileData.profileUrl ? null : userDetails.userProfileData.profileUrl,
+                orderId: orderDetailsData.id
+            }
+
+            trans.commit()
+            return ResponseHelpers.SetSuccessResponse(successResultData, res, CommonConfig.STATUS_CODE.CREATED)
+        } catch (error) {
+            trans.rollback()
             next(error)
         }
     }

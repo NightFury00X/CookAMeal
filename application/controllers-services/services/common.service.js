@@ -4,6 +4,8 @@ const Op = Sequelize.Op
 const db = require('../../modals')
 const {AuthenticationHelpers} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
+const AnonymousService = require('../services/anonymous.service')
+const MapService = require('./map-service')
 
 CommonService = function () {
 }
@@ -22,10 +24,26 @@ CommonService.prototype.UserModel = {
 }
 
 CommonService.prototype.Keys = {
+    GeneratePassword: async () => {
+        const passwordLength = 8
+        const numberChars = '0123456789'
+        const upperChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'
+        const lowerChars = 'abcdefghijkmnopqrstuvwxyz'
+        const specialCharacters = '!@#$%^&'
+        const allChars = numberChars + upperChars + lowerChars + specialCharacters
+        let randPasswordArray = Array(passwordLength)
+        randPasswordArray[0] = numberChars
+        randPasswordArray[1] = upperChars
+        randPasswordArray[2] = lowerChars
+        randPasswordArray[3] = specialCharacters
+        randPasswordArray = randPasswordArray.fill(allChars, 4)
+        let data = await AnonymousService.ShuffleArray(randPasswordArray.map(function (x) {
+            return x[Math.floor(Math.random() * x.length)]
+        }))
+        return data.join('')
+    },
+
     RandomKeys: {
-        GenerateRandomKey: async () => {
-            return await randomString(CommonConfig.OPTIONS.RANDOM_KEYS)
-        },
         GenerateUnique16DigitKey: async () => {
             return await randomString(CommonConfig.OPTIONS.UNIQUE_RANDOM_KEYS)
         }
@@ -200,6 +218,20 @@ CommonService.prototype.User = {
                         emailId: `${facebookEmailId}`,
                         facebookId: `${facebookId}`,
                         facebookEmailId: `${facebookEmailId}`
+                    }
+                }
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
+    CheckUserEmailIdExistForGuestLogin: async (emailId) => {
+        try {
+            console.log('Email: ', emailId)
+            return await db.UserType.findOne({
+                where: {
+                    [Op.or]: {
+                        emailId: `${emailId}`
                     }
                 }
             })
@@ -692,7 +724,7 @@ CommonService.prototype.Recipe = {
     FindRecipePriceByRecipeId: async (recipeId) => {
         try {
             return await db.Recipe.findById(recipeId, {
-                attributes: ['id', 'costPerServing', 'profileId']
+                attributes: ['id', 'costPerServing', 'profileId', 'availableServings']
             })
         } catch (error) {
             throw (error)
@@ -972,4 +1004,59 @@ CommonService.prototype.Recipe = {
     }
 }
 
+CommonService.prototype.Order = {
+    GuestOrderFood: async (userData, trans) => {
+        try {
+            const userType = await db.UserType.create({
+                emailId: userData.email,
+                userRole: CommonConfig.ROLES.CUSTOMER,
+                hasProfile: true,
+                hasLogin: true,
+                profileSelected: true
+            }, {transaction: trans})
+
+            await db.User.create({
+                createdBy: userType.id,
+                email: userData.email,
+                password: userData.password
+            }, {transaction: trans})
+
+            let tempData = userData
+            delete tempData.password
+            tempData.createdBy = userType.id
+            tempData.gender = 'm'
+            tempData.userRole = CommonConfig.ROLES.CUSTOMER
+            tempData.isFacebookConnected = false
+            let userProfileData = await db.Profile.create(tempData, {transaction: trans})
+            let address = {
+                street: userData.streetAddress,
+                city: userData.city,
+                state: userData.state,
+                zipCode: userData.zipCode,
+                country: userData.country
+            }
+
+            console.log('====================================')
+            console.log(JSON.parse(JSON.stringify(userData)))
+
+            const location = await MapService.Map.GetGeoCordinatesFromAddress(`${userData.streetAddress}, ${userData.city}, ${userData.state}, ${userData.country}`)
+
+            console.log('====================================')
+            console.log(JSON.parse(JSON.stringify(location)))
+
+            address.latitude = location[0].latitude
+            address.longitude = location[0].longitude
+            address.profileId = userProfileData.id
+            const addressDetails = await db.Address.create(address, {transaction: trans})
+            if (!addressDetails) {
+                trans.rollback()
+                return false
+            }
+            console.log('Done')
+            return {userType, userProfileData, addressDetails}
+        } catch (error) {
+            throw (error)
+        }
+    }
+}
 module.exports = new CommonService()

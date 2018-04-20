@@ -465,6 +465,22 @@ AuthService.prototype.Order = {
             throw (error)
         }
     },
+    UpdateAvailableServingsByRecipeId: async (recipeData, trans) => {
+        try {
+            return await db.Recipe.update({
+                availableServings: recipeData.availableServings
+            }, {
+                where: {
+                    [Op.and]: [{
+                        id: `${recipeData.recipeId}`
+                    }]
+                },
+                transaction: trans
+            })
+        } catch (error) {
+            throw (error)
+        }
+    },
     GetMyPendingOrdersForCustomer: async (customerId) => {
         try {
             return await db.Order.findAll({
@@ -1120,7 +1136,7 @@ AuthService.prototype.Cart = {
     GetPriceOfRecipeByCartItemId: async (itemId) => {
         try {
             return await db.Recipe.findOne({
-                attributes: ['costPerServing', 'profileId'],
+                attributes: ['costPerServing', 'profileId', 'availableServings'],
                 include: [{
                     model: db.CartItem,
                     where: {

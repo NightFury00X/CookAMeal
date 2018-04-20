@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const db = require('../../modals')
-const CommonService = require('./common.service')
 const {AuthenticationHelpers, MailingHelpers, MailGun} = require('../../../configurations/helpers/helper')
 const CommonConfig = require('../../../configurations/helpers/common-config')
-const MapService = require('../services/map-service')
+const MapService = require('./map-service')
+const CommonService = require('./common.service')
 
 AnonymousService = function () {
 }
@@ -110,7 +110,7 @@ AnonymousService.prototype.SignUp = async (registrationData, files) => {
             }
         }
         if (facebookId || (files.identificationCard && registrationData.identificationCard)) {
-            const d = await db.Profile.update({
+            await db.Profile.update({
                 isEligibleForHire: true
             }, {
                 where: {
@@ -227,11 +227,26 @@ AnonymousService.prototype.AddResetPasswordDetails = async (userDetails, email, 
                 return null
             }
         }
-        let userInfo = await CommonService.GetUserDetailsByUserTypeId(userDetails.createdBy)
+
+        console.log('userDetails.createdBy: ', userDetails.createdBy)
+        let userInfo = await db.UserType.findOne({
+            where: {
+                id: {
+                    [Op.eq]: `${userDetails.createdBy}`
+                }
+            },
+            include: [{
+                model: db.Profile,
+                include: [{
+                    model: db.Address
+                }]
+            }]
+        })
         if (!userInfo) {
             await trans.rollback()
             return null
         }
+
         let fullname = userInfo.Profile.firstName + ' ' + userInfo.Profile.lastName
         let data = await db.ResetPassword.create(userDetails, {transaction: trans})
         if (!data) {
@@ -320,6 +335,16 @@ AnonymousService.prototype.AddFacebookUser = async (facebookDetails) => {
         trans.rollback()
         throw (error)
     }
+}
+
+AnonymousService.prototype.ShuffleArray = async (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1))
+        let temp = array[i]
+        array[i] = array[j]
+        array[j] = temp
+    }
+    return array
 }
 
 module.exports = new AnonymousService()

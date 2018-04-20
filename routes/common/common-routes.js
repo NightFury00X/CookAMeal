@@ -99,4 +99,9 @@ router.get('/order/client-token/:orderType/:id',
 //     RequestMethodsMiddlewares.ApplicationJsonData,
 //     AuthController.Order.CreatePurchaseOrderForRecipe)
 
+router.post('/order/guest/create-purchase-recipe',
+    RequestMethodsMiddlewares.ApplicationJsonData,
+    ValidateBody(BodySchemas.GuestOrderProcess),
+    CommonController.Order.CreatePurchaseOrderForGuest)
+
 module.exports = router

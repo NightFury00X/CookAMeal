@@ -69,7 +69,6 @@ const localLogin = new LocalStrategy(localOptions, async (userEmail, password, d
                 status: CommonConfig.STATUS_CODE.OK
             }, false)
         }
-        CONSOLE.LOG('done')
         return done(null, userForResetPassword)
 
         // const normalUserLogin = await db.User.findOne({

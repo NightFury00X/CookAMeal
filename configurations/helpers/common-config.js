@@ -117,6 +117,31 @@ CommonConfig.OPTIONS = {
     }
 }
 
+CommonConfig.DefaultPasswordConfig = {
+    base: 'WORD',
+    length: {
+        min: 8,
+        max: 8
+    },
+    capsLetters: {
+        min: 1,
+        max: 3,
+        exclude: ['I']
+    },
+    numerals: {
+        min: 1
+    },
+    spacialCharactors: {
+        includes: ['!', '@', '#', '$', '%', '^', '&'],
+        min: 1
+    },
+    spaces: {
+        allow: false,
+        min: 0,
+        max: 0
+    }
+}
+
 CommonConfig.WHITE_LIST = {
     IMAGE_EXTENSTIONS: ['.JPG', '.jpg', '.JPEG', '.jpeg', '.PNG', '.png']
 }
@@ -171,7 +196,8 @@ CommonConfig.ERRORS = {
     },
     ORDER: {
         SUCCESS: 'Your order placed successfully.',
-        FAILURE: 'Your order couldn"t completed.'
+        FAILURE: 'Your order couldn"t completed.',
+        OUT_OF_STOCK: 'Recipe serving not available.'
     }
 }
 

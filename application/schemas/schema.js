@@ -142,6 +142,27 @@ module.exports = {
             date: Joi.string().required(),
             startTime: Joi.string().required(),
             endTime: Joi.string().required()
+        }),
+        GuestOrderProcess: Joi.object().keys({
+            recipeId: Joi.string().required(),
+            noOfServing: Joi.string().required(),
+            spiceLevel: Joi.string().required(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            email: Joi.string().required(),
+            phoneNumber: Joi.string().required(),
+            streetAddress: Joi.string().required(),
+            city: Joi.string().required(),
+            state: Joi.string().required(),
+            zipCode: Joi.string().required(),
+            country: Joi.string().required(),
+            specialInstruction: Joi.string().required(),
+            deliveryType: Joi.string().required(),
+            deliveryFee: Joi.string().required(),
+            pickUpTime: Joi.string().required(),
+            nonce: Joi.string().required(),
+            chargeAmount: Joi.string().required(),
+            paymentType: Joi.string().required()
         })
     }
 }

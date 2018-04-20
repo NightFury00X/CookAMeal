@@ -21,8 +21,29 @@ distance.apiKey = Config.Google.Map.key
 MapService = function () {
 }
 
+MapService.prototype.GetUserDetailsByUserTypeId = async (userTypeId) => {
+    try {
+        return await db.UserType.findOne({
+            where: {
+                id: {
+                    [Op.eq]: `${userTypeId}`
+                }
+            },
+            include: [{
+                model: db.Profile,
+                include: [{
+                    model: db.Address
+                }]
+            }]
+        })
+    } catch (error) {
+        throw (error)
+    }
+}
+
 MapService.prototype.Map = {
     GetGeoCordinatesFromAddress: async (address) => {
+        console.log('address: ', address)
         return await geocoder.geocode(`${address}`)
     },
     FindAllCooksLocationsForMap: async () => {
